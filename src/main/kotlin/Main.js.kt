@@ -9,8 +9,15 @@ import io.data2viz.viz.*
 
 const val vizSize = 500.0
 
+external fun alert(message: Any?)
+
 fun main() {
     println("Hello Kotlin/JS")
+
+    jQuery(".clickable").click {
+        alert("Joepie!")
+    }
+
     val viz = viz {
         size = size(vizSize * 2, vizSize)
 
@@ -18,6 +25,7 @@ fun main() {
             val angle = it.deg
             val position = point(250 + angle.cos * 100, 125 + angle.sin * 100)
             val color = Colors.hsl(angle, 100.pct, 50.pct)
+
             circle {
                 // draw a circle with "pure-color"
                 fill = color
@@ -42,7 +50,5 @@ fun main() {
             }
         }
     }
-
-
     viz.bindRendererOn("viz")           //<- select a canvas with this id to install the viz
 }
