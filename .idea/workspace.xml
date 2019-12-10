@@ -1,65 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4cb68dff-52c1-4a85-92b5-91dc274354eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2IMV20-Visualization-and-Interaction.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/jQuery.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/autocomplete.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/autoinit.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/carousel.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/carousel.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/character-counter.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/character-counter.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/chips.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/chips.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/collapsible.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/collapsible.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/common.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/datepicker.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/datepicker.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/dropdown.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/dropdown.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/fab.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/fab.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/formselect.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/formselect.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/index.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/inputfields.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/materialbox.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/materialbox.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/modal.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/modal.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/parallax.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/parallax.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/pushpin.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/pushpin.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/range.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/range.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/scrollspy.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/scrollspy.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/sidenav.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/sidenav.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/slider.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/slider.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/tabs.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/tabs.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/taptarget.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/taptarget.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/timepicker.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/timepicker.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/toast.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/tooltip.M.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/tooltip.module_definitely-typed.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/waves.Waves.module_definitely-typed.kt" afterDir="false" />
+    <list default="true" id="8a015174-1918-416a-a28e-2c1185637b64" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kotlin_vue_1_0_SNAPSHOT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinScripting.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/kotlin-vue/kotlin-wrapper.kotlin-vue.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/kotlin-vue/kotlin-wrapper.kotlin-vue.test.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin-vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/components/Content.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/components/Header.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/components/SideMenu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/components/functionCompnent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/components/side_menu/SideMenuGroup.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/components/side_menu/SideMenuItem.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/directives/init.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/directives/onGlobalClick.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/external/font_awsome/fortAwesomeSvgCore.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/external/font_awsome/freeSolidSvgIcons.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/external/font_awsome/init.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/external/font_awsome/vueFortAwesome.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/router.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/views/Container.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/views/Home.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kotlin-vue/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-vue/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kotlin-vue/example/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-vue/example/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/jQuery.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/jQuery.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/autocomplete.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/autoinit.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/carousel.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/carousel.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/character-counter.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/character-counter.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/chips.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/chips.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/collapsible.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/collapsible.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/common.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/datepicker.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/datepicker.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/dropdown.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/dropdown.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/fab.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/fab.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/formselect.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/formselect.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/index.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/inputfields.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/materialbox.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/materialbox.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/modal.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/modal.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/parallax.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/parallax.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/pushpin.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/pushpin.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/range.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/range.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/scrollspy.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/scrollspy.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/sidenav.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/sidenav.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/slider.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/slider.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/tabs.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/tabs.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/taptarget.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/taptarget.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/timepicker.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/timepicker.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/toast.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/tooltip.M.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/tooltip.module_definitely-typed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/waves.Waves.module_definitely-typed.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +99,9 @@
         <task path="$PROJECT_DIR$">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/kotlin-vue">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -87,11 +112,18 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+                <item name="kotlin-vue" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+                <item name="kotlin-vue" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+                <item name="kotlin-vue" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="other" type="c8890929:TasksNode$1" />
               </path>
@@ -110,12 +142,15 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_COMMON_BRANCH" value="master" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/kotlin-vue" />
+    <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="KonanWorkspace" KOTLIN_NATIVE_HOME="$USER_HOME$/.konan/kotlin-native-linux-1.3.61">
     <executables />
   </component>
-  <component name="ProjectId" id="1UnXKDsQzggj8SrBLFmYFVG2IgS" />
+  <component name="ProjectId" id="1Uo2aOKj6HYnSlxhiNjZjNwehRh" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -126,7 +161,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/kotlin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/kotlin-vue/example" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -140,9 +175,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/kotlin" />
+      <recent name="$PROJECT_DIR$/src/main/kotlin/views" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Kotlin script.build.gradle.kts">
     <configuration name="2IMV20-Visualization-and-Interaction [browserRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -162,8 +198,63 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="2IMV20-Visualization-and-Interaction:kotlin-vue [browserRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/kotlin-vue" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="browserRun" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="build.gradle.kts" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script" temporary="true" nameIsGenerated="true">
+      <module name="2IMV20-Visualization-and-Interaction" />
+      <option name="filePath" value="$PROJECT_DIR$/kotlin-vue/example/build.gradle.kts" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" value="$PROJECT_DIR$/kotlin-vue/example" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" value="$PROJECT_DIR$/kotlin-vue/example/build.gradle.kts" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" value="$PROJECT_DIR$/kotlin-vue/example" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin script.build.gradle.kts" />
+        <item itemvalue="Gradle.2IMV20-Visualization-and-Interaction:kotlin-vue [browserRun]" />
         <item itemvalue="Gradle.2IMV20-Visualization-and-Interaction [browserRun]" />
       </list>
     </recent_temporary>
@@ -185,12 +276,12 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4cb68dff-52c1-4a85-92b5-91dc274354eb" name="Default Changelist" comment="" />
-      <created>1575993266450</created>
+      <changelist id="8a015174-1918-416a-a28e-2c1185637b64" name="Default Changelist" comment="" />
+      <created>1576008689592</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1575993266450</updated>
-      <workItem from="1575993269068" duration="10584000" />
+      <updated>1576008689592</updated>
+      <workItem from="1576008691745" duration="2214000" />
     </task>
     <servers />
   </component>
@@ -198,33 +289,29 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1191" y="271" width="480" height="558" key="#com.intellij.ide.util.MemberChooser" timestamp="1576002575650">
+    <state x="1203" y="310" key="FileChooserDialogImpl" timestamp="1576010983327">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
-    <state x="1191" y="271" width="480" height="558" key="#com.intellij.ide.util.MemberChooser/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576002575650" />
-    <state width="1872" height="279" key="GridCell.Tab.0.bottom" timestamp="1576006404360">
+    <state x="1203" y="310" key="FileChooserDialogImpl/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576010983327" />
+    <state width="1872" height="279" key="GridCell.Tab.0.bottom" timestamp="1576011021653">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
-    <state width="1872" height="279" key="GridCell.Tab.0.bottom/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="1872" height="279" key="GridCell.Tab.0.center" timestamp="1576006404360">
+    <state width="1872" height="279" key="GridCell.Tab.0.bottom/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576011021653" />
+    <state width="1872" height="279" key="GridCell.Tab.0.center" timestamp="1576011021652">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
-    <state width="1872" height="279" key="GridCell.Tab.0.center/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="1872" height="279" key="GridCell.Tab.0.left" timestamp="1576006404360">
+    <state width="1872" height="279" key="GridCell.Tab.0.center/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576011021652" />
+    <state width="1872" height="279" key="GridCell.Tab.0.left" timestamp="1576011021652">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
-    <state width="1872" height="279" key="GridCell.Tab.0.left/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="1872" height="279" key="GridCell.Tab.0.right" timestamp="1576006404360">
+    <state width="1872" height="279" key="GridCell.Tab.0.left/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576011021652" />
+    <state width="1872" height="279" key="GridCell.Tab.0.right" timestamp="1576011021653">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
-    <state width="1872" height="279" key="GridCell.Tab.0.right/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state x="1046" y="166" width="770" height="768" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1576004827292">
+    <state width="1872" height="279" key="GridCell.Tab.0.right/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576011021653" />
+    <state x="1100" y="254" width="672" height="677" key="run.anything.popup" timestamp="1576010994524">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
-    <state x="1046" y="166" width="770" height="768" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576004827292" />
-    <state x="1097" y="259" width="675" height="676" key="search.everywhere.popup" timestamp="1576004083216">
-      <screen x="476" y="0" width="1920" height="1080" />
-    </state>
-    <state x="1097" y="259" width="675" height="676" key="search.everywhere.popup/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576004083216" />
+    <state x="1100" y="254" width="672" height="677" key="run.anything.popup/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576010994524" />
   </component>
 </project>
