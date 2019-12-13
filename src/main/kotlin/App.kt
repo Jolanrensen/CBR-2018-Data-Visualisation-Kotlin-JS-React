@@ -16,6 +16,7 @@ import react.RState
 import react.dom.*
 import styled.css
 import styled.styledDiv
+import styled.styledP
 
 
 class App : RComponent<App.Props, App.State>() {
@@ -34,15 +35,13 @@ class App : RComponent<App.Props, App.State>() {
         styledDiv {
             css {
                 padding(vertical = 16.px)
-
                 backgroundColor = Color.green
             }
             +"Hello world!"
         }
-        p {
-            style {
-                attrs {
-                }
+        styledP {
+            css {
+                color = Color.blue
             }
             +"Hello from React!!!!!!!!"
             attrs {
