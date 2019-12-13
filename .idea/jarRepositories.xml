@@ -26,5 +26,20 @@
       <option name="name" value="maven" />
       <option name="url" value="https://kotlin.bintray.com/js-externals" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven2" />
+      <option name="name" value="maven2" />
+      <option name="url" value="https://dl.bintray.com/kotlin/kotlin-eap" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="https://dl.bintray.com/kotlin/kotlinx" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven4" />
+      <option name="name" value="maven4" />
+      <option name="url" value="https://kotlin.bintray.com/kotlin-js-wrappers" />
+    </remote-repository>
   </component>
 </project>
