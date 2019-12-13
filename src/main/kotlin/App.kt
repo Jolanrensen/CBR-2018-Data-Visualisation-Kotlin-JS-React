@@ -6,34 +6,50 @@ import io.data2viz.math.pct
 import io.data2viz.viz.TextHAlign
 import io.data2viz.viz.TextVAlign
 import io.data2viz.viz.textAlign
+import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
+import kotlinx.html.style
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
 import react.dom.*
+import styled.css
+import styled.styledDiv
 
-class App: RComponent<App.Props, App.State>() {
 
+class App : RComponent<App.Props, App.State>() {
 
+    val vizSize = 500.0
 
-    interface State: RState {
+    interface State : RState {
 
     }
 
-    interface Props: RProps {
+    interface Props : RProps {
 
     }
 
     override fun RBuilder.render() {
-       p {
-            +"Hello from React!!!!!!!!"
+        styledDiv {
+            css {
+                padding(vertical = 16.px)
 
-           attrs {
-               onClickFunction = {
-                   alert("Clickedie clackedie")
-               }
-           }
+                backgroundColor = Color.green
+            }
+            +"Hello world!"
+        }
+        p {
+            style {
+                attrs {
+                }
+            }
+            +"Hello from React!!!!!!!!"
+            attrs {
+                onClickFunction = {
+                    alert("Clickedie clackedie")
+                }
+            }
         }
 
         vizComponent {

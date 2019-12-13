@@ -1,15 +1,9 @@
-import io.data2viz.color.Colors
-import io.data2viz.color.Colors.Web.black
-import io.data2viz.color.Colors.Web.white
-import io.data2viz.geom.point
-import io.data2viz.geom.size
-import io.data2viz.math.deg
-import io.data2viz.math.pct
-import io.data2viz.viz.*
+import kotlinx.css.RuleSet
+import kotlinx.serialization.internal.MapEntry
 import react.dom.render
-import kotlin.browser.*
+import kotlin.browser.document
+import kotlin.browser.window
 
-const val vizSize = 500.0
 
 external fun alert(message: Any?)
 
@@ -23,3 +17,18 @@ fun main() {
     }
 
 }
+
+//var Tag.style: RuleSet
+//    get() = error("style cannot be read from props")
+//    set(value) = jsStyle {
+//        CSSBuilder().apply(value).declarations.forEach { it: MapEntry<*, *> ->
+//            this[it.key] = when (it.value) {
+//                !is String, !is Number -> it.value.toString()
+//                else -> it.value
+//            }
+//        }
+//    }
+//
+//fun Tag.style(handler: RuleSet) {
+//    style = handler
+//}
