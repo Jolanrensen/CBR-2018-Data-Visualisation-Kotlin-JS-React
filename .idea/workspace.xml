@@ -2,7 +2,130 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cb68dff-52c1-4a85-92b5-91dc274354eb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/muirwik_components_0_4_0_SNAPSHOT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Appbar.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Avatar.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Backdrop.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Badge.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Base.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/BottomNavigation.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Breadcrumbs.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Checkbox.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ChildPropDelegate.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Chip.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/CircularProgress.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ClickAwayListener.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Colors.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Container.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/CssBaseline.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Divider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Drawer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/EnumPropToStringDelegates.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Grid.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Hidden.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Icon.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/LinearProgress.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Link.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/MuiThemeProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/NativeSelect.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/OnClosePropWithReasonDelegate.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Paper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Popover.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Radio.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ReactHtmlElementAttributes.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ReactHtmlElementEvents.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ReactHtmlTouchEvent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Select.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Slider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Snackbar.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/StyledPropsWithCommonAttributes.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/SwipeableDrawer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Switch.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Tabs.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/TextField.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ThemeProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Toolbar.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Tooltip.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Typography.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/Button.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/ButtonBase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/ButtonGroup.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/FabButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/IconButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/Card.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardActionArea.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardActions.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardContent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardHeader.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardMedia.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/Dialog.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/DialogActions.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/DialogContent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/DialogContentText.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/DialogTitle.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/Modal.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/expansionpanel/ExpansionPanel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/expansionpanel/ExpansionPanelActions.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/expansionpanel/ExpansionPanelDetails.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/expansionpanel/ExpansionPanelSummary.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormControl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormControlLabel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormGroup.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormHelperText.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormLabel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/LabelMargin.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/gridlist/GridList.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/gridlist/GridListTile.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/gridlist/GridListTileBar.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/FilledInput.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/Input.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/InputAdornment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/InputBase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/InputLabel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/OutlinedInput.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/List.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItem.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItemAvatar.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItemIcon.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItemSecondaryAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItemText.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListSubheader.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/menu/Menu.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/menu/MenuItem.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/menu/MenuList.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/ColorManipulator.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/ColorsCommon.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/CreateBreakpoints.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/CreateMixins.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/CreateMuiTheme.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/CreatePalette.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/CreateTypography.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/IndexColor.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/Spacing.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/StylesProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/shape.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/transitions.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/zIndex.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/Table.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableBody.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableCell.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableFooter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableHead.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TablePagination.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableRow.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableSortLabel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Collapse.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Duration.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Fade.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Grow.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Slide.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Transition.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/TransitionDelegates.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Zoom.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -10,8 +133,25 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/muirwik-components">
       <ProjectState />
     </projectState>
   </component>
@@ -22,6 +162,9 @@
           <activation />
         </task>
         <task path="$PROJECT_DIR$/kotlin-vue">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/muirwik-components">
           <activation />
         </task>
         <projects_view>
@@ -74,7 +217,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/kotlin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/kotlin/libs" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -83,33 +226,24 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="Settings.JavaScript.Linters.JSLint" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/kotlin/libs" />
+      <recent name="$PROJECT_DIR$/muirwik-components" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/kotlin" />
     </key>
   </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="gradle dependencies" />
+    </option>
+  </component>
   <component name="RunManager" selected="Gradle.2IMV20-Visualization-and-Interaction [run]">
-    <configuration name="2IMV20-Visualization-and-Interaction [browserRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="browserRun" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="2IMV20-Visualization-and-Interaction [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -129,10 +263,104 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="muirwik-components [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/muirwik-components" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="assemble" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="muirwik-components [buildDependents]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/muirwik-components" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildDependents" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="muirwik-components [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/muirwik-components" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="build.gradle.kts" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script" temporary="true" nameIsGenerated="true">
+      <module name="2IMV20-Visualization-and-Interaction.muirwik-components" />
+      <option name="filePath" value="$PROJECT_DIR$/muirwik-components/build.gradle.kts" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" value="$PROJECT_DIR$/muirwik-components" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" value="$PROJECT_DIR$/muirwik-components/build.gradle.kts" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" value="$PROJECT_DIR$/muirwik-components" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.2IMV20-Visualization-and-Interaction [run]" />
-        <item itemvalue="Gradle.2IMV20-Visualization-and-Interaction [browserRun]" />
+        <item itemvalue="Gradle.muirwik-components [buildDependents]" />
+        <item itemvalue="Gradle.muirwik-components [assemble]" />
+        <item itemvalue="Gradle.muirwik-components [build]" />
+        <item itemvalue="Kotlin script.build.gradle.kts" />
       </list>
     </recent_temporary>
   </component>
@@ -159,7 +387,12 @@
       <option name="presentableId" value="Default" />
       <updated>1575993266450</updated>
       <workItem from="1575993269068" duration="10584000" />
-      <workItem from="1576247185772" duration="11833000" />
+      <workItem from="1576247185772" duration="11861000" />
+      <workItem from="1576274677451" duration="1328000" />
+      <workItem from="1576276018820" duration="1287000" />
+      <workItem from="1576277328117" duration="2894000" />
+      <workItem from="1576280725437" duration="2179000" />
+      <workItem from="1576283504205" duration="1029000" />
     </task>
     <task id="LOCAL-00001" summary="react!">
       <created>1576254618421</created>
@@ -175,13 +408,22 @@
       <option name="project" value="LOCAL" />
       <updated>1576265706073</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="styling works!">
+      <created>1576265978619</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1576265978619</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
     <option name="exactExcludedFiles">
       <list>
+        <option value="$PROJECT_DIR$/build/js/node_modules/karma/config.tpl.js" />
+        <option value="$PROJECT_DIR$/build/js/node_modules/karma/config.tpl.js" />
         <option value="$PROJECT_DIR$/build/js/node_modules/karma/config.tpl.js" />
         <option value="$PROJECT_DIR$/build/js/node_modules/karma/config.tpl.js" />
       </list>
@@ -198,50 +440,50 @@
     </state>
     <state x="1073" y="425" key="#com.intellij.ide.util.MemberChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1576251768134" />
     <state x="1191" y="271" width="480" height="558" key="#com.intellij.ide.util.MemberChooser/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576002575650" />
-    <state x="1196" y="406" width="1578" height="829" key="CommitChangelistDialog2" timestamp="1576265705929">
+    <state x="1196" y="406" width="1578" height="829" key="CommitChangelistDialog2" timestamp="1576265978395">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1196" y="406" width="1578" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1576265705929" />
-    <state width="1731" height="454" key="GridCell.Tab.0.bottom" timestamp="1576265892775">
+    <state x="1196" y="406" width="1578" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1576265978395" />
+    <state width="1392" height="454" key="GridCell.Tab.0.bottom" timestamp="1576284629247">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1731" height="454" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1576265892775" />
+    <state width="1392" height="454" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1576284629247" />
     <state width="2066" height="647" key="GridCell.Tab.0.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1576172810168" />
     <state width="1872" height="279" key="GridCell.Tab.0.bottom/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="1731" height="454" key="GridCell.Tab.0.center" timestamp="1576265892775">
+    <state width="1392" height="454" key="GridCell.Tab.0.center" timestamp="1576284629247">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1731" height="454" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1576265892775" />
+    <state width="1392" height="454" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1576284629247" />
     <state width="2066" height="647" key="GridCell.Tab.0.center/0.50.4320.2380@0.50.4320.2380" timestamp="1576172810167" />
     <state width="1872" height="279" key="GridCell.Tab.0.center/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="1731" height="454" key="GridCell.Tab.0.left" timestamp="1576265892774">
+    <state width="1392" height="454" key="GridCell.Tab.0.left" timestamp="1576284629247">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1731" height="454" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1576265892774" />
+    <state width="1392" height="454" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1576284629247" />
     <state width="2066" height="647" key="GridCell.Tab.0.left/0.50.4320.2380@0.50.4320.2380" timestamp="1576172810167" />
     <state width="1872" height="279" key="GridCell.Tab.0.left/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="1731" height="454" key="GridCell.Tab.0.right" timestamp="1576265892775">
+    <state width="1392" height="454" key="GridCell.Tab.0.right" timestamp="1576284629247">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1731" height="454" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1576265892775" />
+    <state width="1392" height="454" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1576284629247" />
     <state width="2066" height="647" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1576172810167" />
     <state width="1872" height="279" key="GridCell.Tab.0.right/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
     <state x="1119" y="323" key="SettingsEditor" timestamp="1576254699824">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1119" y="323" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1576254699824" />
-    <state x="1585" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1576265707960">
+    <state x="1585" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1576265981708">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1585" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1576265707960" />
+    <state x="1585" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1576265981708" />
     <state x="1046" y="166" width="770" height="768" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1576004827292">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state x="1046" y="166" width="770" height="768" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576004827292" />
-    <state x="1654" y="389" width="672" height="677" key="run.anything.popup" timestamp="1576255558546">
+    <state x="1654" y="389" width="672" height="677" key="run.anything.popup" timestamp="1576275623514">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1654" y="389" width="672" height="677" key="run.anything.popup/0.25.2880.1595@0.25.2880.1595" timestamp="1576255558546" />
+    <state x="1654" y="389" width="672" height="677" key="run.anything.popup/0.25.2880.1595@0.25.2880.1595" timestamp="1576275623514" />
     <state x="932" y="408" width="1013" height="999" key="search.everywhere.popup" timestamp="1576249015397">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>

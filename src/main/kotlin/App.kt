@@ -1,3 +1,14 @@
+import com.ccfraser.muirwik.components.MColor
+import com.ccfraser.muirwik.components.button.MButtonSize
+import com.ccfraser.muirwik.components.button.MButtonVariant
+import com.ccfraser.muirwik.components.button.mButton
+import com.ccfraser.muirwik.components.button.mIconButton
+import com.ccfraser.muirwik.components.card.mCard
+import com.ccfraser.muirwik.components.card.mCardActions
+import com.ccfraser.muirwik.components.card.mCardContent
+import com.ccfraser.muirwik.components.card.mCardHeader
+import com.ccfraser.muirwik.components.mAvatar
+import com.ccfraser.muirwik.components.mTypography
 import io.data2viz.color.Colors
 import io.data2viz.geom.point
 import io.data2viz.geom.size
@@ -9,6 +20,7 @@ import io.data2viz.viz.textAlign
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.style
+import org.w3c.dom.Node
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -84,6 +96,33 @@ class App : RComponent<App.Props, App.State>() {
                     }
                 }
             }
+        }
+
+        mCard {
+            mCardHeader(
+                title = "Test",
+                subHeader = "OtherTest",
+                avatar = mAvatar(addAsChild = false) {
+                    +"R"
+                }
+            )
+
+            mCardContent {
+                mTypography {
+                    +"This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like."
+                }
+            }
+
+            mCardActions {
+                mButton("Click Here",
+                    color = MColor.primary,
+                    size = MButtonSize.medium,
+                    onClick = {
+                    alert("Clicked the button :D")
+                })
+            }
+
+
         }
     }
 
