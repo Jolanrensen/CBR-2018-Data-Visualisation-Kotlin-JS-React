@@ -20,11 +20,9 @@ import io.data2viz.viz.textAlign
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.style
+import org.w3c.dom.HTMLElement
 import org.w3c.dom.Node
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
+import react.*
 import react.dom.*
 import styled.css
 import styled.styledDiv
@@ -36,7 +34,7 @@ class App : RComponent<App.Props, App.State>() {
     val vizSize = 500.0
 
     interface State : RState {
-
+        var welcomeText: String?
     }
 
     interface Props : RProps {
@@ -49,8 +47,16 @@ class App : RComponent<App.Props, App.State>() {
                 padding(vertical = 16.px)
                 backgroundColor = Color.green
             }
-            +"Hello world!"
+
+            +(state.welcomeText ?: "Hello world!")
+
+            attrs.onClickFunction = {
+                setState {
+                    welcomeText = "Something else"
+                }
+            }
         }
+
         styledP {
             css {
                 color = Color.blue
@@ -63,66 +69,84 @@ class App : RComponent<App.Props, App.State>() {
             }
         }
 
-        vizComponent {
-            runOnViz = {
-                size = size(vizSize * 2, vizSize)
+        vizComponentCard(
+            runOnCard = {
+                mCardHeader(
+                    title = "Mooie grafiek",
+                    subHeader = "Ja, echt wel",
+                    avatar = mAvatar(addAsChild = false) {
+                        +"gg"
+                    }
+                )
+            }
+        ) {
+            size = size(vizSize * 2, vizSize)
 
-                (0 until 360 step 30).forEach {
-                    val angle = it.deg
-                    val position = point(250 + angle.cos * 100, 125 + angle.sin * 100)
-                    val color = Colors.hsl(angle, 100.pct, 50.pct)
+            (0 until 360 step 30).forEach {
+                val angle = it.deg
+                val position = point(250 + angle.cos * 100, 125 + angle.sin * 100)
+                val color = Colors.hsl(angle, 100.pct, 50.pct)
 
-                    circle {
-                        // draw a circle with "pure-color"
-                        fill = color
-                        radius = 25.0
-                        x = position.x
-                        y = position.y
-                    }
-                    circle {
-                        // draw a circle with the desaturated color
-                        fill = color.desaturate(10.0)
-                        radius = 25.0
-                        x = position.x + 270
-                        y = position.y
-                    }
-                    text {
-                        // indicate the perceived lightness of the color
-                        x = position.x
-                        y = position.y
-                        textColor = if (color.luminance() > 50.pct) Colors.Web.black else Colors.Web.white
-                        textContent = "${(color.luminance().value * 100).toInt()}%"
-                        textAlign = textAlign(TextHAlign.MIDDLE, TextVAlign.MIDDLE)
-                    }
+                circle {
+                    // draw a circle with "pure-color"
+                    fill = color
+                    radius = 25.0
+                    x = position.x
+                    y = position.y
+                }
+                circle {
+                    // draw a circle with the desaturated color
+                    fill = color.desaturate(10.0)
+                    radius = 25.0
+                    x = position.x + 270
+                    y = position.y
+                }
+                text {
+                    // indicate the perceived lightness of the color
+                    x = position.x
+                    y = position.y
+                    textColor = if (color.luminance() > 50.pct) Colors.Web.black else Colors.Web.white
+                    textContent = "${(color.luminance().value * 100).toInt()}%"
+                    textAlign = textAlign(TextHAlign.MIDDLE, TextVAlign.MIDDLE)
                 }
             }
         }
 
-        mCard {
-            mCardHeader(
-                title = "Test",
-                subHeader = "OtherTest",
-                avatar = mAvatar(addAsChild = false) {
-                    +"R"
-                }
-            )
-
-            mCardContent {
-                mTypography {
-                    +"This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like."
+        div {
+            attrs {
+                onClickFunction = {
+                    println("Card clicked!")
                 }
             }
+            mCard {
+                mCardHeader(
+                    title = "Test",
+                    subHeader = "OtherTest",
+                    avatar = mAvatar(addAsChild = false) {
+                        +"R"
+                    }
+                )
 
-            mCardActions {
-                mButton("Click Here",
-                    color = MColor.primary,
-                    size = MButtonSize.medium,
-                    onClick = {
-                    alert("Clicked the button :D")
-                })
+                mCardContent {
+                    mTypography {
+                        +"This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like."
+                    }
+                    attrs {
+
+                    }
+                }
+
+                mCardActions {
+                    mButton("Click Here",
+                        color = MColor.primary,
+                        size = MButtonSize.medium,
+                        onClick = {
+                            alert("Clicked the button :D")
+                        })
+                }
+
+
             }
-
-
         }
     }
 

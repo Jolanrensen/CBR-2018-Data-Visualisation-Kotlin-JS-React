@@ -1,9 +1,11 @@
 package com.ccfraser.muirwik.components.card
 
+import com.ccfraser.muirwik.components.MPaperProps
 import com.ccfraser.muirwik.components.createStyled
 import com.ccfraser.muirwik.components.setStyledPropsAndRunHandler
 import react.RBuilder
 import react.RComponent
+import react.RProps
 import react.RState
 import styled.StyledHandler
 import styled.StyledProps
@@ -15,7 +17,7 @@ private external val cardModule: dynamic
 @Suppress("UnsafeCastFromDynamic")
 private val cardComponent : RComponent<MCardProps, RState> = cardModule.default
 
-interface MCardProps : StyledProps {
+interface MCardProps : StyledProps, MPaperProps {
     var raised: Boolean
 }
 

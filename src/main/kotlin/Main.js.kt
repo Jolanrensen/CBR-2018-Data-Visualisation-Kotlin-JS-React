@@ -17,18 +17,3 @@ fun main() {
     }
 
 }
-
-//var Tag.style: RuleSet
-//    get() = error("style cannot be read from props")
-//    set(value) = jsStyle {
-//        CSSBuilder().apply(value).declarations.forEach { it: MapEntry<*, *> ->
-//            this[it.key] = when (it.value) {
-//                !is String, !is Number -> it.value.toString()
-//                else -> it.value
-//            }
-//        }
-//    }
-//
-//fun Tag.style(handler: RuleSet) {
-//    style = handler
-//}

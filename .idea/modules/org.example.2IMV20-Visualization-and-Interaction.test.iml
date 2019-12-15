@@ -2,7 +2,7 @@
 <module version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="true" externalProjectId="2IMV20-Visualization-and-Interaction" pureKotlinSourceFolders="$MODULE_DIR$/../../src/test/kotlin;/mnt/HardDisk/Projects/2IMV20-Visualization-and-Interaction/src/main/kotlin">
+      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="true" externalProjectId="2IMV20-Visualization-and-Interaction" pureKotlinSourceFolders="$MODULE_DIR$/../../src/test/kotlin;/home/jolanrensen/Projects/2IMV20-Visualization-and-Interaction/src/main/kotlin">
         <sourceSets>
           <sourceSet>org.example.2IMV20-Visualization-and-Interaction.main</sourceSet>
         </sourceSets>
