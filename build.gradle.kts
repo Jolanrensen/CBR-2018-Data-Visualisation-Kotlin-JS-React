@@ -18,12 +18,14 @@ repositories {
 
 kotlin {
     target {
+        useCommonJs()
         browser {
             val main by compilations.getting {
                 kotlinOptions {
                     metaInfo = true
                     outputFile = "${project.buildDir.path}/js/${project.name}.js"
                     sourceMap = true
+                    sourceMapEmbedSources = "always"
                     moduleKind = "commonjs"
                     main = "call"
                 }
@@ -40,7 +42,7 @@ kotlin {
 //        implementation(project(":muirwik-components"))
 //        implementation(npm( "../../link-muirwik-components.js"))
 
-        implementation(npm("webpack-dev-server"))
+//        implementation(npm("webpack-dev-server"))
         implementation(kotlin("stdlib-js"))
         implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.6.12")
         implementation("org.jetbrains:kotlin-react:16.9.0-pre.89-kotlin-1.3.60")
@@ -51,8 +53,15 @@ kotlin {
         implementation("org.jetbrains:kotlin-css-js:1.0.0-pre.89-kotlin-1.3.60")
         implementation("org.jetbrains:kotlin-styled:1.0.0-pre.89-kotlin-1.3.60")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.11.1")
+
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.1")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.1")
+
+//        implementation("com.github.doyaaaaaken:kotlin-csv-js:0.7.3")
+
+        implementation(npm("react", "16.12.0"))
+        implementation(npm("react-dom", "16.12.0"))
+        implementation(npm("react-draggable"))
 
         implementation(npm("inline-style-prefixer"))
         implementation(npm("core-js"))
@@ -64,12 +73,10 @@ kotlin {
         implementation(npm("karma"))
         implementation(npm("jquery"))
 
-        implementation(npm("webpack"))
-        implementation(npm("webpack-cli"))
+//        implementation(npm("webpack"))
+//        implementation(npm("webpack-cli"))
 
-        implementation(npm("react", "16.12.0"))
-        implementation(npm("react-dom", "16.12.0"))
-        implementation(npm("react-draggable"))
+
 //        implementation(npm("reactstrap"))
 //    this one sucks    implementation("kotlin.js.externals:kotlin-js-jquery:3.2.0-0")
 

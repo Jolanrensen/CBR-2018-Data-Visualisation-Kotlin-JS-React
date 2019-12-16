@@ -48,7 +48,7 @@ class VizComponentCard : RComponent<VizComponentCard.Props, VizComponentCard.Sta
                         raised = false
                     }
                 }
-            }
+            } 
             mCard {
                 css {
 //                    display = Display.flex

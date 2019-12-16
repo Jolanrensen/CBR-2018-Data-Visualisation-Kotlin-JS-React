@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cb68dff-52c1-4a85-92b5-91dc274354eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/VizComponentCard.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/opleiderresultaten-01072017-tm-30062018.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/VizComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/VizComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/Card.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/Card.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/VizComponentCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/VizComponentCard.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,8 +74,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin File" />
         <option value="Kotlin Class" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -86,6 +86,10 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/App.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/build.gradle.kts" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KonanWorkspace" KOTLIN_NATIVE_HOME="$USER_HOME$/.konan/kotlin-native-linux-1.3.61">
     <executables />
@@ -98,11 +102,15 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/kotlin" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -112,15 +120,19 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.45623836" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="Settings.JavaScript.Linters.JSLint" />
+    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/kotlin" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
       <recent name="$PROJECT_DIR$/src/main/kotlin/libs" />
       <recent name="$PROJECT_DIR$/muirwik-components" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/main/kotlin" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -128,22 +140,41 @@
       <command value="gradle dependencies" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.2IMV20-Visualization-and-Interaction [run]">
-    <configuration name="2IMV20-Visualization-and-Interaction [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.browserRun">
+    <configuration name="broweserRun -t" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="-t" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value="run" />
+            <option value="browserRun" />
           </list>
         </option>
-        <option name="vmOptions" />
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="browserRun" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="browserRun" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
       </ExternalSystemSettings>
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
@@ -239,9 +270,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Gradle.broweserRun -t" />
+      <item itemvalue="Gradle.browserRun" />
+      <item itemvalue="Gradle.muirwik-components [assemble]" />
+      <item itemvalue="Gradle.muirwik-components [build]" />
+      <item itemvalue="Gradle.muirwik-components [buildDependents]" />
+      <item itemvalue="Kotlin script.build.gradle.kts" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.2IMV20-Visualization-and-Interaction [run]" />
+        <item itemvalue="Gradle.browserRun" />
         <item itemvalue="Gradle.muirwik-components [buildDependents]" />
         <item itemvalue="Gradle.muirwik-components [assemble]" />
         <item itemvalue="Gradle.muirwik-components [build]" />
@@ -282,7 +321,13 @@
       <workItem from="1576336921685" duration="926000" />
       <workItem from="1576409534143" duration="6903000" />
       <workItem from="1576419835996" duration="1410000" />
-      <workItem from="1576421252886" duration="9739000" />
+      <workItem from="1576421252886" duration="9911000" />
+      <workItem from="1576484106692" duration="703000" />
+      <workItem from="1576485763671" duration="1770000" />
+      <workItem from="1576498734741" duration="78000" />
+      <workItem from="1576498937726" duration="5623000" />
+      <workItem from="1576529614628" duration="1766000" />
+      <workItem from="1576531411800" duration="3154000" />
     </task>
     <task id="LOCAL-00001" summary="react!">
       <created>1576254618421</created>
@@ -312,13 +357,21 @@
       <option name="project" value="LOCAL" />
       <updated>1576284810836</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="playing around">
+      <created>1576431298351</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1576431298351</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
     <option name="exactExcludedFiles">
       <list>
+        <option value="$PROJECT_DIR$/build/js/node_modules/karma/config.tpl.js" />
         <option value="$PROJECT_DIR$/build/js/node_modules/karma/config.tpl.js" />
         <option value="$PROJECT_DIR$/build/js/node_modules/karma/config.tpl.js" />
         <option value="$PROJECT_DIR$/build/js/node_modules/karma/config.tpl.js" />
@@ -331,82 +384,99 @@
     <MESSAGE value="react!" />
     <MESSAGE value="styling works!" />
     <MESSAGE value="put Muirwik components inside project to get it to work" />
-    <option name="LAST_COMMIT_MESSAGE" value="put Muirwik components inside project to get it to work" />
+    <MESSAGE value="playing around" />
+    <option name="LAST_COMMIT_MESSAGE" value="playing around" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1073" y="425" width="480" height="558" key="#com.intellij.ide.util.MemberChooser" timestamp="1576251768134">
+    <state x="275" y="524" width="2074" height="1384" key="#Project_Structure" timestamp="1576530099912">
+      <screen x="0" y="50" width="4320" height="2380" />
+    </state>
+    <state x="275" y="524" width="2074" height="1384" key="#Project_Structure/0.50.4320.2380@0.50.4320.2380" timestamp="1576530099911" />
+    <state x="1329" y="341" width="2080" height="1071" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576505427743">
       <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="1329" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1576505427743" />
+    <state x="1993" y="522" width="2080" height="1071" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.50.4320.2380@0.50.4320.2380" timestamp="1576485852386" />
+    <state x="1610" y="611" width="955" height="833" key="#com.intellij.ide.util.MemberChooser" timestamp="1576487420971">
+      <screen x="0" y="50" width="4320" height="2380" />
     </state>
     <state x="1073" y="425" key="#com.intellij.ide.util.MemberChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1576251768134" />
+    <state x="1610" y="611" width="955" height="833" key="#com.intellij.ide.util.MemberChooser/0.50.4320.2380@0.50.4320.2380" timestamp="1576487420971" />
     <state x="1191" y="271" width="480" height="558" key="#com.intellij.ide.util.MemberChooser/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576002575650" />
-    <state x="1196" y="406" width="1578" height="829" key="CommitChangelistDialog2" timestamp="1576284809718">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state x="1794" y="583" width="1578" height="829" key="CommitChangelistDialog2" timestamp="1576431297953">
+      <screen x="0" y="50" width="4320" height="2380" />
     </state>
     <state x="1196" y="406" width="1578" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1576284809718" />
-    <state width="2492" height="641" key="GridCell.Tab.0.bottom" timestamp="1576431234039">
+    <state x="1794" y="583" key="CommitChangelistDialog2/0.50.4320.2380@0.50.4320.2380" timestamp="1576431297953" />
+    <state width="2066" height="639" key="GridCell.Tab.0.bottom" timestamp="1576534436778">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
-    <state width="1392" height="454" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1576343168882" />
-    <state width="2492" height="641" key="GridCell.Tab.0.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1576431234039" />
+    <state width="1392" height="450" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1576505656442" />
+    <state width="2066" height="639" key="GridCell.Tab.0.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1576534436778" />
     <state width="1872" height="279" key="GridCell.Tab.0.bottom/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="2492" height="641" key="GridCell.Tab.0.center" timestamp="1576431234039">
+    <state width="2066" height="639" key="GridCell.Tab.0.center" timestamp="1576534436777">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
-    <state width="1392" height="454" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1576343168881" />
-    <state width="2492" height="641" key="GridCell.Tab.0.center/0.50.4320.2380@0.50.4320.2380" timestamp="1576431234039" />
+    <state width="1392" height="450" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1576505656442" />
+    <state width="2066" height="639" key="GridCell.Tab.0.center/0.50.4320.2380@0.50.4320.2380" timestamp="1576534436777" />
     <state width="1872" height="279" key="GridCell.Tab.0.center/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="2492" height="641" key="GridCell.Tab.0.left" timestamp="1576431234039">
+    <state width="2066" height="639" key="GridCell.Tab.0.left" timestamp="1576534436777">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
-    <state width="1392" height="454" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1576343168881" />
-    <state width="2492" height="641" key="GridCell.Tab.0.left/0.50.4320.2380@0.50.4320.2380" timestamp="1576431234039" />
+    <state width="1392" height="450" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1576505656442" />
+    <state width="2066" height="639" key="GridCell.Tab.0.left/0.50.4320.2380@0.50.4320.2380" timestamp="1576534436777" />
     <state width="1872" height="279" key="GridCell.Tab.0.left/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="2492" height="641" key="GridCell.Tab.0.right" timestamp="1576431234039">
+    <state width="2066" height="639" key="GridCell.Tab.0.right" timestamp="1576534436778">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
-    <state width="1392" height="454" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1576343168881" />
-    <state width="2492" height="641" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1576431234039" />
+    <state width="1392" height="450" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1576505656442" />
+    <state width="2066" height="639" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1576534436778" />
     <state width="1872" height="279" key="GridCell.Tab.0.right/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="2492" height="800" key="GridCell.Tab.1.bottom" timestamp="1576429330107">
+    <state width="2492" height="800" key="GridCell.Tab.1.bottom" timestamp="1576431368889">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
-    <state width="2492" height="800" key="GridCell.Tab.1.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1576429330107" />
-    <state width="2492" height="800" key="GridCell.Tab.1.center" timestamp="1576429330107">
+    <state width="2492" height="800" key="GridCell.Tab.1.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1576431368889" />
+    <state width="2492" height="800" key="GridCell.Tab.1.center" timestamp="1576431368889">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
-    <state width="2492" height="800" key="GridCell.Tab.1.center/0.50.4320.2380@0.50.4320.2380" timestamp="1576429330107" />
-    <state width="2492" height="800" key="GridCell.Tab.1.left" timestamp="1576429330107">
+    <state width="2492" height="800" key="GridCell.Tab.1.center/0.50.4320.2380@0.50.4320.2380" timestamp="1576431368889" />
+    <state width="2492" height="800" key="GridCell.Tab.1.left" timestamp="1576431368889">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
-    <state width="2492" height="800" key="GridCell.Tab.1.left/0.50.4320.2380@0.50.4320.2380" timestamp="1576429330107" />
-    <state width="2492" height="800" key="GridCell.Tab.1.right" timestamp="1576429330107">
+    <state width="2492" height="800" key="GridCell.Tab.1.left/0.50.4320.2380@0.50.4320.2380" timestamp="1576431368889" />
+    <state width="2492" height="800" key="GridCell.Tab.1.right" timestamp="1576431368889">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
-    <state width="2492" height="800" key="GridCell.Tab.1.right/0.50.4320.2380@0.50.4320.2380" timestamp="1576429330107" />
-    <state width="2492" height="800" key="GridCell.Tab.2.bottom" timestamp="1576429330108">
+    <state width="2492" height="800" key="GridCell.Tab.1.right/0.50.4320.2380@0.50.4320.2380" timestamp="1576431368889" />
+    <state width="2492" height="800" key="GridCell.Tab.2.bottom" timestamp="1576431368889">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
-    <state width="2492" height="800" key="GridCell.Tab.2.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1576429330108" />
-    <state width="2492" height="800" key="GridCell.Tab.2.center" timestamp="1576429330108">
+    <state width="2492" height="800" key="GridCell.Tab.2.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1576431368889" />
+    <state width="2492" height="800" key="GridCell.Tab.2.center" timestamp="1576431368889">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
-    <state width="2492" height="800" key="GridCell.Tab.2.center/0.50.4320.2380@0.50.4320.2380" timestamp="1576429330108" />
-    <state width="2492" height="800" key="GridCell.Tab.2.left" timestamp="1576429330108">
+    <state width="2492" height="800" key="GridCell.Tab.2.center/0.50.4320.2380@0.50.4320.2380" timestamp="1576431368889" />
+    <state width="2492" height="800" key="GridCell.Tab.2.left" timestamp="1576431368889">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
-    <state width="2492" height="800" key="GridCell.Tab.2.left/0.50.4320.2380@0.50.4320.2380" timestamp="1576429330108" />
-    <state width="2492" height="800" key="GridCell.Tab.2.right" timestamp="1576429330108">
+    <state width="2492" height="800" key="GridCell.Tab.2.left/0.50.4320.2380@0.50.4320.2380" timestamp="1576431368889" />
+    <state width="2492" height="800" key="GridCell.Tab.2.right" timestamp="1576431368889">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
-    <state width="2492" height="800" key="GridCell.Tab.2.right/0.50.4320.2380@0.50.4320.2380" timestamp="1576429330108" />
-    <state x="1119" y="323" key="SettingsEditor" timestamp="1576254699824">
+    <state width="2492" height="800" key="GridCell.Tab.2.right/0.50.4320.2380@0.50.4320.2380" timestamp="1576431368889" />
+    <state x="1119" y="323" key="SettingsEditor" timestamp="1576504167707">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1119" y="323" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1576254699824" />
-    <state x="1585" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1576284813075">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state x="1119" y="323" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1576504167707" />
+    <state x="2378" y="809" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1576431300830">
+      <screen x="0" y="50" width="4320" height="2380" />
     </state>
     <state x="1585" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1576284813075" />
+    <state x="2378" y="809" key="Vcs.Push.Dialog.v2/0.50.4320.2380@0.50.4320.2380" timestamp="1576431300830" />
+    <state x="516" y="1000" width="1582" height="419" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1576530098695">
+      <screen x="0" y="50" width="4320" height="2380" />
+    </state>
+    <state x="516" y="1000" width="1582" height="419" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.50.4320.2380@0.50.4320.2380" timestamp="1576530098695" />
     <state x="1046" y="166" width="770" height="768" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1576004827292">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>

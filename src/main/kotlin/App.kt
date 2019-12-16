@@ -27,11 +27,12 @@ import react.dom.*
 import styled.css
 import styled.styledDiv
 import styled.styledP
+import kotlin.browser.window
 
 
 class App : RComponent<App.Props, App.State>() {
 
-    val vizSize = 500.0
+    val vizSize = 300.0
 
     interface State : RState {
         var welcomeText: String?
@@ -61,7 +62,7 @@ class App : RComponent<App.Props, App.State>() {
             css {
                 color = Color.blue
             }
-            +"Hello from React!!!!!!!!"
+            +"Hello from React!"
             attrs {
                 onClickFunction = {
                     alert("Clickedie clackedie")
@@ -71,16 +72,20 @@ class App : RComponent<App.Props, App.State>() {
 
         vizComponentCard(
             runOnCard = {
+                css {
+                    width = LinearDimension(if (window.screen.availWidth > 720) "60%" else "90%")
+                }
                 mCardHeader(
                     title = "Mooie grafiek",
-                    subHeader = "Ja, echt wel",
+                    subHeader = "Nou kweenie hoor",
                     avatar = mAvatar(addAsChild = false) {
                         +"gg"
                     }
                 )
             }
         ) {
-            size = size(vizSize * 2, vizSize)
+
+            size = size(800, 250)
 
             (0 until 360 step 30).forEach {
                 val angle = it.deg

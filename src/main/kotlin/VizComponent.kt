@@ -7,7 +7,15 @@ import styled.styledCanvas
 
 class VizComponent : RComponent<VizComponent.Props, VizComponent.State>() {
 
-    interface State : RState
+    interface State : RState {
+        var currentViz: Viz?
+    }
+
+    init {
+        setState {
+            currentViz = null
+        }
+    }
 
     interface Props : RProps {
         var runOnViz: Viz.() -> Unit
@@ -16,12 +24,22 @@ class VizComponent : RComponent<VizComponent.Props, VizComponent.State>() {
     override fun RBuilder.render() {
         canvas {
             ref {
-                try {
-                    viz(props.runOnViz).bindRendererOn(it as HTMLCanvasElement)
-                } catch (e: Exception) {
-                    // TODO try how to fix reloading, maybe not rebind every time
-                    console.error("Couldn't load viz", e)
+                //                try {
+//                throw IllegalArgumentException("Test")
+                if (state.currentViz == null) {
+                    viz(props.runOnViz).apply {
+                        bindRendererOn(it as HTMLCanvasElement)
+                        this@VizComponent.setState {
+                            currentViz = this@apply
+                        }
+                    }
+                } else {
+                    state.currentViz?.render()
                 }
+//                } catch (e: Exception) {
+//                    // TODO try how to fix reloading, maybe not rebind every time
+//                    console.error("Couldn't load viz", e)
+//                }
             }
         }
     }

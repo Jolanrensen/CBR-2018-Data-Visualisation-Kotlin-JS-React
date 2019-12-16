@@ -9,6 +9,7 @@
           <option name="outputFile" value="$MODULE_DIR$/../../build/js/2IMV20-Visualization-and-Interaction.js" />
           <option name="noStdlib" value="true" />
           <option name="sourceMap" value="true" />
+          <option name="sourceMapEmbedSources" value="always" />
           <option name="metaInfo" value="true" />
           <option name="target" value="v5" />
           <option name="moduleKind" value="commonjs" />
