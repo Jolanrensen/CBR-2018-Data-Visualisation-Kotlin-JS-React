@@ -3,12 +3,12 @@ package data
 import data.ExamenResultaat.*
 
 enum class ExamenResultaat {
-    Voldoende,
-    OnVoldoende
+    VOLDOENDE,
+    ONVOLDOENDE
 }
 
 val Collection<ExamenResultaatAantal>.voldoende
-    get() = filter { it.examenResultaat == Voldoende }
+    get() = filter { it.examenResultaat == VOLDOENDE }
 
 val Collection<ExamenResultaatAantal>.onvoldoende
-    get() = filter { it.examenResultaat == OnVoldoende }
+    get() = filter { it.examenResultaat == ONVOLDOENDE }

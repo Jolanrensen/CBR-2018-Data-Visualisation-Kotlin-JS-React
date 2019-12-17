@@ -80,75 +80,75 @@ object Data {
                         },
                         examenResultaatAantallen = listOf(
                             ExamenResultaatAantal(
-                                examenResultaatVersie = EersteExamenOfToets,
-                                examenResultaatCategorie = Automaat,
-                                examenResultaat = Voldoende,
+                                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
+                                examenResultaatCategorie = AUTOMAAT,
+                                examenResultaat = VOLDOENDE,
                                 aantal = line[23].toInt()
                             ),
                             ExamenResultaatAantal(
-                                examenResultaatVersie = EersteExamenOfToets,
-                                examenResultaatCategorie = Automaat,
-                                examenResultaat = OnVoldoende,
+                                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
+                                examenResultaatCategorie = AUTOMAAT,
+                                examenResultaat = ONVOLDOENDE,
                                 aantal = line[24].toInt()
                             ),
                             ExamenResultaatAantal(
-                                examenResultaatVersie = EersteExamenOfToets,
-                                examenResultaatCategorie = Combi,
-                                examenResultaat = Voldoende,
+                                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
+                                examenResultaatCategorie = COMBI,
+                                examenResultaat = VOLDOENDE,
                                 aantal = line[25].toInt()
                             ),
                             ExamenResultaatAantal(
-                                examenResultaatVersie = EersteExamenOfToets,
-                                examenResultaatCategorie = Combi,
-                                examenResultaat = OnVoldoende,
+                                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
+                                examenResultaatCategorie = COMBI,
+                                examenResultaat = ONVOLDOENDE,
                                 aantal = line[26].toInt()
                             ),
                             ExamenResultaatAantal(
-                                examenResultaatVersie = EersteExamenOfToets,
-                                examenResultaatCategorie = Handgeschakeld,
-                                examenResultaat = Voldoende,
+                                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
+                                examenResultaatCategorie = HANDGESCHAKELD,
+                                examenResultaat = VOLDOENDE,
                                 aantal = line[27].toInt()
                             ),
                             ExamenResultaatAantal(
-                                examenResultaatVersie = EersteExamenOfToets,
-                                examenResultaatCategorie = Handgeschakeld,
-                                examenResultaat = OnVoldoende,
+                                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
+                                examenResultaatCategorie = HANDGESCHAKELD,
+                                examenResultaat = ONVOLDOENDE,
                                 aantal = line[28].toInt()
                             ),
                             ExamenResultaatAantal(
-                                examenResultaatVersie = HerexamenOfToets,
-                                examenResultaatCategorie = Automaat,
-                                examenResultaat = Voldoende,
+                                examenResultaatVersie = HEREXAMEN_OF_TOETS,
+                                examenResultaatCategorie = AUTOMAAT,
+                                examenResultaat = VOLDOENDE,
                                 aantal = line[31].toInt()
                             ),
                             ExamenResultaatAantal(
-                                examenResultaatVersie = HerexamenOfToets,
-                                examenResultaatCategorie = Automaat,
-                                examenResultaat = OnVoldoende,
+                                examenResultaatVersie = HEREXAMEN_OF_TOETS,
+                                examenResultaatCategorie = AUTOMAAT,
+                                examenResultaat = ONVOLDOENDE,
                                 aantal = line[32].toInt()
                             ),
                             ExamenResultaatAantal(
-                                examenResultaatVersie = HerexamenOfToets,
-                                examenResultaatCategorie = Combi,
-                                examenResultaat = Voldoende,
+                                examenResultaatVersie = HEREXAMEN_OF_TOETS,
+                                examenResultaatCategorie = COMBI,
+                                examenResultaat = VOLDOENDE,
                                 aantal = line[33].toInt()
                             ),
                             ExamenResultaatAantal(
-                                examenResultaatVersie = HerexamenOfToets,
-                                examenResultaatCategorie = Combi,
-                                examenResultaat = OnVoldoende,
+                                examenResultaatVersie = HEREXAMEN_OF_TOETS,
+                                examenResultaatCategorie = COMBI,
+                                examenResultaat = ONVOLDOENDE,
                                 aantal = line[34].toInt()
                             ),
                             ExamenResultaatAantal(
-                                examenResultaatVersie = HerexamenOfToets,
-                                examenResultaatCategorie = Handgeschakeld,
-                                examenResultaat = Voldoende,
+                                examenResultaatVersie = HEREXAMEN_OF_TOETS,
+                                examenResultaatCategorie = HANDGESCHAKELD,
+                                examenResultaat = VOLDOENDE,
                                 aantal = line[35].toInt()
                             ),
                             ExamenResultaatAantal(
-                                examenResultaatVersie = HerexamenOfToets,
-                                examenResultaatCategorie = Handgeschakeld,
-                                examenResultaat = OnVoldoende,
+                                examenResultaatVersie = HEREXAMEN_OF_TOETS,
+                                examenResultaatCategorie = HANDGESCHAKELD,
+                                examenResultaat = ONVOLDOENDE,
                                 aantal = line[36].toInt()
                             )
                         )

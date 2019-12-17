@@ -3,12 +3,12 @@ package data
 import data.ExamenResultaatVersie.*
 
 enum class ExamenResultaatVersie {
-    EersteExamenOfToets,
-    HerexamenOfToets
+    EERSTE_EXAMEN_OF_TOETS,
+    HEREXAMEN_OF_TOETS
 }
 
 val Collection<ExamenResultaatAantal>.eersteExamen
-    get() = filter { it.examenResultaatVersie == EersteExamenOfToets }
+    get() = filter { it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS }
 
 val Collection<ExamenResultaatAantal>.herExamen
-    get() = filter { it.examenResultaatVersie == HerexamenOfToets }
+    get() = filter { it.examenResultaatVersie == HEREXAMEN_OF_TOETS }

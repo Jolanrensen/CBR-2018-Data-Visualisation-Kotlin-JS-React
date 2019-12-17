@@ -1,10 +1,10 @@
 import data.*
-import kotlinx.coroutines.*
-import org.w3c.xhr.XMLHttpRequest
+import data.ExamenResultaat.VOLDOENDE
+import data.ExamenResultaatCategorie.HANDGESCHAKELD
+import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import react.dom.render
 import kotlin.browser.document
 import kotlin.browser.window
-import kotlin.coroutines.CoroutineContext
 
 
 external fun alert(message: Any?)
@@ -24,11 +24,11 @@ fun main() {
                 it.naam.contains("ANWB") && it.plaatsnaam == "BREDA"
             }
         }.sumBy {
-            it.examenResultaatAantallen
-                .handgeschakeld
-                .eersteExamen
-                .voldoende[0] // list is now size 1
-                .aantal
+            it.examenResultaatAantallen.find {
+                it.examenResultaatCategorie == HANDGESCHAKELD
+                        && it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
+                        && it.examenResultaat == VOLDOENDE
+            }!!.aantal
         }
     )
 }

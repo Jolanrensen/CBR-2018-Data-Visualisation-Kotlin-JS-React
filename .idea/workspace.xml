@@ -2,67 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cb68dff-52c1-4a85-92b5-91dc274354eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaat.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatAantal.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatCategorie.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatVersie.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Product.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Categorie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Categorie.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Result.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Resultaat.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/jQuery.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/jQuery.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/autocomplete.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/autoinit.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/carousel.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/carousel.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/character-counter.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/character-counter.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/chips.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/chips.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/collapsible.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/collapsible.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/common.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/datepicker.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/datepicker.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/dropdown.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/dropdown.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/fab.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/fab.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/formselect.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/formselect.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/index.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/inputfields.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/materialbox.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/materialbox.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/modal.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/modal.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/parallax.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/parallax.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/pushpin.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/pushpin.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/range.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/range.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/scrollspy.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/scrollspy.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/sidenav.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/sidenav.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/slider.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/slider.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/tabs.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/tabs.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/taptarget.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/taptarget.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/timepicker.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/timepicker.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/toast.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/tooltip.M.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/tooltip.module_definitely-typed.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/materialize/waves.Waves.module_definitely-typed.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -382,7 +323,7 @@
       <workItem from="1576498937726" duration="5623000" />
       <workItem from="1576529614628" duration="1766000" />
       <workItem from="1576531411800" duration="3332000" />
-      <workItem from="1576586629702" duration="16205000" />
+      <workItem from="1576586629702" duration="16517000" />
     </task>
     <task id="LOCAL-00001" summary="react!">
       <created>1576254618421</created>
@@ -433,7 +374,21 @@
       <option name="project" value="LOCAL" />
       <updated>1576591684488</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="working on result and categorie enzo">
+      <created>1576603027195</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1576603027195</updated>
+    </task>
+    <task id="LOCAL-00009" summary="working on result and categorie enzo">
+      <created>1576603150409</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1576603150409</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -479,36 +434,36 @@
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state x="1163" y="150" width="536" height="801" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576599899893" />
-    <state x="885" y="226" width="1501" height="829" key="CommitChangelistDialog2" timestamp="1576603027061">
+    <state x="885" y="226" width="1501" height="829" key="CommitChangelistDialog2" timestamp="1576603150335">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state x="1196" y="406" width="1578" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1576284809718" />
     <state x="1331" y="547" width="2979" height="1444" key="CommitChangelistDialog2/0.50.4320.2380@0.50.4320.2380" timestamp="1576534769640" />
-    <state x="885" y="226" width="1501" height="829" key="CommitChangelistDialog2/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576603027061" />
-    <state width="1872" height="274" key="GridCell.Tab.0.bottom" timestamp="1576602876687">
+    <state x="885" y="226" width="1501" height="829" key="CommitChangelistDialog2/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576603150335" />
+    <state width="1872" height="274" key="GridCell.Tab.0.bottom" timestamp="1576603344068">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state width="1392" height="450" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1576505656442" />
     <state width="2066" height="639" key="GridCell.Tab.0.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1576534803755" />
-    <state width="1872" height="274" key="GridCell.Tab.0.bottom/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576602876687" />
-    <state width="1872" height="274" key="GridCell.Tab.0.center" timestamp="1576602876686">
+    <state width="1872" height="274" key="GridCell.Tab.0.bottom/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576603344068" />
+    <state width="1872" height="274" key="GridCell.Tab.0.center" timestamp="1576603344068">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state width="1392" height="450" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1576505656442" />
     <state width="2066" height="639" key="GridCell.Tab.0.center/0.50.4320.2380@0.50.4320.2380" timestamp="1576534803753" />
-    <state width="1872" height="274" key="GridCell.Tab.0.center/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576602876686" />
-    <state width="1872" height="274" key="GridCell.Tab.0.left" timestamp="1576602876686">
+    <state width="1872" height="274" key="GridCell.Tab.0.center/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576603344068" />
+    <state width="1872" height="274" key="GridCell.Tab.0.left" timestamp="1576603344068">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state width="1392" height="450" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1576505656442" />
     <state width="2066" height="639" key="GridCell.Tab.0.left/0.50.4320.2380@0.50.4320.2380" timestamp="1576534803753" />
-    <state width="1872" height="274" key="GridCell.Tab.0.left/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576602876686" />
-    <state width="1872" height="274" key="GridCell.Tab.0.right" timestamp="1576602876687">
+    <state width="1872" height="274" key="GridCell.Tab.0.left/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576603344068" />
+    <state width="1872" height="274" key="GridCell.Tab.0.right" timestamp="1576603344068">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state width="1392" height="450" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1576505656442" />
     <state width="2066" height="639" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1576534803754" />
-    <state width="1872" height="274" key="GridCell.Tab.0.right/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576602876687" />
+    <state width="1872" height="274" key="GridCell.Tab.0.right/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576603344068" />
     <state width="2492" height="800" key="GridCell.Tab.1.bottom" timestamp="1576431368889">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
@@ -545,12 +500,12 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1119" y="323" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1576504167707" />
-    <state x="1533" y="328" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1576603028804">
+    <state x="1533" y="328" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1576603151826">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state x="1585" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1576284813075" />
     <state x="2378" y="773" width="1600" height="1086" key="Vcs.Push.Dialog.v2/0.50.4320.2380@0.50.4320.2380" timestamp="1576534774046" />
-    <state x="1533" y="328" width="800" height="524" key="Vcs.Push.Dialog.v2/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576603028804" />
+    <state x="1533" y="328" width="800" height="524" key="Vcs.Push.Dialog.v2/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576603151826" />
     <state x="516" y="1000" width="1582" height="419" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1576530098695">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
