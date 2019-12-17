@@ -23,7 +23,6 @@ fun main() {
             it.opleider == Data.alleOpleiders.values.find {
                 it.naam.contains("ANWB") && it.plaatsnaam == "BREDA"
             }
-            it.categorie == Categorie.A
         }.sumBy {
             it.examenResultaatAantallen
                 .handgeschakeld

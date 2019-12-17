@@ -479,12 +479,12 @@
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state x="1163" y="150" width="536" height="801" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576599899893" />
-    <state x="1068" y="226" width="2979" height="1444" key="CommitChangelistDialog2" timestamp="1576591684341">
-      <screen x="0" y="1080" width="2880" height="1620" />
+    <state x="885" y="226" width="1501" height="829" key="CommitChangelistDialog2" timestamp="1576603027061">
+      <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state x="1196" y="406" width="1578" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1576284809718" />
     <state x="1331" y="547" width="2979" height="1444" key="CommitChangelistDialog2/0.50.4320.2380@0.50.4320.2380" timestamp="1576534769640" />
-    <state x="1068" y="226" key="CommitChangelistDialog2/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576591684341" />
+    <state x="885" y="226" width="1501" height="829" key="CommitChangelistDialog2/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576603027061" />
     <state width="1872" height="274" key="GridCell.Tab.0.bottom" timestamp="1576602876687">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
@@ -545,12 +545,12 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1119" y="323" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1576504167707" />
-    <state x="1533" y="328" width="1600" height="1086" key="Vcs.Push.Dialog.v2" timestamp="1576591686290">
+    <state x="1533" y="328" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1576603028804">
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state x="1585" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1576284813075" />
     <state x="2378" y="773" width="1600" height="1086" key="Vcs.Push.Dialog.v2/0.50.4320.2380@0.50.4320.2380" timestamp="1576534774046" />
-    <state x="1533" y="328" key="Vcs.Push.Dialog.v2/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576591686290" />
+    <state x="1533" y="328" width="800" height="524" key="Vcs.Push.Dialog.v2/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576603028804" />
     <state x="516" y="1000" width="1582" height="419" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1576530098695">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
