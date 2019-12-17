@@ -14,7 +14,7 @@ import styled.StyledHandler
 import styled.css
 import styled.styledDiv
 
-class VizComponentCard : RComponent<VizComponentCard.Props, VizComponentCard.State>() {
+class VizComponentCard(props: Props) : RComponent<VizComponentCard.Props, VizComponentCard.State>(props) {
 
     interface Props : RProps {
         var runOnCard: StyledHandler<MCardProps>
@@ -25,10 +25,8 @@ class VizComponentCard : RComponent<VizComponentCard.Props, VizComponentCard.Sta
         var raised: Boolean
     }
 
-    init {
-        setState {
-            raised = false
-        }
+    override fun State.init(props: Props) {
+        raised = false
     }
 
     override fun RBuilder.render() {

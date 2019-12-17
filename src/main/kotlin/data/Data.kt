@@ -7,12 +7,16 @@ import io.data2viz.time.Date
 import org.w3c.xhr.XMLHttpRequest
 
 object Data {
-    val alleResultaten = arrayListOf<Resultaat>()
+    val alleResultaten: ArrayList<Resultaat> = arrayListOf()
+        get() {
+            if (field.isEmpty()) buildResults()
+            return field
+        }
 
     val alleOpleiders = hashMapOf<String, Opleider>()
     val alleExamenLocaties = hashMapOf<String, Examenlocatie>()
 
-    init {
+    fun buildResults() {
         val xmlhttp = XMLHttpRequest()
         xmlhttp.open("GET", "opleiderresultaten-01072017-tm-30062018.csv", false)
 

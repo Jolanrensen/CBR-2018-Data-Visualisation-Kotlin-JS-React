@@ -1,8 +1,5 @@
 import com.ccfraser.muirwik.components.MColor
-import com.ccfraser.muirwik.components.button.MButtonSize
-import com.ccfraser.muirwik.components.button.MButtonVariant
-import com.ccfraser.muirwik.components.button.mButton
-import com.ccfraser.muirwik.components.button.mIconButton
+import com.ccfraser.muirwik.components.button.*
 import com.ccfraser.muirwik.components.card.mCard
 import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.card.mCardContent
@@ -30,13 +27,20 @@ import styled.styledP
 import kotlin.browser.window
 
 
-class App : RComponent<App.Props, App.State>() {
+class App(props: Props): RComponent<App.Props, App.State>(props) {
 
     val vizSize = 300.0
 
     interface State : RState {
-        var welcomeText: String?
+        var welcomeText: String
+        var circleColor: io.data2viz.color.Color
     }
+
+    override fun State.init(props: Props) {
+        welcomeText = "Hello world!"
+        circleColor = Colors.rgb(255, 0, 0)
+    }
+
 
     interface Props : RProps {
 
@@ -49,7 +53,7 @@ class App : RComponent<App.Props, App.State>() {
                 backgroundColor = Color.green
             }
 
-            +(state.welcomeText ?: "Hello world!")
+            +(state.welcomeText)
 
             attrs.onClickFunction = {
                 setState {
@@ -70,6 +74,17 @@ class App : RComponent<App.Props, App.State>() {
             }
         }
 
+        mButton("Change color",
+            color = MColor.primary,
+            size = MButtonSize.medium,
+            onClick = {
+                setState {
+                    circleColor = if (state.circleColor == Colors.rgb(255, 0, 0))
+                            Colors.rgb(0, 255, 0)
+                        else Colors.rgb(255, 0, 0)
+                }
+            })
+
         vizComponentCard(
             runOnCard = {
                 css {
@@ -84,13 +99,13 @@ class App : RComponent<App.Props, App.State>() {
                 )
             }
         ) {
-
+            clear()
             size = size(800, 250)
 
             (0 until 360 step 30).forEach {
                 val angle = it.deg
                 val position = point(250 + angle.cos * 100, 125 + angle.sin * 100)
-                val color = Colors.hsl(angle, 100.pct, 50.pct)
+                val color = state.circleColor
 
                 circle {
                     // draw a circle with "pure-color"

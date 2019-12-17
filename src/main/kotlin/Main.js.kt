@@ -1,4 +1,5 @@
 import data.*
+import data.ExamenResultaat.ONVOLDOENDE
 import data.ExamenResultaat.VOLDOENDE
 import data.ExamenResultaatCategorie.HANDGESCHAKELD
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
@@ -18,19 +19,32 @@ fun main() {
         }
     }
 
-    println(
-        Data.alleResultaten.filter {
-            it.opleider == Data.alleOpleiders.values.find {
-                it.naam.contains("ANWB") && it.plaatsnaam == "BREDA"
-            }
-        }.sumBy {
-            it.examenResultaatAantallen.find {
-                it.examenResultaatCategorie == HANDGESCHAKELD
-                        && it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
-                        && it.examenResultaat == VOLDOENDE
-            }!!.aantal
-        }
-    )
+//    val opleider = Data.alleOpleiders.values.find {
+//        it.naam.contains("ANWB") && it.plaatsnaam == "BREDA"
+//    }
+//
+//    println(
+//        Data.alleResultaten.filter {
+//            it.opleider == opleider
+//        }.sumBy {
+//            it.examenResultaatAantallen.filter {
+//                //it.examenResultaatCategorie == HANDGESCHAKELD
+//                         it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
+//                        && it.examenResultaat == VOLDOENDE
+//            }.sumBy { it.aantal }
+//        }
+//    )
+//    println(
+//        Data.alleResultaten.filter {
+//            it.opleider == opleider
+//        }.sumBy {
+//            it.examenResultaatAantallen.filter {
+//                //it.examenResultaatCategorie == HANDGESCHAKELD
+//                        it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
+//                        && it.examenResultaat == ONVOLDOENDE
+//            }.sumBy { it.aantal }
+//        }
+//    )
 }
 
 

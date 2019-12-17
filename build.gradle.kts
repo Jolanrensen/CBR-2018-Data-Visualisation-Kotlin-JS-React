@@ -2,6 +2,7 @@ import org.gradle.kotlin.dsl.*
 
 plugins {
     kotlin("js") version "1.3.61"
+    id("com.diffplug.gradle.spotless") version "3.26.1"
 }
 
 group = "org.example"
@@ -14,6 +15,19 @@ repositories {
     maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
     maven(url = "https://kotlin.bintray.com/js-externals")
     maven(url = "https://kotlin.bintray.com/kotlin-js-wrappers")
+}
+
+// attempt at linter
+spotless {
+    kotlin {
+        ktlint()
+    }
+    kotlinGradle {
+        // same as kotlin, but for .gradle.kts files (defaults to '*.gradle.kts')
+        target("*.gradle.kts", "additionalScripts/*.gradle.kts")
+
+        ktlint()
+    }
 }
 
 kotlin {
