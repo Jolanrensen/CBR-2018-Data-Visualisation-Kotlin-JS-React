@@ -2,16 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cb68dff-52c1-4a85-92b5-91dc274354eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/opleiderresultaten-01072017-tm-30062018.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Categorie.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Result.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/VizComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/VizComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/VizComponentCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/VizComponentCard.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,8 +72,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin Class" />
+        <option value="Kotlin Enum" />
       </list>
     </option>
   </component>
@@ -86,6 +86,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/kotlin/App.kt" root0="FORCE_HIGHLIGHTING" />
@@ -327,7 +328,8 @@
       <workItem from="1576498734741" duration="78000" />
       <workItem from="1576498937726" duration="5623000" />
       <workItem from="1576529614628" duration="1766000" />
-      <workItem from="1576531411800" duration="3154000" />
+      <workItem from="1576531411800" duration="3332000" />
+      <workItem from="1576586629702" duration="4948000" />
     </task>
     <task id="LOCAL-00001" summary="react!">
       <created>1576254618421</created>
@@ -364,7 +366,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576431298351</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="added data set and other stuff">
+      <created>1576534770026</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1576534770026</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -385,7 +394,8 @@
     <MESSAGE value="styling works!" />
     <MESSAGE value="put Muirwik components inside project to get it to work" />
     <MESSAGE value="playing around" />
-    <option name="LAST_COMMIT_MESSAGE" value="playing around" />
+    <MESSAGE value="added data set and other stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="added data set and other stuff" />
   </component>
   <component name="WindowStateProjectService">
     <state x="275" y="524" width="2074" height="1384" key="#Project_Structure" timestamp="1576530099912">
@@ -403,35 +413,35 @@
     <state x="1073" y="425" key="#com.intellij.ide.util.MemberChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1576251768134" />
     <state x="1610" y="611" width="955" height="833" key="#com.intellij.ide.util.MemberChooser/0.50.4320.2380@0.50.4320.2380" timestamp="1576487420971" />
     <state x="1191" y="271" width="480" height="558" key="#com.intellij.ide.util.MemberChooser/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576002575650" />
-    <state x="1794" y="583" width="1578" height="829" key="CommitChangelistDialog2" timestamp="1576431297953">
+    <state x="1331" y="547" width="2979" height="1444" key="CommitChangelistDialog2" timestamp="1576534769640">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
     <state x="1196" y="406" width="1578" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1576284809718" />
-    <state x="1794" y="583" key="CommitChangelistDialog2/0.50.4320.2380@0.50.4320.2380" timestamp="1576431297953" />
-    <state width="2066" height="639" key="GridCell.Tab.0.bottom" timestamp="1576534436778">
-      <screen x="0" y="50" width="4320" height="2380" />
+    <state x="1331" y="547" width="2979" height="1444" key="CommitChangelistDialog2/0.50.4320.2380@0.50.4320.2380" timestamp="1576534769640" />
+    <state width="1872" height="274" key="GridCell.Tab.0.bottom" timestamp="1576591242821">
+      <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state width="1392" height="450" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1576505656442" />
-    <state width="2066" height="639" key="GridCell.Tab.0.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1576534436778" />
-    <state width="1872" height="279" key="GridCell.Tab.0.bottom/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="2066" height="639" key="GridCell.Tab.0.center" timestamp="1576534436777">
-      <screen x="0" y="50" width="4320" height="2380" />
+    <state width="2066" height="639" key="GridCell.Tab.0.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1576534803755" />
+    <state width="1872" height="274" key="GridCell.Tab.0.bottom/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576591242821" />
+    <state width="1872" height="274" key="GridCell.Tab.0.center" timestamp="1576591242821">
+      <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state width="1392" height="450" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1576505656442" />
-    <state width="2066" height="639" key="GridCell.Tab.0.center/0.50.4320.2380@0.50.4320.2380" timestamp="1576534436777" />
-    <state width="1872" height="279" key="GridCell.Tab.0.center/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="2066" height="639" key="GridCell.Tab.0.left" timestamp="1576534436777">
-      <screen x="0" y="50" width="4320" height="2380" />
+    <state width="2066" height="639" key="GridCell.Tab.0.center/0.50.4320.2380@0.50.4320.2380" timestamp="1576534803753" />
+    <state width="1872" height="274" key="GridCell.Tab.0.center/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576591242821" />
+    <state width="1872" height="274" key="GridCell.Tab.0.left" timestamp="1576591242821">
+      <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state width="1392" height="450" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1576505656442" />
-    <state width="2066" height="639" key="GridCell.Tab.0.left/0.50.4320.2380@0.50.4320.2380" timestamp="1576534436777" />
-    <state width="1872" height="279" key="GridCell.Tab.0.left/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
-    <state width="2066" height="639" key="GridCell.Tab.0.right" timestamp="1576534436778">
-      <screen x="0" y="50" width="4320" height="2380" />
+    <state width="2066" height="639" key="GridCell.Tab.0.left/0.50.4320.2380@0.50.4320.2380" timestamp="1576534803753" />
+    <state width="1872" height="274" key="GridCell.Tab.0.left/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576591242821" />
+    <state width="1872" height="274" key="GridCell.Tab.0.right" timestamp="1576591242821">
+      <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state width="1392" height="450" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1576505656442" />
-    <state width="2066" height="639" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1576534436778" />
-    <state width="1872" height="279" key="GridCell.Tab.0.right/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576006404360" />
+    <state width="2066" height="639" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1576534803754" />
+    <state width="1872" height="274" key="GridCell.Tab.0.right/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576591242821" />
     <state width="2492" height="800" key="GridCell.Tab.1.bottom" timestamp="1576431368889">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
@@ -468,11 +478,11 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1119" y="323" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1576504167707" />
-    <state x="2378" y="809" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1576431300830">
+    <state x="2378" y="773" width="1600" height="1086" key="Vcs.Push.Dialog.v2" timestamp="1576534774046">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
     <state x="1585" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1576284813075" />
-    <state x="2378" y="809" key="Vcs.Push.Dialog.v2/0.50.4320.2380@0.50.4320.2380" timestamp="1576431300830" />
+    <state x="2378" y="773" width="1600" height="1086" key="Vcs.Push.Dialog.v2/0.50.4320.2380@0.50.4320.2380" timestamp="1576534774046" />
     <state x="516" y="1000" width="1582" height="419" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1576530098695">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
@@ -481,10 +491,18 @@
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state x="1046" y="166" width="770" height="768" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576004827292" />
+    <state x="1167" y="472" width="528" height="156" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1576591630511">
+      <screen x="476" y="0" width="1920" height="1080" />
+    </state>
+    <state x="1167" y="472" width="528" height="156" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576591630511" />
     <state x="2214" y="669" width="1615" height="1106" key="find.popup" timestamp="1576412735016">
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
     <state x="2214" y="669" width="1615" height="1106" key="find.popup/0.50.4320.2380@0.50.4320.2380" timestamp="1576412735016" />
+    <state x="1180" y="194" width="501" height="712" key="refactoring.ChangeSignatureDialog" timestamp="1576590970633">
+      <screen x="476" y="0" width="1920" height="1080" />
+    </state>
+    <state x="1180" y="194" width="501" height="712" key="refactoring.ChangeSignatureDialog/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576590970633" />
     <state x="1654" y="389" width="672" height="677" key="run.anything.popup" timestamp="1576275623514">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
