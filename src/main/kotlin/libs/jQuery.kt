@@ -1,6 +1,5 @@
 @file:Suppress("INTERFACE_WITH_SUPERCLASS", "OVERRIDING_FINAL_MEMBER", "RETURN_TYPE_MISMATCH_ON_OVERRIDE", "CONFLICTING_OVERLOADS", "UNCHECKED_CAST_TO_EXTERNAL_INTERFACE")
 
-import M.AutocompleteOptionsPartial
 import kotlin.js.*
 import kotlin.js.Json
 import org.khronos.webgl.*
@@ -360,8 +359,8 @@ external interface JQueryStatic {
 external interface JQuery {
     fun autocomplete(method: Any): JQuery
     fun autocomplete(method: Any, el: Element): JQuery
-    fun autocomplete(method: Any, data: M.AutocompleteData): JQuery
-    fun autocomplete(options: AutocompleteOptionsPartial? = definedExternally): JQuery
+//    fun autocomplete(method: Any, data: M.AutocompleteData): JQuery
+//    fun autocomplete(options: AutocompleteOptionsPartial? = definedExternally): JQuery
     fun ajaxComplete(handler: (event: JQueryEventObject, XMLHttpRequest: XMLHttpRequest, ajaxOptions: Any) -> Any): JQuery
     fun ajaxError(handler: (event: JQueryEventObject, jqXHR: JQueryXHR, ajaxSettings: JQueryAjaxSettings, thrownError: Any) -> Any): JQuery
     fun ajaxSend(handler: (event: JQueryEventObject, jqXHR: JQueryXHR, ajaxOptions: JQueryAjaxSettings) -> Any): JQuery

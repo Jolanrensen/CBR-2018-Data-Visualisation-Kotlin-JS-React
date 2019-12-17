@@ -1,12 +1,7 @@
 package data
 
-import io.data2viz.time.Date
-
-data class Opleider(
-    val code: String,
+data class Examenlocatie(
     val naam: String,
-    val startdatum: Date,
-    val einddatum: Date,
     val straatnaam: String,
     val huisnummer: String,
     val huisnummerToevoeging: String = "",

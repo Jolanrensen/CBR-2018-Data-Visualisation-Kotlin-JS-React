@@ -58,3 +58,6 @@ enum class Categorie(val naam: String) {
     TAT("Taxi Amsterdam theorie (TAT)"),
     BE_T("Tussentijdse toets personenauto met aanhangwagen")
 }
+
+val Categorie.producten
+    get() = Product.values().filter { it.categorie == this }
