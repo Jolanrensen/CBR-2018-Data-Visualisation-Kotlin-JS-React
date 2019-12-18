@@ -5,6 +5,10 @@ plugins {
     id("com.diffplug.gradle.spotless") version "3.26.1"
 }
 
+apply {
+    plugin("kotlin-dce-js")
+}
+
 group = "org.example"
 version = "1.0-SNAPSHOT"
 
@@ -25,17 +29,27 @@ spotless {
     kotlinGradle {
         // same as kotlin, but for .gradle.kts files (defaults to '*.gradle.kts')
         target("*.gradle.kts", "additionalScripts/*.gradle.kts")
-
         ktlint()
     }
 }
+
+tasks {
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinJsDce> {
+        dceOptions {
+            devMode = true
+        }
+    }
+}
+
 
 kotlin {
     target {
         useCommonJs()
 //        nodejs()
         browser {
+
             compilations.all {
+
                 kotlinOptions {
                     metaInfo = true
                     outputFile = "${project.buildDir.path}/js/${project.name}.js"
@@ -43,6 +57,7 @@ kotlin {
                     sourceMapEmbedSources = "always"
                     moduleKind = "commonjs"
                     main = "call"
+
                 }
 
             }
@@ -56,6 +71,7 @@ kotlin {
 
     sourceSets {
         main {
+
             dependencies {
                 //        implementation(project(":muirwik-components"))
 //        implementation(npm( "../../link-muirwik-components.js"))
