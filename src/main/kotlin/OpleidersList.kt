@@ -1,11 +1,10 @@
-import com.ccfraser.muirwik.components.child
+import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.list.*
-import com.ccfraser.muirwik.components.mCheckbox
-import com.ccfraser.muirwik.components.spacingUnits
-import com.ccfraser.muirwik.components.themeContext
 import data.Opleider
+import kotlinext.js.js
 import kotlinext.js.jsObject
 import kotlinx.css.*
+import kotlinx.html.style
 import libs.*
 import react.*
 import react.children
@@ -14,6 +13,7 @@ import react.dom.p
 import styled.StyleSheet
 import styled.StyledComponents.css
 import styled.css
+import styled.styled
 import styled.styledDiv
 
 class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersList.State>(props) {
@@ -63,22 +63,15 @@ class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersLis
     @Suppress("UnsafeCastFromDynamic")
     val renderRow: FunctionalComponent<RenderProps<List<Opleider>>> = functionalComponent { props ->
         val opleider = props.data?.get(props.index)
-        console.log("row item style", props.style)
-        mListItem(dense = true, button = true, onClick = { toggleSelected(opleider?.code) }) {
+        mListItem(
+            primaryText = "${opleider?.naam} (${opleider?.code})",
+            selected = state.selected[opleider?.code] ?: true,
+            key = props.index.toString(),
+            divider = true,
+            onClick = { toggleSelected(opleider?.code) }
+        ) {
             attrs {
                 style = props.style
-            }
-            mListItemText("${opleider?.naam} (${opleider?.code})")
-            mListItemSecondaryAction {
-//                attrs.style = props.style
-                mCheckbox(checked = state.selected[opleider?.code] ?: true,
-                    onChange = { _, _ ->
-                        toggleSelected(opleider?.code)
-                    }) {
-                    attrs {
-                      style = props.style
-                    }
-                }
             }
         }
     }
@@ -94,7 +87,7 @@ class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersLis
 
             styledDiv {
                 css {
-                    display = Display.inlineFlex
+//                    display = Display.inlineFlex
                     padding(1.spacingUnits)
                 }
 
@@ -105,16 +98,23 @@ class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersLis
 //
 //
 //                }
-                FixedSizeListOpleider {
+
+                styled(FixedSizeListOpleider)() {
+                    css {
+                        width = 320.px
+                        height = 400.px
+                        maxWidth = 360.px
+                        backgroundColor = Color(theme.palette.background.paper)
+
+                    }
                     attrs {
                         height = 400
                         width = 400
-                        itemSize = 46
+                        itemSize = 100
                         itemCount = state.opleiders.size
                         itemData = state.opleiders
                         children = renderRow
                     }
-                    //child(renderRow)
                 }
             }
             Unit

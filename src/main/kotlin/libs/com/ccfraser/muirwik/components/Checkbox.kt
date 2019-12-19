@@ -13,7 +13,7 @@ import styled.StyledHandler
 private external val checkboxModule: dynamic
 
 @Suppress("UnsafeCastFromDynamic")
-private val checkboxComponent : RComponent<MCheckboxProps, RState> = checkboxModule.default
+public val checkboxComponent : RComponent<MCheckboxProps, RState> = checkboxModule.default
 
 
 interface MCheckboxProps : StyledPropsWithCommonAttributes {
@@ -29,6 +29,7 @@ interface MCheckboxProps : StyledPropsWithCommonAttributes {
     var required: Boolean
     var type: String
     var value: String
+    var edge: String
 }
 var MCheckboxProps.color by EnumPropToString(MOptionColor.values())
 

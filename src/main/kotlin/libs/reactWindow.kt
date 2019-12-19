@@ -4,10 +4,15 @@ package libs
 
 import data.Opleider
 import react.*
+import react.dom.WithClassName
 
 
 @JsName("FixedSizeList")
 external val FixedSizeListOpleider : RClass<ListProps<List<Opleider>>>
+
+//external class FixedSizeList<T: Any> : Component<ListProps<List<T>>, RState> {
+//    override fun render(): ReactElement?
+//}
 
 external enum class Direction {
     vertical, horizontal
@@ -38,7 +43,7 @@ external interface OnScrollProps : RProps {
     var scrollUpdateWasRequested: Boolean
 }
 
-external interface ListProps<TDataType: Any> : RConsumerProps<RenderProps<TDataType>> {
+external interface ListProps<TDataType: Any> : RConsumerProps<RenderProps<TDataType>>, WithClassName {
     /**
      * React component responsible for rendering the individual item specified by an index prop. This component also receives a style prop (used for positioning).
      * If useIsScrolling is enabled for the list, the component also receives an additional isScrolling boolean prop.
@@ -47,7 +52,7 @@ external interface ListProps<TDataType: Any> : RConsumerProps<RenderProps<TDataT
     /**
      * Optional CSS class to attach to outermost <div> element.
      */
-    var className: String
+    override var className: String?
     /**
      * Primary scroll direction of the list. Acceptable values are:
      * - vertical (default) - Up/down scrolling.
