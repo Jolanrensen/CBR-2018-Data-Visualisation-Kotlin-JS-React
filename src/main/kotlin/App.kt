@@ -6,6 +6,8 @@ import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
 import com.ccfraser.muirwik.components.mAvatar
 import com.ccfraser.muirwik.components.mTypography
+import data.Data
+import data.Opleider
 import io.data2viz.color.Colors
 import io.data2viz.geom.point
 import io.data2viz.geom.size
@@ -14,11 +16,9 @@ import io.data2viz.math.pct
 import io.data2viz.viz.TextHAlign
 import io.data2viz.viz.TextVAlign
 import io.data2viz.viz.textAlign
+import kotlinx.coroutines.*
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
-import kotlinx.html.style
-import org.w3c.dom.HTMLElement
-import org.w3c.dom.Node
 import react.*
 import react.dom.*
 import styled.css
@@ -27,18 +27,26 @@ import styled.styledP
 import kotlin.browser.window
 
 
-class App(props: Props): RComponent<App.Props, App.State>(props) {
+class App(props: Props) : RComponent<App.Props, App.State>(props) {
 
     val vizSize = 300.0
 
     interface State : RState {
         var welcomeText: String
         var circleColor: io.data2viz.color.Color
+        var setRijschoolFilter: (String) -> Unit
+        var setOpleidersForList: (List<Opleider>) -> Unit // OpleidersList
     }
 
     override fun State.init(props: Props) {
         welcomeText = "Hello world!"
         circleColor = Colors.rgb(255, 0, 0)
+        setRijschoolFilter = {}
+        setOpleidersForList = {}
+    }
+
+    fun setOpleiders(opleiders: List<Opleider>) {
+        state.setOpleidersForList(opleiders)
     }
 
 
@@ -80,8 +88,8 @@ class App(props: Props): RComponent<App.Props, App.State>(props) {
             onClick = {
                 setState {
                     circleColor = if (state.circleColor == Colors.rgb(255, 0, 0))
-                            Colors.rgb(0, 255, 0)
-                        else Colors.rgb(255, 0, 0)
+                        Colors.rgb(0, 255, 0)
+                    else Colors.rgb(255, 0, 0)
                 }
             })
 
@@ -157,19 +165,32 @@ class App(props: Props): RComponent<App.Props, App.State>(props) {
                 }
 
                 mCardActions {
-                    mButton("Click Here",
+                    mButton("Load data",
                         color = MColor.primary,
                         size = MButtonSize.medium,
                         onClick = {
-                            alert("Clicked the button :D")
+                            Data.buildData()
+                            println("data loaded!")
+                            setOpleiders(Data.alleOpleiders.values.toList())
                         })
                 }
+            }
+        }
 
 
+        opleidersList {
+            setOpleidersRef = {
+                setState {
+                    setOpleidersForList = it
+                }
+            }
+            setFilterRef = {
+                setState {
+                    setRijschoolFilter = it
+                }
             }
         }
     }
-
 }
 
 fun RBuilder.app() = child(App::class) {}

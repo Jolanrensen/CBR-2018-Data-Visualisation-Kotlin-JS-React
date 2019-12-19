@@ -6,7 +6,7 @@ plugins {
 }
 
 apply {
-    plugin("kotlin-dce-js")
+    //    plugin("kotlin-dce-js")
 }
 
 group = "org.example"
@@ -33,23 +33,20 @@ spotless {
     }
 }
 
-tasks {
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinJsDce> {
-        dceOptions {
-            devMode = true
-        }
-    }
-}
+//tasks {
+//    withType<org.jetbrains.kotlin.gradle.tasks.KotlinJsDce> {
+//        dceOptions {
+//            devMode = true
+//        }
+//    }
+//}
 
 
 kotlin {
     target {
         useCommonJs()
-//        nodejs()
         browser {
-
             compilations.all {
-
                 kotlinOptions {
                     metaInfo = true
                     outputFile = "${project.buildDir.path}/js/${project.name}.js"
@@ -61,10 +58,6 @@ kotlin {
                 }
 
             }
-
-//            webpackTask {
-//                options
-//            }
         }
     }
 
@@ -73,10 +66,6 @@ kotlin {
         main {
 
             dependencies {
-                //        implementation(project(":muirwik-components"))
-//        implementation(npm( "../../link-muirwik-components.js"))
-
-//        implementation(npm("webpack-dev-server"))
                 implementation(kotlin("stdlib-js"))
                 implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.6.12")
                 implementation("org.jetbrains:kotlin-react:16.9.0-pre.89-kotlin-1.3.60")
@@ -91,11 +80,10 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.1")
 
-//        implementation("com.github.doyaaaaaken:kotlin-csv-js:0.7.3")
-
                 implementation(npm("react", "16.12.0"))
                 implementation(npm("react-dom", "16.12.0"))
                 implementation(npm("react-draggable"))
+                implementation(npm("react-window"))
 
                 implementation(npm("inline-style-prefixer"))
                 implementation(npm("core-js"))
@@ -106,21 +94,9 @@ kotlin {
                 implementation(npm("mocha"))
                 implementation(npm("karma"))
                 implementation(npm("jquery"))
-
-//        implementation(npm("webpack"))
-//        implementation(npm("webpack-cli"))
-
-
-//        implementation(npm("reactstrap"))
 //    this one sucks    implementation("kotlin.js.externals:kotlin-js-jquery:3.2.0-0")
 
             }
         }
     }
 }
-
-
-//val serverPrepare by tasks.creating {
-//    dependsOn("bundle")
-//}
-
