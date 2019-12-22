@@ -10,11 +10,8 @@ import react.*
 import react.children
 import react.dom.div
 import react.dom.p
-import styled.StyleSheet
+import styled.*
 import styled.StyledComponents.css
-import styled.css
-import styled.styled
-import styled.styledDiv
 
 class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersList.State>(props) {
 
@@ -49,32 +46,38 @@ class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersLis
         setState {
             this.opleiders = opleiders.apply { } // TODO FILTER and deselect rijscholen die nu verdwenen zijn
             this.selected =
-                hashMapOf(*opleiders.map { it.code to true }.toTypedArray())// by default select all opleiders
+                hashMapOf(*opleiders.map { it.code to false }.toTypedArray())// by default deselect all opleiders
         }
     }
 
-    fun toggleSelected(opleider: String?) {
+    fun toggleSelected(opleider: String?, newState: Boolean? = null) {
         opleider ?: return
         setState {
-            selected[opleider] = !selected[opleider]!!
+            selected[opleider] = newState ?: !selected[opleider]!!
         }
     }
 
-    @Suppress("UnsafeCastFromDynamic")
-    val renderRow: FunctionalComponent<RenderProps<List<Opleider>>> = functionalComponent { props ->
-        val opleider = props.data?.get(props.index)
+    fun renderRow(index: Int, key: String) = buildElement {
+        val opleider = state.opleiders[index]
         mListItem(
-            primaryText = "${opleider?.naam} (${opleider?.code})",
-            selected = state.selected[opleider?.code] ?: true,
-            key = props.index.toString(),
-            divider = true,
-            onClick = { toggleSelected(opleider?.code) }
+            button = true,
+            selected = state.selected[opleider.code] ?: false,
+            key = key,
+            divider = false,
+            onClick = { toggleSelected(opleider.code) }
         ) {
-            attrs {
-                style = props.style
+            mListItemAvatar {
+                mAvatar {
+                    +opleider.naam.first().toString()
+                }
             }
+            mListItemText("${opleider.naam} (${opleider.code})")
+            mCheckbox(
+                checked = state.selected[opleider.code] ?: false,
+                onChange = { _, newState -> toggleSelected(opleider.code, newState) })
         }
     }
+
 
     override fun RBuilder.render() {
         themeContext.Consumer { theme ->
@@ -87,35 +90,20 @@ class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersLis
 
             styledDiv {
                 css {
-//                    display = Display.inlineFlex
                     padding(1.spacingUnits)
+                    display = Display.inlineFlex
+                    overflow = Overflow.auto
+                    maxHeight = 400.px
                 }
-
-
-//                mList {
-//                    css(themeStyles.list)
-//                    mListSubheader("\"Full\" ListItemAvatar (more code)", disableSticky = true)
-//
-//
-//                }
-
-                styled(FixedSizeListOpleider)() {
-                    css {
-                        width = 320.px
-                        height = 400.px
-                        maxWidth = 360.px
-                        backgroundColor = Color(theme.palette.background.paper)
-
-                    }
+                styledReactList {
+                    css(themeStyles.list)
                     attrs {
-                        height = 400
-                        width = 400
-                        itemSize = 100
-                        itemCount = state.opleiders.size
-                        itemData = state.opleiders
-                        children = renderRow
+                        length = state.opleiders.size
+                        itemRenderer = ::renderRow
+                        type = "uniform"
                     }
                 }
+
             }
             Unit
         }

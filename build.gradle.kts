@@ -2,6 +2,7 @@ import org.gradle.kotlin.dsl.*
 
 plugins {
     kotlin("js") version "1.3.61"
+    kotlin("kapt") version "1.3.61"
     id("com.diffplug.gradle.spotless") version "3.26.1"
 }
 
@@ -66,6 +67,7 @@ kotlin {
         main {
 
             dependencies {
+                implementation("org.jetbrains:annotations:16.0.2")
                 implementation(kotlin("stdlib-js"))
                 implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.6.12")
                 implementation("org.jetbrains:kotlin-react:16.9.0-pre.89-kotlin-1.3.60")
@@ -83,6 +85,7 @@ kotlin {
                 implementation(npm("react", "16.12.0"))
                 implementation(npm("react-dom", "16.12.0"))
                 implementation(npm("react-draggable"))
+                implementation(npm("react-list"))
                 implementation(npm("react-window"))
 
                 implementation(npm("inline-style-prefixer"))

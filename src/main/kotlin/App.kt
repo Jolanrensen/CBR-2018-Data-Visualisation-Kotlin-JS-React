@@ -177,7 +177,6 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
             }
         }
 
-
         opleidersList {
             setOpleidersRef = {
                 setState {
