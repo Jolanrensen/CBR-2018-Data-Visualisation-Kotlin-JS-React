@@ -7,7 +7,10 @@
           <sourceSet>org.example.2IMV20-Visualization-and-Interaction.main</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
-        <externalSystemTestTasks>browserTest|2IMV20-Visualization-and-Interaction:test|Js</externalSystemTestTasks>
+        <externalSystemTestTasks>
+          <externalSystemTestTask>nodeTest|2IMV20-Visualization-and-Interaction:test|Js</externalSystemTestTask>
+          <externalSystemTestTask>browserTest|2IMV20-Visualization-and-Interaction:test|Js</externalSystemTestTask>
+        </externalSystemTestTasks>
         <compilerSettings />
         <compilerArguments>
           <option name="outputFile" value="$MODULE_DIR$/../../build/js/2IMV20-Visualization-and-Interaction.js" />

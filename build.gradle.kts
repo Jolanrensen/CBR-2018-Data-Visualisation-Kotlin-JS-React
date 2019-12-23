@@ -34,18 +34,11 @@ spotless {
     }
 }
 
-//tasks {
-//    withType<org.jetbrains.kotlin.gradle.tasks.KotlinJsDce> {
-//        dceOptions {
-//            devMode = true
-//        }
-//    }
-//}
-
 
 kotlin {
     target {
         useCommonJs()
+        nodejs()
         browser {
             compilations.all {
                 kotlinOptions {
@@ -55,9 +48,7 @@ kotlin {
                     sourceMapEmbedSources = "always"
                     moduleKind = "commonjs"
                     main = "call"
-
                 }
-
             }
         }
     }
@@ -65,8 +56,11 @@ kotlin {
 
     sourceSets {
         main {
-
             dependencies {
+                implementation(npm("webpack", "4.41.2"))
+                implementation(npm("webpack-cli", "3.3.9"))
+                implementation(npm("webpack-dev-server", "3.8.2"))
+
                 implementation("org.jetbrains:annotations:16.0.2")
                 implementation(kotlin("stdlib-js"))
                 implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.6.12")
@@ -94,11 +88,7 @@ kotlin {
                 implementation(npm("@material-ui/icons"))
 
                 implementation(npm("styled-components"))
-                implementation(npm("mocha"))
-                implementation(npm("karma"))
                 implementation(npm("jquery"))
-//    this one sucks    implementation("kotlin.js.externals:kotlin-js-jquery:3.2.0-0")
-
             }
         }
     }

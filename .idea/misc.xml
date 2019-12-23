@@ -4,7 +4,7 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="JSX" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" default="false" project-jdk-name="Kotlin SDK" project-jdk-type="KotlinSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" default="false" project-jdk-name="12 oracle" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

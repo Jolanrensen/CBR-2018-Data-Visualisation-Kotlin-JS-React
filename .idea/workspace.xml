@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cb68dff-52c1-4a85-92b5-91dc274354eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/ReactList.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/OpleidersList.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,6 +60,42 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build setup" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="help" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="nodejs" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -121,11 +157,11 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.11976045" />
     <property name="project.structure.side.proportion" value="0.45623836" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
+    <property name="settings.editor.selected.configurable" value="preferences.language.Kotlin" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
@@ -148,7 +184,26 @@
       <command value="gradle dependencies" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.browserRun">
+  <component name="RunManager" selected="Gradle.run">
+    <configuration name="2IMV20-Visualization-and-Interaction [browserWebpack]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="browserWebpack" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="2IMV20-Visualization-and-Interaction [spotlessApply]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -187,63 +242,6 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="broweserRun -t" type="GradleRunConfiguration" factoryName="Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="-t" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="browserRun" />
-          </list>
-        </option>
-        <option name="vmOptions" value="" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="browserRun" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="browserRun" />
-          </list>
-        </option>
-        <option name="vmOptions" value="" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="muirwik-components [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/muirwik-components" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="assemble" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="muirwik-components [buildDependents]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -263,21 +261,59 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="run --continuous" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--continuous" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="run" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Gradle.broweserRun -t" />
-      <item itemvalue="Gradle.browserRun" />
-      <item itemvalue="Gradle.muirwik-components [assemble]" />
+      <item itemvalue="Gradle.run --continuous" />
+      <item itemvalue="Gradle.run" />
       <item itemvalue="Gradle.muirwik-components [buildDependents]" />
       <item itemvalue="Gradle.2IMV20-Visualization-and-Interaction [spotlessCheck]" />
       <item itemvalue="Gradle.2IMV20-Visualization-and-Interaction [spotlessApply]" />
+      <item itemvalue="Gradle.2IMV20-Visualization-and-Interaction [browserWebpack]" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.browserRun" />
+        <item itemvalue="Gradle.run" />
+        <item itemvalue="Gradle.2IMV20-Visualization-and-Interaction [browserWebpack]" />
         <item itemvalue="Gradle.2IMV20-Visualization-and-Interaction [spotlessApply]" />
         <item itemvalue="Gradle.2IMV20-Visualization-and-Interaction [spotlessCheck]" />
         <item itemvalue="Gradle.muirwik-components [buildDependents]" />
-        <item itemvalue="Gradle.muirwik-components [assemble]" />
       </list>
     </recent_temporary>
   </component>
@@ -338,7 +374,8 @@
       <workItem from="1576878719626" duration="3657000" />
       <workItem from="1576931727841" duration="3057000" />
       <workItem from="1577028528719" duration="6277000" />
-      <workItem from="1577048258371" duration="6771000" />
+      <workItem from="1577048258371" duration="7024000" />
+      <workItem from="1577103579265" duration="18648000" />
     </task>
     <task id="LOCAL-00001" summary="react!">
       <created>1576254618421</created>
@@ -438,13 +475,21 @@
       <option name="project" value="LOCAL" />
       <updated>1576762428870</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="mooi lijstje met react-list">
+      <created>1577055305574</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1577055305574</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
     <option name="exactExcludedFiles">
       <list>
+        <option value="$PROJECT_DIR$/build/js/node_modules/karma/config.tpl.js" />
         <option value="$PROJECT_DIR$/build/js/node_modules/karma/config.tpl.js" />
         <option value="$PROJECT_DIR$/build/js/node_modules/karma/config.tpl.js" />
         <option value="$PROJECT_DIR$/build/js/node_modules/karma/config.tpl.js" />
@@ -467,19 +512,22 @@
     <MESSAGE value="working on result and categorie enzo" />
     <MESSAGE value="Added dce for smaller js" />
     <MESSAGE value="Working on opleidersList with functional component" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on opleidersList with functional component" />
+    <MESSAGE value="mooi lijstje met react-list" />
+    <option name="LAST_COMMIT_MESSAGE" value="mooi lijstje met react-list" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="952" y="276" width="1291" height="677" key="#Project_Structure" timestamp="1577053453675">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state x="2880" y="171" width="1599" height="761" key="#Project_Structure" timestamp="1577116036885">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="952" y="276" width="1291" height="677" key="#Project_Structure/0.25.2880.1595@0.25.2880.1595" timestamp="1577053453675" />
     <state x="272" y="496" width="2074" height="1384" key="#Project_Structure/0.50.4320.2380@0.50.4320.2380" timestamp="1576843308299" />
-    <state x="1329" y="341" width="2080" height="1071" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576505427743">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state x="2880" y="171" width="1599" height="761" key="#Project_Structure/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1577116036885" />
+    <state x="3413" y="214" width="2080" height="1071" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1577118019818">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="1329" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1576505427743" />
     <state x="1993" y="522" width="2080" height="1071" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.50.4320.2380@0.50.4320.2380" timestamp="1576485852386" />
+    <state x="3413" y="214" key="#com.intellij.execution.impl.EditConfigurationsDialog/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1577118019818" />
     <state x="1073" y="425" width="955" height="1073" key="#com.intellij.ide.util.MemberChooser" timestamp="1577028942308">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
@@ -491,10 +539,10 @@
       <screen x="476" y="0" width="1920" height="1080" />
     </state>
     <state x="1163" y="150" width="536" height="801" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576599899893" />
-    <state x="1196" y="406" width="1150" height="661" key="CommitChangelistDialog2" timestamp="1576797858599">
+    <state x="1196" y="406" width="1150" height="661" key="CommitChangelistDialog2" timestamp="1577055305422">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1196" y="406" width="1578" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1576797858599" />
+    <state x="1196" y="406" width="1578" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1577055305422" />
     <state x="1331" y="475" width="2979" height="1444" key="CommitChangelistDialog2/0.50.4320.2380@0.50.4320.2380" timestamp="1576660450219" />
     <state x="3472" y="193" width="1150" height="661" key="CommitChangelistDialog2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1576762428733" />
     <state x="885" y="226" width="1501" height="829" key="CommitChangelistDialog2/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576615753430" />
@@ -503,33 +551,33 @@
     </state>
     <state x="927" y="417" width="864" height="510" key="FileChooserDialogImpl/0.25.2880.1595@0.25.2880.1595" timestamp="1577053451142" />
     <state x="871" y="717" key="FileChooserDialogImpl/0.50.4320.2380@0.50.4320.2380" timestamp="1576684986703" />
-    <state width="1905" height="248" key="GridCell.Tab.0.bottom" timestamp="1577055071933">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state width="1872" height="146" key="GridCell.Tab.0.bottom" timestamp="1577122229936">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state width="1905" height="248" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1577055071933" />
+    <state width="1905" height="248" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1577055334491" />
     <state width="2508" height="637" key="GridCell.Tab.0.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1576687420536" />
-    <state width="1872" height="147" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1576762438536" />
+    <state width="1872" height="146" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1577122229936" />
     <state width="1872" height="274" key="GridCell.Tab.0.bottom/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576615769928" />
-    <state width="1905" height="248" key="GridCell.Tab.0.center" timestamp="1577055071933">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state width="1872" height="146" key="GridCell.Tab.0.center" timestamp="1577122229936">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state width="1905" height="248" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1577055071933" />
+    <state width="1905" height="248" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1577055334490" />
     <state width="2508" height="637" key="GridCell.Tab.0.center/0.50.4320.2380@0.50.4320.2380" timestamp="1576687420536" />
-    <state width="1872" height="147" key="GridCell.Tab.0.center/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1576762438536" />
+    <state width="1872" height="146" key="GridCell.Tab.0.center/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1577122229936" />
     <state width="1872" height="274" key="GridCell.Tab.0.center/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576615769928" />
-    <state width="1905" height="248" key="GridCell.Tab.0.left" timestamp="1577055071932">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state width="1872" height="146" key="GridCell.Tab.0.left" timestamp="1577122229936">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state width="1905" height="248" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1577055071932" />
+    <state width="1905" height="248" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1577055334490" />
     <state width="2508" height="637" key="GridCell.Tab.0.left/0.50.4320.2380@0.50.4320.2380" timestamp="1576687420535" />
-    <state width="1872" height="147" key="GridCell.Tab.0.left/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1576762438536" />
+    <state width="1872" height="146" key="GridCell.Tab.0.left/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1577122229936" />
     <state width="1872" height="274" key="GridCell.Tab.0.left/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576615769928" />
-    <state width="1905" height="248" key="GridCell.Tab.0.right" timestamp="1577055071933">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state width="1872" height="146" key="GridCell.Tab.0.right" timestamp="1577122229936">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state width="1905" height="248" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1577055071933" />
+    <state width="1905" height="248" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1577055334491" />
     <state width="2508" height="637" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1576687420536" />
-    <state width="1872" height="147" key="GridCell.Tab.0.right/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1576762438536" />
+    <state width="1872" height="146" key="GridCell.Tab.0.right/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1577122229936" />
     <state width="1872" height="274" key="GridCell.Tab.0.right/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576615769928" />
     <state width="2492" height="800" key="GridCell.Tab.1.bottom" timestamp="1576431368889">
       <screen x="0" y="50" width="4320" height="2380" />
@@ -563,15 +611,16 @@
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
     <state width="2492" height="800" key="GridCell.Tab.2.right/0.50.4320.2380@0.50.4320.2380" timestamp="1576431368889" />
-    <state x="629" y="296" key="SettingsEditor" timestamp="1576696980046">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state x="3299" y="183" key="SettingsEditor" timestamp="1577111386982">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="629" y="296" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1576696980046" />
+    <state x="3299" y="183" key="SettingsEditor/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1577111386982" />
     <state x="1014" y="168" key="SettingsEditor/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576615103612" />
-    <state x="1585" y="558" width="557" height="238" key="Vcs.Push.Dialog.v2" timestamp="1576797861408">
+    <state x="1585" y="558" width="557" height="238" key="Vcs.Push.Dialog.v2" timestamp="1577055307949">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1585" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1576797861408" />
+    <state x="1585" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1577055307949" />
     <state x="2378" y="701" width="1600" height="1086" key="Vcs.Push.Dialog.v2/0.50.4320.2380@0.50.4320.2380" timestamp="1576660453724" />
     <state x="3937" y="295" width="557" height="238" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1576762430895" />
     <state x="1533" y="328" width="800" height="524" key="Vcs.Push.Dialog.v2/476.0.1920.1080/0.1080.2880.1620@476.0.1920.1080" timestamp="1576615755128" />
