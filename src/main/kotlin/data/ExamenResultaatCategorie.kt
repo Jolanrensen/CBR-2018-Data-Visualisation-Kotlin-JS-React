@@ -8,11 +8,11 @@ enum class ExamenResultaatCategorie {
     COMBI
 }
 
-val Collection<ExamenResultaatAantal>.handgeschakeld
+val Sequence<ExamenResultaatAantal>.handgeschakeld
     get() = filter { it.examenResultaatCategorie == HANDGESCHAKELD }
 
-val Collection<ExamenResultaatAantal>.automaat
+val Sequence<ExamenResultaatAantal>.automaat
     get() = filter { it.examenResultaatCategorie == AUTOMAAT }
 
-val Collection<ExamenResultaatAantal>.combi
+val Sequence<ExamenResultaatAantal>.combi
     get() = filter { it.examenResultaatCategorie == COMBI }

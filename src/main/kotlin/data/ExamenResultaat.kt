@@ -7,8 +7,8 @@ enum class ExamenResultaat {
     ONVOLDOENDE
 }
 
-val Collection<ExamenResultaatAantal>.voldoende
+val Sequence<ExamenResultaatAantal>.voldoende
     get() = filter { it.examenResultaat == VOLDOENDE }
 
-val Collection<ExamenResultaatAantal>.onvoldoende
+val Sequence<ExamenResultaatAantal>.onvoldoende
     get() = filter { it.examenResultaat == ONVOLDOENDE }

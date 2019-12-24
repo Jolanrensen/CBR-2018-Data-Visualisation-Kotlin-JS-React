@@ -2,25 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ExamenlocatiesList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/muirwik_components_0_4_0_SNAPSHOT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinScripting.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.test.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/OpleidersList.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/ReactList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/ReactList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/jQuery.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaat.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatCategorie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatCategorie.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatVersie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatVersie.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,37 +143,61 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1577194573200</updated>
-      <workItem from="1577194574482" duration="10031000" />
+      <workItem from="1577194574482" duration="12236000" />
     </task>
+    <task id="LOCAL-00001" summary="fixed all errors, created two cooperating lists, opleider and examenlocatie">
+      <created>1577205156703</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1577205156703</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fixed all errors, created two cooperating lists, opleider and examenlocatie" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed all errors, created two cooperating lists, opleider and examenlocatie" />
   </component>
   <component name="WindowStateProjectService">
     <state x="347" y="480" width="1116" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1577196648398">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="347" y="480" width="1116" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577196648398" />
+    <state x="98" y="161" width="1491" height="1074" key="CommitChangelistDialog2" timestamp="1577205156482">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="98" y="161" width="1491" height="1074" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1577205156482" />
     <state x="672" y="580" key="FileChooserDialogImpl" timestamp="1577194839081">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="672" y="580" key="FileChooserDialogImpl/0.25.2880.1595@0.25.2880.1595" timestamp="1577194839081" />
-    <state width="1649" height="336" key="GridCell.Tab.0.bottom" timestamp="1577205026811">
+    <state width="1973" height="336" key="GridCell.Tab.0.bottom" timestamp="1577207137548">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1649" height="336" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1577205026811" />
-    <state width="1649" height="336" key="GridCell.Tab.0.center" timestamp="1577205026811">
+    <state width="1973" height="336" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1577207137548" />
+    <state width="1973" height="336" key="GridCell.Tab.0.center" timestamp="1577207137547">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1649" height="336" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1577205026811" />
-    <state width="1649" height="336" key="GridCell.Tab.0.left" timestamp="1577205026811">
+    <state width="1973" height="336" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1577207137547" />
+    <state width="1973" height="336" key="GridCell.Tab.0.left" timestamp="1577207137547">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1649" height="336" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1577205026811" />
-    <state width="1649" height="336" key="GridCell.Tab.0.right" timestamp="1577205026811">
+    <state width="1973" height="336" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1577207137547" />
+    <state width="1973" height="336" key="GridCell.Tab.0.right" timestamp="1577207137548">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1649" height="336" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1577205026811" />
+    <state width="1973" height="336" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1577207137548" />
+    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1577205158386">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1577205158386" />
+    <state x="413" y="435" width="851" height="522" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1577205108611">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="413" y="435" width="851" height="522" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577205108611" />
   </component>
 </project>

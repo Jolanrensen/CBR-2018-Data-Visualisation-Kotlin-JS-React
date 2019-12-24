@@ -24,32 +24,29 @@ fun main() {
         }
     }
 
-//    val opleider = Data.alleOpleiders.values.find {
-//        it.naam.contains("ANWB") && it.plaatsnaam == "BREDA"
-//    }
-//
-//    println(
-//        Data.alleResultaten.filter {
-//            it.opleider == opleider
-//        }.sumBy {
-//            it.examenResultaatAantallen.filter {
-//                //it.examenResultaatCategorie == HANDGESCHAKELD
-//                         it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
-//                        && it.examenResultaat == VOLDOENDE
-//            }.sumBy { it.aantal }
-//        }
-//    )
-//    println(
-//        Data.alleResultaten.filter {
-//            it.opleider == opleider
-//        }.sumBy {
-//            it.examenResultaatAantallen.filter {
-//                //it.examenResultaatCategorie == HANDGESCHAKELD
-//                        it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
-//                        && it.examenResultaat == ONVOLDOENDE
-//            }.sumBy { it.aantal }
-//        }
-//    )
+    Data.buildData()
+    val opleider = Data.alleOpleiders.values.find {
+        it.naam.contains("ANWB") && it.plaatsnaam == "BREDA"
+    }!!
+
+    println("${
+    Data.getResults(listOf(opleider)).asSequence()
+        .filter { it.product == Product.A || it.product == Product.A_NO }
+        .sumBy {
+            it.examenResultaatAantallen.asSequence()
+                .voldoende
+                .eersteExamen
+                .sumBy { it.aantal }
+        }
+    }/${
+    Data.getResults(listOf(opleider)).asSequence()
+        .filter { it.product == Product.A || it.product == Product.A_NO }
+        .sumBy {
+            it.examenResultaatAantallen.asSequence()
+                .eersteExamen
+                .sumBy { it.aantal }
+        }
+    }")
 }
 
 fun Boolean.toInt() = if (this) 1 else 0
