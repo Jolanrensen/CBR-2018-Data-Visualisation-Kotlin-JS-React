@@ -13,9 +13,12 @@ typealias ReactList = RComponent<ReactListProps, RState>
 @JsModule("react-list")
 external val reactList: ReactList
 
-fun ReactList.scrollTo(index: Int) = asDynamic().scrollTo(index) as Unit
-fun ReactList.scrollAround(index: Int) = asDynamic().scrollAround(index) as Unit
-fun ReactList.getVisibleRange() = asDynamic().getVisibleRange() as IntArray
+external interface ReactListRef {
+    fun scrollTo(index: Int)
+    fun scrollAround(index: Int)
+    fun getVisibleRange(): IntArray
+}
+
 
 fun RBuilder.styledReactList(
     className: String? = null,
@@ -48,4 +51,8 @@ external interface ReactListProps : StyledProps {
     var type: String?
     var useStaticSize: Boolean?
     var useTranslate3d: Boolean?
+}
+
+fun ReactListProps.ref(ref: (ReactListRef) -> Unit) {
+    asDynamic().ref = ref
 }

@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="muirwik-components-0.4.0-SNAPSHOT">
-    <output-path>$PROJECT_DIR$/muirwik-components/build/libs</output-path>
-    <root id="archive" name="muirwik-components-0.4.0-SNAPSHOT.jar" />
-  </artifact>
-</component>

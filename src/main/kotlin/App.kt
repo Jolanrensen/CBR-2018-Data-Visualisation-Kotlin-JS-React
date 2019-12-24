@@ -4,14 +4,13 @@ import com.ccfraser.muirwik.components.card.mCard
 import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
+import com.ccfraser.muirwik.components.form.MFormControlMargin
 import com.ccfraser.muirwik.components.form.MFormControlVariant
+import com.ccfraser.muirwik.components.form.MLabelMargin
 import com.ccfraser.muirwik.components.form.mFormControl
-import com.ccfraser.muirwik.components.gridlist.mGridList
-import com.ccfraser.muirwik.components.input.MInputAdornmentPosition
-import com.ccfraser.muirwik.components.input.mFilledInput
-import com.ccfraser.muirwik.components.input.mInputAdornment
-import com.ccfraser.muirwik.components.input.mInputLabel
+import com.ccfraser.muirwik.components.input.*
 import data.Data
+import data.Examenlocatie
 import data.Opleider
 import io.data2viz.color.Colors
 import io.data2viz.geom.point
@@ -21,14 +20,14 @@ import io.data2viz.math.pct
 import io.data2viz.viz.TextHAlign
 import io.data2viz.viz.TextVAlign
 import io.data2viz.viz.textAlign
-import kotlinx.coroutines.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.css.*
 import kotlinx.html.InputType
 import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.*
 import styled.css
-import styled.styledCol
 import styled.styledDiv
 import styled.styledP
 import kotlin.browser.window
@@ -41,21 +40,46 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
     interface State : RState {
         var welcomeText: String
         var circleColor: io.data2viz.color.Color
-        var setRijschoolFilter: (String) -> Unit
-        var refreshOpleiders: () -> Unit // OpleidersList
+
+        // OpleidersList
+        var opleiderFilter: String
+        var refreshOpleiders: RefreshOpleiders
+        var filteredOpleiders: List<Opleider>
+        var isOpleiderSelected: HashMap<String, Boolean>
+
+        // ExamenlocatiesList
+        var examenlocatieFilter: String
+        var refreshExamenlocaties: RefreshExamenlocaties
+        var filteredExamenlocaties: List<Examenlocatie>
+        var isExamenlocatieSelected: HashMap<String, Boolean>
     }
 
     override fun State.init(props: Props) {
         welcomeText = "Hello world!"
         circleColor = Colors.rgb(255, 0, 0)
-        setRijschoolFilter = {}
+
+        opleiderFilter = ""
         refreshOpleiders = {}
+        filteredOpleiders = arrayListOf()
+        isOpleiderSelected = hashMapOf()
+
+        examenlocatieFilter = ""
+        refreshExamenlocaties = {}
+        filteredExamenlocaties = arrayListOf()
+        isExamenlocatieSelected = hashMapOf()
     }
 
-
-    interface Props : RProps {
-
+    private fun loadData() {
+        if (Data.alleOpleiders.isNotEmpty()) return
+        GlobalScope.launch {
+            Data.buildData()
+            println("data loaded!")
+            state.refreshOpleiders()
+            state.refreshExamenlocaties()
+        }
     }
+
+    interface Props : RProps
 
     override fun RBuilder.render() {
         styledDiv {
@@ -180,98 +204,146 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
             }
         }
 
-        mGridContainer {
+        mGridContainer(
+            spacing = MGridSpacing.spacing2
+        ) {
             mGridItem(
-                xs = MGridSize.cells6
+                xs = MGridSize.cells4
             ) {
-//                mGridItem(xs = MGridSize.cells12) {
-//                    mFormControl(
-//                        variant = MFormControlVariant.filled,
-//                        fullWidth = true
-//                    ) {
-//                        mInputLabel(htmlFor = "filled-adornment-filter", caption = "Filter")
-//                        mFilledInput(
-//                            id = "filled-adornment-filter",
-//                            type = InputType.text,
-//                            onChange = {
-//                                state.setRijschoolFilter(it.targetInputValue)
-//                            }
-//                        ) {
-//                            attrs {
-//                                onKeyPress = {
-//                                    when (it.key) {
-//                                        "Enter" -> {
-//                                            it.preventDefault()
-//                                            state.refreshOpleiders()
-//                                        }
-//                                    }
-//                                }
-//                                endAdornment = buildElement {
-//                                    mInputAdornment(position = MInputAdornmentPosition.end) {
-//                                        mIconButton(
-//                                            iconName = "find",
-//                                            onClick = { state.refreshOpleiders() },
-//                                            edge = MIconEdge.end
-//                                        ) {
-//                                            css {
-//                                                //margin = 1.px
-//                                            }
-//                                        }
-//                                    }
-//                                }!!
-//                            }
-//                        }
-//                    }
-//                }
-
-                mGridItem(xs = MGridSize.cells11) {
-                    mTextField(
-                        label = "Filter",
-                        fullWidth = true,
+                mGridItem(xs = MGridSize.cells12) {
+                    mFormControl(
                         variant = MFormControlVariant.filled,
-                        onChange = {
-                            state.setRijschoolFilter(it.targetInputValue)
-                        }
+                        fullWidth = true,
+                        margin = MFormControlMargin.normal
                     ) {
                         css {
-                            marginLeft = 1.spacingUnits
-                            marginRight = 1.spacingUnits
+                            padding(LinearDimension.contentBox)
                         }
-                        attrs {
-                            onKeyPress = {
-                                when (it.key) {
-                                    "Enter" -> {
-                                        it.preventDefault()
-                                        state.refreshOpleiders()
+                        mInputLabel(
+                            htmlFor = "filled-adornment-filter",
+                            caption = "Filter Opleider",
+                            margin = MLabelMargin.dense
+                        )
+                        mFilledInput(
+                            id = "filled-adornment-filter",
+                            type = InputType.text,
+                            onChange = {
+                                it.persist()
+                                setState {
+                                    opleiderFilter = it.targetInputValue
+                                }
+                            }
+                        ) {
+                            attrs {
+                                margin = MInputMargin.dense
+                                onKeyPress = {
+                                    when (it.key) {
+                                        "Enter" -> {
+                                            it.preventDefault()
+                                            state.refreshOpleiders()
+                                        }
                                     }
+                                }
+                                endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
+                                    mIconButton(
+                                        iconName = "search",
+                                        onClick = { state.refreshOpleiders() },
+                                        edge = MIconEdge.end
+                                    )
                                 }
                             }
                         }
                     }
                 }
-                mGridItem(xs = MGridSize.cells1) {
-                    mIconButton("find", onClick = { state.refreshOpleiders() }) {
-                        css {
-                            //margin = 1.px
-                        }
-                    }
-                }
                 mGridItem(xs = MGridSize.cells12) {
                     opleidersList {
+                        filterDelegate = readOnlyPropertyOf { state.opleiderFilter }
                         setRefreshOpleidersRef = {
                             setState {
                                 refreshOpleiders = it
                             }
                         }
-                        setFilterRef = {
-                            setState {
-                                setRijschoolFilter = it
-                            }
+                        filteredOpleidersDelegate = readWritePropertyOf(
+                            get = { state.filteredOpleiders },
+                            set = { setState { filteredOpleiders = it } }
+                        )
+
+                        isOpleiderSelectedDelegate = readOnlyPropertyOf { state.isOpleiderSelected }
+                        isExamenlocatieSelectedDelegate = readOnlyPropertyOf { state.isExamenlocatieSelected }
+                        onSelectedOpleiderChanged = {
+                            state.refreshExamenlocaties()
                         }
                     }
                 }
             }
-
+            mGridItem(
+                xs = MGridSize.cells4
+            ) {
+                mGridItem(xs = MGridSize.cells12) {
+                    mFormControl(
+                        variant = MFormControlVariant.filled,
+                        fullWidth = true,
+                        margin = MFormControlMargin.normal
+                    ) {
+                        css {
+                            padding(LinearDimension.contentBox)
+                        }
+                        mInputLabel(
+                            htmlFor = "filled-adornment-filter",
+                            caption = "Filter Examenlocaties",
+                            margin = MLabelMargin.dense
+                        )
+                        mFilledInput(
+                            id = "filled-adornment-filter",
+                            type = InputType.text,
+                            onChange = {
+                                it.persist()
+                                setState {
+                                    examenlocatieFilter = it.targetInputValue
+                                }
+                            }
+                        ) {
+                            attrs {
+                                margin = MInputMargin.dense
+                                onKeyPress = {
+                                    when (it.key) {
+                                        "Enter" -> {
+                                            it.preventDefault()
+                                            state.refreshExamenlocaties()
+                                        }
+                                    }
+                                }
+                                endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
+                                    mIconButton(
+                                        iconName = "search",
+                                        onClick = { state.refreshExamenlocaties() },
+                                        edge = MIconEdge.end
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                mGridItem(xs = MGridSize.cells12) {
+                    examenlocatiesList {
+                        filterDelegate = readOnlyPropertyOf { state.examenlocatieFilter }
+                        setRefreshExamenlocatiesRef = {
+                            setState {
+                                refreshExamenlocaties = it
+                            }
+                        }
+                        filteredExamenlocatiesDelegate = readWritePropertyOf(
+                            get = { state.filteredExamenlocaties },
+                            set = { setState { filteredExamenlocaties = it } }
+                        )
+                        isExamenlocatieSelectedDelegate = readOnlyPropertyOf { state.isExamenlocatieSelected }
+                        isOpleiderSelectedDelegate = readOnlyPropertyOf { state.isOpleiderSelected }
+                        onSelectedExamenlocatiesChanged = {
+                            state.refreshOpleiders()
+                        }
+                    }
+                }
+            }
         }
 
         video {
@@ -281,8 +353,7 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                 loop = true
             }
         }
-
-
+        loadData()
     }
 }
 

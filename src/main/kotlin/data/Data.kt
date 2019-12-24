@@ -1,8 +1,5 @@
 package data
 
-import data.ExamenResultaat.*
-import data.ExamenResultaatCategorie.*
-import data.ExamenResultaatVersie.*
 import io.data2viz.time.Date
 import org.w3c.xhr.XMLHttpRequest
 
@@ -14,7 +11,10 @@ object Data {
 //        }
 
     val alleOpleiders = hashMapOf<String, Opleider>()
-    val alleExamenLocaties = hashMapOf<String, Examenlocatie>()
+    val alleExamenlocaties = hashMapOf<String, Examenlocatie>()
+
+    val opleiderToExamenlocaties: HashMap<String, HashSet<String>> = hashMapOf()
+    val examenlocatieToOpleiders: HashMap<String, HashSet<String>> = hashMapOf()
 
     fun buildData() {
         val xmlhttp = XMLHttpRequest()
@@ -33,7 +33,7 @@ object Data {
 //            val headers = csv.first()
             val data = csv.drop(1)
             for (line in data) {
-                alleOpleiders.getOrPut(line[0]) {
+                val opleider = alleOpleiders.getOrPut(line[0]) {
                     Opleider(
                         code = line[0],
                         naam = line[1],
@@ -67,7 +67,7 @@ object Data {
                     )
                 }
 
-                alleExamenLocaties.getOrPut(line[13]) {
+                val examenlocatie = alleExamenlocaties.getOrPut(line[13]) {
                     Examenlocatie(
                         naam = line[13],
                         straatnaam = line[14],
@@ -76,6 +76,13 @@ object Data {
                         postcode = line[17],
                         plaatsnaam = line[18]
                     )
+                }
+
+                opleiderToExamenlocaties.apply {
+                    get(opleider.code)?.add(examenlocatie.naam) ?: set(opleider.code, hashSetOf(examenlocatie.naam))
+                }
+                examenlocatieToOpleiders.apply {
+                    get(examenlocatie.naam)?.add(opleider.code) ?: set(examenlocatie.naam, hashSetOf(opleider.code))
                 }
             }
         }

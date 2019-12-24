@@ -43,7 +43,7 @@ kotlin {
             compilations.all {
                 kotlinOptions {
                     metaInfo = true
-                    outputFile = "${project.buildDir.path}/js/${project.name}.js"
+                    // outputFile = "${project.path}/js/${project.name}.js"
                     sourceMap = true
                     sourceMapEmbedSources = "always"
                     moduleKind = "commonjs"

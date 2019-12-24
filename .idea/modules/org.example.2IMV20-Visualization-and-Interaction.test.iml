@@ -13,7 +13,7 @@
         </externalSystemTestTasks>
         <compilerSettings />
         <compilerArguments>
-          <option name="outputFile" value="$MODULE_DIR$/../../build/js/2IMV20-Visualization-and-Interaction.js" />
+          <option name="outputFile" value="$USER_HOME$/.gradle/daemon/5.2.1/:/js/2IMV20-Visualization-and-Interaction.js" />
           <option name="noStdlib" value="true" />
           <option name="sourceMap" value="true" />
           <option name="sourceMapEmbedSources" value="always" />
