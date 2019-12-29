@@ -1,9 +1,9 @@
+
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.MGridSize
 import com.ccfraser.muirwik.components.MGridSpacing
 import com.ccfraser.muirwik.components.button.MButtonSize
 import com.ccfraser.muirwik.components.button.mButton
-import com.ccfraser.muirwik.components.card.mCard
 import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
@@ -12,6 +12,8 @@ import com.ccfraser.muirwik.components.mGridContainer
 import com.ccfraser.muirwik.components.mGridItem
 import com.ccfraser.muirwik.components.mTypography
 import data.Data
+import filterableLists.examenlocatiesList
+import filterableLists.opleidersList
 import io.data2viz.color.Colors
 import io.data2viz.geom.point
 import io.data2viz.geom.size
@@ -26,6 +28,8 @@ import kotlinx.css.Color
 import kotlinx.css.LinearDimension
 import kotlinx.css.backgroundColor
 import kotlinx.css.color
+import kotlinx.css.margin
+import kotlinx.css.mm
 import kotlinx.css.padding
 import kotlinx.css.px
 import kotlinx.css.width
@@ -49,12 +53,10 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
         var welcomeText: String
         var circleColor: io.data2viz.color.Color
 
-        // OpleidersList
         var opleiderFilter: String
         var refreshOpleiders: ReloadItems
         var selectedOpleiderKeys: HashSet<String>
 
-        // ExamenlocatiesList
         var examenlocatieFilter: String
         var refreshExamenlocaties: ReloadItems
         var selectedExamenlocatieKeys: HashSet<String>
@@ -177,7 +179,10 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                     println("Card clicked!")
                 }
             }
-            mCard {
+            hoveringCard {
+                css {
+                    margin(5.mm)
+                }
                 mCardHeader(
                     title = "Test",
                     subHeader = "OtherTest",

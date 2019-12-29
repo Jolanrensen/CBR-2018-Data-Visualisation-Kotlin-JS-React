@@ -67,7 +67,7 @@ fun <P : StyledProps> RBuilder.createStyled(
  * Helper for creating a styled component from a component class (e.g. MyComponent::class)
  */
 fun <P : StyledProps> RBuilder.createStyled(
-    componentClass: KClass<out RComponent<P, RState>>,
+    componentClass: KClass<out RComponent<out P, out RState>>,
     addAsChild: Boolean = true,
     handler: StyledHandler<P>
 ): ReactElement {

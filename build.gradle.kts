@@ -1,7 +1,3 @@
-import org.gradle.kotlin.dsl.*
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
-import org.jetbrains.kotlin.incremental.makeJsIncrementally
-
 plugins {
     kotlin("js") version "1.3.61"
     kotlin("kapt") version "1.3.61"
@@ -81,7 +77,6 @@ kotlin {
                 implementation(npm("react-dom", "16.12.0"))
                 implementation(npm("react-draggable"))
                 implementation(npm("react-list"))
-                implementation(npm("react-window"))
 
                 implementation(npm("inline-style-prefixer"))
                 implementation(npm("core-js"))

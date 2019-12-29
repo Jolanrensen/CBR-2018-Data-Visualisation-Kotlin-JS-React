@@ -1,17 +1,14 @@
+
 import com.ccfraser.muirwik.components.card.MCardProps
-import com.ccfraser.muirwik.components.card.mCard
 import com.ccfraser.muirwik.components.card.mCardContent
 import io.data2viz.viz.Viz
 import kotlinx.css.margin
 import kotlinx.css.mm
 import kotlinx.css.padding
-import kotlinx.html.js.onMouseOutFunction
-import kotlinx.html.js.onMouseOverFunction
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
-import react.setState
 import styled.StyledHandler
 import styled.css
 import styled.styledDiv
@@ -23,53 +20,22 @@ class VizComponentCard(props: Props) : RComponent<VizComponentCard.Props, VizCom
         var runOnViz: Viz.() -> Unit
     }
 
-    interface State : RState {
-        var raised: Boolean
-    }
-
-    override fun State.init(props: Props) {
-        raised = false
-    }
+    interface State : RState
 
     override fun RBuilder.render() {
         styledDiv {
             css {
-                margin(all = 5.mm)
+                margin(5.mm)
             }
-            attrs {
-                onMouseOverFunction = {
-                    setState {
-                        raised = true
-                    }
-
-                }
-                onMouseOutFunction = {
-                    setState {
-                        raised = false
-                    }
-                }
-            }
-            mCard {
+            hoveringCard {
                 css {
-                    //                    display = Display.flex
                     padding(5.mm)
                 }
-                attrs {
-                    elevation = if (state.raised) 3 else 1
-                }
                 props.runOnCard(this)
-
                 mCardContent {
-                    //                    styledDiv { todo kunnen we nog stylen of centeren ofzo
-//                        css {
-//                            display = Display.flex
-//                            justifyContent = JustifyContent.center
-//                            alignItems = Align.center
-//                        }
+                    //  todo kunnen we nog stylen of centeren ofzo
                     vizComponent(props.runOnViz)
-//                    }
                 }
-
             }
         }
     }

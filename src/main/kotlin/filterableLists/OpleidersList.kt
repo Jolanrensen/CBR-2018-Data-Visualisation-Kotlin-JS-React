@@ -1,4 +1,7 @@
+package filterableLists
 
+import FilterableList
+import ReloadItems
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemAvatar
 import com.ccfraser.muirwik.components.list.mListItemText
@@ -7,7 +10,7 @@ import com.ccfraser.muirwik.components.mCheckbox
 import com.ccfraser.muirwik.components.spacingUnits
 import com.ccfraser.muirwik.components.themeContext
 import data.Data
-import data.Examenlocatie
+import data.Opleider
 import kotlinx.css.Color
 import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
@@ -26,10 +29,11 @@ import react.setState
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
+import toInt
 
-class ExamenlocatiesList(props: Props) : FilterableList<ExamenlocatiesList.Props, ExamenlocatiesList.State>(props) {
+class OpleidersList(props: Props) : FilterableList<OpleidersList.Props, OpleidersList.State>(props) {
 
-    interface Props : FilterableListProps {
+    interface Props : FilterableList.FilterableListProps {
         override var filter: String
         override var setReloadRef: (ReloadItems) -> Unit
         override var selectedItemKeys: HashSet<String>
@@ -37,54 +41,55 @@ class ExamenlocatiesList(props: Props) : FilterableList<ExamenlocatiesList.Props
         override var selectedOtherItemKeys: HashSet<String>
     }
 
-    private val isExamenlocatieSelected = props.selectedItemKeys
-    private val isOpleiderSelected = props.selectedOtherItemKeys
+    private val isOpleiderSelected = props.selectedItemKeys
+    private val isExamenlocatieSelected = props.selectedOtherItemKeys
 
-    interface State : FilterableListState<Examenlocatie>
+    interface State : FilterableList.FilterableListState<Opleider>
 
     override fun State.init(props: Props) {
-        props.setReloadRef(::refreshExamenlocaties)
+        props.setReloadRef(::refreshOpleiders)
         filteredItems = listOf()
     }
 
     private var list: ReactListRef? = null
 
-    private fun refreshExamenlocaties() {
-        // println("refreshExamenlocations")
+    private fun refreshOpleiders() {
+        // println("refreshOpleiders")
         val filterTerms = props.filter.split(" ", ", ", ",")
         val score = hashMapOf<String, Int>()
-        (if (isOpleiderSelected.isNotEmpty())
-            isOpleiderSelected.asSequence()
-                .map { Data.opleiderToExamenlocaties[it]!! }
+        (if (isExamenlocatieSelected.isNotEmpty())
+            isExamenlocatieSelected.asSequence()
+                .map { Data.examenlocatieToOpleiders[it]!! }
                 .flatten()
-                .map { it to Data.alleExamenlocaties[it]!! }
+                .map { it to Data.alleOpleiders[it]!! }
                 .toMap()
-        else Data.alleExamenlocaties).forEach { (examNaam, examenlocatie) ->
+        else Data.alleOpleiders).forEach { (oplCode, opleider) ->
             filterTerms.forEach {
-                val naam = examNaam.contains(it, true)
-                val plaatsnaam = examenlocatie.plaatsnaam.contains(it, true)
-                val postcode = examenlocatie.postcode.contains(it, true)
-                val straatnaam = examenlocatie.straatnaam.contains(it, true)
-                score[examNaam] = (score[examNaam] ?: 0) +
-                    naam.toInt() * 3 + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
+                val naam = opleider.naam.contains(it, true)
+                val code = oplCode.contains(it, true)
+                val plaatsnaam = opleider.plaatsnaam.contains(it, true)
+                val postcode = opleider.postcode.contains(it, true)
+                val straatnaam = opleider.straatnaam.contains(it, true)
+                score[oplCode] = (score[oplCode] ?: 0) +
+                    naam.toInt() * 3 + code.toInt() + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
             }
         }
         setState {
-            val filteredExamenlocatieCodes: List<String>
+            val filteredOpleiderCodes: List<String>
             filteredItems = score.asSequence()
                 .filter { it.value != 0 }
                 .sortedByDescending { it.value }
-                .sortedByDescending { it.key in isExamenlocatieSelected }
-                .apply { filteredExamenlocatieCodes = map { it.key }.toList() }
-                .map { Data.alleExamenlocaties[it.key]!! }
+                .sortedByDescending { it.key in isOpleiderSelected }
+                .apply { filteredOpleiderCodes = map { it.key }.toList() }
+                .map { Data.alleOpleiders[it.key]!! }
                 .toList()
 
-            // deselect all previously selected examenlocaties that are no longer in filteredExamenlocaties
-            isExamenlocatieSelected.filter { naam ->
-                naam !in filteredExamenlocatieCodes
+            // deselect all previously selected opleiders that are no longer in filteredOpleiders
+            isOpleiderSelected.filter { code ->
+                code !in filteredOpleiderCodes
             }.apply {
                 forEach { key ->
-                    isExamenlocatieSelected.remove(key)
+                    isOpleiderSelected.remove(key)
                 }
                 if (size > 0) props.onSelectionChanged()
             }
@@ -93,36 +98,36 @@ class ExamenlocatiesList(props: Props) : FilterableList<ExamenlocatiesList.Props
         list?.scrollTo(0)
     }
 
-    private fun toggleSelected(examenlocatie: String?, newState: Boolean? = null) {
-        examenlocatie ?: return
+    private fun toggleSelected(opleider: String?, newState: Boolean? = null) {
+        opleider ?: return
         setState {
-            if (newState ?: examenlocatie !in isExamenlocatieSelected)
-                isExamenlocatieSelected += examenlocatie
+            if (newState ?: opleider !in isOpleiderSelected)
+                isOpleiderSelected += opleider
             else
-                isExamenlocatieSelected -= examenlocatie
+                isOpleiderSelected -= opleider
 
             props.onSelectionChanged()
         }
     }
 
     private fun renderRow(index: Int, key: String) = buildElement {
-        val examenlocatie = state.filteredItems[index]
+        val opleider = state.filteredItems[index]
         mListItem(
             button = true,
-            selected = examenlocatie.naam in isExamenlocatieSelected,
+            selected = opleider.code in isOpleiderSelected,
             key = key,
             divider = false,
-            onClick = { toggleSelected(examenlocatie.naam) }
+            onClick = { toggleSelected(opleider.code) }
         ) {
             mListItemAvatar {
                 mAvatar {
-                    +examenlocatie.naam.first().toString()
+                    +opleider.naam.first().toString()
                 }
             }
-            mListItemText("${examenlocatie.naam}, ${examenlocatie.plaatsnaam} (${examenlocatie.naam})")
+            mListItemText("${opleider.naam}, ${opleider.plaatsnaam} (${opleider.code})")
             mCheckbox(
-                checked = examenlocatie.naam in isExamenlocatieSelected,
-                onChange = { _, newState -> toggleSelected(examenlocatie.naam, newState) })
+                checked = opleider.code in isOpleiderSelected,
+                onChange = { _, newState -> toggleSelected(opleider.code, newState) })
         }
     }
 
@@ -153,14 +158,23 @@ class ExamenlocatiesList(props: Props) : FilterableList<ExamenlocatiesList.Props
                         }
                     }
                 }
+
             }
             Unit
         }
     }
 }
 
-val examenlocatiesList: RBuilder.(ExamenlocatiesList.Props.() -> Unit) -> ReactElement = { handler ->
-    child(ExamenlocatiesList::class) {
+// as for a fun RBuilder.opleiderslist, its ::filterableLists.getOpleidersList wouldn't be an extension function anymore
+val opleidersList: RBuilder.(OpleidersList.Props.() -> Unit) -> ReactElement = { handler ->
+    child(OpleidersList::class) {
         attrs(handler)
     }
 }
+
+// fun RBuilder.filterableLists.getOpleidersList(handler: filterableLists.OpleidersList.Props.() -> Unit): ReactElement {
+//     return child(filterableLists.OpleidersList::class) {
+//         attrs(handler)
+//     }
+// }
+

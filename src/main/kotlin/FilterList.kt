@@ -1,5 +1,4 @@
 
-import com.ccfraser.muirwik.components.MGridProps
 import com.ccfraser.muirwik.components.MGridSize
 import com.ccfraser.muirwik.components.button.MIconEdge
 import com.ccfraser.muirwik.components.button.mIconButton
@@ -13,6 +12,7 @@ import com.ccfraser.muirwik.components.input.mFilledInput
 import com.ccfraser.muirwik.components.input.mInputAdornment
 import com.ccfraser.muirwik.components.input.mInputLabel
 import com.ccfraser.muirwik.components.input.margin
+import com.ccfraser.muirwik.components.mGridContainer
 import com.ccfraser.muirwik.components.mGridItem
 import com.ccfraser.muirwik.components.persist
 import com.ccfraser.muirwik.components.targetInputValue
@@ -21,7 +21,6 @@ import kotlinx.css.padding
 import kotlinx.html.InputType
 import react.RBuilder
 import react.RComponent
-import react.RElementBuilder
 import react.RProps
 import react.RState
 import react.setState
@@ -51,74 +50,73 @@ class FilterList(props: Props) : RComponent<FilterList.Props, FilterList.State>(
     }
 
     override fun RBuilder.render() {
-        mGridItem(xs = MGridSize.cells12) {
-            mFormControl(
-                variant = MFormControlVariant.filled,
-                fullWidth = true,
-                margin = MFormControlMargin.normal
-            ) {
-                css {
-                    padding(LinearDimension.contentBox)
-                }
-                mInputLabel(
-                    htmlFor = "filled-adornment-filter",
-                    caption = "Filter ${props.itemsName}",
-                    margin = MLabelMargin.dense
-                )
-                mFilledInput(
-                    id = "filled-adornment-filter",
-                    type = InputType.text,
-                    onChange = {
-                        it.persist()
-                        setState {
-                            filter = it.targetInputValue
-                            if (props.liveReload) state.reload()
-                        }
-                    }
+        mGridContainer {
+            mGridItem(xs = MGridSize.cells12) {
+                mFormControl(
+                    variant = MFormControlVariant.filled,
+                    fullWidth = true,
+                    margin = MFormControlMargin.normal
                 ) {
-                    attrs {
-                        margin = MInputMargin.dense
-                        onKeyPress = {
-                            when (it.key) {
-                                "Enter" -> {
-                                    it.preventDefault()
-                                    state.reload()
-                                }
+                    css {
+                        padding(LinearDimension.contentBox)
+                    }
+                    mInputLabel(
+                        htmlFor = "filled-adornment-filter",
+                        caption = "Filter ${props.itemsName}",
+                        margin = MLabelMargin.dense
+                    )
+                    mFilledInput(
+                        id = "filled-adornment-filter",
+                        type = InputType.text,
+                        onChange = {
+                            it.persist()
+                            setState {
+                                filter = it.targetInputValue
+                                if (props.liveReload) state.reload()
                             }
                         }
-                        endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
-                            mIconButton(
-                                iconName = "search",
-                                onClick = { state.reload() },
-                                edge = MIconEdge.end
-                            )
+                    ) {
+                        attrs {
+                            margin = MInputMargin.dense
+                            onKeyPress = {
+                                when (it.key) {
+                                    "Enter" -> {
+                                        it.preventDefault()
+                                        state.reload()
+                                    }
+                                }
+                            }
+                            endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
+                                mIconButton(
+                                    iconName = "search",
+                                    onClick = { state.reload() },
+                                    edge = MIconEdge.end
+                                )
+                            }
                         }
                     }
                 }
             }
-        }
-        mGridItem(xs = MGridSize.cells12) {
-
-            props.filterableListCreationFunction(this) {
-                setReloadRef = {
-                    setState {
-                        reload = it
+            mGridItem(xs = MGridSize.cells12) {
+                props.filterableListCreationFunction(this) {
+                    setReloadRef = {
+                        setState {
+                            reload = it
+                        }
+                        props.setReloadRef(it)
                     }
-                    props.setReloadRef(it)
+                    filter = state.filter
+                    selectedItemKeys = props.selectedItemKeys
+                    selectedOtherItemKeys = props.selectedOtherItemKeys
+                    onSelectionChanged = props.onSelectionChanged
+
                 }
-
-                filter = state.filter
-                selectedItemKeys = props.selectedItemKeys
-                selectedOtherItemKeys = props.selectedOtherItemKeys
-                onSelectionChanged = props.onSelectionChanged
-
             }
         }
     }
 }
 
-// can only create inside a MGridContainer
-fun RElementBuilder<MGridProps>.filterList(type: CreateFilterableList, itemsName: String = "items", handler: FilterList.Props.() -> Unit) =
+fun RBuilder.filterList(type: CreateFilterableList, itemsName: String = "items", handler: FilterList.Props.() -> Unit) =
     child(FilterList::class) {
         attrs {
             filterableListCreationFunction = type
