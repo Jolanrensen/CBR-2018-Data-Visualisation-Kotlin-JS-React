@@ -32,6 +32,7 @@ class FilterList(props: Props) : RComponent<FilterList.Props, FilterList.State>(
     interface Props : RProps {
         var filterableListCreationFunction: CreateFilterableList
         var liveReload: Boolean
+        var itemsName: String
 
         var setReloadRef: (ReloadItems) -> Unit
         var selectedItemKeys: HashSet<String>
@@ -61,7 +62,7 @@ class FilterList(props: Props) : RComponent<FilterList.Props, FilterList.State>(
                 }
                 mInputLabel(
                     htmlFor = "filled-adornment-filter",
-                    caption = "Filter Opleider",
+                    caption = "Filter ${props.itemsName}",
                     margin = MLabelMargin.dense
                 )
                 mFilledInput(
@@ -117,11 +118,12 @@ class FilterList(props: Props) : RComponent<FilterList.Props, FilterList.State>(
 }
 
 // can only create inside a MGridContainer
-fun RElementBuilder<MGridProps>.filterList(type: CreateFilterableList, handler: FilterList.Props.() -> Unit) =
+fun RElementBuilder<MGridProps>.filterList(type: CreateFilterableList, itemsName: String = "items", handler: FilterList.Props.() -> Unit) =
     child(FilterList::class) {
         attrs {
             filterableListCreationFunction = type
             liveReload = true
+            this.itemsName = itemsName
         }
         attrs(handler)
     }

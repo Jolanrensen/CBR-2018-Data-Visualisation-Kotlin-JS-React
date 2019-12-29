@@ -1,143 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="fixed all errors, created two cooperating lists, opleider and examenlocatie">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/jolanrensen.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinCodeInsightSettings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webpack.config.d/webpack.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.test.iml" afterDir="false" />
+    <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ExamenlocatiesList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/OpleidersList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/VizComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/VizComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/VizComponentCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/VizComponentCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaat.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatCategorie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatCategorie.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatVersie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatVersie.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Resultaat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Resultaat.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/ReactList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/ReactList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Appbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Appbar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Avatar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Avatar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Backdrop.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Backdrop.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Badge.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Badge.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Base.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Base.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/BottomNavigation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/BottomNavigation.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Breadcrumbs.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Breadcrumbs.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Checkbox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Checkbox.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ChildPropDelegate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ChildPropDelegate.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Chip.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Chip.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/CircularProgress.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/CircularProgress.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ClickAwayListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ClickAwayListener.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Container.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Container.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/CssBaseline.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/CssBaseline.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Divider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Divider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Drawer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Drawer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/EnumPropToStringDelegates.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/EnumPropToStringDelegates.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Grid.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Grid.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Hidden.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Hidden.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Icon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Icon.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/LinearProgress.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/LinearProgress.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Link.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Link.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/MuiThemeProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/MuiThemeProvider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/NativeSelect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/NativeSelect.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/OnClosePropWithReasonDelegate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/OnClosePropWithReasonDelegate.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Paper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Paper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Popover.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Popover.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Radio.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Radio.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ReactHtmlElementAttributes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ReactHtmlElementAttributes.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ReactHtmlElementEvents.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ReactHtmlElementEvents.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ReactHtmlTouchEvent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ReactHtmlTouchEvent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Select.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Select.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Slider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Slider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Snackbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Snackbar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/SwipeableDrawer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/SwipeableDrawer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Switch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Switch.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Tabs.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Tabs.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/TextField.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/TextField.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ThemeProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ThemeProvider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Toolbar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Toolbar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Tooltip.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Tooltip.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Typography.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Typography.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/Button.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/Button.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/ButtonBase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/ButtonBase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/ButtonGroup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/ButtonGroup.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/FabButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/FabButton.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/IconButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/button/IconButton.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/Card.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/Card.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardActionArea.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardActionArea.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardActions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardActions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardContent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardContent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardHeader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardHeader.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardMedia.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/card/CardMedia.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/Dialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/Dialog.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/DialogActions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/DialogActions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/DialogContent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/DialogContent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/DialogContentText.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/DialogContentText.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/DialogTitle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/DialogTitle.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/Modal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/dialog/Modal.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/expansionpanel/ExpansionPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/expansionpanel/ExpansionPanel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/expansionpanel/ExpansionPanelActions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/expansionpanel/ExpansionPanelActions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/expansionpanel/ExpansionPanelDetails.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/expansionpanel/ExpansionPanelDetails.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/expansionpanel/ExpansionPanelSummary.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/expansionpanel/ExpansionPanelSummary.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormControl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormControl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormControlLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormControlLabel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormGroup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormGroup.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormHelperText.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormHelperText.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/form/FormLabel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/gridlist/GridList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/gridlist/GridList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/gridlist/GridListTile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/gridlist/GridListTile.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/gridlist/GridListTileBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/gridlist/GridListTileBar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/FilledInput.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/FilledInput.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/Input.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/Input.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/InputAdornment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/InputAdornment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/InputBase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/InputBase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/InputLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/InputLabel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/OutlinedInput.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/input/OutlinedInput.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/List.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/List.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItem.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItemAvatar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItemAvatar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItemIcon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItemIcon.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItemSecondaryAction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItemSecondaryAction.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItemText.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListItemText.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListSubheader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/list/ListSubheader.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/menu/Menu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/menu/Menu.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/menu/MenuItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/menu/MenuItem.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/menu/MenuList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/menu/MenuList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/ColorManipulator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/ColorManipulator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/CreateMuiTheme.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/CreateMuiTheme.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/CreatePalette.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/CreatePalette.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/CreateTypography.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/CreateTypography.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/StylesProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/StylesProvider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/transitions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/styles/transitions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/Table.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/Table.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableBody.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableBody.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableCell.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableCell.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableFooter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableFooter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableHead.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableHead.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TablePagination.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TablePagination.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableRow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableSortLabel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/table/TableSortLabel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Collapse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Collapse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Duration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Duration.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Fade.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Fade.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Grow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Grow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Slide.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Slide.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/TransitionDelegates.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/TransitionDelegates.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Zoom.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/transitions/Zoom.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/reactWindow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/reactWindow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/reactWindowHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/reactWindowHelper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -306,7 +173,7 @@
       <updated>1577194573200</updated>
       <workItem from="1577194574482" duration="12422000" />
       <workItem from="1577218895304" duration="4063000" />
-      <workItem from="1577627069447" duration="16866000" />
+      <workItem from="1577627069447" duration="17750000" />
     </task>
     <task id="LOCAL-00001" summary="fixed all errors, created two cooperating lists, opleider and examenlocatie">
       <created>1577205156703</created>
@@ -322,7 +189,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577207243113</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="linted all, fixed live/hot reloading, created filterablelists for opleiders and examenlocaties">
+      <created>1577658664552</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1577658664552</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -330,7 +204,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fixed all errors, created two cooperating lists, opleider and examenlocatie" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed all errors, created two cooperating lists, opleider and examenlocatie" />
+    <MESSAGE value="linted all, fixed live/hot reloading, created filterablelists for opleiders and examenlocaties" />
+    <option name="LAST_COMMIT_MESSAGE" value="linted all, fixed live/hot reloading, created filterablelists for opleiders and examenlocaties" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1533" y="484" key="#Project_Structure" timestamp="1577627188024">
@@ -349,10 +224,10 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="659" y="25" width="1552" height="1591" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577629556309" />
-    <state x="98" y="161" width="1491" height="1074" key="CommitChangelistDialog2" timestamp="1577207417668">
+    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2" timestamp="1577658664259">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="98" y="161" width="1491" height="1074" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1577207417668" />
+    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1577658664259" />
     <state x="672" y="580" key="FileChooserDialogImpl" timestamp="1577194839081">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
@@ -381,10 +256,10 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1420" y="457" width="1363" height="730" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1577627588255" />
-    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1577207244543">
+    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1577658667233">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1577207244543" />
+    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1577658667233" />
     <state x="413" y="435" width="851" height="522" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1577205108611">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>

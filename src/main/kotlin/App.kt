@@ -1,4 +1,3 @@
-
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.MGridSize
 import com.ccfraser.muirwik.components.MGridSpacing
@@ -215,7 +214,7 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
             mGridItem(
                 xs = MGridSize.cells4
             ) {
-                filterList(opleidersList) {
+                filterList(opleidersList, "opleiders") {
                     setReloadRef = {
                         setState {
                             refreshOpleiders = it
@@ -233,7 +232,7 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
             mGridItem(
                 xs = MGridSize.cells4
             ) {
-                filterList(examenlocatiesList) {
+                filterList(examenlocatiesList, "examenlocaties") {
                     setReloadRef = {
                         setState {
                             refreshExamenlocaties = it
@@ -246,149 +245,6 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                     }
                 }
             }
-
-
-            // mGridItem(
-            //     xs = MGridSize.cells4
-            // ) {
-            //     mGridItem(xs = MGridSize.cells12) {
-            //         mFormControl(
-            //             variant = MFormControlVariant.filled,
-            //             fullWidth = true,
-            //             margin = MFormControlMargin.normal
-            //         ) {
-            //             css {
-            //                 padding(LinearDimension.contentBox)
-            //             }
-            //             mInputLabel(
-            //                 htmlFor = "filled-adornment-filter",
-            //                 caption = "Filter Opleider",
-            //                 margin = MLabelMargin.dense
-            //             )
-            //             mFilledInput(
-            //                 id = "filled-adornment-filter",
-            //                 type = InputType.text,
-            //                 onChange = {
-            //                     it.persist()
-            //                     setState {
-            //                         opleiderFilter = it.targetInputValue
-            //                         if (LIVE_RELOAD) refreshOpleiders()
-            //                     }
-            //                 }
-            //             ) {
-            //                 attrs {
-            //                     margin = MInputMargin.dense
-            //                     onKeyPress = {
-            //                         when (it.key) {
-            //                             "Enter" -> {
-            //                                 it.preventDefault()
-            //                                 state.refreshOpleiders()
-            //                             }
-            //                         }
-            //                     }
-            //                     endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
-            //                         mIconButton(
-            //                             iconName = "search",
-            //                             onClick = { state.refreshOpleiders() },
-            //                             edge = MIconEdge.end
-            //                         )
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     }
-            //     mGridItem(xs = MGridSize.cells12) {
-            //         opleidersList {
-            //             // filterDelegate = readOnlyPropertyOf { state.opleiderFilter }
-            //             setReloadRef = {
-            //                 setState {
-            //                     refreshOpleiders = it
-            //                 }
-            //             }
-            //             filteredItemsDelegate = readWritePropertyOf(
-            //                 get = { state.filteredOpleiders },
-            //                 set = { setState { filteredOpleiders = it } }
-            //             )
-            //
-            //             isOpleiderSelectedDelegate = readOnlyPropertyOf { state.isOpleiderSelected }
-            //             isExamenlocatieSelectedDelegate = readOnlyPropertyOf { state.isExamenlocatieSelected }
-            //             onSelectionChanged = {
-            //                 state.refreshExamenlocaties()
-            //             }
-            //         }
-            //     }
-            // }
-            //
-            //
-            // mGridItem(
-            //     xs = MGridSize.cells4
-            // ) {
-            //     mGridItem(xs = MGridSize.cells12) {
-            //         mFormControl(
-            //             variant = MFormControlVariant.filled,
-            //             fullWidth = true,
-            //             margin = MFormControlMargin.normal
-            //         ) {
-            //             css {
-            //                 padding(LinearDimension.contentBox)
-            //             }
-            //             mInputLabel(
-            //                 htmlFor = "filled-adornment-filter",
-            //                 caption = "Filter Examenlocaties",
-            //                 margin = MLabelMargin.dense
-            //             )
-            //             mFilledInput(
-            //                 id = "filled-adornment-filter",
-            //                 type = InputType.text,
-            //                 onChange = {
-            //                     it.persist()
-            //                     setState {
-            //                         examenlocatieFilter = it.targetInputValue
-            //                         if (LIVE_RELOAD) refreshExamenlocaties()
-            //                     }
-            //                 }
-            //             ) {
-            //                 attrs {
-            //                     margin = MInputMargin.dense
-            //                     onKeyPress = {
-            //                         when (it.key) {
-            //                             "Enter" -> {
-            //                                 it.preventDefault()
-            //                                 state.refreshExamenlocaties()
-            //                             }
-            //                         }
-            //                     }
-            //                     endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
-            //                         mIconButton(
-            //                             iconName = "search",
-            //                             onClick = { state.refreshExamenlocaties() },
-            //                             edge = MIconEdge.end
-            //                         )
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     }
-            //     mGridItem(xs = MGridSize.cells12) {
-            //         examenlocatiesList {
-            //             filter = readOnlyPropertyOf { state.examenlocatieFilter }
-            //             setRefreshExamenlocatiesRef = {
-            //                 setState {
-            //                     refreshExamenlocaties = it
-            //                 }
-            //             }
-            //             filteredExamenlocatiesDelegate = readWritePropertyOf(
-            //                 get = { state.filteredExamenlocaties },
-            //                 set = { setState { filteredExamenlocaties = it } }
-            //             )
-            //             isExamenlocatieSelectedDelegate = readOnlyPropertyOf { state.isExamenlocatieSelected }
-            //             isOpleiderSelectedDelegate = readOnlyPropertyOf { state.isOpleiderSelected }
-            //             onSelectedExamenlocatiesChanged = {
-            //                 state.refreshOpleiders()
-            //             }
-            //         }
-            //     }
-            // }
         }
 
         // video {
