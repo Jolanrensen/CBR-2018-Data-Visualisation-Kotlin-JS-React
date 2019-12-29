@@ -4,9 +4,12 @@ import com.ccfraser.muirwik.components.form.MFormControlLabelProps
 import com.ccfraser.muirwik.components.form.mFormControlLabel
 import kotlinx.html.InputType
 import org.w3c.dom.events.Event
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.StyledHandler
-
 
 @JsModule("@material-ui/core/Switch")
 private external val switchDefault: dynamic
@@ -36,25 +39,27 @@ interface MSwitchProps : StyledPropsWithCommonAttributes {
     var type: String
     var value: String
 }
+
 var MSwitchProps.color by EnumPropToString(MOptionColor.values())
 var MSwitchProps.edge by EnumPropToString(MSwitchEdge.values())
 var MSwitchProps.size by EnumPropToString(MSwitchSize.values())
 
 fun RBuilder.mSwitch(
-        checked: Boolean = false,
-        color: MOptionColor = MOptionColor.secondary,
-        disabled: Boolean = false,
-        required: Boolean? = null,
-        size: MSwitchSize = MSwitchSize.medium,
-        onChange: ((Event, Boolean) -> Unit)? = null,
-        id: String? = null,
-        inputProps: RProps? = null,
-        value: String? = null,
-        edge: MSwitchEdge? = null,
+    checked: Boolean = false,
+    color: MOptionColor = MOptionColor.secondary,
+    disabled: Boolean = false,
+    required: Boolean? = null,
+    size: MSwitchSize = MSwitchSize.medium,
+    onChange: ((Event, Boolean) -> Unit)? = null,
+    id: String? = null,
+    inputProps: RProps? = null,
+    value: String? = null,
+    edge: MSwitchEdge? = null,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
-        handler: StyledHandler<MSwitchProps>? = null) = createStyled(switchComponent, addAsChild) {
+    addAsChild: Boolean = true,
+    className: String? = null,
+    handler: StyledHandler<MSwitchProps>? = null
+) = createStyled(switchComponent, addAsChild) {
     attrs.checked = checked
     attrs.color = color
     attrs.disabled = disabled
@@ -66,7 +71,7 @@ fun RBuilder.mSwitch(
     onChange?.let { attrs.onChange = onChange }
     attrs.size = size
     attrs.type = InputType.checkBox.realValue
-    value?.let {attrs.value = value}
+    value?.let { attrs.value = value }
 
     setStyledPropsAndRunHandler(className, handler)
 }
@@ -76,20 +81,21 @@ fun RBuilder.mSwitch(
  * mFormControlLabel and pass in a mSwitch.
  */
 fun RBuilder.mSwitchWithLabel(
-        label: String,
-        checked: Boolean = false,
-        color: MOptionColor = MOptionColor.secondary,
-        disabled: Boolean = false,
-        required: Boolean? = null,
-        size: MSwitchSize = MSwitchSize.medium,
-        onChange: ((event: Event, checked: Boolean) -> Unit)? = null,
-        id: String? = null,
-        inputProps: RProps? = null,
-        value: String? = null,
-        edge: MSwitchEdge? = null,
+    label: String,
+    checked: Boolean = false,
+    color: MOptionColor = MOptionColor.secondary,
+    disabled: Boolean = false,
+    required: Boolean? = null,
+    size: MSwitchSize = MSwitchSize.medium,
+    onChange: ((event: Event, checked: Boolean) -> Unit)? = null,
+    id: String? = null,
+    inputProps: RProps? = null,
+    value: String? = null,
+    edge: MSwitchEdge? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MFormControlLabelProps>? = null): ReactElement {
+    className: String? = null,
+    handler: StyledHandler<MFormControlLabelProps>? = null
+): ReactElement {
     val switch = mSwitch(checked, color, disabled, required, size, onChange, id, inputProps, value, edge, false)
 
     return mFormControlLabel(label, switch, checked, disabled, value = value, className = className, handler = handler)

@@ -8,7 +8,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/DialogActions")
 private external val dialogActionsModule: dynamic
 
@@ -20,9 +19,10 @@ interface MDialogActionsProps : StyledProps {
 }
 
 fun RBuilder.mDialogActions(
-        disableSpacing: Boolean = false,
-        className: String? = null,
-        handler: StyledHandler<MDialogActionsProps>) = createStyled(dialogActionsComponent) {
+    disableSpacing: Boolean = false,
+    className: String? = null,
+    handler: StyledHandler<MDialogActionsProps>
+) = createStyled(dialogActionsComponent) {
     attrs.disableSpacing = disableSpacing
     setStyledPropsAndRunHandler(className, handler)
 }

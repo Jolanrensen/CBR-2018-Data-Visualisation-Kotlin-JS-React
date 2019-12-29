@@ -8,7 +8,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/CircularProgress")
 private external val circularProgressModule: dynamic
 
@@ -30,6 +29,7 @@ interface MCircularProgressProps : StyledProps {
     var thickness: Double
     var value: Double
 }
+
 var MCircularProgressProps.color by EnumPropToString(MCircularProgressColor.values())
 var MCircularProgressProps.variant by EnumPropToString(MCircularProgressVariant.values())
 var MCircularProgressProps.size: LinearDimension
@@ -39,15 +39,16 @@ var MCircularProgressProps.size: LinearDimension
     }
 
 fun RBuilder.mCircularProgress(
-        value: Double? = null,
-        variant: MCircularProgressVariant = MCircularProgressVariant.indeterminate,
-        size: LinearDimension = 40.px,
-        color: MCircularProgressColor = MCircularProgressColor.primary,
-        thickness: Double = 3.6,
-        disableShrink: Boolean = false,
+    value: Double? = null,
+    variant: MCircularProgressVariant = MCircularProgressVariant.indeterminate,
+    size: LinearDimension = 40.px,
+    color: MCircularProgressColor = MCircularProgressColor.primary,
+    thickness: Double = 3.6,
+    disableShrink: Boolean = false,
 
-        className: String? = null,
-        handler: StyledHandler<MCircularProgressProps>? = null) = createStyled(circularProgressComponent) {
+    className: String? = null,
+    handler: StyledHandler<MCircularProgressProps>? = null
+) = createStyled(circularProgressComponent) {
     attrs.color = color
     attrs.disableShrink = disableShrink
     attrs.size = size

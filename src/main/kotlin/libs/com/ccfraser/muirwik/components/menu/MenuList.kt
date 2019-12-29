@@ -9,7 +9,6 @@ import react.RState
 import react.ReactElement
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/MenuList")
 private external val menuListModule: dynamic
 private val menuList: RComponent<MMenuListProps, RState> = menuListModule.default
@@ -22,14 +21,15 @@ interface MMenuListProps : MListProps {
  * Includes the props from ListItem
  */
 fun RBuilder.mMenuList(
-        dense: Boolean = false,
-        disablePadding: Boolean = false,
-        subheader: ReactElement? = null,
-        component: String = "ul",
-        disableListWrap: Boolean = false,
+    dense: Boolean = false,
+    disablePadding: Boolean = false,
+    subheader: ReactElement? = null,
+    component: String = "ul",
+    disableListWrap: Boolean = false,
 
-        className: String? = null,
-        handler: StyledHandler<MMenuListProps>? = null) = createStyled(menuList) {
+    className: String? = null,
+    handler: StyledHandler<MMenuListProps>? = null
+) = createStyled(menuList) {
 
     attrs.component = component
     attrs.dense = dense

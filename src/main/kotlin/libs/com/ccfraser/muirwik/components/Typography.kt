@@ -5,7 +5,6 @@ import react.RComponent
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/Typography")
 private external val typographyDefault: dynamic
 
@@ -33,24 +32,25 @@ interface MTypographyProps : StyledPropsWithCommonAttributes {
     var noWrap: Boolean
     var paragraph: Boolean
 }
+
 var MTypographyProps.align by EnumPropToString(MTypographyAlign.values())
 var MTypographyProps.color by EnumPropToString(MTypographyColor.values())
 var MTypographyProps.variant by EnumPropToString(MTypographyVariant.values())
 
-
 fun RBuilder.mTypography(
-        text: String? = null,
-        variant: MTypographyVariant = MTypographyVariant.body1,
-        color: MTypographyColor = MTypographyColor.initial,
-        align: MTypographyAlign = MTypographyAlign.left,
-        gutterBottom: Boolean = false,
-        noWrap: Boolean = false,
-        paragraph: Boolean = false,
-        component: String? = null,
+    text: String? = null,
+    variant: MTypographyVariant = MTypographyVariant.body1,
+    color: MTypographyColor = MTypographyColor.initial,
+    align: MTypographyAlign = MTypographyAlign.left,
+    gutterBottom: Boolean = false,
+    noWrap: Boolean = false,
+    paragraph: Boolean = false,
+    component: String? = null,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
-        handler: StyledHandler<MTypographyProps>? = null) = createStyled(typographyComponent, addAsChild) {
+    addAsChild: Boolean = true,
+    className: String? = null,
+    handler: StyledHandler<MTypographyProps>? = null
+) = createStyled(typographyComponent, addAsChild) {
     attrs.align = align
     attrs.color = color
     component?.let { attrs.component = it }
@@ -59,7 +59,7 @@ fun RBuilder.mTypography(
     attrs.paragraph = paragraph
     attrs.variant = variant
 
-    text?.let {childList.add(it)}
+    text?.let { childList.add(it) }
 
     setStyledPropsAndRunHandler(className, handler)
 }

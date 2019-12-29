@@ -1,8 +1,12 @@
 package data
 
-import data.ExamenResultaat.*
-import data.ExamenResultaatCategorie.*
-import data.ExamenResultaatVersie.*
+import data.ExamenResultaat.ONVOLDOENDE
+import data.ExamenResultaat.VOLDOENDE
+import data.ExamenResultaatCategorie.AUTOMAAT
+import data.ExamenResultaatCategorie.COMBI
+import data.ExamenResultaatCategorie.HANDGESCHAKELD
+import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
+import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 import io.data2viz.time.Date
 import org.w3c.xhr.XMLHttpRequest
 

@@ -1,17 +1,18 @@
-import com.ccfraser.muirwik.components.*
-import com.ccfraser.muirwik.components.button.*
+
+import com.ccfraser.muirwik.components.MColor
+import com.ccfraser.muirwik.components.MGridSize
+import com.ccfraser.muirwik.components.MGridSpacing
+import com.ccfraser.muirwik.components.button.MButtonSize
+import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.card.mCard
 import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
-import com.ccfraser.muirwik.components.form.MFormControlMargin
-import com.ccfraser.muirwik.components.form.MFormControlVariant
-import com.ccfraser.muirwik.components.form.MLabelMargin
-import com.ccfraser.muirwik.components.form.mFormControl
-import com.ccfraser.muirwik.components.input.*
+import com.ccfraser.muirwik.components.mAvatar
+import com.ccfraser.muirwik.components.mGridContainer
+import com.ccfraser.muirwik.components.mGridItem
+import com.ccfraser.muirwik.components.mTypography
 import data.Data
-import data.Examenlocatie
-import data.Opleider
 import io.data2viz.color.Colors
 import io.data2viz.geom.point
 import io.data2viz.geom.size
@@ -22,16 +23,24 @@ import io.data2viz.viz.TextVAlign
 import io.data2viz.viz.textAlign
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.css.*
-import kotlinx.html.InputType
+import kotlinx.css.Color
+import kotlinx.css.LinearDimension
+import kotlinx.css.backgroundColor
+import kotlinx.css.color
+import kotlinx.css.padding
+import kotlinx.css.px
+import kotlinx.css.width
 import kotlinx.html.js.onClickFunction
-import react.*
-import react.dom.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.dom.div
+import react.setState
 import styled.css
 import styled.styledDiv
 import styled.styledP
 import kotlin.browser.window
-
 
 class App(props: Props) : RComponent<App.Props, App.State>(props) {
 
@@ -43,15 +52,13 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
 
         // OpleidersList
         var opleiderFilter: String
-        var refreshOpleiders: RefreshOpleiders
-        var filteredOpleiders: List<Opleider>
-        var isOpleiderSelected: HashMap<String, Boolean>
+        var refreshOpleiders: ReloadItems
+        var selectedOpleiderKeys: HashSet<String>
 
         // ExamenlocatiesList
         var examenlocatieFilter: String
-        var refreshExamenlocaties: RefreshExamenlocaties
-        var filteredExamenlocaties: List<Examenlocatie>
-        var isExamenlocatieSelected: HashMap<String, Boolean>
+        var refreshExamenlocaties: ReloadItems
+        var selectedExamenlocatieKeys: HashSet<String>
     }
 
     override fun State.init(props: Props) {
@@ -60,13 +67,11 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
 
         opleiderFilter = ""
         refreshOpleiders = {}
-        filteredOpleiders = arrayListOf()
-        isOpleiderSelected = hashMapOf()
+        selectedOpleiderKeys = hashSetOf()
 
         examenlocatieFilter = ""
         refreshExamenlocaties = {}
-        filteredExamenlocaties = arrayListOf()
-        isExamenlocatieSelected = hashMapOf()
+        selectedExamenlocatieKeys = hashSetOf()
     }
 
     private fun loadData() {
@@ -210,149 +215,189 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
             mGridItem(
                 xs = MGridSize.cells4
             ) {
-                mGridItem(xs = MGridSize.cells12) {
-                    mFormControl(
-                        variant = MFormControlVariant.filled,
-                        fullWidth = true,
-                        margin = MFormControlMargin.normal
-                    ) {
-                        css {
-                            padding(LinearDimension.contentBox)
-                        }
-                        mInputLabel(
-                            htmlFor = "filled-adornment-filter",
-                            caption = "Filter Opleider",
-                            margin = MLabelMargin.dense
-                        )
-                        mFilledInput(
-                            id = "filled-adornment-filter",
-                            type = InputType.text,
-                            onChange = {
-                                it.persist()
-                                setState {
-                                    opleiderFilter = it.targetInputValue
-                                }
-                            }
-                        ) {
-                            attrs {
-                                margin = MInputMargin.dense
-                                onKeyPress = {
-                                    when (it.key) {
-                                        "Enter" -> {
-                                            it.preventDefault()
-                                            state.refreshOpleiders()
-                                        }
-                                    }
-                                }
-                                endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
-                                    mIconButton(
-                                        iconName = "search",
-                                        onClick = { state.refreshOpleiders() },
-                                        edge = MIconEdge.end
-                                    )
-                                }
-                            }
+                filterList(opleidersList) {
+                    setReloadRef = {
+                        setState {
+                            refreshOpleiders = it
                         }
                     }
-                }
-                mGridItem(xs = MGridSize.cells12) {
-                    opleidersList {
-                        filterDelegate = readOnlyPropertyOf { state.opleiderFilter }
-                        setRefreshOpleidersRef = {
-                            setState {
-                                refreshOpleiders = it
-                            }
-                        }
-                        filteredOpleidersDelegate = readWritePropertyOf(
-                            get = { state.filteredOpleiders },
-                            set = { setState { filteredOpleiders = it } }
-                        )
+                    selectedItemKeys = state.selectedOpleiderKeys
+                    selectedOtherItemKeys = state.selectedExamenlocatieKeys
+                    onSelectionChanged = {
+                        state.refreshExamenlocaties()
+                    }
 
-                        isOpleiderSelectedDelegate = readOnlyPropertyOf { state.isOpleiderSelected }
-                        isExamenlocatieSelectedDelegate = readOnlyPropertyOf { state.isExamenlocatieSelected }
-                        onSelectedOpleiderChanged = {
-                            state.refreshExamenlocaties()
-                        }
-                    }
                 }
             }
+
             mGridItem(
                 xs = MGridSize.cells4
             ) {
-                mGridItem(xs = MGridSize.cells12) {
-                    mFormControl(
-                        variant = MFormControlVariant.filled,
-                        fullWidth = true,
-                        margin = MFormControlMargin.normal
-                    ) {
-                        css {
-                            padding(LinearDimension.contentBox)
-                        }
-                        mInputLabel(
-                            htmlFor = "filled-adornment-filter",
-                            caption = "Filter Examenlocaties",
-                            margin = MLabelMargin.dense
-                        )
-                        mFilledInput(
-                            id = "filled-adornment-filter",
-                            type = InputType.text,
-                            onChange = {
-                                it.persist()
-                                setState {
-                                    examenlocatieFilter = it.targetInputValue
-                                }
-                            }
-                        ) {
-                            attrs {
-                                margin = MInputMargin.dense
-                                onKeyPress = {
-                                    when (it.key) {
-                                        "Enter" -> {
-                                            it.preventDefault()
-                                            state.refreshExamenlocaties()
-                                        }
-                                    }
-                                }
-                                endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
-                                    mIconButton(
-                                        iconName = "search",
-                                        onClick = { state.refreshExamenlocaties() },
-                                        edge = MIconEdge.end
-                                    )
-                                }
-                            }
+                filterList(examenlocatiesList) {
+                    setReloadRef = {
+                        setState {
+                            refreshExamenlocaties = it
                         }
                     }
-                }
-                mGridItem(xs = MGridSize.cells12) {
-                    examenlocatiesList {
-                        filterDelegate = readOnlyPropertyOf { state.examenlocatieFilter }
-                        setRefreshExamenlocatiesRef = {
-                            setState {
-                                refreshExamenlocaties = it
-                            }
-                        }
-                        filteredExamenlocatiesDelegate = readWritePropertyOf(
-                            get = { state.filteredExamenlocaties },
-                            set = { setState { filteredExamenlocaties = it } }
-                        )
-                        isExamenlocatieSelectedDelegate = readOnlyPropertyOf { state.isExamenlocatieSelected }
-                        isOpleiderSelectedDelegate = readOnlyPropertyOf { state.isOpleiderSelected }
-                        onSelectedExamenlocatiesChanged = {
-                            state.refreshOpleiders()
-                        }
+                    selectedItemKeys = state.selectedExamenlocatieKeys
+                    selectedOtherItemKeys = state.selectedOpleiderKeys
+                    onSelectionChanged = {
+                        state.refreshOpleiders()
                     }
                 }
             }
+
+
+            // mGridItem(
+            //     xs = MGridSize.cells4
+            // ) {
+            //     mGridItem(xs = MGridSize.cells12) {
+            //         mFormControl(
+            //             variant = MFormControlVariant.filled,
+            //             fullWidth = true,
+            //             margin = MFormControlMargin.normal
+            //         ) {
+            //             css {
+            //                 padding(LinearDimension.contentBox)
+            //             }
+            //             mInputLabel(
+            //                 htmlFor = "filled-adornment-filter",
+            //                 caption = "Filter Opleider",
+            //                 margin = MLabelMargin.dense
+            //             )
+            //             mFilledInput(
+            //                 id = "filled-adornment-filter",
+            //                 type = InputType.text,
+            //                 onChange = {
+            //                     it.persist()
+            //                     setState {
+            //                         opleiderFilter = it.targetInputValue
+            //                         if (LIVE_RELOAD) refreshOpleiders()
+            //                     }
+            //                 }
+            //             ) {
+            //                 attrs {
+            //                     margin = MInputMargin.dense
+            //                     onKeyPress = {
+            //                         when (it.key) {
+            //                             "Enter" -> {
+            //                                 it.preventDefault()
+            //                                 state.refreshOpleiders()
+            //                             }
+            //                         }
+            //                     }
+            //                     endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
+            //                         mIconButton(
+            //                             iconName = "search",
+            //                             onClick = { state.refreshOpleiders() },
+            //                             edge = MIconEdge.end
+            //                         )
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            //     mGridItem(xs = MGridSize.cells12) {
+            //         opleidersList {
+            //             // filterDelegate = readOnlyPropertyOf { state.opleiderFilter }
+            //             setReloadRef = {
+            //                 setState {
+            //                     refreshOpleiders = it
+            //                 }
+            //             }
+            //             filteredItemsDelegate = readWritePropertyOf(
+            //                 get = { state.filteredOpleiders },
+            //                 set = { setState { filteredOpleiders = it } }
+            //             )
+            //
+            //             isOpleiderSelectedDelegate = readOnlyPropertyOf { state.isOpleiderSelected }
+            //             isExamenlocatieSelectedDelegate = readOnlyPropertyOf { state.isExamenlocatieSelected }
+            //             onSelectionChanged = {
+            //                 state.refreshExamenlocaties()
+            //             }
+            //         }
+            //     }
+            // }
+            //
+            //
+            // mGridItem(
+            //     xs = MGridSize.cells4
+            // ) {
+            //     mGridItem(xs = MGridSize.cells12) {
+            //         mFormControl(
+            //             variant = MFormControlVariant.filled,
+            //             fullWidth = true,
+            //             margin = MFormControlMargin.normal
+            //         ) {
+            //             css {
+            //                 padding(LinearDimension.contentBox)
+            //             }
+            //             mInputLabel(
+            //                 htmlFor = "filled-adornment-filter",
+            //                 caption = "Filter Examenlocaties",
+            //                 margin = MLabelMargin.dense
+            //             )
+            //             mFilledInput(
+            //                 id = "filled-adornment-filter",
+            //                 type = InputType.text,
+            //                 onChange = {
+            //                     it.persist()
+            //                     setState {
+            //                         examenlocatieFilter = it.targetInputValue
+            //                         if (LIVE_RELOAD) refreshExamenlocaties()
+            //                     }
+            //                 }
+            //             ) {
+            //                 attrs {
+            //                     margin = MInputMargin.dense
+            //                     onKeyPress = {
+            //                         when (it.key) {
+            //                             "Enter" -> {
+            //                                 it.preventDefault()
+            //                                 state.refreshExamenlocaties()
+            //                             }
+            //                         }
+            //                     }
+            //                     endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
+            //                         mIconButton(
+            //                             iconName = "search",
+            //                             onClick = { state.refreshExamenlocaties() },
+            //                             edge = MIconEdge.end
+            //                         )
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            //     mGridItem(xs = MGridSize.cells12) {
+            //         examenlocatiesList {
+            //             filter = readOnlyPropertyOf { state.examenlocatieFilter }
+            //             setRefreshExamenlocatiesRef = {
+            //                 setState {
+            //                     refreshExamenlocaties = it
+            //                 }
+            //             }
+            //             filteredExamenlocatiesDelegate = readWritePropertyOf(
+            //                 get = { state.filteredExamenlocaties },
+            //                 set = { setState { filteredExamenlocaties = it } }
+            //             )
+            //             isExamenlocatieSelectedDelegate = readOnlyPropertyOf { state.isExamenlocatieSelected }
+            //             isOpleiderSelectedDelegate = readOnlyPropertyOf { state.isOpleiderSelected }
+            //             onSelectedExamenlocatiesChanged = {
+            //                 state.refreshOpleiders()
+            //             }
+            //         }
+            //     }
+            // }
         }
 
-        video {
-            attrs {
-                src = "https://thumbs.gfycat.com/ThankfulWeakChick-mobile.mp4"
-                autoPlay = true
-                loop = true
-            }
-        }
+        // video {
+        //     attrs {
+        //         src = "https://thumbs.gfycat.com/ThankfulWeakChick-mobile.mp4"
+        //         autoPlay = true
+        //         loop = true
+        //     }
+        // }
         loadData()
     }
 }

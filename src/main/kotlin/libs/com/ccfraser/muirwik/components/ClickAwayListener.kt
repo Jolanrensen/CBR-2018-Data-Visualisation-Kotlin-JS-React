@@ -6,7 +6,6 @@ import react.RHandler
 import react.RState
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/ClickAwayListener")
 private external val clickAwayListenerModule: dynamic
 
@@ -22,7 +21,7 @@ enum class MClickAwayListenerMouseEvent {
 
 @Suppress("EnumEntryName")
 enum class MClickAwayListenerTouchEvent {
-    onTouchStart, onTouchEnd,  disable;
+    onTouchStart, onTouchEnd, disable;
 
     fun value() = if (this == disable) false else super.toString()
 }
@@ -30,26 +29,31 @@ enum class MClickAwayListenerTouchEvent {
 interface MClickAwayListenerProps : StyledProps {
     var onClickAway: () -> Unit
 }
+
 var MClickAwayListenerProps.mouseEvent: MClickAwayListenerMouseEvent
     get() = when (this.asDynamic().mouseEvent) {
         is String -> MClickAwayListenerMouseEvent.valueOf(this.asDynamic().mouseEvent)
         else -> MClickAwayListenerMouseEvent.disable
     }
-    set(value) { this.asDynamic().mouseEvent = value.value() }
+    set(value) {
+        this.asDynamic().mouseEvent = value.value()
+    }
 
 var MClickAwayListenerProps.touchEvent: MClickAwayListenerTouchEvent
     get() = when (this.asDynamic().touchEvent) {
         is String -> MClickAwayListenerTouchEvent.valueOf(this.asDynamic().touchEvent)
         else -> MClickAwayListenerTouchEvent.disable
     }
-    set(value) { this.asDynamic().touchEvent = value.value() }
-
+    set(value) {
+        this.asDynamic().touchEvent = value.value()
+    }
 
 fun RBuilder.mClickAwayListener(
-        onClickAway: () -> Unit,
-        mouseEvent: MClickAwayListenerMouseEvent = MClickAwayListenerMouseEvent.onClick,
-        touchEvent: MClickAwayListenerTouchEvent = MClickAwayListenerTouchEvent.onTouchStart,
-        handler: RHandler<MClickAwayListenerProps>? = null) = child(clickAwayListenerComponent) {
+    onClickAway: () -> Unit,
+    mouseEvent: MClickAwayListenerMouseEvent = MClickAwayListenerMouseEvent.onClick,
+    touchEvent: MClickAwayListenerTouchEvent = MClickAwayListenerTouchEvent.onTouchStart,
+    handler: RHandler<MClickAwayListenerProps>? = null
+) = child(clickAwayListenerComponent) {
     attrs.mouseEvent = mouseEvent
     attrs.touchEvent = touchEvent
     attrs.onClickAway = onClickAway

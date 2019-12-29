@@ -12,16 +12,19 @@ import styled.StyledHandler
 private external val expansionPanelActionsModule: dynamic
 
 @Suppress("UnsafeCastFromDynamic")
-private val expansionPanelActionsComponent: RComponent<MExpansionPanelActionsProps, RState> = expansionPanelActionsModule.default
+private val expansionPanelActionsComponent: RComponent<MExpansionPanelActionsProps, RState> =
+    expansionPanelActionsModule.default
 
 interface MExpansionPanelActionsProps : StyledPropsWithCommonAttributes {
-	var disableSpacing: Boolean
+    var disableSpacing: Boolean
 }
 
-fun RBuilder.mExpansionPanelActions(disableSpacing: Boolean? = null,
-                                    className: String? = null,
-                                    handler: StyledHandler<MExpansionPanelActionsProps>? = null) =
-		createStyled(expansionPanelActionsComponent) {
-			disableSpacing?.let { attrs.disableSpacing = it }
-			setStyledPropsAndRunHandler(className, handler)
-		}
+fun RBuilder.mExpansionPanelActions(
+    disableSpacing: Boolean? = null,
+    className: String? = null,
+    handler: StyledHandler<MExpansionPanelActionsProps>? = null
+) =
+    createStyled(expansionPanelActionsComponent) {
+        disableSpacing?.let { attrs.disableSpacing = it }
+        setStyledPropsAndRunHandler(className, handler)
+    }

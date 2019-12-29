@@ -1,6 +1,10 @@
 package com.ccfraser.muirwik.components
 
-import com.ccfraser.muirwik.components.form.*
+import com.ccfraser.muirwik.components.form.MFormControlMargin
+import com.ccfraser.muirwik.components.form.MFormControlProps
+import com.ccfraser.muirwik.components.form.MFormControlVariant
+import com.ccfraser.muirwik.components.form.margin
+import com.ccfraser.muirwik.components.form.variant
 import kotlinx.html.InputType
 import org.w3c.dom.events.Event
 import react.RBuilder
@@ -8,7 +12,6 @@ import react.RComponent
 import react.RProps
 import react.RState
 import styled.StyledHandler
-
 
 @JsModule("@material-ui/core/TextField")
 private external val textFieldDefault: dynamic
@@ -60,27 +63,28 @@ interface MTextFieldProps : MFormControlProps {
  * and FormHelperText ) that you can leverage directly to significantly customize your form inputs.
  */
 fun RBuilder.mTextField(
-        label: String,
-        value: String? = null,
-        helperText: String? = null,
-        defaultValue: String? = null,
-        placeholder: String? = null,
-        variant: MFormControlVariant = MFormControlVariant.standard,
-        onChange: ((event: Event) -> Unit)? = null,
-        type: InputType = InputType.text,
-        required: Boolean = false,
-        disabled: Boolean = false,
-        error: Boolean = false,
-        autoFocus: Boolean = false,
-        fullWidth: Boolean = false,
-        margin: MFormControlMargin = MFormControlMargin.normal,
+    label: String,
+    value: String? = null,
+    helperText: String? = null,
+    defaultValue: String? = null,
+    placeholder: String? = null,
+    variant: MFormControlVariant = MFormControlVariant.standard,
+    onChange: ((event: Event) -> Unit)? = null,
+    type: InputType = InputType.text,
+    required: Boolean = false,
+    disabled: Boolean = false,
+    error: Boolean = false,
+    autoFocus: Boolean = false,
+    fullWidth: Boolean = false,
+    margin: MFormControlMargin = MFormControlMargin.normal,
 
-        autoComplete: String? = null,
-        id: String? = null,
-        name: String? = null,
+    autoComplete: String? = null,
+    id: String? = null,
+    name: String? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MTextFieldProps>? = null) = createStyled(textFieldComponent) {
+    className: String? = null,
+    handler: StyledHandler<MTextFieldProps>? = null
+) = createStyled(textFieldComponent) {
     autoComplete?.let { attrs.autoComplete = it }
     attrs.autoFocus = autoFocus
     defaultValue?.let { attrs.defaultValue = defaultValue }
@@ -105,28 +109,29 @@ fun RBuilder.mTextField(
 }
 
 fun RBuilder.mTextFieldMultiLine(
-        label: String,
-        value: String? = null,
-        helperText: String? = null,
-        defaultValue: String? = null,
-        placeholder: String? = null,
-        variant: MFormControlVariant = MFormControlVariant.standard,
-        onChange: ((event: Event) -> Unit)? = null,
-        required: Boolean = false,
-        disabled: Boolean = false,
-        error: Boolean = false,
-        autoFocus: Boolean = false,
-        fullWidth: Boolean = false,
+    label: String,
+    value: String? = null,
+    helperText: String? = null,
+    defaultValue: String? = null,
+    placeholder: String? = null,
+    variant: MFormControlVariant = MFormControlVariant.standard,
+    onChange: ((event: Event) -> Unit)? = null,
+    required: Boolean = false,
+    disabled: Boolean = false,
+    error: Boolean = false,
+    autoFocus: Boolean = false,
+    fullWidth: Boolean = false,
 
-        margin: MFormControlMargin = MFormControlMargin.normal,
-        rows: Int? = null,
-        rowsMax: Int? = null,
+    margin: MFormControlMargin = MFormControlMargin.normal,
+    rows: Int? = null,
+    rowsMax: Int? = null,
 
-        id: String? = null,
-        name: String? = null,
+    id: String? = null,
+    name: String? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MTextFieldProps>? = null) = createStyled(textFieldComponent) {
+    className: String? = null,
+    handler: StyledHandler<MTextFieldProps>? = null
+) = createStyled(textFieldComponent) {
     attrs.autoFocus = autoFocus
     defaultValue?.let { attrs.defaultValue = defaultValue }
     attrs.disabled = disabled
@@ -155,27 +160,28 @@ fun RBuilder.mTextFieldMultiLine(
  * I don't know why there is a text field select when there is a select... but here you go...
  */
 fun RBuilder.mTextFieldSelect(
-        label: String,
-        value: String? = null,
-        helperText: String? = null,
-        defaultValue: String? = null,
-        placeholder: String? = null,
-        variant: MFormControlVariant = MFormControlVariant.standard,
-        onChange: ((event: Event) -> Unit)? = null,
-        required: Boolean = false,
-        disabled: Boolean = false,
-        error: Boolean = false,
-        autoFocus: Boolean = false,
-        fullWidth: Boolean = false,
+    label: String,
+    value: String? = null,
+    helperText: String? = null,
+    defaultValue: String? = null,
+    placeholder: String? = null,
+    variant: MFormControlVariant = MFormControlVariant.standard,
+    onChange: ((event: Event) -> Unit)? = null,
+    required: Boolean = false,
+    disabled: Boolean = false,
+    error: Boolean = false,
+    autoFocus: Boolean = false,
+    fullWidth: Boolean = false,
 
-        margin: MFormControlMargin = MFormControlMargin.normal,
+    margin: MFormControlMargin = MFormControlMargin.normal,
 
-        autoComplete: String? = null,
-        id: String? = null,
-        name: String? = null,
+    autoComplete: String? = null,
+    id: String? = null,
+    name: String? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MTextFieldProps>? = null) = createStyled(textFieldComponent) {
+    className: String? = null,
+    handler: StyledHandler<MTextFieldProps>? = null
+) = createStyled(textFieldComponent) {
     autoComplete?.let { attrs.autoComplete = it }
     attrs.autoFocus = autoFocus
     defaultValue?.let { attrs.defaultValue = defaultValue }

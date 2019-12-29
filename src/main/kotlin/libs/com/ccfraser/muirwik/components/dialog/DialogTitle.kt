@@ -8,7 +8,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/DialogTitle")
 private external val dialogTitleModule: dynamic
 
@@ -20,11 +19,12 @@ interface MDialogTitleProps : StyledProps {
 }
 
 fun RBuilder.mDialogTitle(
-        text: String,
-        disableTypography: Boolean = false,
+    text: String,
+    disableTypography: Boolean = false,
 
-        className: String? = null,
-        handler: StyledHandler<MDialogTitleProps>? = null) = createStyled(dialogTitleComponent) {
+    className: String? = null,
+    handler: StyledHandler<MDialogTitleProps>? = null
+) = createStyled(dialogTitleComponent) {
     attrs.disableTypography = disableTypography
 
     childList.add(text)

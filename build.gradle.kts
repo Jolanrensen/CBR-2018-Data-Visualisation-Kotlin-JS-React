@@ -1,4 +1,6 @@
 import org.gradle.kotlin.dsl.*
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import org.jetbrains.kotlin.incremental.makeJsIncrementally
 
 plugins {
     kotlin("js") version "1.3.61"
@@ -33,7 +35,6 @@ spotless {
         ktlint()
     }
 }
-
 
 kotlin {
     target {

@@ -1,46 +1,60 @@
-import com.ccfraser.muirwik.components.*
-import com.ccfraser.muirwik.components.list.*
+import com.ccfraser.muirwik.components.list.mListItem
+import com.ccfraser.muirwik.components.list.mListItemAvatar
+import com.ccfraser.muirwik.components.list.mListItemText
+import com.ccfraser.muirwik.components.mAvatar
+import com.ccfraser.muirwik.components.mCheckbox
+import com.ccfraser.muirwik.components.spacingUnits
+import com.ccfraser.muirwik.components.themeContext
 import data.Data
 import data.Opleider
-import kotlinx.css.*
-import libs.*
-import react.*
-import styled.*
-import kotlin.properties.ReadOnlyProperty
-import kotlin.properties.ReadWriteProperty
-import kotlin.reflect.KMutableProperty0
+import kotlinx.css.Color
+import kotlinx.css.Overflow
+import kotlinx.css.backgroundColor
+import kotlinx.css.maxHeight
+import kotlinx.css.overflow
+import kotlinx.css.padding
+import kotlinx.css.px
+import kotlinx.css.width
+import libs.ReactListRef
+import libs.ref
+import libs.styledReactList
+import react.RBuilder
+import react.ReactElement
+import react.buildElement
+import react.setState
+import styled.StyleSheet
+import styled.css
+import styled.styledDiv
 
-class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersList.State>(props) {
+class OpleidersList(props: Props) : FilterableList<OpleidersList.Props, OpleidersList.State>(props) {
 
-    interface Props : RProps {
-        var filterDelegate: ReadOnlyProperty<Any?, String>
-        var setRefreshOpleidersRef: (RefreshOpleiders) -> Unit
-        var filteredOpleidersDelegate: ReadWriteProperty<Any?, List<Opleider>>
-        var isOpleiderSelectedDelegate: ReadOnlyProperty<Any?, HashMap<String, Boolean>>
-        var onSelectedOpleiderChanged: () -> Unit
-        var isExamenlocatieSelectedDelegate: ReadOnlyProperty<Any?, HashMap<String, Boolean>>
+    interface Props : FilterableListProps {
+        override var filter: String
+        override var setReloadRef: (ReloadItems) -> Unit
+        override var selectedItemKeys: HashSet<String>
+        override var onSelectionChanged: () -> Unit
+        override var selectedOtherItemKeys: HashSet<String>
     }
 
-    private val filter by props.filterDelegate
-    private var filteredOpleiders by props.filteredOpleidersDelegate // Cleaner way than passing along 2 functions for every prop
-    private val isOpleiderSelected by props.isOpleiderSelectedDelegate
-    private val isExamenlocatieSelected by props.isExamenlocatieSelectedDelegate
+    private val isOpleiderSelected = props.selectedItemKeys
+    private val isExamenlocatieSelected = props.selectedOtherItemKeys
 
-    interface State : RState
+    interface State : FilterableListState<Opleider>
 
     override fun State.init(props: Props) {
-        props.setRefreshOpleidersRef(::refreshOpleiders)
+        props.setReloadRef(::refreshOpleiders)
+        filteredItems = listOf()
     }
 
     private var list: ReactListRef? = null
 
     private fun refreshOpleiders() {
-        val filterTerms = filter.split(" ", ", ", ",")
+        // println("refreshOpleiders")
+        val filterTerms = props.filter.split(" ", ", ", ",")
         val score = hashMapOf<String, Int>()
-        (if (isExamenlocatieSelected.values.any { it })
+        (if (isExamenlocatieSelected.isNotEmpty())
             isExamenlocatieSelected.asSequence()
-                .filter { it.value }
-                .map { Data.examenlocatieToOpleiders[it.key]!! }
+                .map { Data.examenlocatieToOpleiders[it]!! }
                 .flatten()
                 .map { it to Data.alleOpleiders[it]!! }
                 .toMap()
@@ -52,27 +66,27 @@ class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersLis
                 val postcode = opleider.postcode.contains(it, true)
                 val straatnaam = opleider.straatnaam.contains(it, true)
                 score[oplCode] = (score[oplCode] ?: 0) +
-                        naam.toInt() * 3 + code.toInt() + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
+                    naam.toInt() * 3 + code.toInt() + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
             }
         }
         setState {
             val filteredOpleiderCodes: List<String>
-            filteredOpleiders = score.asSequence()
+            filteredItems = score.asSequence()
                 .filter { it.value != 0 }
                 .sortedByDescending { it.value }
-                .sortedByDescending { isOpleiderSelected[it.key] ?: false }
+                .sortedByDescending { it.key in isOpleiderSelected }
                 .apply { filteredOpleiderCodes = map { it.key }.toList() }
                 .map { Data.alleOpleiders[it.key]!! }
                 .toList()
 
             // deselect all previously selected opleiders that are no longer in filteredOpleiders
-            isOpleiderSelected.filter { (code, selected) ->
-                selected && code !in filteredOpleiderCodes
+            isOpleiderSelected.filter { code ->
+                code !in filteredOpleiderCodes
             }.apply {
-                forEach { (key, _) ->
-                    isOpleiderSelected[key] = false
+                forEach { key ->
+                    isOpleiderSelected.remove(key)
                 }
-                if (size > 0) props.onSelectedOpleiderChanged()
+                if (size > 0) props.onSelectionChanged()
             }
         }
 
@@ -82,16 +96,20 @@ class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersLis
     private fun toggleSelected(opleider: String?, newState: Boolean? = null) {
         opleider ?: return
         setState {
-            isOpleiderSelected[opleider] = newState ?: !(isOpleiderSelected[opleider] ?: false)
-            props.onSelectedOpleiderChanged()
+            if (newState ?: opleider !in isOpleiderSelected)
+                isOpleiderSelected += opleider
+            else
+                isOpleiderSelected -= opleider
+
+            props.onSelectionChanged()
         }
     }
 
     private fun renderRow(index: Int, key: String) = buildElement {
-        val opleider = filteredOpleiders[index]
+        val opleider = state.filteredItems[index]
         mListItem(
             button = true,
-            selected = isOpleiderSelected[opleider.code] ?: false,
+            selected = opleider.code in isOpleiderSelected,
             key = key,
             divider = false,
             onClick = { toggleSelected(opleider.code) }
@@ -103,11 +121,10 @@ class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersLis
             }
             mListItemText("${opleider.naam}, ${opleider.plaatsnaam} (${opleider.code})")
             mCheckbox(
-                checked = isOpleiderSelected[opleider.code] ?: false,
+                checked = opleider.code in isOpleiderSelected,
                 onChange = { _, newState -> toggleSelected(opleider.code, newState) })
         }
     }
-
 
     override fun RBuilder.render() {
         themeContext.Consumer { theme ->
@@ -128,7 +145,7 @@ class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersLis
                 styledReactList {
                     css(themeStyles.list)
                     attrs {
-                        length = filteredOpleiders.size
+                        length = state.filteredItems.size
                         itemRenderer = ::renderRow
                         type = "variable"
                         ref {
@@ -141,12 +158,18 @@ class OpleidersList(props: Props) : RComponent<OpleidersList.Props, OpleidersLis
             Unit
         }
     }
-
 }
 
-fun RBuilder.opleidersList(handler: OpleidersList.Props.() -> Unit) =
+// as for a fun RBuilder.opleiderslist, its ::opleidersList wouldn't be an extension function anymore
+val opleidersList: RBuilder.(OpleidersList.Props.() -> Unit) -> ReactElement = { handler ->
     child(OpleidersList::class) {
         attrs(handler)
     }
+}
 
-typealias RefreshOpleiders = () -> Unit
+// fun RBuilder.opleidersList(handler: OpleidersList.Props.() -> Unit): ReactElement {
+//     return child(OpleidersList::class) {
+//         attrs(handler)
+//     }
+// }
+

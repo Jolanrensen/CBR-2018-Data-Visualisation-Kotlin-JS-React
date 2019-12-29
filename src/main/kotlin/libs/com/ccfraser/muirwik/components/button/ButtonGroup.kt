@@ -1,11 +1,14 @@
 package com.ccfraser.muirwik.components.button
 
-import com.ccfraser.muirwik.components.*
+import com.ccfraser.muirwik.components.EnumPropToString
+import com.ccfraser.muirwik.components.MColor
+import com.ccfraser.muirwik.components.StyledPropsWithCommonAttributes
+import com.ccfraser.muirwik.components.createStyled
+import com.ccfraser.muirwik.components.setStyledPropsAndRunHandler
 import react.RBuilder
 import react.RComponent
 import react.RState
 import styled.StyledHandler
-
 
 @JsModule("@material-ui/core/ButtonGroup")
 private external val buttonGroupModule: dynamic
@@ -24,26 +27,27 @@ interface MButtonGroupProps : StyledPropsWithCommonAttributes {
     var disableRipple: Boolean
     var fullWidth: Boolean
 }
+
 var MButtonGroupProps.color by EnumPropToString(MColor.values())
 var MButtonGroupProps.size by EnumPropToString(MButtonSize.values())
 var MButtonGroupProps.variant by EnumPropToString(MButtonGroupVariant.values())
 
-
 fun RBuilder.mButtonGroup(
-        color: MColor = MColor.default,
-        variant: MButtonGroupVariant = MButtonGroupVariant.outlined,
-        size: MButtonSize = MButtonSize.medium,
-        fullWidth: Boolean = false,
-        disabled: Boolean = false,
-        component: String? = null,
+    color: MColor = MColor.default,
+    variant: MButtonGroupVariant = MButtonGroupVariant.outlined,
+    size: MButtonSize = MButtonSize.medium,
+    fullWidth: Boolean = false,
+    disabled: Boolean = false,
+    component: String? = null,
 
-        disableFocusRipple: Boolean = false,
-        disableRipple: Boolean = false,
+    disableFocusRipple: Boolean = false,
+    disableRipple: Boolean = false,
 
-        className: String? = null,
-        handler: StyledHandler<MButtonGroupProps>? = null) = createStyled(buttonGroupComponent) {
+    className: String? = null,
+    handler: StyledHandler<MButtonGroupProps>? = null
+) = createStyled(buttonGroupComponent) {
     attrs.color = color
-    component?.let { attrs.component = component}
+    component?.let { attrs.component = component }
     attrs.disabled = disabled
     attrs.disableFocusRipple = disableFocusRipple
     attrs.disableRipple = disableRipple

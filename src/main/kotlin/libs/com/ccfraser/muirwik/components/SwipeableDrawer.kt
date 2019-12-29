@@ -8,7 +8,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/SwipeableDrawer")
 private external val swipeableDrawerModule: dynamic
 
@@ -29,18 +28,19 @@ interface MSwipeableDrawerProps : MDrawerProps {
 interface MSwipeAreaProps : StyledProps
 
 fun RBuilder.mSwipeableDrawer(
-        open: Boolean = false,
-        anchor: MDrawerAnchor = MDrawerAnchor.left,
-        variant: MDrawerVariant = MDrawerVariant.temporary,
-        onOpen: ((Event) -> Unit)? = null,
-        onClose: ((Event) -> Unit)? = null,
-        swipeAreaWidth: Number = 20,
+    open: Boolean = false,
+    anchor: MDrawerAnchor = MDrawerAnchor.left,
+    variant: MDrawerVariant = MDrawerVariant.temporary,
+    onOpen: ((Event) -> Unit)? = null,
+    onClose: ((Event) -> Unit)? = null,
+    swipeAreaWidth: Number = 20,
 
-        elevation: Int = 16,
-        transitionDuration: TransitionDuration? = null,
+    elevation: Int = 16,
+    transitionDuration: TransitionDuration? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MSwipeableDrawerProps>) = createStyled(swipeableDrawerComponent) {
+    className: String? = null,
+    handler: StyledHandler<MSwipeableDrawerProps>
+) = createStyled(swipeableDrawerComponent) {
     attrs.anchor = anchor
     attrs.elevation = elevation
     attrs.swipeAreaWidth = swipeAreaWidth

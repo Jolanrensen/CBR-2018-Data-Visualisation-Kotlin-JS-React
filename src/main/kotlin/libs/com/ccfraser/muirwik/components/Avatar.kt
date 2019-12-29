@@ -22,16 +22,17 @@ interface MAvatarProps : StyledPropsWithCommonAttributes {
 }
 
 fun RBuilder.mAvatar(
-        src: String? = null,
-        alt: String? = null,
-        srcSet: String? = null,
-        component: String = "div",
-        imgProps: RProps? = null,
-        sizes: String? = null,
-        addAsChild: Boolean = true,
+    src: String? = null,
+    alt: String? = null,
+    srcSet: String? = null,
+    component: String = "div",
+    imgProps: RProps? = null,
+    sizes: String? = null,
+    addAsChild: Boolean = true,
 
-        className: String? = null,
-        handler: StyledHandler<MAvatarProps>? = null) = createStyled(avatarComponent, addAsChild) {
+    className: String? = null,
+    handler: StyledHandler<MAvatarProps>? = null
+) = createStyled(avatarComponent, addAsChild) {
     alt?.let { attrs.alt = alt }
     attrs.component = component
     imgProps?.let { attrs.imgProps = imgProps }

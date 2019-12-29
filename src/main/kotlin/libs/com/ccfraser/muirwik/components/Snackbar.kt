@@ -3,10 +3,13 @@ package com.ccfraser.muirwik.components
 import com.ccfraser.muirwik.components.transitions.TransitionComponentDelegate
 import com.ccfraser.muirwik.components.transitions.TransitionDurationDelegate
 import org.w3c.dom.events.Event
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.StyledHandler
 import styled.StyledProps
-
 
 @JsModule("@material-ui/core/Snackbar")
 private external val SnackbarModule: dynamic
@@ -56,25 +59,33 @@ interface MSnackbarProps : StyledProps {
     var transitionProps: RProps
 }
 
-var MSnackbarProps.anchorOriginHorizontal by EnumPropToStringNullable(MSnackbarHorizAnchor.values(), "anchorOrigin", "horizontal")
-var MSnackbarProps.anchorOriginVertical by EnumPropToStringNullable(MSnackbarVertAnchor.values(), "anchorOrigin", "vertical")
+var MSnackbarProps.anchorOriginHorizontal by EnumPropToStringNullable(
+    MSnackbarHorizAnchor.values(),
+    "anchorOrigin",
+    "horizontal"
+)
+var MSnackbarProps.anchorOriginVertical by EnumPropToStringNullable(
+    MSnackbarVertAnchor.values(),
+    "anchorOrigin",
+    "vertical"
+)
 var MSnackbarProps.onClose by OnClosePropWithReasonDelegate(MSnackbarOnCloseReason.values())
 var MSnackbarProps.transitionComponent by TransitionComponentDelegate()
 var MSnackbarProps.transitionDuration by TransitionDurationDelegate()
 
-
 fun RBuilder.mSnackbar(
-        message: ReactElement,
-        open: Boolean? = null,
-        onClose: ((Event, MSnackbarOnCloseReason) -> Unit)? = null,
-        horizAnchor: MSnackbarHorizAnchor = MSnackbarHorizAnchor.center,
-        vertAnchor: MSnackbarVertAnchor = MSnackbarVertAnchor.bottom,
-        key: String? = null,
-        autoHideDuration: Int? = null,
-        resumeHideDuration: Int? = null,
+    message: ReactElement,
+    open: Boolean? = null,
+    onClose: ((Event, MSnackbarOnCloseReason) -> Unit)? = null,
+    horizAnchor: MSnackbarHorizAnchor = MSnackbarHorizAnchor.center,
+    vertAnchor: MSnackbarVertAnchor = MSnackbarVertAnchor.bottom,
+    key: String? = null,
+    autoHideDuration: Int? = null,
+    resumeHideDuration: Int? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MSnackbarProps>? = null) = createStyled(snackbarComponent) {
+    className: String? = null,
+    handler: StyledHandler<MSnackbarProps>? = null
+) = createStyled(snackbarComponent) {
     attrs.anchorOriginHorizontal = horizAnchor
     attrs.anchorOriginVertical = vertAnchor
     autoHideDuration?.let { attrs.autoHideDuration = it }
@@ -91,19 +102,22 @@ fun RBuilder.mSnackbar(
  * Just one with a string for the message
  */
 fun RBuilder.mSnackbar(
-        message: String,
-        open: Boolean? = null,
-        onClose: ((Event, MSnackbarOnCloseReason) -> Unit)? = null,
-        horizAnchor: MSnackbarHorizAnchor = MSnackbarHorizAnchor.center,
-        vertAnchor: MSnackbarVertAnchor = MSnackbarVertAnchor.bottom,
-        key: String? = null,
-        autoHideDuration: Int? = null,
-        resumeHideDuration: Int? = null,
+    message: String,
+    open: Boolean? = null,
+    onClose: ((Event, MSnackbarOnCloseReason) -> Unit)? = null,
+    horizAnchor: MSnackbarHorizAnchor = MSnackbarHorizAnchor.center,
+    vertAnchor: MSnackbarVertAnchor = MSnackbarVertAnchor.bottom,
+    key: String? = null,
+    autoHideDuration: Int? = null,
+    resumeHideDuration: Int? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MSnackbarProps>? = null): ReactElement {
+    className: String? = null,
+    handler: StyledHandler<MSnackbarProps>? = null
+): ReactElement {
     @Suppress("UnsafeCastFromDynamic")
     val dynamicElement: ReactElement = message.asDynamic()
-    return mSnackbar(dynamicElement, open, onClose, horizAnchor, vertAnchor, key, autoHideDuration, resumeHideDuration,
-            className, handler)
+    return mSnackbar(
+        dynamicElement, open, onClose, horizAnchor, vertAnchor, key, autoHideDuration, resumeHideDuration,
+        className, handler
+    )
 }

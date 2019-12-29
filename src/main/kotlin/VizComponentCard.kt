@@ -1,15 +1,17 @@
 import com.ccfraser.muirwik.components.card.MCardProps
 import com.ccfraser.muirwik.components.card.mCard
 import com.ccfraser.muirwik.components.card.mCardContent
-import com.ccfraser.muirwik.components.card.mCardHeader
-import com.ccfraser.muirwik.components.mTypography
-import com.ccfraser.muirwik.components.spacingUnits
 import io.data2viz.viz.Viz
-import kotlinx.css.*
+import kotlinx.css.margin
+import kotlinx.css.mm
+import kotlinx.css.padding
 import kotlinx.html.js.onMouseOutFunction
 import kotlinx.html.js.onMouseOverFunction
-import react.*
-import react.dom.div
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.setState
 import styled.StyledHandler
 import styled.css
 import styled.styledDiv
@@ -46,10 +48,10 @@ class VizComponentCard(props: Props) : RComponent<VizComponentCard.Props, VizCom
                         raised = false
                     }
                 }
-            } 
+            }
             mCard {
                 css {
-//                    display = Display.flex
+                    //                    display = Display.flex
                     padding(5.mm)
                 }
                 attrs {
@@ -58,13 +60,13 @@ class VizComponentCard(props: Props) : RComponent<VizComponentCard.Props, VizCom
                 props.runOnCard(this)
 
                 mCardContent {
-//                    styledDiv { todo kunnen we nog stylen of centeren ofzo
+                    //                    styledDiv { todo kunnen we nog stylen of centeren ofzo
 //                        css {
 //                            display = Display.flex
 //                            justifyContent = JustifyContent.center
 //                            alignItems = Align.center
 //                        }
-                        vizComponent(props.runOnViz)
+                    vizComponent(props.runOnViz)
 //                    }
                 }
 

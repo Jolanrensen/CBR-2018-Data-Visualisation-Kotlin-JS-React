@@ -6,7 +6,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/Paper")
 private external val paperModule: dynamic
 
@@ -20,12 +19,13 @@ interface MPaperProps : StyledProps {
 }
 
 fun RBuilder.mPaper(
-        component: String = "div",
-        elevation: Int = 2,
-        square: Boolean = false,
+    component: String = "div",
+    elevation: Int = 2,
+    square: Boolean = false,
 
-        className: String? = null,
-        handler: StyledHandler<MPaperProps>? = null) = createStyled(paperComponent) {
+    className: String? = null,
+    handler: StyledHandler<MPaperProps>? = null
+) = createStyled(paperComponent) {
     attrs.component = component
     attrs.elevation = elevation
     attrs.square = square

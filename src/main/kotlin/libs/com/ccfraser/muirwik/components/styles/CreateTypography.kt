@@ -1,6 +1,5 @@
 package com.ccfraser.muirwik.components.styles
 
-
 external interface FontStyle {
     var fontFamily: String?
     var fontSize: Int
@@ -19,7 +18,6 @@ external interface TypographyStyle {
     var letterSpacing: String?
     var lineHeight: String?
     var textTransform: String?
-
 
     // From FontStyleOptions
     var useNextVariants: Boolean?

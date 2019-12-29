@@ -15,14 +15,15 @@ private external val backdropModule: dynamic
 private val backdropComponent: RComponent<MBackdropProps, RState> = backdropModule.default
 
 interface MBackdropProps : StyledProps
+
 var MBackdropProps.transitionDuration by TransitionDurationDelegate()
 
-
 fun RBuilder.mBackdrop(
-        transitionDuration: TransitionDuration,
+    transitionDuration: TransitionDuration,
 
-        className: String? = null,
-        handler: StyledHandler<MBackdropProps>? = null) = createStyled(backdropComponent) {
+    className: String? = null,
+    handler: StyledHandler<MBackdropProps>? = null
+) = createStyled(backdropComponent) {
     attrs.transitionDuration = transitionDuration
     setStyledPropsAndRunHandler(className, handler)
 }

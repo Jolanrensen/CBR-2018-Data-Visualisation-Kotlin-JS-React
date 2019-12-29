@@ -20,11 +20,13 @@ interface MCardMediaProps : StyledProps {
     var title: String
 }
 
-fun RBuilder.mCardMedia(image: String,
-                        title: String = "",
+fun RBuilder.mCardMedia(
+    image: String,
+    title: String = "",
 
-                        className: String? = null,
-                        handler: StyledHandler<MCardMediaProps>? = null) = createStyled(cardMediaComponent) {
+    className: String? = null,
+    handler: StyledHandler<MCardMediaProps>? = null
+) = createStyled(cardMediaComponent) {
     attrs.image = image
     attrs.title = title
 

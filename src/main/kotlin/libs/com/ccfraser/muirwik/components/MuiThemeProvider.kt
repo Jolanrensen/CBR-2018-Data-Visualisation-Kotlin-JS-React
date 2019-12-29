@@ -1,8 +1,11 @@
 package com.ccfraser.muirwik.components
 
 import com.ccfraser.muirwik.components.styles.Theme
-import react.*
-
+import react.RBuilder
+import react.RComponent
+import react.RHandler
+import react.RProps
+import react.RState
 
 @JsModule("@material-ui/core/styles/MuiThemeProvider")
 private external val muiThemeProviderModule: dynamic
@@ -16,10 +19,14 @@ interface MuiThemeProviderProps : RProps {
     var theme: Theme
 }
 
-@Deprecated("Using mMuiThemeProvider directly does not provide usable contexts to access the theme property. " +
-        "Consider using themeProvider which wraps mMuiThemeProvider instead.", ReplaceWith("themeProvider"))
-fun RBuilder.mMuiThemeProvider(theme: Theme, disableStylesGeneration: Boolean? = null, sheetsManager: Any? = null,
-        handler: RHandler<MuiThemeProviderProps>? = null) = child(muiThemeProviderComponent) {
+@Deprecated(
+    "Using mMuiThemeProvider directly does not provide usable contexts to access the theme property. " +
+        "Consider using themeProvider which wraps mMuiThemeProvider instead.", ReplaceWith("themeProvider")
+)
+fun RBuilder.mMuiThemeProvider(
+    theme: Theme, disableStylesGeneration: Boolean? = null, sheetsManager: Any? = null,
+    handler: RHandler<MuiThemeProviderProps>? = null
+) = child(muiThemeProviderComponent) {
     disableStylesGeneration?.let { attrs.disableStylesGeneration = disableStylesGeneration }
     sheetsManager?.let { attrs.sheetsManager = sheetsManager }
     attrs.theme = theme

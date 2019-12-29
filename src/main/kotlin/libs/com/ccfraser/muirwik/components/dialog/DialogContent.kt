@@ -8,7 +8,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/DialogContent")
 private external val dialogContentModule: dynamic
 
@@ -20,9 +19,10 @@ interface MDialogContentProps : StyledProps {
 }
 
 fun RBuilder.mDialogContent(
-        dividers: Boolean = false,
-        className: String? = null,
-        handler: StyledHandler<MDialogContentProps>) = createStyled(dialogContentComponent) {
+    dividers: Boolean = false,
+    className: String? = null,
+    handler: StyledHandler<MDialogContentProps>
+) = createStyled(dialogContentComponent) {
     attrs.dividers = dividers
     setStyledPropsAndRunHandler(className, handler)
 }

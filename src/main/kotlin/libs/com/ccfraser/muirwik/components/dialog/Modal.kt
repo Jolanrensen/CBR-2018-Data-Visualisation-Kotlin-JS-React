@@ -8,7 +8,6 @@ import react.RProps
 import react.RState
 import react.ReactElement
 
-
 @JsModule("@material-ui/core/Dialog")
 private external val dialogModule: dynamic
 
@@ -19,7 +18,6 @@ private val dialogComponent: RComponent<MDialogProps, RState> = dialogModule.def
 enum class ModalOnCloseReason {
     escapeKeyDown, backdropClick
 }
-
 
 interface MModalProps : StyledPropsWithCommonAttributes {
     @JsName("BackdropComponent")
@@ -44,5 +42,6 @@ interface MModalProps : StyledPropsWithCommonAttributes {
 
     var open: Boolean
 }
+
 var MModalProps.onClose by OnClosePropWithReasonDelegate(ModalOnCloseReason.values())
 

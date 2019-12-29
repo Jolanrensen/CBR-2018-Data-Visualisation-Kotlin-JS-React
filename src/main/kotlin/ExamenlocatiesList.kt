@@ -1,48 +1,61 @@
-import com.ccfraser.muirwik.components.*
-import com.ccfraser.muirwik.components.list.*
+
+import com.ccfraser.muirwik.components.list.mListItem
+import com.ccfraser.muirwik.components.list.mListItemAvatar
+import com.ccfraser.muirwik.components.list.mListItemText
+import com.ccfraser.muirwik.components.mAvatar
+import com.ccfraser.muirwik.components.mCheckbox
+import com.ccfraser.muirwik.components.spacingUnits
+import com.ccfraser.muirwik.components.themeContext
 import data.Data
 import data.Examenlocatie
-import data.Opleider
-import kotlinx.css.*
-import libs.*
-import react.*
-import styled.*
-import kotlin.properties.ReadOnlyProperty
-import kotlin.properties.ReadWriteProperty
-import kotlin.reflect.KMutableProperty0
+import kotlinx.css.Color
+import kotlinx.css.Overflow
+import kotlinx.css.backgroundColor
+import kotlinx.css.maxHeight
+import kotlinx.css.overflow
+import kotlinx.css.padding
+import kotlinx.css.px
+import kotlinx.css.width
+import libs.ReactListRef
+import libs.ref
+import libs.styledReactList
+import react.RBuilder
+import react.ReactElement
+import react.buildElement
+import react.setState
+import styled.StyleSheet
+import styled.css
+import styled.styledDiv
 
-class ExamenlocatiesList(props: Props) : RComponent<ExamenlocatiesList.Props, ExamenlocatiesList.State>(props) {
+class ExamenlocatiesList(props: Props) : FilterableList<ExamenlocatiesList.Props, ExamenlocatiesList.State>(props) {
 
-    interface Props : RProps {
-        var filterDelegate: ReadOnlyProperty<Any?, String>
-        var setRefreshExamenlocatiesRef: (RefreshExamenlocaties) -> Unit
-        var filteredExamenlocatiesDelegate: ReadWriteProperty<Any?, List<Examenlocatie>>
-        var isExamenlocatieSelectedDelegate: ReadOnlyProperty<Any, HashMap<String, Boolean>>
-        var isOpleiderSelectedDelegate: ReadOnlyProperty<Any, HashMap<String, Boolean>>
-        var onSelectedExamenlocatiesChanged: () -> Unit
+    interface Props : FilterableListProps {
+        override var filter: String
+        override var setReloadRef: (ReloadItems) -> Unit
+        override var selectedItemKeys: HashSet<String>
+        override var onSelectionChanged: () -> Unit
+        override var selectedOtherItemKeys: HashSet<String>
     }
 
-    private val filter by props.filterDelegate
-    private var filteredExamenlocaties by props.filteredExamenlocatiesDelegate
-    private val isExamenlocatieSelected by props.isExamenlocatieSelectedDelegate
-    private val isOpleiderSelected by props.isOpleiderSelectedDelegate
+    private val isExamenlocatieSelected = props.selectedItemKeys
+    private val isOpleiderSelected = props.selectedOtherItemKeys
 
-
-    interface State : RState
+    interface State : FilterableListState<Examenlocatie>
 
     override fun State.init(props: Props) {
-        props.setRefreshExamenlocatiesRef { refreshExamenlocaties() }
+        props.setReloadRef(::refreshExamenlocaties)
+        filteredItems = listOf()
     }
 
     private var list: ReactListRef? = null
 
     private fun refreshExamenlocaties() {
-        val filterTerms = filter.split(" ", ", ", ",")
+        // println("refreshExamenlocations")
+        val filterTerms = props.filter.split(" ", ", ", ",")
         val score = hashMapOf<String, Int>()
-        (if (isOpleiderSelected.values.any { it })
+        (if (isOpleiderSelected.isNotEmpty())
             isOpleiderSelected.asSequence()
-                .filter { it.value }
-                .map { Data.opleiderToExamenlocaties[it.key]!! }
+                .map { Data.opleiderToExamenlocaties[it]!! }
                 .flatten()
                 .map { it to Data.alleExamenlocaties[it]!! }
                 .toMap()
@@ -53,27 +66,27 @@ class ExamenlocatiesList(props: Props) : RComponent<ExamenlocatiesList.Props, Ex
                 val postcode = examenlocatie.postcode.contains(it, true)
                 val straatnaam = examenlocatie.straatnaam.contains(it, true)
                 score[examNaam] = (score[examNaam] ?: 0) +
-                        naam.toInt() * 3 + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
+                    naam.toInt() * 3 + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
             }
         }
         setState {
             val filteredExamenlocatieCodes: List<String>
-            filteredExamenlocaties = score.asSequence()
+            filteredItems = score.asSequence()
                 .filter { it.value != 0 }
                 .sortedByDescending { it.value }
-                .sortedByDescending { isExamenlocatieSelected[it.key] ?: false }
+                .sortedByDescending { it.key in isExamenlocatieSelected }
                 .apply { filteredExamenlocatieCodes = map { it.key }.toList() }
                 .map { Data.alleExamenlocaties[it.key]!! }
                 .toList()
 
             // deselect all previously selected examenlocaties that are no longer in filteredExamenlocaties
-            isExamenlocatieSelected.filter { (naam, selected) ->
-                selected && naam !in filteredExamenlocatieCodes
+            isExamenlocatieSelected.filter { naam ->
+                naam !in filteredExamenlocatieCodes
             }.apply {
-                forEach { (key, _) ->
-                    isExamenlocatieSelected[key] = false
+                forEach { key ->
+                    isExamenlocatieSelected.remove(key)
                 }
-                if (size > 0) props.onSelectedExamenlocatiesChanged()
+                if (size > 0) props.onSelectionChanged()
             }
         }
 
@@ -83,17 +96,20 @@ class ExamenlocatiesList(props: Props) : RComponent<ExamenlocatiesList.Props, Ex
     private fun toggleSelected(examenlocatie: String?, newState: Boolean? = null) {
         examenlocatie ?: return
         setState {
-            isExamenlocatieSelected[examenlocatie] =
-                newState ?: !(isExamenlocatieSelected[examenlocatie] ?: false)
-            props.onSelectedExamenlocatiesChanged()
+            if (newState ?: examenlocatie !in isExamenlocatieSelected)
+                isExamenlocatieSelected += examenlocatie
+            else
+                isExamenlocatieSelected -= examenlocatie
+
+            props.onSelectionChanged()
         }
     }
 
     private fun renderRow(index: Int, key: String) = buildElement {
-        val examenlocatie = filteredExamenlocaties[index]
+        val examenlocatie = state.filteredItems[index]
         mListItem(
             button = true,
-            selected = isExamenlocatieSelected[examenlocatie.naam] ?: false,
+            selected = examenlocatie.naam in isExamenlocatieSelected,
             key = key,
             divider = false,
             onClick = { toggleSelected(examenlocatie.naam) }
@@ -105,11 +121,10 @@ class ExamenlocatiesList(props: Props) : RComponent<ExamenlocatiesList.Props, Ex
             }
             mListItemText("${examenlocatie.naam}, ${examenlocatie.plaatsnaam} (${examenlocatie.naam})")
             mCheckbox(
-                checked = isExamenlocatieSelected[examenlocatie.naam] ?: false,
+                checked = examenlocatie.naam in isExamenlocatieSelected,
                 onChange = { _, newState -> toggleSelected(examenlocatie.naam, newState) })
         }
     }
-
 
     override fun RBuilder.render() {
         themeContext.Consumer { theme ->
@@ -130,7 +145,7 @@ class ExamenlocatiesList(props: Props) : RComponent<ExamenlocatiesList.Props, Ex
                 styledReactList {
                     css(themeStyles.list)
                     attrs {
-                        length = filteredExamenlocaties.size
+                        length = state.filteredItems.size
                         itemRenderer = ::renderRow
                         type = "variable"
                         ref {
@@ -142,12 +157,10 @@ class ExamenlocatiesList(props: Props) : RComponent<ExamenlocatiesList.Props, Ex
             Unit
         }
     }
-
 }
 
-fun RBuilder.examenlocatiesList(handler: ExamenlocatiesList.Props.() -> Unit) =
+val examenlocatiesList: RBuilder.(ExamenlocatiesList.Props.() -> Unit) -> ReactElement = { handler ->
     child(ExamenlocatiesList::class) {
         attrs(handler)
     }
-
-typealias RefreshExamenlocaties = () -> Unit
+}

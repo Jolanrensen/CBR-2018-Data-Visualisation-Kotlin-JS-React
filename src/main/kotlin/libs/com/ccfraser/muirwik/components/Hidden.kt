@@ -7,7 +7,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/Hidden")
 private external val hiddenModule: dynamic
 
@@ -32,28 +31,30 @@ interface MHiddenProps : StyledProps {
     var xsDown: Boolean
     var xsUp: Boolean
 }
+
 var MHiddenProps.initialWidth by EnumPropToStringNullable(Breakpoint.values())
 var MHiddenProps.implementation by EnumPropToString(MHiddenImplementation.values())
 
 fun RBuilder.mHidden(
-        only: Array<Breakpoint> = emptyArray(),
-        xsUp: Boolean = false,
-        smUp: Boolean = false,
-        mdUp: Boolean = false,
-        lgUp: Boolean = false,
-        xlUp: Boolean = false,
-        xsDown: Boolean = false,
-        smDown: Boolean = false,
-        mdDown: Boolean = false,
-        lgDown: Boolean = false,
-        xlDown: Boolean = false,
-        className: String? = null,
-        implementation: MHiddenImplementation = MHiddenImplementation.js,
-        initialWidth: Breakpoint? = null,
+    only: Array<Breakpoint> = emptyArray(),
+    xsUp: Boolean = false,
+    smUp: Boolean = false,
+    mdUp: Boolean = false,
+    lgUp: Boolean = false,
+    xlUp: Boolean = false,
+    xsDown: Boolean = false,
+    smDown: Boolean = false,
+    mdDown: Boolean = false,
+    lgDown: Boolean = false,
+    xlDown: Boolean = false,
+    className: String? = null,
+    implementation: MHiddenImplementation = MHiddenImplementation.js,
+    initialWidth: Breakpoint? = null,
 
-        handler: StyledHandler<MHiddenProps>) = createStyled(hiddenComponent) {
+    handler: StyledHandler<MHiddenProps>
+) = createStyled(hiddenComponent) {
     attrs.implementation = implementation
-    initialWidth?.let {  attrs.initialWidth = it }
+    initialWidth?.let { attrs.initialWidth = it }
     attrs.lgDown = lgDown
     attrs.lgUp = lgUp
     attrs.mdDown = mdDown

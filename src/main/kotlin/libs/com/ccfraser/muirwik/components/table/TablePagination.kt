@@ -12,7 +12,6 @@ import react.RProps
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/TablePagination")
 private external val tablePaginationModule: dynamic
 
@@ -37,22 +36,23 @@ interface MTablePaginationProps : MButtonBaseProps {
 }
 
 fun RBuilder.mTablePagination(
-        actions: String? = null,
-        backIconButtonProps: MIconButtonProps? = null,
-        component: String? = "div",
-        count: Int? = null,
-        labelDisplayedRows: ((from: Int, to: Int, count: Int) -> Unit)? = null,
-        labelRowsPerPage: Node? = null,
-        nextIconButtonProps: MIconButtonProps? = null,
-        onChangePage: ((event: Event, page: Int) -> Unit)? = null,
-        onChangeRowsPerPage: ((event: Event) -> Unit)? = null,
-        page: Int? = null,
-        rowsPerPage: Int? = null,
-        rowsPerPageOptions: Array<Int>? = null,
-        selectProps: RProps? = null,
+    actions: String? = null,
+    backIconButtonProps: MIconButtonProps? = null,
+    component: String? = "div",
+    count: Int? = null,
+    labelDisplayedRows: ((from: Int, to: Int, count: Int) -> Unit)? = null,
+    labelRowsPerPage: Node? = null,
+    nextIconButtonProps: MIconButtonProps? = null,
+    onChangePage: ((event: Event, page: Int) -> Unit)? = null,
+    onChangeRowsPerPage: ((event: Event) -> Unit)? = null,
+    page: Int? = null,
+    rowsPerPage: Int? = null,
+    rowsPerPageOptions: Array<Int>? = null,
+    selectProps: RProps? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MTablePaginationProps>? = null) = createStyled(tablePaginationComponent) {
+    className: String? = null,
+    handler: StyledHandler<MTablePaginationProps>? = null
+) = createStyled(tablePaginationComponent) {
     actions?.let { attrs.actions = it }
     backIconButtonProps?.let { attrs.backIconButtonProps = it }
     component?.let { attrs.component = it }

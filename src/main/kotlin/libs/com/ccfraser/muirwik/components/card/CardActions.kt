@@ -8,7 +8,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/CardActions")
 private external val cardActionsModule: dynamic
 
@@ -19,8 +18,10 @@ interface MCardActionsProps : StyledProps {
     var disableSpacing: Boolean
 }
 
-fun RBuilder.mCardActions(disableSpacing: Boolean = false,
-                          handler: StyledHandler<MCardActionsProps>?) = createStyled(cardActionsComponent) {
+fun RBuilder.mCardActions(
+    disableSpacing: Boolean = false,
+    handler: StyledHandler<MCardActionsProps>?
+) = createStyled(cardActionsComponent) {
     attrs.disableSpacing = disableSpacing
     setStyledPropsAndRunHandler(null, handler)
 }

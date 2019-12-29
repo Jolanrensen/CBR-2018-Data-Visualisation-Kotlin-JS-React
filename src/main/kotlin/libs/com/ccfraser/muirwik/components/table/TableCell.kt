@@ -9,7 +9,6 @@ import react.RComponent
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/TableCell")
 private external val tableCellModule: dynamic
 
@@ -54,30 +53,33 @@ interface MTableCellProps : StyledPropsWithCommonAttributes {
     @JsName("sortDirection")
     var rawSortDirection: dynamic
 }
+
 var MTableCellProps.align by EnumPropToString(MTableCellAlign.values())
 var MTableCellProps.padding by EnumPropToString(MTableCellPadding.values())
 var MTableCellProps.size by EnumPropToString(MTableCellSize.values())
 var MTableCellProps.sortDirection: MTableCellSortDirection
-    get() = if (rawSortDirection == false) MTableCellSortDirection.False else MTableCellSortDirection.valueOf(rawSortDirection)
+    get() = if (rawSortDirection == false) MTableCellSortDirection.False else MTableCellSortDirection.valueOf(
+        rawSortDirection
+    )
     set(value) {
         rawSortDirection = if (value == MTableCellSortDirection.False) false else value.toString()
     }
 var MTableCellProps.variant by EnumPropToString(MTableCellVariant.values())
 
-
 fun RBuilder.mTableCell(
-        key: Any? = null,
-        variant: MTableCellVariant = MTableCellVariant.body,
-        sortDirection: MTableCellSortDirection = MTableCellSortDirection.False,
-        align: MTableCellAlign = MTableCellAlign.inherit,
-        padding: MTableCellPadding = MTableCellPadding.default,
-        size: MTableCellSize = MTableCellSize.medium,
-        colSpan: Int? = null,
-        component: String? = null,
-        scope: String? = null,
+    key: Any? = null,
+    variant: MTableCellVariant = MTableCellVariant.body,
+    sortDirection: MTableCellSortDirection = MTableCellSortDirection.False,
+    align: MTableCellAlign = MTableCellAlign.inherit,
+    padding: MTableCellPadding = MTableCellPadding.default,
+    size: MTableCellSize = MTableCellSize.medium,
+    colSpan: Int? = null,
+    component: String? = null,
+    scope: String? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MTableCellProps>? = null) = createStyled(TableCellComponent) {
+    className: String? = null,
+    handler: StyledHandler<MTableCellProps>? = null
+) = createStyled(TableCellComponent) {
     attrs.align = align
     colSpan?.let { attrs.colSpan = it }
     component?.let { attrs.component = component }

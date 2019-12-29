@@ -1,12 +1,20 @@
 package com.ccfraser.muirwik.components.button
 
-import com.ccfraser.muirwik.components.*
+import com.ccfraser.muirwik.components.EnumPropToString
+import com.ccfraser.muirwik.components.EnumPropToStringNullable
+import com.ccfraser.muirwik.components.HRefOptions
+import com.ccfraser.muirwik.components.MColor
+import com.ccfraser.muirwik.components.MIconColor
+import com.ccfraser.muirwik.components.MIconFontSize
+import com.ccfraser.muirwik.components.createStyled
+import com.ccfraser.muirwik.components.mIcon
+import com.ccfraser.muirwik.components.setHRefTargetNoOpener
+import com.ccfraser.muirwik.components.setStyledPropsAndRunHandler
 import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RComponent
 import react.RState
 import styled.StyledHandler
-
 
 @JsModule("@material-ui/core/IconButton")
 private external val iconButtonModule: dynamic
@@ -27,10 +35,10 @@ interface MIconButtonProps : MButtonBaseProps {
     var disableFocusRipple: Boolean
     var href: String
 }
+
 var MIconButtonProps.color by EnumPropToString(MColor.values())
 var MIconButtonProps.edge by EnumPropToStringNullable(MIconEdge.values())
 var MIconButtonProps.size by EnumPropToString(MIconButtonSize.values())
-
 
 /**
  * If the icon name is given, we shall create a child mIcon with the given name and try and match the size and color.
@@ -38,18 +46,19 @@ var MIconButtonProps.size by EnumPropToString(MIconButtonSize.values())
  * to be given to the icon.
  */
 fun RBuilder.mIconButton(
-        iconName: String? = null,
-        color: MColor = MColor.default,
-        disabled: Boolean = false,
-        onClick: ((Event) -> Unit)? = null,
-        size: MIconButtonSize = MIconButtonSize.medium,
-        hRefOptions: HRefOptions? = null,
-        iconColor: MIconColor? = null,
-        edge: MIconEdge? = null,
+    iconName: String? = null,
+    color: MColor = MColor.default,
+    disabled: Boolean = false,
+    onClick: ((Event) -> Unit)? = null,
+    size: MIconButtonSize = MIconButtonSize.medium,
+    hRefOptions: HRefOptions? = null,
+    iconColor: MIconColor? = null,
+    edge: MIconEdge? = null,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
-        handler: StyledHandler<MIconButtonProps>? = null) = createStyled(iconButtonComponent, addAsChild) {
+    addAsChild: Boolean = true,
+    className: String? = null,
+    handler: StyledHandler<MIconButtonProps>? = null
+) = createStyled(iconButtonComponent, addAsChild) {
     attrs.color = color
     attrs.disabled = disabled
     edge?.let { attrs.edge = it }

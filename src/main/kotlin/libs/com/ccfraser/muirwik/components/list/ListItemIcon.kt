@@ -16,9 +16,10 @@ private external val listItemIconModule: dynamic
 val listItemIconComponent: RComponent<MButtonBaseProps, RState> = listItemIconModule.default
 
 fun RBuilder.mListItemIcon(
-        iconName: String? = null,
-        className: String? = null,
-        handler: StyledHandler<MButtonBaseProps>? = null) = createStyled(listItemIconComponent) {
+    iconName: String? = null,
+    className: String? = null,
+    handler: StyledHandler<MButtonBaseProps>? = null
+) = createStyled(listItemIconComponent) {
     iconName?.let { mIcon(iconName) }
     setStyledPropsAndRunHandler(className, handler)
 }

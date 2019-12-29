@@ -10,7 +10,6 @@ import react.RState
 import react.ReactElement
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/List")
 private external val listModule: dynamic
 
@@ -24,13 +23,14 @@ interface MListProps : MButtonBaseProps {
 }
 
 fun RBuilder.mList(
-        dense: Boolean = false,
-        disablePadding: Boolean = false,
-        subheader: ReactElement? = null,
-        component: String = "ul",
+    dense: Boolean = false,
+    disablePadding: Boolean = false,
+    subheader: ReactElement? = null,
+    component: String = "ul",
 
-        className: String? = null,
-        handler: StyledHandler<MListProps>? = null) = createStyled(listComponent) {
+    className: String? = null,
+    handler: StyledHandler<MListProps>? = null
+) = createStyled(listComponent) {
     attrs.component = component
     attrs.dense = dense
     attrs.disablePadding = disablePadding
@@ -40,14 +40,15 @@ fun RBuilder.mList(
 }
 
 fun RBuilder.mList(
-        subheader: String,
-        addHeadDivider: Boolean = false,
-        dense: Boolean = false,
-        disablePadding: Boolean = false,
-        component: String = "ul",
+    subheader: String,
+    addHeadDivider: Boolean = false,
+    dense: Boolean = false,
+    disablePadding: Boolean = false,
+    component: String = "ul",
 
-        className: String? = null,
-        handler: StyledHandler<MListProps>? = null) = createStyled(listComponent) {
+    className: String? = null,
+    handler: StyledHandler<MListProps>? = null
+) = createStyled(listComponent) {
     attrs.component = component
     attrs.dense = dense
     attrs.disablePadding = disablePadding

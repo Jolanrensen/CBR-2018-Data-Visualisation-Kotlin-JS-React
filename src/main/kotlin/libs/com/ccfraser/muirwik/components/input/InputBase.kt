@@ -8,7 +8,6 @@ import react.RProps
 import react.RRef
 import react.ReactElement
 
-
 /*
  * Don't think we will be creating these types of controls, so we shall just define the props and
  * inherit from them in the other inputs...
@@ -50,10 +49,13 @@ interface MInputBaseProps : StyledPropsWithCommonAttributes {
 
     var value: Any
 }
+
 var MInputBaseProps.margin by EnumPropToStringNullable(MInputMargin.values())
 var MInputBaseProps.type: InputType
     get() = InputType.values().first { it.realValue == rawType }
-    set(value) { rawType = value.realValue}
+    set(value) {
+        rawType = value.realValue
+    }
 
 
 

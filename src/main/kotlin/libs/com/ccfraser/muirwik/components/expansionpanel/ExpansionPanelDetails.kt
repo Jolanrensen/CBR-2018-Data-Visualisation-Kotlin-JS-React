@@ -14,8 +14,10 @@ private external val expansionPanelDetailsModule: dynamic
 @Suppress("UnsafeCastFromDynamic")
 private val expansionPanelDetailsComponent: RComponent<StyledProps, RState> = expansionPanelDetailsModule.default
 
-fun RBuilder.mExpansionPanelDetails(className: String? = null,
-                                    handler: StyledHandler<StyledProps>? = null) =
-		createStyled(expansionPanelDetailsComponent) {
-			setStyledPropsAndRunHandler(className, handler)
-		}
+fun RBuilder.mExpansionPanelDetails(
+    className: String? = null,
+    handler: StyledHandler<StyledProps>? = null
+) =
+    createStyled(expansionPanelDetailsComponent) {
+        setStyledPropsAndRunHandler(className, handler)
+    }

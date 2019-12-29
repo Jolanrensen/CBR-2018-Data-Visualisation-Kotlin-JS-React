@@ -9,5 +9,4 @@ data class Resultaat(
 ) {
     val categorie: Categorie
         get() = product.categorie
-
 }

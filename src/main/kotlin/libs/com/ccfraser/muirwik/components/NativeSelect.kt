@@ -3,9 +3,12 @@ package com.ccfraser.muirwik.components
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.input.MInputMargin
 import org.w3c.dom.events.Event
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.StyledHandler
-
 
 @JsModule("@material-ui/core/NativeSelect")
 private external val nativeSelectModule: dynamic
@@ -29,31 +32,32 @@ interface MNativeSelectProps : StyledPropsWithCommonAttributes {
     var onChange: ((event: Event, child: ReactElement?) -> Unit)?
     var value: Any
 }
+
 var MNativeSelectProps.margin by EnumPropToStringNullable(MInputMargin.values())
 var MNativeSelectProps.variant by EnumPropToString(MFormControlVariant.values())
-
 
 /**
  * From the Material-UI documentation: An alternative to <Select native /> with a much smaller bundle size footprint.
  * In other words, the mSelect control can do the same thing.
  */
 fun RBuilder.mNativeSelect(
-        value: Any?,
-        error: Boolean? = null,
-        disabled: Boolean? = null,
-        multiple: Boolean = false,
-        iconComponent: RComponent<MIconProps, RState>? = null,
-        autoFocus: Boolean? = null,
-        id: String? = null,
-        name: String? = null,
-        variant: MFormControlVariant = MFormControlVariant.standard,
+    value: Any?,
+    error: Boolean? = null,
+    disabled: Boolean? = null,
+    multiple: Boolean = false,
+    iconComponent: RComponent<MIconProps, RState>? = null,
+    autoFocus: Boolean? = null,
+    id: String? = null,
+    name: String? = null,
+    variant: MFormControlVariant = MFormControlVariant.standard,
 
-        onChange: ((event: Event, child: ReactElement?) -> Unit)? = null,
+    onChange: ((event: Event, child: ReactElement?) -> Unit)? = null,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
+    addAsChild: Boolean = true,
+    className: String? = null,
 
-        handler: StyledHandler<MNativeSelectProps>? = null) = createStyled(nativeSelectComponent, addAsChild) {
+    handler: StyledHandler<MNativeSelectProps>? = null
+) = createStyled(nativeSelectComponent, addAsChild) {
     autoFocus?.let { attrs.autoFocus = it }
     disabled?.let { attrs.disabled = it }
     error?.let { attrs.error = it }

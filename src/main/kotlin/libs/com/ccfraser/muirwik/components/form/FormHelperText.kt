@@ -10,7 +10,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/FormHelperText")
 private external val formHelperTextModule: dynamic
 
@@ -25,22 +24,24 @@ interface MFormHelperTextProps : StyledProps {
     var focused: Boolean
     var required: Boolean
 }
+
 var MFormHelperTextProps.margin by EnumPropToStringNullable(MLabelMargin.values())
 var MFormHelperTextProps.variant by EnumPropToString(MFormControlVariant.values())
 
-fun RBuilder.mFormHelperText (
-        caption: String,
-        disabled: Boolean = false,
-        error: Boolean = false,
-        filled: Boolean = false,
-        focused: Boolean = false,
-        required: Boolean = false,
-        variant: MFormControlVariant = MFormControlVariant.standard,
-        margin: MLabelMargin? = null,
-        component: String? = null,
+fun RBuilder.mFormHelperText(
+    caption: String,
+    disabled: Boolean = false,
+    error: Boolean = false,
+    filled: Boolean = false,
+    focused: Boolean = false,
+    required: Boolean = false,
+    variant: MFormControlVariant = MFormControlVariant.standard,
+    margin: MLabelMargin? = null,
+    component: String? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MFormHelperTextProps>? = null) = createStyled(formHelperTextComponent) {
+    className: String? = null,
+    handler: StyledHandler<MFormHelperTextProps>? = null
+) = createStyled(formHelperTextComponent) {
     component?.let { attrs.component = it }
     attrs.disabled = disabled
     attrs.error = error
@@ -51,5 +52,5 @@ fun RBuilder.mFormHelperText (
     attrs.variant = variant
 
     childList.add(caption)
-    setStyledPropsAndRunHandler(className,  handler)
+    setStyledPropsAndRunHandler(className, handler)
 }

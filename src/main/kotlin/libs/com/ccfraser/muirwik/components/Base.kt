@@ -7,19 +7,27 @@ import kotlinx.css.CSSBuilder
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.HTMLTextAreaElement
 import org.w3c.dom.events.Event
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RHandler
+import react.RProps
+import react.RState
+import react.ReactElement
+import react.children
 import styled.StyledElementBuilder
 import styled.StyledHandler
 import styled.StyledProps
 import styled.toStyle
 import kotlin.reflect.KClass
 
-
 /**
  * Just a one liner to replace a repetitive two liner :-)
  */
-fun <P : StyledProps> StyledElementBuilder<P>.setStyledPropsAndRunHandler(className: String?, handler: StyledHandler<P>?) {
-    className?.let {attrs.className = it}
+fun <P : StyledProps> StyledElementBuilder<P>.setStyledPropsAndRunHandler(
+    className: String?,
+    handler: StyledHandler<P>?
+) {
+    className?.let { attrs.className = it }
     if (handler != null) handler()
 }
 
@@ -45,7 +53,11 @@ fun <P : RProps, S : RState> RBuilder.child(component: RComponent<P, S>, handler
  *      etc
  * }
  */
-fun <P : StyledProps> RBuilder.createStyled(component: RComponent<P, RState>, addAsChild: Boolean = true, handler: StyledHandler<P>): ReactElement {
+fun <P : StyledProps> RBuilder.createStyled(
+    component: RComponent<P, RState>,
+    addAsChild: Boolean = true,
+    handler: StyledHandler<P>
+): ReactElement {
     val builder = StyledElementBuilder<P>(component)
     handler(builder)
     return if (addAsChild) child(builder.create()) else builder.create()
@@ -54,7 +66,11 @@ fun <P : StyledProps> RBuilder.createStyled(component: RComponent<P, RState>, ad
 /**
  * Helper for creating a styled component from a component class (e.g. MyComponent::class)
  */
-fun <P : StyledProps> RBuilder.createStyled(componentClass: KClass<out RComponent<P, RState>>, addAsChild: Boolean = true, handler: StyledHandler<P>): ReactElement {
+fun <P : StyledProps> RBuilder.createStyled(
+    componentClass: KClass<out RComponent<P, RState>>,
+    addAsChild: Boolean = true,
+    handler: StyledHandler<P>
+): ReactElement {
     val builder = StyledElementBuilder<P>(componentClass.js)
     handler(builder)
 
@@ -102,7 +118,6 @@ fun CSSBuilder.toolbarJsCssToPartialCss(jsObject: JsObject) {
         }
     }
 }
-
 
 //class EmptyProps : RProps
 class PropsWithJsStyle(var style: JsObject?) : RProps

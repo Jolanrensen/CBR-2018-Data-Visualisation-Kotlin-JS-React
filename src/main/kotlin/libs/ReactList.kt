@@ -2,10 +2,14 @@ package libs
 
 import com.ccfraser.muirwik.components.child
 import com.ccfraser.muirwik.components.createStyled
-import kotlinext.js.JsObject
-import react.*
-import styled.StyledElementBuilder
 import com.ccfraser.muirwik.components.setStyledPropsAndRunHandler
+import kotlinext.js.JsObject
+import react.RBuilder
+import react.RComponent
+import react.RElementBuilder
+import react.RState
+import react.ReactElement
+import styled.StyledElementBuilder
 import styled.StyledProps
 
 typealias ReactList = RComponent<ReactListProps, RState>
@@ -18,7 +22,6 @@ external interface ReactListRef {
     fun scrollAround(index: Int)
     fun getVisibleRange(): IntArray
 }
-
 
 fun RBuilder.styledReactList(
     className: String? = null,
@@ -38,7 +41,8 @@ typealias ItemSizeGetter = (index: Int) -> Int
 typealias ScrollParentGetter = () -> ReactElement?
 
 external interface ReactListProps : StyledProps {
-    var axis: String? /** 'x' or 'y' */
+    var axis: String?
+    /** 'x' or 'y' */
     var initialIndex: Int?
     var itemRenderer: ItemRenderer?
     var itemSizeEstimator: ItemSizeEstimator?

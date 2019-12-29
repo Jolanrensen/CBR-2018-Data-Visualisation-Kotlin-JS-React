@@ -5,7 +5,6 @@ import react.RComponent
 import react.RProps
 import react.RState
 
-
 @JsModule("@material-ui/core/CssBaseline")
 private external val cssBaselineModule: dynamic
 

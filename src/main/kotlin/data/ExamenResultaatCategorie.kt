@@ -1,6 +1,8 @@
 package data
 
-import data.ExamenResultaatCategorie.*
+import data.ExamenResultaatCategorie.AUTOMAAT
+import data.ExamenResultaatCategorie.COMBI
+import data.ExamenResultaatCategorie.HANDGESCHAKELD
 
 enum class ExamenResultaatCategorie {
     HANDGESCHAKELD,

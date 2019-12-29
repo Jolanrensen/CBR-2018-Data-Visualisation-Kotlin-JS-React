@@ -4,7 +4,6 @@ import react.RProps
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-
 class TransitionDurationDelegate : ReadWriteProperty<RProps, TransitionDuration> {
     override fun getValue(thisRef: RProps, property: KProperty<*>): TransitionDuration {
         error("transitionDuration cannot be read from props")

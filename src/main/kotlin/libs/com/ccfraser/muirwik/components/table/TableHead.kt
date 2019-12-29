@@ -8,7 +8,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/TableHead")
 private external val tableHeadModule: dynamic
 
@@ -20,10 +19,11 @@ interface MTableHeadProps : StyledProps {
 }
 
 fun RBuilder.mTableHead(
-        component: String = "thead",
+    component: String = "thead",
 
-        className: String? = null,
-        handler: StyledHandler<MTableHeadProps>? = null) = createStyled(TableHeadComponent) {
+    className: String? = null,
+    handler: StyledHandler<MTableHeadProps>? = null
+) = createStyled(TableHeadComponent) {
     attrs.component = component
     setStyledPropsAndRunHandler(className, handler)
 }

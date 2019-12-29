@@ -8,7 +8,6 @@ import react.RState
 import react.ReactElement
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/Chip")
 private external val chipModule: dynamic
 
@@ -39,6 +38,7 @@ interface MChipProps : StyledPropsWithCommonAttributes {
     var key: Any
     var onDelete: (Event) -> Unit
 }
+
 var MChipProps.color by EnumPropToString(MChipColor.values())
 var MChipProps.size by EnumPropToString(MChipSize.values())
 var MChipProps.variant by EnumPropToString(MChipVariant.values())
@@ -47,18 +47,19 @@ var MChipProps.variant by EnumPropToString(MChipVariant.values())
  * This is the simpler version of the chip component allowing you to pass in a string label for the chip
  */
 fun RBuilder.mChip(
-        label: String,
-        avatar: ReactElement? = null,
-        onClick: ((Event) -> Unit)? = null,
-        onDelete: ((Event) -> Unit)? = null,
-        key: Any? = null,
-        color: MChipColor = MChipColor.default,
-        size: MChipSize = MChipSize.medium,
-        variant: MChipVariant = MChipVariant.default,
+    label: String,
+    avatar: ReactElement? = null,
+    onClick: ((Event) -> Unit)? = null,
+    onDelete: ((Event) -> Unit)? = null,
+    key: Any? = null,
+    color: MChipColor = MChipColor.default,
+    size: MChipSize = MChipSize.medium,
+    variant: MChipVariant = MChipVariant.default,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
-        handler: StyledHandler<MChipProps>? = null) = createStyled(chipComponent, addAsChild) {
+    addAsChild: Boolean = true,
+    className: String? = null,
+    handler: StyledHandler<MChipProps>? = null
+) = createStyled(chipComponent, addAsChild) {
     avatar?.let { attrs.avatar = it }
     attrs.color = color
     attrs.component = "div"

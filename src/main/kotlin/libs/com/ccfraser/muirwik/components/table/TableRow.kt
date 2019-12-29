@@ -9,7 +9,6 @@ import react.RComponent
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/TableRow")
 private external val tableRowModule: dynamic
 
@@ -20,18 +19,18 @@ interface MTableRowProps : MButtonBaseProps {
     var hover: Boolean
     var key: Any
     var selected: Boolean
-
 }
 
 fun RBuilder.mTableRow(
-        key: Any? = null,
-        selected: Boolean = false,
-        hover: Boolean = false,
-        onClick: ((Event) -> Unit)? = null,
-        component: String = "tr",
+    key: Any? = null,
+    selected: Boolean = false,
+    hover: Boolean = false,
+    onClick: ((Event) -> Unit)? = null,
+    component: String = "tr",
 
-        className: String? = null,
-        handler: StyledHandler<MTableRowProps>? = null) = createStyled(tableRowComponent) {
+    className: String? = null,
+    handler: StyledHandler<MTableRowProps>? = null
+) = createStyled(tableRowComponent) {
     key?.let { attrs.key = key }
     attrs.component = component
     attrs.hover = hover

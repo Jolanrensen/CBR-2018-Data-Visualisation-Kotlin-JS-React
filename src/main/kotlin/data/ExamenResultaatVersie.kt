@@ -1,6 +1,7 @@
 package data
 
-import data.ExamenResultaatVersie.*
+import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
+import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 
 enum class ExamenResultaatVersie {
     EERSTE_EXAMEN_OF_TOETS,

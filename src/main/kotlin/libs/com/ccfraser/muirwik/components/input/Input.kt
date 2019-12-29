@@ -9,7 +9,6 @@ import react.RComponent
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/Input")
 private external val inputModule: dynamic
 
@@ -25,29 +24,30 @@ interface MInputProps : MInputBaseProps {
  * and has more functionality.
  */
 fun RBuilder.mInput(
-        value: Any? = null,
-        required: Boolean? = null,
-        disabled: Boolean? = null,
-        readOnly: Boolean? = null,
-        error: Boolean? = null,
-        fullWidth: Boolean = false,
-        defaultValue: String? = null,
-        placeholder: String? = null,
-        disableUnderline: Boolean? = null,
-        autoFocus: Boolean? = null,
-        type: InputType = InputType.text,
-        id: String? = null,
-        name: String? = null,
-        multiline: Boolean = false,
-        rows: Int? = null,
-        rowsMax: Int? = null,
-        onChange: ((Event) -> Unit)? = null,
+    value: Any? = null,
+    required: Boolean? = null,
+    disabled: Boolean? = null,
+    readOnly: Boolean? = null,
+    error: Boolean? = null,
+    fullWidth: Boolean = false,
+    defaultValue: String? = null,
+    placeholder: String? = null,
+    disableUnderline: Boolean? = null,
+    autoFocus: Boolean? = null,
+    type: InputType = InputType.text,
+    id: String? = null,
+    name: String? = null,
+    multiline: Boolean = false,
+    rows: Int? = null,
+    rowsMax: Int? = null,
+    onChange: ((Event) -> Unit)? = null,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
+    addAsChild: Boolean = true,
+    className: String? = null,
 
-        handler: StyledHandler<MInputProps>? = null) = createStyled(com.ccfraser.muirwik.components.input.inputComponent, addAsChild) {
-    autoFocus?.let{ attrs.autoFocus = it }
+    handler: StyledHandler<MInputProps>? = null
+) = createStyled(com.ccfraser.muirwik.components.input.inputComponent, addAsChild) {
+    autoFocus?.let { attrs.autoFocus = it }
     defaultValue?.let { attrs.defaultValue = it }
     disabled?.let { attrs.disabled = it }
     disableUnderline?.let { attrs.disableUnderline = it }

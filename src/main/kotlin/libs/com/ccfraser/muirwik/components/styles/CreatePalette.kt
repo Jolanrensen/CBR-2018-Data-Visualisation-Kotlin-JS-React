@@ -9,6 +9,7 @@ external interface TypeText {
     var disabled: String
     var hint: String
 }
+
 external interface TypeAction {
     var active: String
     var hover: String
@@ -16,27 +17,32 @@ external interface TypeAction {
     var disabled: String
     var disabledBackground: String
 }
+
 external interface TypeBackground {
     var default: String
     var paper: String
 }
+
 external interface SimplePaletteColorOptions {
     var light: String? get() = definedExternally; set(value) = definedExternally
     var main: String
     var dark: String? get() = definedExternally; set(value) = definedExternally
     var contrastText: String? get() = definedExternally; set(value) = definedExternally
 }
+
 external interface PaletteColor {
     var light: String
     var main: String
     var dark: String
     var contrastText: String
 }
+
 external interface TypeObject {
     var text: TypeText
     var action: TypeAction
     var background: TypeBackground
 }
+
 external interface Palette {
     var common: CommonColors
     var type: String //export type PaletteType = 'light' | 'dark';
@@ -52,6 +58,7 @@ external interface Palette {
     var background: TypeBackground
     var getContrastText: (color: String) -> String
 }
+
 external interface PaletteOptions {
     var common: Any? get() = definedExternally; set(value) = definedExternally
     var type: String? get() = definedExternally; set(value) = definedExternally

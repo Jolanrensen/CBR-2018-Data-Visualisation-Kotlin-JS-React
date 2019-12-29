@@ -6,7 +6,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/LinearProgress")
 private external val linearProgressModule: dynamic
 
@@ -27,18 +26,19 @@ interface MLinearProgressProps : StyledProps {
     var value: Double
     var valueBuffer: Double
 }
+
 var MLinearProgressProps.color by EnumPropToString(MLinearProgressColor.values())
 var MLinearProgressProps.variant by EnumPropToString(MLinearProgressVariant.values())
 
-
 fun RBuilder.mLinearProgress(
-        value: Double? = null,
-        valueBuffer: Double? = null,
-        variant: MLinearProgressVariant = MLinearProgressVariant.indeterminate,
-        color: MLinearProgressColor = MLinearProgressColor.primary,
+    value: Double? = null,
+    valueBuffer: Double? = null,
+    variant: MLinearProgressVariant = MLinearProgressVariant.indeterminate,
+    color: MLinearProgressColor = MLinearProgressColor.primary,
 
-        className: String? = null,
-        handler: StyledHandler<MLinearProgressProps>? = null) = createStyled(linearProgressComponent) {
+    className: String? = null,
+    handler: StyledHandler<MLinearProgressProps>? = null
+) = createStyled(linearProgressComponent) {
     attrs.color = color
     value?.let { attrs.value = it }
     valueBuffer?.let { attrs.valueBuffer = it }

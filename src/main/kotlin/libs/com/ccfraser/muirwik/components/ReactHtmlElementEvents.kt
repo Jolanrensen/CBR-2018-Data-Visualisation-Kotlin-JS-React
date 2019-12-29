@@ -2,7 +2,13 @@ package com.ccfraser.muirwik.components
 
 import org.w3c.dom.DragEvent
 import org.w3c.dom.clipboard.ClipboardEvent
-import org.w3c.dom.events.*
+import org.w3c.dom.events.Event
+import org.w3c.dom.events.FocusEvent
+import org.w3c.dom.events.InputEvent
+import org.w3c.dom.events.KeyboardEvent
+import org.w3c.dom.events.MouseEvent
+import org.w3c.dom.events.UIEvent
+import org.w3c.dom.events.WheelEvent
 import react.RProps
 
 /**

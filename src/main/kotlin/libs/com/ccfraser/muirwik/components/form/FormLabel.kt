@@ -8,7 +8,6 @@ import react.RComponent
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/FormLabel")
 private external val formLabelModule: dynamic
 
@@ -25,17 +24,18 @@ interface MFormLabelProps : StyledPropsWithCommonAttributes {
     var required: Boolean
 }
 
-fun RBuilder.mFormLabel (
-        caption: String,
-        htmlFor: String? = null,
-        required: Boolean? = null,
-        disabled: Boolean? = null,
-        error: Boolean? = null,
-        focused: Boolean? = null,
-        filled: Boolean? = null,
-        component: String = "label",
-        className: String? = null,
-        handler: StyledHandler<MFormLabelProps>? = null) = createStyled(formLabelComponent) {
+fun RBuilder.mFormLabel(
+    caption: String,
+    htmlFor: String? = null,
+    required: Boolean? = null,
+    disabled: Boolean? = null,
+    error: Boolean? = null,
+    focused: Boolean? = null,
+    filled: Boolean? = null,
+    component: String = "label",
+    className: String? = null,
+    handler: StyledHandler<MFormLabelProps>? = null
+) = createStyled(formLabelComponent) {
     attrs.component = component
     disabled?.let { attrs.disabled = it }
     error?.let { attrs.error = it }
@@ -45,5 +45,5 @@ fun RBuilder.mFormLabel (
     required?.let { attrs.required = it }
 
     childList.add(caption)
-    setStyledPropsAndRunHandler(className,  handler)
+    setStyledPropsAndRunHandler(className, handler)
 }

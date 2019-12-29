@@ -8,7 +8,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/TableFooter")
 private external val tableFooterModule: dynamic
 
@@ -20,10 +19,11 @@ interface MTableFooterProps : StyledProps {
 }
 
 fun RBuilder.mTableFooter(
-        component: String = "tfoot",
+    component: String = "tfoot",
 
-        className: String? = null,
-        handler: StyledHandler<MTableFooterProps>? = null) = createStyled(TableFooterComponent) {
+    className: String? = null,
+    handler: StyledHandler<MTableFooterProps>? = null
+) = createStyled(TableFooterComponent) {
     attrs.component = component
     setStyledPropsAndRunHandler(className, handler)
 }

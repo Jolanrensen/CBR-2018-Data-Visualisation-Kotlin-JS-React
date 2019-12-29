@@ -32,20 +32,22 @@ interface MFormControlLabelProps : StyledPropsWithCommonAttributes {
     var onChange: ((Event, Boolean) -> Unit)
     var value: String
 }
+
 var MFormControlLabelProps.labelPlacement by EnumPropToString(MLabelPlacement.values())
 
-fun RBuilder.mFormControlLabel (
-        label: String,
-        control: ReactElement,
-        checked: Boolean? = null,
-        disabled: Boolean = false,
-        value: String? = null,
-        name: String? = null,
-        labelPlacement: MLabelPlacement = MLabelPlacement.end,
-        onChange: ((Event, Boolean) -> Unit)? = null,
+fun RBuilder.mFormControlLabel(
+    label: String,
+    control: ReactElement,
+    checked: Boolean? = null,
+    disabled: Boolean = false,
+    value: String? = null,
+    name: String? = null,
+    labelPlacement: MLabelPlacement = MLabelPlacement.end,
+    onChange: ((Event, Boolean) -> Unit)? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MFormControlLabelProps>? = null) = createStyled(formControlLabelComponent) {
+    className: String? = null,
+    handler: StyledHandler<MFormControlLabelProps>? = null
+) = createStyled(formControlLabelComponent) {
     checked?.let { attrs.checked = checked }
     attrs.control = control
     attrs.disabled = disabled

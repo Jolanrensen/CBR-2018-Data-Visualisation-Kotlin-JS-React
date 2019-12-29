@@ -7,7 +7,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/Icon")
 private external val iconModule: dynamic
 
@@ -27,17 +26,19 @@ enum class MIconFontSize {
 interface MIconProps : StyledProps {
     var style: JsObject
 }
+
 var MIconProps.color by EnumPropToString(MIconColor.values())
 var MIconProps.fontSize by EnumPropToString(MIconFontSize.values())
 
 fun RBuilder.mIcon(
-        iconName: String,
-        color: MIconColor = MIconColor.inherit,
-        fontSize: MIconFontSize = MIconFontSize.default,
+    iconName: String,
+    color: MIconColor = MIconColor.inherit,
+    fontSize: MIconFontSize = MIconFontSize.default,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
-        handler: StyledHandler<MIconProps>? = null) = createStyled(iconComponent, addAsChild) {
+    addAsChild: Boolean = true,
+    className: String? = null,
+    handler: StyledHandler<MIconProps>? = null
+) = createStyled(iconComponent, addAsChild) {
     attrs.color = color
     attrs.fontSize = fontSize
 

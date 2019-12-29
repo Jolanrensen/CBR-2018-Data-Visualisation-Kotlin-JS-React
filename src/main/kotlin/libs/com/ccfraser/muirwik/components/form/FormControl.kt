@@ -1,11 +1,14 @@
 package com.ccfraser.muirwik.components.form
 
-import com.ccfraser.muirwik.components.*
+import com.ccfraser.muirwik.components.EnumPropToString
+import com.ccfraser.muirwik.components.StyledPropsWithCommonAttributes
+import com.ccfraser.muirwik.components.createStyled
+import com.ccfraser.muirwik.components.setStyledPropsAndRunHandler
+import com.ccfraser.muirwik.components.toHyphenCase
 import react.RBuilder
 import react.RComponent
 import react.RState
 import styled.StyledHandler
-
 
 @JsModule("@material-ui/core/FormControl")
 private external val formControlModule: dynamic
@@ -17,7 +20,6 @@ private val formControlComponent: RComponent<MFormControlProps, RState> = formCo
 enum class MFormControlVariant {
     standard, outlined, filled
 }
-
 
 /**
  * Div and FieldSet seem to be the most used values for this prop, so we shall enum these... if you need something
@@ -44,22 +46,23 @@ interface MFormControlProps : StyledPropsWithCommonAttributes {
     var hiddenLabel: Boolean
     var required: Boolean
 }
+
 var MFormControlProps.margin by EnumPropToString(MFormControlMargin.values())
 var MFormControlProps.component by EnumPropToString(MFormControlComponent.values())
 var MFormControlProps.variant by EnumPropToString(MFormControlVariant.values())
 
-
 fun RBuilder.mFormControl(
-        component: MFormControlComponent = MFormControlComponent.div,
-        disabled: Boolean = false,
-        error: Boolean = false,
-        fullWidth: Boolean = false,
-        margin: MFormControlMargin = MFormControlMargin.none,
-        required: Boolean = false,
-        variant: MFormControlVariant = MFormControlVariant.standard,
-        hiddenLabel: Boolean = false,
-        className: String? = null,
-        handler: StyledHandler<MFormControlProps>? = null) = createStyled(formControlComponent) {
+    component: MFormControlComponent = MFormControlComponent.div,
+    disabled: Boolean = false,
+    error: Boolean = false,
+    fullWidth: Boolean = false,
+    margin: MFormControlMargin = MFormControlMargin.none,
+    required: Boolean = false,
+    variant: MFormControlVariant = MFormControlVariant.standard,
+    hiddenLabel: Boolean = false,
+    className: String? = null,
+    handler: StyledHandler<MFormControlProps>? = null
+) = createStyled(formControlComponent) {
     attrs.component = component
     attrs.disabled = disabled
     attrs.error = error

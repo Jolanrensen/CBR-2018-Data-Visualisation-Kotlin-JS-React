@@ -7,7 +7,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/Container")
 private external val containerModule: dynamic
 
@@ -25,12 +24,13 @@ interface MContainerProps : StyledProps {
  * Note: Setting maxWidth to null will disable maxWidth (i.e. pass false to underlying Material UI)
  */
 fun RBuilder.mContainer(
-        maxWidth: Breakpoint? = Breakpoint.lg,
-        fixed: Boolean = false,
-        component: String = "div",
+    maxWidth: Breakpoint? = Breakpoint.lg,
+    fixed: Boolean = false,
+    component: String = "div",
 
-        className: String? = null,
-        handler: StyledHandler<MContainerProps>? = null) = createStyled(containerComponent) {
+    className: String? = null,
+    handler: StyledHandler<MContainerProps>? = null
+) = createStyled(containerComponent) {
     attrs.component = component
     attrs.fixed = fixed
     attrs.maxWidth = maxWidth?.toString() ?: false

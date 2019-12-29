@@ -10,7 +10,8 @@ import kotlin.reflect.KProperty
  * but we usually make a type safe class to wrap it. This delegate makes it easy to declare such extension
  * properties.
  */
-class OnClosePropWithReasonDelegate<T>(private val enumValues: Array<T>) : ReadWriteProperty<RProps, ((Event, T) -> Unit)?> {
+class OnClosePropWithReasonDelegate<T>(private val enumValues: Array<T>) :
+    ReadWriteProperty<RProps, ((Event, T) -> Unit)?> {
     override fun getValue(thisRef: RProps, property: KProperty<*>): ((Event, T) -> Unit)? {
         error("Can't read value of ${thisRef}.${property.name}")
     }
@@ -19,8 +20,8 @@ class OnClosePropWithReasonDelegate<T>(private val enumValues: Array<T>) : ReadW
         if (value == null) {
             thisRef.asDynamic()[property.name] = null
         } else {
-            thisRef.asDynamic()[property.name] = {
-                event: Event, s: String -> value(event, enumValues.first { it.toString() == s })
+            thisRef.asDynamic()[property.name] = { event: Event, s: String ->
+                value(event, enumValues.first { it.toString() == s })
             }
         }
     }

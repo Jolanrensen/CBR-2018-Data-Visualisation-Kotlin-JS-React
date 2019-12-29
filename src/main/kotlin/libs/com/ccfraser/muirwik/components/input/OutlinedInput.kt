@@ -9,7 +9,6 @@ import react.RComponent
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/OutlinedInput")
 private external val outlinedInputModule: dynamic
 
@@ -26,30 +25,31 @@ interface MOutlinedInputProps : MInputBaseProps {
  * and has more functionality.
  */
 fun RBuilder.mOutlinedInput(
-        value: String? = null,
-        required: Boolean? = null,
-        disabled: Boolean? = null,
-        readOnly: Boolean? = null,
-        error: Boolean? = null,
-        fullWidth: Boolean = false,
-        defaultValue: String? = null,
-        placeholder: String? = null,
-        labelWidth: Number? = null,
-        notched: Boolean? = null,
-        autoFocus: Boolean? = null,
-        type: InputType = InputType.text,
-        id: String? = null,
-        name: String? = null,
-        multiline: Boolean = false,
-        rows: Int? = null,
-        rowsMax: Int? = null,
-        onChange: ((Event) -> Unit)? = null,
+    value: String? = null,
+    required: Boolean? = null,
+    disabled: Boolean? = null,
+    readOnly: Boolean? = null,
+    error: Boolean? = null,
+    fullWidth: Boolean = false,
+    defaultValue: String? = null,
+    placeholder: String? = null,
+    labelWidth: Number? = null,
+    notched: Boolean? = null,
+    autoFocus: Boolean? = null,
+    type: InputType = InputType.text,
+    id: String? = null,
+    name: String? = null,
+    multiline: Boolean = false,
+    rows: Int? = null,
+    rowsMax: Int? = null,
+    onChange: ((Event) -> Unit)? = null,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
+    addAsChild: Boolean = true,
+    className: String? = null,
 
-        handler: StyledHandler<MOutlinedInputProps>? = null) = createStyled(outlinedInputComponent, addAsChild) {
-    autoFocus?.let{ attrs.autoFocus = it }
+    handler: StyledHandler<MOutlinedInputProps>? = null
+) = createStyled(outlinedInputComponent, addAsChild) {
+    autoFocus?.let { attrs.autoFocus = it }
     defaultValue?.let { attrs.defaultValue = it }
     disabled?.let { attrs.disabled = it }
     error?.let { attrs.error = it }

@@ -8,16 +8,18 @@ import com.ccfraser.muirwik.components.transitions.TransitionDurationWithAutoDel
 import kotlinext.js.Object
 import org.w3c.dom.Node
 import org.w3c.dom.events.Event
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.StyledHandler
-
 
 @JsModule("@material-ui/core/Popover")
 private external val popoverModule: dynamic
 
 @Suppress("UnsafeCastFromDynamic")
 private val popoverComponent: RComponent<MPopoverProps, RState> = popoverModule.default
-
 
 enum class MPopoverAnchorRef {
     anchorEl, anchorPosition, none
@@ -59,13 +61,15 @@ interface MPopoverProps : MModalProps {
  * anchorOriginHorizontal and anchorOriginHorizontalNumeric are mutually exclusive. Setting one will cause the other to be null.
  */
 var MPopoverProps.anchorOriginHorizontal by EnumPropToStringNullable(
-        MPopoverHorizontalPosition.values(), "anchorOrigin", "horizontal")
+    MPopoverHorizontalPosition.values(), "anchorOrigin", "horizontal"
+)
 
 /**
  * anchorOriginVertical and anchorOriginVerticalNumeric are mutually exclusive. Setting one will cause the other to be null.
  */
 var MPopoverProps.anchorOriginVertical by EnumPropToStringNullable(
-        MPopoverVerticalPosition.values(), "anchorOrigin", "vertical")
+    MPopoverVerticalPosition.values(), "anchorOrigin", "vertical"
+)
 
 /**
  * anchorOriginHorizontal and anchorOriginHorizontalNumeric are mutually exclusive. Setting one will cause the other to be null.
@@ -85,13 +89,15 @@ var MPopoverProps.anchorReference by EnumPropToString(MPopoverAnchorRef.values()
  * transformOriginHorizontal and transformOriginHorizontalNumeric are mutually exclusive. Setting one will cause the other to be null.
  */
 var MPopoverProps.transformOriginHorizontal by EnumPropToStringNullable(
-        MPopoverHorizontalPosition.values(), "transformOrigin", "horizontal")
+    MPopoverHorizontalPosition.values(), "transformOrigin", "horizontal"
+)
 
 /**
  * transformOriginVertical and transformOriginVerticalNumeric are mutually exclusive. Setting one will cause the other to be null.
  */
 var MPopoverProps.transformOriginVertical by EnumPropToStringNullable(
-        MPopoverVerticalPosition.values(), "transformOrigin", "vertical")
+    MPopoverVerticalPosition.values(), "transformOrigin", "vertical"
+)
 
 /**
  * transformOriginHorizontal and transformOriginHorizontalNumeric are mutually exclusive. Setting one will cause the other to be null.
@@ -106,25 +112,25 @@ var MPopoverProps.transformOriginVerticalNumeric: Int? by ChildPropDelegateNulla
 var MPopoverProps.transitionComponent by TransitionComponentDelegate()
 var MPopoverProps.transitionDuration by TransitionDurationWithAutoDelegate()
 
-
 /**
  * Note setting maxWidth to null will disable maxWidth (i.e. pass false to the underlying Material UI component)
  */
 fun RBuilder.mPopover(
-        open: Boolean = false,
-        container: ReactElement? = null,
-        anchorOriginHorizontal: MPopoverHorizontalPosition = MPopoverHorizontalPosition.left,
-        anchorOriginVertical: MPopoverVerticalPosition = MPopoverVerticalPosition.top,
-        hideBackdrop: Boolean = false,
-        keepMounted: Boolean = false,
-        closeAfterTransition: Boolean = false,
+    open: Boolean = false,
+    container: ReactElement? = null,
+    anchorOriginHorizontal: MPopoverHorizontalPosition = MPopoverHorizontalPosition.left,
+    anchorOriginVertical: MPopoverVerticalPosition = MPopoverVerticalPosition.top,
+    hideBackdrop: Boolean = false,
+    keepMounted: Boolean = false,
+    closeAfterTransition: Boolean = false,
 
-        onBackdropClick: SimpleEvent? = null,
-        onClose: ((Event, reason: ModalOnCloseReason) -> Unit)? = null,
-        onEscapeKeyDown: SimpleEvent? = null,
+    onBackdropClick: SimpleEvent? = null,
+    onClose: ((Event, reason: ModalOnCloseReason) -> Unit)? = null,
+    onEscapeKeyDown: SimpleEvent? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MPopoverProps>) = createStyled(popoverComponent) {
+    className: String? = null,
+    handler: StyledHandler<MPopoverProps>
+) = createStyled(popoverComponent) {
     attrs.anchorOriginHorizontal = anchorOriginHorizontal
     attrs.anchorOriginVertical = anchorOriginVertical
     attrs.closeAfterTransition = closeAfterTransition

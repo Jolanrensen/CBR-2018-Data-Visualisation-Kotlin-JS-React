@@ -4,7 +4,6 @@ import org.w3c.dom.Element
 import org.w3c.dom.events.UIEvent
 import org.w3c.dom.events.UIEventInit
 
-
 /**
  * Exposes the JavaScript [TouchEvent](https://developer.mozilla.org/en/docs/Web/API/TouchEvent) to Kotlin
  */

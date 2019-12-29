@@ -4,7 +4,12 @@ import com.ccfraser.muirwik.components.styles.Theme
 import com.ccfraser.muirwik.components.styles.ThemeOptions
 import com.ccfraser.muirwik.components.styles.createMuiTheme
 import kotlinx.css.px
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RHandler
+import react.RProps
+import react.RState
+import react.createContext
 
 // Material UI 3.3.2 (or a bit earlier) has depreciated some typography enums. We do the following
 // so we don't get any warning messages for the default theme.
@@ -30,7 +35,6 @@ val themeContext = createContext(defaultTheme)
  */
 val Int.spacingUnits get() = (defaultTheme.spacing(this)).px
 
-
 class MThemeProvider(props: MuiThemeProviderProps) : RComponent<MuiThemeProviderProps, RState>(props) {
     override fun RBuilder.render() {
         @Suppress("DEPRECATION")
@@ -42,8 +46,9 @@ class MThemeProvider(props: MuiThemeProviderProps) : RComponent<MuiThemeProvider
     }
 }
 
-fun RBuilder.mThemeProvider(theme: Theme = createMuiTheme(), handler: RHandler<RProps>? = null) = child(MThemeProvider::class) {
-    attrs.theme = theme
-    if (handler != null) handler()
-}
+fun RBuilder.mThemeProvider(theme: Theme = createMuiTheme(), handler: RHandler<RProps>? = null) =
+    child(MThemeProvider::class) {
+        attrs.theme = theme
+        if (handler != null) handler()
+    }
 

@@ -24,7 +24,7 @@ enum class DropZone {
 interface ReactHtmlElementAttributes : RProps {
     var accessKey: String
     var autoCapitalize: AutoCapitalize
-//    var class: String
+    //    var class: String
     var contentEditable: Boolean
     var dir: TextDir
     var draggable: Boolean

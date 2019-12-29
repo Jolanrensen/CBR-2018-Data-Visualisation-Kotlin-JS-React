@@ -2,7 +2,12 @@ package com.ccfraser.muirwik.components.styles
 
 import com.ccfraser.muirwik.components.child
 import kotlinext.js.Object
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RHandler
+import react.RProps
+import react.RState
+import react.ReactElement
 
 @JsModule("@material-ui/styles/StylesProvider")
 private external val stylesProviderModule: dynamic
@@ -15,7 +20,6 @@ private external val jssPresetModule: dynamic
 
 @JsModule("jss")
 private external val jss: dynamic
-
 
 interface MStylesProviderProps : RProps {
     var disableGeneration: Boolean
@@ -54,11 +58,12 @@ interface MStylesProviderProps : RProps {
  *     }
  */
 fun RBuilder.mStylesProvider(
-        injectFirst: Boolean = false,
-        disableGeneration: Boolean = false,
-        generateClassName: (() -> Unit)? = null,
-        jss: Object? = null,
-        handler: RHandler<MStylesProviderProps>? = null) = child(stylesProviderComponent) {
+    injectFirst: Boolean = false,
+    disableGeneration: Boolean = false,
+    generateClassName: (() -> Unit)? = null,
+    jss: Object? = null,
+    handler: RHandler<MStylesProviderProps>? = null
+) = child(stylesProviderComponent) {
     attrs.injectFirst = injectFirst
     attrs.disableGeneration = disableGeneration
     generateClassName?.let { attrs.generateClassName = it }
@@ -71,8 +76,9 @@ fun RBuilder.mStylesProvider(
  * See the comments for the full mStylesProvider version.
  */
 fun RBuilder.mStylesProvider(
-        insertionPointComment: String,
-        handler: RHandler<MStylesProviderProps>? = null): ReactElement {
+    insertionPointComment: String,
+    handler: RHandler<MStylesProviderProps>? = null
+): ReactElement {
 
     val jssPresets = jssPresetModule.default()
     jssPresets.insertionPoint = insertionPointComment

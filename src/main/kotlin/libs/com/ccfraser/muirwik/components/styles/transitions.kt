@@ -9,6 +9,7 @@ external interface Easing {
     var easeIn: String
     var sharp: String
 }
+
 external interface Duration {
     var shortest: Int
     var shorter: Int
@@ -18,6 +19,7 @@ external interface Duration {
     var enteringScreen: Int
     var leavingScreen: Int
 }
+
 external interface Transitions {
     var easing: Easing
     var duration: Duration
@@ -25,6 +27,7 @@ external interface Transitions {
     fun create(props: Array<String>, options: Any? = definedExternally /* null */): String
     fun getAutoHeightDuration(height: Number): Int
 }
+
 external interface TransitionsOptions {
     var easing: Any? get() = definedExternally; set(value) = definedExternally
     var duration: Any? get() = definedExternally; set(value) = definedExternally

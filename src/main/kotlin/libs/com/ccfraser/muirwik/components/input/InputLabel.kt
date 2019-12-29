@@ -12,7 +12,6 @@ import react.RComponent
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/InputLabel")
 private external val inputLabelModule: dynamic
 
@@ -23,25 +22,26 @@ interface MInputLabelProps : MFormLabelProps {
     var disableAnimation: Boolean
     var shrink: Boolean
 }
+
 var MInputLabelProps.margin by EnumPropToStringNullable(MLabelMargin.values())
 var MInputLabelProps.variant by EnumPropToString(MFormControlVariant.values())
 
+fun RBuilder.mInputLabel(
+    caption: String,
+    htmlFor: String? = null,
+    required: Boolean? = null,
+    disabled: Boolean? = null,
+    error: Boolean? = null,
+    focused: Boolean? = null,
+    variant: MFormControlVariant = MFormControlVariant.standard,
+    shrink: Boolean? = null,
+    disableAnimation: Boolean = false,
+    margin: MLabelMargin? = null,
+    component: String? = null,
 
-fun RBuilder.mInputLabel (
-        caption: String,
-        htmlFor: String? = null,
-        required: Boolean? = null,
-        disabled: Boolean? = null,
-        error: Boolean? = null,
-        focused: Boolean? = null,
-        variant: MFormControlVariant = MFormControlVariant.standard,
-        shrink: Boolean? = null,
-        disableAnimation: Boolean = false,
-        margin: MLabelMargin? = null,
-        component: String? = null,
-
-        className: String? = null,
-        handler: StyledHandler<MInputLabelProps>? = null) = createStyled(inputLabelComponent) {
+    className: String? = null,
+    handler: StyledHandler<MInputLabelProps>? = null
+) = createStyled(inputLabelComponent) {
     component?.let { attrs.component = it }
     disabled?.let { attrs.disabled = it }
     attrs.disableAnimation = disableAnimation
@@ -60,5 +60,5 @@ fun RBuilder.mInputLabel (
     attrs.variant = variant
 
     childList.add(caption)
-    setStyledPropsAndRunHandler(className,  handler)
+    setStyledPropsAndRunHandler(className, handler)
 }

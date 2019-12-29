@@ -1,6 +1,12 @@
 package com.ccfraser.muirwik.components.menu
 
-import com.ccfraser.muirwik.components.*
+import com.ccfraser.muirwik.components.EnumPropToString
+import com.ccfraser.muirwik.components.MPopoverProps
+import com.ccfraser.muirwik.components.OnClosePropWithReasonDelegate
+import com.ccfraser.muirwik.components.createStyled
+import com.ccfraser.muirwik.components.setStyledPropsAndRunHandler
+import com.ccfraser.muirwik.components.transitionComponent
+import com.ccfraser.muirwik.components.transitionDuration
 import com.ccfraser.muirwik.components.transitions.AutoTransitionDuration
 import com.ccfraser.muirwik.components.transitions.TransitionComponent
 import com.ccfraser.muirwik.components.transitions.TransitionDurationWithAuto
@@ -11,12 +17,11 @@ import react.RComponent
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/Menu")
 private external val menuModule: dynamic
 
 @Suppress("UnsafeCastFromDynamic")
-private val menuComponent: RComponent<MMenuProps, RState>  = menuModule.default
+private val menuComponent: RComponent<MMenuProps, RState> = menuModule.default
 
 @Suppress("EnumEntryName")
 enum class MenuOnCloseReason {
@@ -37,23 +42,24 @@ interface MMenuProps : MPopoverProps {
     var popoverClasses: String
     var value: Any
 }
+
 var MMenuProps.variant by EnumPropToString(MMenuVariant.values())
 var MMenuProps.onClose by OnClosePropWithReasonDelegate(MenuOnCloseReason.values())
 
-
 fun RBuilder.mMenu(
-        open: Boolean,
-        anchorElement: Node? = null,
-        onClose: ((Event, MenuOnCloseReason) -> Unit)? = null,
-        autoFocus: Boolean = true,
-        menuListProps: MMenuListProps? = null,
-        popoverClasses: String? = null,
-        transitionComponent: TransitionComponent? = null,
-        transitionDuration: TransitionDurationWithAuto = AutoTransitionDuration(),
-        variant: MMenuVariant = MMenuVariant.selectedMenu,
+    open: Boolean,
+    anchorElement: Node? = null,
+    onClose: ((Event, MenuOnCloseReason) -> Unit)? = null,
+    autoFocus: Boolean = true,
+    menuListProps: MMenuListProps? = null,
+    popoverClasses: String? = null,
+    transitionComponent: TransitionComponent? = null,
+    transitionDuration: TransitionDurationWithAuto = AutoTransitionDuration(),
+    variant: MMenuVariant = MMenuVariant.selectedMenu,
 
-        className: String? = null,
-        handler: StyledHandler<MMenuProps>) = createStyled(menuComponent) {
+    className: String? = null,
+    handler: StyledHandler<MMenuProps>
+) = createStyled(menuComponent) {
     anchorElement?.let { attrs.anchorEl = anchorElement }
     attrs.autoFocus = autoFocus
     menuListProps?.let { attrs.menuListProps = menuListProps }

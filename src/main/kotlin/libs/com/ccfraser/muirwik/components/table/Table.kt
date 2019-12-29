@@ -9,7 +9,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/Table")
 private external val tableModule: dynamic
 
@@ -24,14 +23,16 @@ interface MTableProps : StyledProps {
      */
     var stickyHeader: Boolean
 }
+
 var MTableProps.padding by EnumPropToString(MTableCellPadding.values())
 var MTableProps.size by EnumPropToString(MTableCellSize.values())
 
 fun RBuilder.mTable(
-        component: String = "table",
+    component: String = "table",
 
-        className: String? = null,
-        handler: StyledHandler<MTableProps>? = null) = createStyled(tableComponent) {
+    className: String? = null,
+    handler: StyledHandler<MTableProps>? = null
+) = createStyled(tableComponent) {
     attrs.component = component
     setStyledPropsAndRunHandler(className, handler)
 }

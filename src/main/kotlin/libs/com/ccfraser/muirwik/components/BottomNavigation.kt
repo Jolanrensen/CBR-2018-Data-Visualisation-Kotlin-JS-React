@@ -8,15 +8,13 @@ import react.RState
 import react.ReactElement
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/BottomNavigation")
 private external val bottomNavigationModule: dynamic
 
 @Suppress("UnsafeCastFromDynamic")
 private val bottomNavigationComponent: RComponent<MBottomNavigationProps, RState> = bottomNavigationModule.default
 
-
-interface MBottomNavigationProps: StyledPropsWithCommonAttributes {
+interface MBottomNavigationProps : StyledPropsWithCommonAttributes {
     var component: String
     var onChange: (event: Event, value: Any) -> Unit
     var showLabels: Boolean
@@ -24,13 +22,14 @@ interface MBottomNavigationProps: StyledPropsWithCommonAttributes {
 }
 
 fun RBuilder.mBottomNavigation(
-        value: Any = false, // false means none selected
-        showLabels: Boolean = false,
-        component: String = "div",
-        onChange: ((event: Event, indexValue: Any) -> Unit)? = null,
+    value: Any = false, // false means none selected
+    showLabels: Boolean = false,
+    component: String = "div",
+    onChange: ((event: Event, indexValue: Any) -> Unit)? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MBottomNavigationProps>? = null) = createStyled(bottomNavigationComponent) {
+    className: String? = null,
+    handler: StyledHandler<MBottomNavigationProps>? = null
+) = createStyled(bottomNavigationComponent) {
     attrs.component = component
     onChange?.let { attrs.onChange = it }
     attrs.showLabels = showLabels
@@ -39,14 +38,14 @@ fun RBuilder.mBottomNavigation(
     setStyledPropsAndRunHandler(className, handler)
 }
 
-
 @JsModule("@material-ui/core/BottomNavigationAction")
 private external val bottomNavigationActionModule: dynamic
 
 @Suppress("UnsafeCastFromDynamic")
-private val bottomNavigationActionComponent: RComponent<MBottomNavigationActionProps, RState> = bottomNavigationActionModule.default
+private val bottomNavigationActionComponent: RComponent<MBottomNavigationActionProps, RState> =
+    bottomNavigationActionModule.default
 
-interface MBottomNavigationActionProps: MButtonBaseProps {
+interface MBottomNavigationActionProps : MButtonBaseProps {
     var icon: ReactElement
     var label: ReactElement
     var showLabel: Boolean
@@ -55,27 +54,28 @@ interface MBottomNavigationActionProps: MButtonBaseProps {
 
 @Suppress("UNCHECKED_CAST_TO_EXTERNAL_INTERFACE")
 fun RBuilder.mBottomNavigationAction(
-        label: String,
-        icon: ReactElement? = null,
-        showLabel: Boolean? = null,
-        value: Any? = null,
-        disabled: Boolean = false,
+    label: String,
+    icon: ReactElement? = null,
+    showLabel: Boolean? = null,
+    value: Any? = null,
+    disabled: Boolean = false,
 
-        className: String? = null,
-        handler: StyledHandler<MBottomNavigationActionProps>? = null) = mBottomNavigationAction(
+    className: String? = null,
+    handler: StyledHandler<MBottomNavigationActionProps>? = null
+) = mBottomNavigationAction(
     label.asDynamic() as ReactElement?, icon, showLabel, value, disabled, className, handler
 )
 
-
 fun RBuilder.mBottomNavigationAction(
-        label: ReactElement? = null,
-        icon: ReactElement? = null,
-        showLabel: Boolean? = null,
-        value: Any? = null,
-        disabled: Boolean = false,
+    label: ReactElement? = null,
+    icon: ReactElement? = null,
+    showLabel: Boolean? = null,
+    value: Any? = null,
+    disabled: Boolean = false,
 
-        className: String? = null,
-        handler: StyledHandler<MBottomNavigationActionProps>? = null) = createStyled(bottomNavigationActionComponent) {
+    className: String? = null,
+    handler: StyledHandler<MBottomNavigationActionProps>? = null
+) = createStyled(bottomNavigationActionComponent) {
     attrs.disabled = disabled
     icon?.let { attrs.icon = icon }
     label?.let { attrs.label = it }

@@ -8,7 +8,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/FormGroup")
 private external val formGroupModule: dynamic
 
@@ -23,12 +22,13 @@ interface MFormGroupProps : StyledProps {
     var row: Boolean
 }
 
-fun RBuilder.mFormGroup (
-        row: Boolean = false,
+fun RBuilder.mFormGroup(
+    row: Boolean = false,
 
-        className: String? = null,
-        handler: StyledHandler<MFormGroupProps>? = null) = createStyled(formGroupComponent) {
+    className: String? = null,
+    handler: StyledHandler<MFormGroupProps>? = null
+) = createStyled(formGroupComponent) {
     attrs.row = row
 
-    setStyledPropsAndRunHandler(className,  handler)
+    setStyledPropsAndRunHandler(className, handler)
 }

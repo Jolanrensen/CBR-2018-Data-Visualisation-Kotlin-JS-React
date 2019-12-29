@@ -3,12 +3,13 @@
 package libs
 
 import data.Opleider
-import react.*
+import react.RClass
+import react.RConsumerProps
+import react.RProps
 import react.dom.WithClassName
 
-
 @JsName("FixedSizeList")
-external val FixedSizeListOpleider : RClass<ListProps<List<Opleider>>>
+external val FixedSizeListOpleider: RClass<ListProps<List<Opleider>>>
 
 //external class FixedSizeList<T: Any> : Component<ListProps<List<T>>, RState> {
 //    override fun render(): ReactElement?
@@ -43,7 +44,7 @@ external interface OnScrollProps : RProps {
     var scrollUpdateWasRequested: Boolean
 }
 
-external interface ListProps<TDataType: Any> : RConsumerProps<RenderProps<TDataType>>, WithClassName {
+external interface ListProps<TDataType : Any> : RConsumerProps<RenderProps<TDataType>>, WithClassName {
     /**
      * React component responsible for rendering the individual item specified by an index prop. This component also receives a style prop (used for positioning).
      * If useIsScrolling is enabled for the list, the component also receives an additional isScrolling boolean prop.

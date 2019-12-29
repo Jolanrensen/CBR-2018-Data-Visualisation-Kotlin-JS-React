@@ -10,7 +10,6 @@ import styled.StyledProps
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-
 @JsModule("@material-ui/core/Grid")
 private external val gridDefault: dynamic
 
@@ -93,7 +92,7 @@ enum class MGridWrap {
     noWrap, wrap, wrapReverse;
 
     override fun toString(): String {
-        return when(this) {
+        return when (this) {
             noWrap -> "nowrap"
             wrap -> "wrap"
             wrapReverse -> "wrap-reverse"
@@ -119,12 +118,19 @@ enum class MGridSpacing(internal val size: Int) {
  * This class as no companion in MaterialUI. We just use it to make setting grid breakpoints a bit easier
  */
 data class MGridBreakpoints(
-        val xs: MGridSize = MGridSize.cellsAuto,
-        val sm: MGridSize = MGridSize.cellsAuto,
-        val md: MGridSize = MGridSize.cellsAuto,
-        val lg: MGridSize = MGridSize.cellsAuto,
-        val xl: MGridSize = MGridSize.cellsAuto) {
-    constructor(defaultGridSize: MGridSize) : this(defaultGridSize, defaultGridSize, defaultGridSize, defaultGridSize, defaultGridSize)
+    val xs: MGridSize = MGridSize.cellsAuto,
+    val sm: MGridSize = MGridSize.cellsAuto,
+    val md: MGridSize = MGridSize.cellsAuto,
+    val lg: MGridSize = MGridSize.cellsAuto,
+    val xl: MGridSize = MGridSize.cellsAuto
+) {
+    constructor(defaultGridSize: MGridSize) : this(
+        defaultGridSize,
+        defaultGridSize,
+        defaultGridSize,
+        defaultGridSize,
+        defaultGridSize
+    )
 
     fun down(breakpoint: Breakpoint, gridSize: MGridSize): MGridBreakpoints {
         return when (breakpoint) {
@@ -147,13 +153,13 @@ data class MGridBreakpoints(
     }
 }
 
-
 interface MGridProps : StyledProps {
     var component: String
     var container: Boolean
     var item: Boolean
     var zeroMinWidth: Boolean
 }
+
 var MGridProps.alignContent by EnumPropToString(MGridAlignContent.values())
 var MGridProps.alignItems by EnumPropToString(MGridAlignItems.values())
 var MGridProps.direction by EnumPropToString(MGridDirection.values())
@@ -224,14 +230,15 @@ class GridSpacingDelegate : ReadWriteProperty<RProps, MGridSpacing?> {
  * to add an extra child item.
  */
 fun RBuilder.mGridContainer(
-        spacing: MGridSpacing = MGridSpacing.spacing0,
-        alignContent: MGridAlignContent = MGridAlignContent.stretch,
-        alignItems: MGridAlignItems = MGridAlignItems.stretch,
-        justify: MGridJustify = MGridJustify.flexStart,
-        wrap: MGridWrap = MGridWrap.wrap,
+    spacing: MGridSpacing = MGridSpacing.spacing0,
+    alignContent: MGridAlignContent = MGridAlignContent.stretch,
+    alignItems: MGridAlignItems = MGridAlignItems.stretch,
+    justify: MGridJustify = MGridJustify.flexStart,
+    wrap: MGridWrap = MGridWrap.wrap,
 
-        className: String? = null,
-        handler: StyledHandler<MGridProps>? = null) = createStyled(gridComponent) {
+    className: String? = null,
+    handler: StyledHandler<MGridProps>? = null
+) = createStyled(gridComponent) {
     attrs.alignContent = alignContent
     attrs.alignItems = alignItems
     attrs.container = true
@@ -243,15 +250,16 @@ fun RBuilder.mGridContainer(
 }
 
 fun RBuilder.mGridItem(
-        xs: MGridSize = MGridSize.cellsFalse,
-        sm: MGridSize = MGridSize.cellsFalse,
-        md: MGridSize = MGridSize.cellsFalse,
-        lg: MGridSize = MGridSize.cellsFalse,
-        xl: MGridSize = MGridSize.cellsFalse,
-        zeroMinWidth: Boolean? = null,
+    xs: MGridSize = MGridSize.cellsFalse,
+    sm: MGridSize = MGridSize.cellsFalse,
+    md: MGridSize = MGridSize.cellsFalse,
+    lg: MGridSize = MGridSize.cellsFalse,
+    xl: MGridSize = MGridSize.cellsFalse,
+    zeroMinWidth: Boolean? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MGridProps>? = null) = createStyled(gridComponent) {
+    className: String? = null,
+    handler: StyledHandler<MGridProps>? = null
+) = createStyled(gridComponent) {
     attrs.item = true
     attrs.sm = sm
     attrs.md = md
@@ -264,16 +272,17 @@ fun RBuilder.mGridItem(
 }
 
 fun RBuilder.mGridItem(
-        breakpoints: MGridBreakpoints,
-        className: String? = null,
-        handler: StyledHandler<MGridProps>? = null) =
+    breakpoints: MGridBreakpoints,
+    className: String? = null,
+    handler: StyledHandler<MGridProps>? = null
+) =
     mGridItem(
-            breakpoints.xs,
-            breakpoints.sm,
-            breakpoints.md,
-            breakpoints.lg,
-            breakpoints.xl,
-            null,
-            className,
-            handler
+        breakpoints.xs,
+        breakpoints.sm,
+        breakpoints.md,
+        breakpoints.lg,
+        breakpoints.xl,
+        null,
+        className,
+        handler
     )

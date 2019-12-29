@@ -9,7 +9,6 @@ import react.RComponent
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/FilledInput")
 private external val filledInputModule: dynamic
 
@@ -25,29 +24,30 @@ interface MFilledInputProps : MInputBaseProps {
  * and has more functionality.
  */
 fun RBuilder.mFilledInput(
-        value: String? = null,
-        required: Boolean? = null,
-        disabled: Boolean? = null,
-        readOnly: Boolean? = null,
-        error: Boolean? = null,
-        fullWidth: Boolean = false,
-        defaultValue: String? = null,
-        placeholder: String? = null,
-        disableUnderline: Boolean? = null,
-        autoFocus: Boolean? = null,
-        type: InputType = InputType.text,
-        id: String? = null,
-        name: String? = null,
-        multiline: Boolean = false,
-        rows: Int? = null,
-        rowsMax: Int? = null,
-        onChange: ((Event) -> Unit)? = null,
+    value: String? = null,
+    required: Boolean? = null,
+    disabled: Boolean? = null,
+    readOnly: Boolean? = null,
+    error: Boolean? = null,
+    fullWidth: Boolean = false,
+    defaultValue: String? = null,
+    placeholder: String? = null,
+    disableUnderline: Boolean? = null,
+    autoFocus: Boolean? = null,
+    type: InputType = InputType.text,
+    id: String? = null,
+    name: String? = null,
+    multiline: Boolean = false,
+    rows: Int? = null,
+    rowsMax: Int? = null,
+    onChange: ((Event) -> Unit)? = null,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
+    addAsChild: Boolean = true,
+    className: String? = null,
 
-        handler: StyledHandler<MFilledInputProps>? = null) = createStyled(filledInputComponent, addAsChild) {
-    autoFocus?.let{ attrs.autoFocus = it }
+    handler: StyledHandler<MFilledInputProps>? = null
+) = createStyled(filledInputComponent, addAsChild) {
+    autoFocus?.let { attrs.autoFocus = it }
     defaultValue?.let { attrs.defaultValue = it }
     disabled?.let { attrs.disabled = it }
     disableUnderline?.let { attrs.disableUnderline = it }

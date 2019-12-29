@@ -11,7 +11,6 @@ import react.ReactElement
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/TableSortLabel")
 private external val tableSortLabelModule: dynamic
 
@@ -31,15 +30,17 @@ interface MTableSortLabelProps : StyledProps {
 
     var onClick: (Event) -> Unit
 }
+
 var MTableSortLabelProps.direction by EnumPropToString(MTableSortLabelDirection.values())
 
 fun RBuilder.mTableSortLabel(
-        active: Boolean = false,
-        direction: MTableSortLabelDirection = MTableSortLabelDirection.desc,
-        onClick: ((event: Event) -> Unit)? = null,
-        iconFunction: (() -> ReactElement)? = null,
-        className: String? = null,
-        handler: StyledHandler<MTableSortLabelProps>? = null) = createStyled(tableSortLabelComponent) {
+    active: Boolean = false,
+    direction: MTableSortLabelDirection = MTableSortLabelDirection.desc,
+    onClick: ((event: Event) -> Unit)? = null,
+    iconFunction: (() -> ReactElement)? = null,
+    className: String? = null,
+    handler: StyledHandler<MTableSortLabelProps>? = null
+) = createStyled(tableSortLabelComponent) {
     attrs.active = active
     attrs.direction = direction
     iconFunction?.let { attrs.iconFunction = iconFunction }
@@ -49,14 +50,15 @@ fun RBuilder.mTableSortLabel(
 }
 
 fun RBuilder.mTableSortLabel(
-        label: String,
-        active: Boolean = false,
-        direction: MTableSortLabelDirection = MTableSortLabelDirection.desc,
-        onClick: ((event: Event) -> Unit)? = null,
-        iconFunction: (() -> ReactElement)? = null,
+    label: String,
+    active: Boolean = false,
+    direction: MTableSortLabelDirection = MTableSortLabelDirection.desc,
+    onClick: ((event: Event) -> Unit)? = null,
+    iconFunction: (() -> ReactElement)? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MTableSortLabelProps>? = null) = createStyled(tableSortLabelComponent) {
+    className: String? = null,
+    handler: StyledHandler<MTableSortLabelProps>? = null
+) = createStyled(tableSortLabelComponent) {
     attrs.active = active
     attrs.direction = direction
     iconFunction?.let { attrs.iconFunction = iconFunction }

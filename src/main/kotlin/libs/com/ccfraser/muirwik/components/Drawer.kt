@@ -10,7 +10,6 @@ import react.RProps
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/Drawer")
 private external val drawerModule: dynamic
 
@@ -41,25 +40,26 @@ interface MDrawerProps : StyledPropsWithCommonAttributes {
 
     @JsName("SlideProps")
     var slideProps: MSlideProps
-
 }
+
 var MDrawerProps.anchor by EnumPropToString(MDrawerAnchor.values())
 var MDrawerProps.transitionDuration by TransitionDurationDelegateNullable()
 var MDrawerProps.variant by EnumPropToString(MDrawerVariant.values())
 
 fun RBuilder.mDrawer(
-        open: Boolean = false,
-        anchor: MDrawerAnchor = MDrawerAnchor.left,
-        variant: MDrawerVariant = MDrawerVariant.temporary,
-        onClose: ((Event) -> Unit)? = null,
-        elevation: Int = 16,
-        modalProps: RProps? = null,
-        paperProps: MPaperProps? = null,
-        slideProps: MSlideProps? = null,
-        transitionDuration: TransitionDuration? = null,
+    open: Boolean = false,
+    anchor: MDrawerAnchor = MDrawerAnchor.left,
+    variant: MDrawerVariant = MDrawerVariant.temporary,
+    onClose: ((Event) -> Unit)? = null,
+    elevation: Int = 16,
+    modalProps: RProps? = null,
+    paperProps: MPaperProps? = null,
+    slideProps: MSlideProps? = null,
+    transitionDuration: TransitionDuration? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MDrawerProps>) = createStyled(drawerComponent) {
+    className: String? = null,
+    handler: StyledHandler<MDrawerProps>
+) = createStyled(drawerComponent) {
     attrs.anchor = anchor
     attrs.elevation = elevation
     modalProps?.let { attrs.modalProps = it }

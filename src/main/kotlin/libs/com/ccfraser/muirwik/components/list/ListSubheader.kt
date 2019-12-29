@@ -14,7 +14,6 @@ import react.RState
 import styled.StyledHandler
 import styled.css
 
-
 @JsModule("@material-ui/core/ListSubheader")
 private external val listSubheaderModule: dynamic
 
@@ -31,23 +30,25 @@ interface MListSubheaderProps : MButtonBaseProps {
     var disableSticky: Boolean
     var inset: Boolean
 }
+
 var MListSubheaderProps.color by EnumPropToString(MListSubheaderColor.values())
 
 /**
  * A list sub-header which allows you to pass a string to use for the heading.
  */
 fun RBuilder.mListSubheader(
-        heading: String,
-        color: MListSubheaderColor = MListSubheaderColor.default,
-        component: String? = null,
-        disableGutters: Boolean = false,
-        disableSticky: Boolean = false,
-        inset: Boolean = false,
-        compact: Boolean = false,
+    heading: String,
+    color: MListSubheaderColor = MListSubheaderColor.default,
+    component: String? = null,
+    disableGutters: Boolean = false,
+    disableSticky: Boolean = false,
+    inset: Boolean = false,
+    compact: Boolean = false,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
-        handler: StyledHandler<MListSubheaderProps>? = null) = createStyled(listSubheaderComponent, addAsChild) {
+    addAsChild: Boolean = true,
+    className: String? = null,
+    handler: StyledHandler<MListSubheaderProps>? = null
+) = createStyled(listSubheaderComponent, addAsChild) {
     attrs.color = color
     component?.let { attrs.component = component }
     attrs.disableGutters = disableGutters
@@ -70,15 +71,16 @@ fun RBuilder.mListSubheader(
  * The 'standard' list sub-header... you need to create a child item for the heading.
  */
 fun RBuilder.mListSubheader(
-        color: MListSubheaderColor = MListSubheaderColor.default,
-        component: String? = null,
-        disableGutters: Boolean = false,
-        disableSticky: Boolean = false,
-        inset: Boolean = false,
+    color: MListSubheaderColor = MListSubheaderColor.default,
+    component: String? = null,
+    disableGutters: Boolean = false,
+    disableSticky: Boolean = false,
+    inset: Boolean = false,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
-        handler: StyledHandler<MListSubheaderProps>? = null) = createStyled(listSubheaderComponent, addAsChild) {
+    addAsChild: Boolean = true,
+    className: String? = null,
+    handler: StyledHandler<MListSubheaderProps>? = null
+) = createStyled(listSubheaderComponent, addAsChild) {
     attrs.color = color
     component?.let { attrs.component = component }
     attrs.disableGutters = disableGutters

@@ -7,7 +7,6 @@ import react.RComponent
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/Zoom")
 private external val zoomModule: dynamic
 
@@ -15,15 +14,17 @@ private external val zoomModule: dynamic
 private val zoomComponent: RComponent<MZoomProps, RState> = zoomModule.default
 
 external interface MZoomProps : MTransitionProps
+
 var MZoomProps.timeout by TransitionDurationDelegate()
 
 fun RBuilder.mZoom(
-        show: Boolean = false,
-        timeout: TransitionDuration? = null,
+    show: Boolean = false,
+    timeout: TransitionDuration? = null,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
-        handler: StyledHandler<MZoomProps>? = null) = createStyled(zoomComponent, addAsChild) {
+    addAsChild: Boolean = true,
+    className: String? = null,
+    handler: StyledHandler<MZoomProps>? = null
+) = createStyled(zoomComponent, addAsChild) {
     attrs.show = show
     timeout?.let { attrs.timeout = it }
 

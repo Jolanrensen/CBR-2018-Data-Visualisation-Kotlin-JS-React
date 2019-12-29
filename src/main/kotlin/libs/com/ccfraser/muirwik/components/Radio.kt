@@ -5,9 +5,12 @@ import com.ccfraser.muirwik.components.form.MFormGroupProps
 import com.ccfraser.muirwik.components.form.MLabelPlacement
 import com.ccfraser.muirwik.components.form.mFormControlLabel
 import org.w3c.dom.events.Event
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.StyledHandler
-
 
 @JsModule("@material-ui/core/Radio")
 private external val radioModule: dynamic
@@ -27,21 +30,23 @@ interface MRadioProps : StyledPropsWithCommonAttributes {
     var type: String
     var value: String?
 }
+
 var MRadioProps.color by EnumPropToString(MOptionColor.values())
 
 fun RBuilder.mRadio(
-        checked: Boolean? = null,
-        color: MOptionColor = MOptionColor.secondary,
-        disabled: Boolean = false,
-        required: Boolean? = null,
-        onChange: ((event: Event, checked: Boolean) -> Unit)? = null,
-        id: String? = null,
-        inputProps: RProps? = null,
-        value: String? = null,
+    checked: Boolean? = null,
+    color: MOptionColor = MOptionColor.secondary,
+    disabled: Boolean = false,
+    required: Boolean? = null,
+    onChange: ((event: Event, checked: Boolean) -> Unit)? = null,
+    id: String? = null,
+    inputProps: RProps? = null,
+    value: String? = null,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
-        handler: StyledHandler<MRadioProps>? = null) = createStyled(radioComponent, addAsChild) {
+    addAsChild: Boolean = true,
+    className: String? = null,
+    handler: StyledHandler<MRadioProps>? = null
+) = createStyled(radioComponent, addAsChild) {
     checked?.let { attrs.checked = it }
     attrs.color = color
     attrs.disabled = disabled
@@ -59,23 +64,32 @@ fun RBuilder.mRadio(
  * mFormControlLabel and pass in an mRadio.
  */
 fun RBuilder.mRadioWithLabel(
-        label: String,
-        checked: Boolean? = null,
-        color: MOptionColor = MOptionColor.secondary,
-        disabled: Boolean = false,
-        required: Boolean? = null,
-        labelPlacement: MLabelPlacement = MLabelPlacement.end,
-        onChange: ((event: Event, checked: Boolean) -> Unit)? = null,
-        id: String? = null,
-        inputProps: RProps? = null,
-        value: String? = null,
+    label: String,
+    checked: Boolean? = null,
+    color: MOptionColor = MOptionColor.secondary,
+    disabled: Boolean = false,
+    required: Boolean? = null,
+    labelPlacement: MLabelPlacement = MLabelPlacement.end,
+    onChange: ((event: Event, checked: Boolean) -> Unit)? = null,
+    id: String? = null,
+    inputProps: RProps? = null,
+    value: String? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MFormControlLabelProps>? = null): ReactElement {
+    className: String? = null,
+    handler: StyledHandler<MFormControlLabelProps>? = null
+): ReactElement {
     val radio = mRadio(checked, color, disabled, required, onChange, id, inputProps, value, false)
-    return mFormControlLabel(label, radio, checked, disabled, value = value, labelPlacement = labelPlacement, className = className, handler = handler)
+    return mFormControlLabel(
+        label,
+        radio,
+        checked,
+        disabled,
+        value = value,
+        labelPlacement = labelPlacement,
+        className = className,
+        handler = handler
+    )
 }
-
 
 @JsModule("@material-ui/core/RadioGroup")
 private external val radioGroupModule: dynamic
@@ -90,13 +104,14 @@ interface MRadioGroupProps : MFormGroupProps {
 }
 
 fun RBuilder.mRadioGroup(
-        value: String? = null,
-        row: Boolean = false,
-        onChange: ((event: Event, value: String) -> Unit)? = null,
-        name: String? = null,
+    value: String? = null,
+    row: Boolean = false,
+    onChange: ((event: Event, value: String) -> Unit)? = null,
+    name: String? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MRadioGroupProps>? = null) = createStyled(radioGroupComponent) {
+    className: String? = null,
+    handler: StyledHandler<MRadioGroupProps>? = null
+) = createStyled(radioGroupComponent) {
     name?.let { attrs.name = name }
     onChange?.let { attrs.onChange = onChange }
     attrs.row = row

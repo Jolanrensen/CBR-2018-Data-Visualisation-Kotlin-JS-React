@@ -8,7 +8,6 @@ import react.RHandler
 import react.RState
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/DialogContentText")
 private external val dialogContentTextModule: dynamic
 
@@ -16,10 +15,11 @@ private external val dialogContentTextModule: dynamic
 private val dialogContentTextComponent: RComponent<StyledProps, RState> = dialogContentTextModule.default
 
 fun RBuilder.mDialogContentText(
-        text: String,
+    text: String,
 
-        className: String? = null,
-        handler: RHandler<StyledProps>? = null) = createStyled(dialogContentTextComponent) {
+    className: String? = null,
+    handler: RHandler<StyledProps>? = null
+) = createStyled(dialogContentTextComponent) {
     childList.add(text)
     setStyledPropsAndRunHandler(className, handler)
 }

@@ -5,16 +5,18 @@ import com.ccfraser.muirwik.components.form.MLabelPlacement
 import com.ccfraser.muirwik.components.form.mFormControlLabel
 import kotlinx.html.InputType
 import org.w3c.dom.events.Event
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.StyledHandler
-
 
 @JsModule("@material-ui/core/Checkbox")
 private external val checkboxModule: dynamic
 
 @Suppress("UnsafeCastFromDynamic")
-public val checkboxComponent : RComponent<MCheckboxProps, RState> = checkboxModule.default
-
+val checkboxComponent: RComponent<MCheckboxProps, RState> = checkboxModule.default
 
 interface MCheckboxProps : StyledPropsWithCommonAttributes {
     var checked: Boolean
@@ -31,25 +33,27 @@ interface MCheckboxProps : StyledPropsWithCommonAttributes {
     var value: String
     var edge: String
 }
+
 var MCheckboxProps.color by EnumPropToString(MOptionColor.values())
 
 /**
  * Checkbox without a label. If you want a simple checkbox that is wrapped in a label, use [mCheckboxWithLabel]
  */
 fun RBuilder.mCheckbox(
-        checked: Boolean = false,
-        color: MOptionColor = MOptionColor.secondary,
-        disabled: Boolean = false,
-        required: Boolean? = null,
-        indeterminate: Boolean = false,
-        onChange: ((event: Event, checked: Boolean) -> Unit)? = null,
-        id: String? = null,
-        inputProps: RProps? = null,
-        value: String? = null,
+    checked: Boolean = false,
+    color: MOptionColor = MOptionColor.secondary,
+    disabled: Boolean = false,
+    required: Boolean? = null,
+    indeterminate: Boolean = false,
+    onChange: ((event: Event, checked: Boolean) -> Unit)? = null,
+    id: String? = null,
+    inputProps: RProps? = null,
+    value: String? = null,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
-        handler: StyledHandler<MCheckboxProps>? = null) = createStyled(checkboxComponent, addAsChild) {
+    addAsChild: Boolean = true,
+    className: String? = null,
+    handler: StyledHandler<MCheckboxProps>? = null
+) = createStyled(checkboxComponent, addAsChild) {
     attrs.checked = checked
     attrs.color = color
     attrs.disabled = disabled
@@ -59,7 +63,7 @@ fun RBuilder.mCheckbox(
     inputProps?.let { attrs.inputProps = inputProps }
     onChange?.let { attrs.onChange = onChange }
     attrs.type = InputType.checkBox.realValue
-    value?.let {attrs.value = value}
+    value?.let { attrs.value = value }
 
     setStyledPropsAndRunHandler(className, handler)
 }
@@ -69,21 +73,31 @@ fun RBuilder.mCheckbox(
  * mFormControlLabel and pass in a mCheckbox.
  */
 fun RBuilder.mCheckboxWithLabel(
-        label: String,
-        checked: Boolean = false,
-        color: MOptionColor = MOptionColor.secondary,
-        disabled: Boolean = false,
-        required: Boolean? = null,
-        indeterminate: Boolean = false,
-        labelPlacement: MLabelPlacement = MLabelPlacement.end,
-        onChange: ((event: Event, checked: Boolean) -> Unit)? = null,
-        id: String? = null,
-        inputProps: RProps? = null,
-        value: String? = null,
+    label: String,
+    checked: Boolean = false,
+    color: MOptionColor = MOptionColor.secondary,
+    disabled: Boolean = false,
+    required: Boolean? = null,
+    indeterminate: Boolean = false,
+    labelPlacement: MLabelPlacement = MLabelPlacement.end,
+    onChange: ((event: Event, checked: Boolean) -> Unit)? = null,
+    id: String? = null,
+    inputProps: RProps? = null,
+    value: String? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MFormControlLabelProps>? = null): ReactElement {
+    className: String? = null,
+    handler: StyledHandler<MFormControlLabelProps>? = null
+): ReactElement {
     val checkBox = mCheckbox(checked, color, disabled, required, indeterminate, onChange, id, inputProps, value, false)
 
-    return mFormControlLabel(label, checkBox, checked, disabled, value = value, labelPlacement = labelPlacement, className = className, handler = handler)
+    return mFormControlLabel(
+        label,
+        checkBox,
+        checked,
+        disabled,
+        value = value,
+        labelPlacement = labelPlacement,
+        className = className,
+        handler = handler
+    )
 }

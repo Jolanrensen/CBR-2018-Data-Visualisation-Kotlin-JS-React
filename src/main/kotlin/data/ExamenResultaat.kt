@@ -1,6 +1,7 @@
 package data
 
-import data.ExamenResultaat.*
+import data.ExamenResultaat.ONVOLDOENDE
+import data.ExamenResultaat.VOLDOENDE
 
 enum class ExamenResultaat {
     VOLDOENDE,

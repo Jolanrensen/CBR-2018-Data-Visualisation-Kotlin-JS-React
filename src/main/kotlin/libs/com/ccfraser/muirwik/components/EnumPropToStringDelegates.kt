@@ -34,9 +34,11 @@ class EnumPropToStringR<T> {
  *                  we would have an propNameOverride set to origin and a childProp value set to horizontal.
  *
  */
-class EnumPropToString<T>(private val enumValues: Array<T>,
-                          private val propNameOverride: String? = null,
-                          private val childProp: String? = null) : ReadWriteProperty<RProps, T> {
+class EnumPropToString<T>(
+    private val enumValues: Array<T>,
+    private val propNameOverride: String? = null,
+    private val childProp: String? = null
+) : ReadWriteProperty<RProps, T> {
     override fun getValue(thisRef: RProps, property: KProperty<*>): T {
         val valAsString = valueAsString(property, thisRef, propNameOverride, childProp)
         return enumValues.first { it.toString() == valAsString }
@@ -49,7 +51,7 @@ class EnumPropToString<T>(private val enumValues: Array<T>,
             thisRef.asDynamic()[propName] = value.toString()
         } else {
             if (thisRef.asDynamic()[propName] == undefined) {
-                thisRef.asDynamic()[propName] = js ("({})")
+                thisRef.asDynamic()[propName] = js("({})")
             }
             thisRef.asDynamic()[propName][childProp] = value.toString()
         }
@@ -59,9 +61,11 @@ class EnumPropToString<T>(private val enumValues: Array<T>,
 /**
  * Same as [EnumPropToString] but allows nullable props
  */
-class EnumPropToStringNullable<T>(private val enumValues: Array<T>,
-                                  private val propNameOverride: String? = null,
-                                  private val childProp: String? = null) : ReadWriteProperty<RProps, T?> {
+class EnumPropToStringNullable<T>(
+    private val enumValues: Array<T>,
+    private val propNameOverride: String? = null,
+    private val childProp: String? = null
+) : ReadWriteProperty<RProps, T?> {
     override fun getValue(thisRef: RProps, property: KProperty<*>): T? {
         val valAsString = valueAsString(property, thisRef, propNameOverride, childProp)
 
@@ -79,14 +83,19 @@ class EnumPropToStringNullable<T>(private val enumValues: Array<T>,
             thisRef.asDynamic()[propName] = value?.toString()
         } else {
             if (thisRef.asDynamic()[propName] == undefined) {
-                thisRef.asDynamic()[propName] = js ("({})")
+                thisRef.asDynamic()[propName] = js("({})")
             }
             thisRef.asDynamic()[propName][childProp] = value?.toString()
         }
     }
 }
 
-private fun valueAsString(property: KProperty<*>, thisRef: RProps, propNameOverride: String?, childProp: String?): String? {
+private fun valueAsString(
+    property: KProperty<*>,
+    thisRef: RProps,
+    propNameOverride: String?,
+    childProp: String?
+): String? {
     val propName = propNameOverride ?: property.name
 
     return if (childProp == null) {

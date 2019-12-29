@@ -6,7 +6,6 @@ import react.RState
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/Divider")
 private external val dividerModule: dynamic
 
@@ -28,19 +27,21 @@ interface MDividerProps : StyledProps {
     var component: String
     var light: Boolean
 }
+
 var MDividerProps.orientation by EnumPropToString(MDividerOrientation.values())
 var MDividerProps.variant by EnumPropToString(MDividerVariant.values())
 
 fun RBuilder.mDivider(
-        variant: MDividerVariant = MDividerVariant.fullWidth,
-        light: Boolean = false,
-        absolute: Boolean = false,
-        orientation: MDividerOrientation = MDividerOrientation.horizontal,
-        component: String = "hr",
+    variant: MDividerVariant = MDividerVariant.fullWidth,
+    light: Boolean = false,
+    absolute: Boolean = false,
+    orientation: MDividerOrientation = MDividerOrientation.horizontal,
+    component: String = "hr",
 
-        addAsChild: Boolean = true,
-        className: String? = null,
-        handler: StyledHandler<MDividerProps>? = null) = createStyled(dividerComponent, addAsChild) {
+    addAsChild: Boolean = true,
+    className: String? = null,
+    handler: StyledHandler<MDividerProps>? = null
+) = createStyled(dividerComponent, addAsChild) {
     attrs.absolute = absolute
     attrs.component = component
     attrs.light = light

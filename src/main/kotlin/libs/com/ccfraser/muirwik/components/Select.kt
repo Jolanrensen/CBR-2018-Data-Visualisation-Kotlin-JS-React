@@ -2,9 +2,12 @@ package com.ccfraser.muirwik.components
 
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import org.w3c.dom.events.Event
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.StyledHandler
-
 
 @JsModule("@material-ui/core/Select")
 private external val selectModule: dynamic
@@ -49,27 +52,28 @@ interface MSelectProps : StyledPropsWithCommonAttributes {
 }
 
 fun RBuilder.mSelect(
-        value: Any?,
-        open: Boolean? = null,
-        error: Boolean? = null,
-        disabled: Boolean? = null,
-        multiple: Boolean = false,
-        variant: MFormControlVariant? = null,
-        autoWidth: Boolean = false,
-        fullWidth: Boolean = false,
-        displayEmpty: Boolean = false,
-        autoFocus: Boolean? = null,
-        id: String? = null,
-        name: String? = null,
-        input: ReactElement? = null,
-        native: Boolean = false,
+    value: Any?,
+    open: Boolean? = null,
+    error: Boolean? = null,
+    disabled: Boolean? = null,
+    multiple: Boolean = false,
+    variant: MFormControlVariant? = null,
+    autoWidth: Boolean = false,
+    fullWidth: Boolean = false,
+    displayEmpty: Boolean = false,
+    autoFocus: Boolean? = null,
+    id: String? = null,
+    name: String? = null,
+    input: ReactElement? = null,
+    native: Boolean = false,
 
-        onChange: ((event: Event, child: ReactElement?) -> Unit)? = null,
+    onChange: ((event: Event, child: ReactElement?) -> Unit)? = null,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
+    addAsChild: Boolean = true,
+    className: String? = null,
 
-        handler: StyledHandler<MSelectProps>? = null) = createStyled(selectComponent, addAsChild) {
+    handler: StyledHandler<MSelectProps>? = null
+) = createStyled(selectComponent, addAsChild) {
     autoFocus?.let { attrs.autoFocus = it }
     attrs.autoWidth = autoWidth
     disabled?.let { attrs.disabled = it }
@@ -84,7 +88,7 @@ fun RBuilder.mSelect(
     onChange?.let { attrs.onChange = it }
     open?.let { attrs.open = it }
     value?.let { attrs.value = it }
-    variant?.let {attrs.variant = it.toString() }
+    variant?.let { attrs.variant = it.toString() }
 
     setStyledPropsAndRunHandler(className, handler)
 }

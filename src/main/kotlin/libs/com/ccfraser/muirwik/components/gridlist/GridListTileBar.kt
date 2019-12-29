@@ -10,10 +10,9 @@ import react.ReactElement
 import styled.StyledHandler
 import styled.StyledProps
 
-
 @JsModule("@material-ui/core/GridListTileBar")
 private external val gridListTileBarModule: dynamic
-private val gridListTileBarComponent: RComponent<MGridListTileBarProps, RState> =gridListTileBarModule.default
+private val gridListTileBarComponent: RComponent<MGridListTileBarProps, RState> = gridListTileBarModule.default
 
 @Suppress("EnumEntryName")
 enum class MActionPosition {
@@ -25,27 +24,28 @@ enum class MTitlePosition {
     top, bottom
 }
 
-interface MGridListTileBarProps: StyledProps {
+interface MGridListTileBarProps : StyledProps {
     var actionIcon: ReactElement
     var subtitle: ReactElement
     var title: ReactElement
 }
+
 var MGridListTileBarProps.actionPosition by EnumPropToString(MActionPosition.values())
 var MGridListTileBarProps.titlePosition by EnumPropToString(MTitlePosition.values())
-
 
 /**
  * This mGridListTileBar allows easier to use title and subtitle strings.
  */
 fun RBuilder.mGridListTileBar(
-        title: String,
-        subtitle: String? = null,
-        actionIcon: ReactElement? = null,
-        titlePosition: MTitlePosition = MTitlePosition.bottom,
-        actionPosition: MActionPosition = MActionPosition.right,
+    title: String,
+    subtitle: String? = null,
+    actionIcon: ReactElement? = null,
+    titlePosition: MTitlePosition = MTitlePosition.bottom,
+    actionPosition: MActionPosition = MActionPosition.right,
 
-        className: String? = null,
-        handler: StyledHandler<MGridListTileBarProps>? = null) = createStyled(gridListTileBarComponent) {
+    className: String? = null,
+    handler: StyledHandler<MGridListTileBarProps>? = null
+) = createStyled(gridListTileBarComponent) {
     actionIcon?.let { attrs.actionIcon = it }
     attrs.actionPosition = actionPosition
 
@@ -61,14 +61,15 @@ fun RBuilder.mGridListTileBar(
 }
 
 fun RBuilder.mGridListTileBar(
-        title: ReactElement,
-        subtitle: ReactElement? = null,
-        actionIcon: ReactElement? = null,
-        titlePosition: MTitlePosition = MTitlePosition.bottom,
-        actionPosition: MActionPosition = MActionPosition.right,
+    title: ReactElement,
+    subtitle: ReactElement? = null,
+    actionIcon: ReactElement? = null,
+    titlePosition: MTitlePosition = MTitlePosition.bottom,
+    actionPosition: MActionPosition = MActionPosition.right,
 
-        className: String? = null,
-        handler: StyledHandler<MGridListTileBarProps>? = null) = createStyled(gridListTileBarComponent) {
+    className: String? = null,
+    handler: StyledHandler<MGridListTileBarProps>? = null
+) = createStyled(gridListTileBarComponent) {
     actionIcon?.let { attrs.actionIcon = it }
     attrs.actionPosition = actionPosition
     subtitle?.let { attrs.subtitle = it }

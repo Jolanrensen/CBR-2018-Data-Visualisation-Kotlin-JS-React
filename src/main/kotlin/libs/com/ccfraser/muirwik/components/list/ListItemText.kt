@@ -9,7 +9,6 @@ import react.RState
 import react.ReactElement
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/ListItemText")
 private external val listItemTextModule: dynamic
 
@@ -27,13 +26,14 @@ interface MListItemTextProps : MButtonBaseProps {
  * This list item is a little simple to user as you can pass strings for primary and secondary...
  */
 fun RBuilder.mListItemText(
-        primary: String,
-        secondary: String? = null,
-        inset: Boolean = false,
-        disableTypography: Boolean = false,
+    primary: String,
+    secondary: String? = null,
+    inset: Boolean = false,
+    disableTypography: Boolean = false,
 
-        className: String? = null,
-        handler: StyledHandler<MListItemTextProps>? = null): ReactElement {
+    className: String? = null,
+    handler: StyledHandler<MListItemTextProps>? = null
+): ReactElement {
 
     @Suppress("UnsafeCastFromDynamic")
     val primaryAsElement: ReactElement = primary.asDynamic()
@@ -42,12 +42,13 @@ fun RBuilder.mListItemText(
     val secondaryAsElement: ReactElement? = secondary?.asDynamic()
 
     return mListItemText(
-            primaryAsElement,
-            secondaryAsElement,
-            inset,
-            disableTypography,
-            className,
-            handler)
+        primaryAsElement,
+        secondaryAsElement,
+        inset,
+        disableTypography,
+        className,
+        handler
+    )
 }
 
 /**
@@ -55,13 +56,14 @@ fun RBuilder.mListItemText(
  * strings instead.
  */
 fun RBuilder.mListItemText(
-        primary: ReactElement? = null,
-        secondary: ReactElement? = null,
-        inset: Boolean = false,
-        disableTypography: Boolean = false,
+    primary: ReactElement? = null,
+    secondary: ReactElement? = null,
+    inset: Boolean = false,
+    disableTypography: Boolean = false,
 
-        className: String? = null,
-        handler: StyledHandler<MListItemTextProps>? = null) = createStyled(listItemTextComponent) {
+    className: String? = null,
+    handler: StyledHandler<MListItemTextProps>? = null
+) = createStyled(listItemTextComponent) {
     attrs.disableTypography = disableTypography
     attrs.inset = inset
     primary?.let { attrs.primary = primary }

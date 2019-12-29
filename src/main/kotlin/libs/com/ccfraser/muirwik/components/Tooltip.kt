@@ -7,7 +7,6 @@ import react.RProps
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/Tooltip")
 private external val tooltipModule: dynamic
 
@@ -38,22 +37,23 @@ interface MTooltipProps : StyledPropsWithCommonAttributes {
     @JsName("PopperProps")
     var popperProps: RProps
 }
+
 var MTooltipProps.placement by EnumPropToString(TooltipPlacement.values())
 
-
 fun RBuilder.mTooltip(
-        title: String,
-        placement: TooltipPlacement = TooltipPlacement.bottom,
+    title: String,
+    placement: TooltipPlacement = TooltipPlacement.bottom,
 
-        enterDelay: Int? = null,
-        enterTouchDelay: Int? = null,
-        leaveDelay: Int? = null,
-        leaveTouchDelay: Int? = null,
+    enterDelay: Int? = null,
+    enterTouchDelay: Int? = null,
+    leaveDelay: Int? = null,
+    leaveTouchDelay: Int? = null,
 
-        id: String? = null,
+    id: String? = null,
 
-        className: String? = null,
-        handler: StyledHandler<MTooltipProps>? = null) = createStyled(tooltipComponent) {
+    className: String? = null,
+    handler: StyledHandler<MTooltipProps>? = null
+) = createStyled(tooltipComponent) {
     enterDelay?.let { attrs.enterDelay = enterDelay }
     enterTouchDelay?.let { attrs.enterTouchDelay = enterTouchDelay }
     id?.let { attrs.id = id }

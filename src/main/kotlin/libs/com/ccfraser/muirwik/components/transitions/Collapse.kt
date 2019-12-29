@@ -9,7 +9,6 @@ import react.RComponent
 import react.RState
 import styled.StyledHandler
 
-
 @JsModule("@material-ui/core/Collapse")
 private external val collapseModule: dynamic
 
@@ -20,17 +19,19 @@ external interface MCollapseProps : MTransitionProps {
     var collapsedHeight: String
     var component: String
 }
+
 var MCollapseProps.timeout by TransitionDurationWithAutoDelegate()
 
 fun RBuilder.mCollapse(
-        show: Boolean = false,
-        collapsedHeight: LinearDimension = 0.px,
-        component: String = "div",
-        timeout: TransitionDurationWithAuto? = null,
+    show: Boolean = false,
+    collapsedHeight: LinearDimension = 0.px,
+    component: String = "div",
+    timeout: TransitionDurationWithAuto? = null,
 
-        addAsChild: Boolean = true,
-        className: String? = null,
-        handler: StyledHandler<MCollapseProps>? = null) = createStyled(collapseComponent, addAsChild) {
+    addAsChild: Boolean = true,
+    className: String? = null,
+    handler: StyledHandler<MCollapseProps>? = null
+) = createStyled(collapseComponent, addAsChild) {
     attrs.collapsedHeight = collapsedHeight.toString()
     attrs.component = component
     attrs.show = show

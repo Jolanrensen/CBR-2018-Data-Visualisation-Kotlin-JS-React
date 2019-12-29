@@ -16,21 +16,23 @@ private external val expansionPanelModule: dynamic
 private val expansionPanelComponent: RComponent<MExpansionPanelProps, RState> = expansionPanelModule.default
 
 interface MExpansionPanelProps : StyledPropsWithCommonAttributes {
-	var defaultExpanded: Boolean
-	var disabled: Boolean
-	var expanded: Boolean
-	var onChange: (Event, Boolean) -> Unit
+    var defaultExpanded: Boolean
+    var disabled: Boolean
+    var expanded: Boolean
+    var onChange: (Event, Boolean) -> Unit
 }
 
-fun RBuilder.mExpansionPanel(expanded: Boolean? = null,
-							 defaultExpanded: Boolean = false,
-                             disabled: Boolean = false,
-                             onChange: ((Event, Boolean) -> Unit)? = null,
-                             className: String? = null,
-                             handler: StyledHandler<MExpansionPanelProps>? = null) = createStyled(expansionPanelComponent) {
-	attrs.defaultExpanded = defaultExpanded
-	attrs.disabled = disabled
-	expanded?.let { attrs.expanded = it }
-	onChange?.let { attrs.onChange = it }
-	setStyledPropsAndRunHandler(className, handler)
+fun RBuilder.mExpansionPanel(
+    expanded: Boolean? = null,
+    defaultExpanded: Boolean = false,
+    disabled: Boolean = false,
+    onChange: ((Event, Boolean) -> Unit)? = null,
+    className: String? = null,
+    handler: StyledHandler<MExpansionPanelProps>? = null
+) = createStyled(expansionPanelComponent) {
+    attrs.defaultExpanded = defaultExpanded
+    attrs.disabled = disabled
+    expanded?.let { attrs.expanded = it }
+    onChange?.let { attrs.onChange = it }
+    setStyledPropsAndRunHandler(className, handler)
 }
