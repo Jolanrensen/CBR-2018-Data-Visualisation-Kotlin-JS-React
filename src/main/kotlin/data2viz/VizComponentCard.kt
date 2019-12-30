@@ -1,6 +1,7 @@
-
+package data2viz
 import com.ccfraser.muirwik.components.card.MCardProps
 import com.ccfraser.muirwik.components.card.mCardContent
+import hoveringCard
 import io.data2viz.viz.Viz
 import kotlinx.css.margin
 import kotlinx.css.mm

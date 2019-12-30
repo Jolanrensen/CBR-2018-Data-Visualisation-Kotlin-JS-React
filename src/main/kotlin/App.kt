@@ -1,3 +1,4 @@
+
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.MGridSize
 import com.ccfraser.muirwik.components.MGridSpacing
@@ -12,10 +13,28 @@ import com.ccfraser.muirwik.components.mGridItem
 import com.ccfraser.muirwik.components.mTypography
 import data.Data
 import data.Product
+import data2viz.GeoPathNode
+import data2viz.vizComponentCard
 import filterableLists.categorieProductList
 import filterableLists.examenlocatiesList
 import filterableLists.opleidersList
 import io.data2viz.color.Colors
+import io.data2viz.geo.projection.albersProjection
+import io.data2viz.geo.projection.albersUSAProjection
+import io.data2viz.geo.projection.azimuthalEqualAreaProjection
+import io.data2viz.geo.projection.azimuthalEquidistant
+import io.data2viz.geo.projection.conicConformalProjection
+import io.data2viz.geo.projection.conicEqualAreaProjection
+import io.data2viz.geo.projection.conicEquidistantProjection
+import io.data2viz.geo.projection.equalEarthProjection
+import io.data2viz.geo.projection.equirectangularProjection
+import io.data2viz.geo.projection.gnomonicProjection
+import io.data2viz.geo.projection.identityProjection
+import io.data2viz.geo.projection.mercatorProjection
+import io.data2viz.geo.projection.naturalEarthProjection
+import io.data2viz.geo.projection.orthographicProjection
+import io.data2viz.geo.projection.stereographicProjection
+import io.data2viz.geo.projection.transverseMercatorProjection
 import io.data2viz.geom.point
 import io.data2viz.geom.size
 import io.data2viz.math.deg
@@ -127,9 +146,6 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
 
         vizComponentCard(
             runOnCard = {
-                // css {
-                //     width = LinearDimension(if (window.screen.availWidth > 720) "60%" else "90%")
-                // }
                 mCardHeader(
                     title = "Mooie grafiek",
                     subHeader = "Nou kweenie hoor",
@@ -139,7 +155,6 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                 )
             }
         ) {
-            clear()
             size = size(800, 250)
 
             (0 until 360 step 30).forEach {
@@ -230,7 +245,6 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                     onSelectionChanged = {
                         state.refreshExamenlocaties()
                     }
-
                 }
             }
 
@@ -267,6 +281,72 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                     }
                 }
             }
+        }
+
+
+        vizComponentCard(
+            runOnCard = {
+                mCardHeader(
+                    title = "Kaartje",
+                    subHeader = "Nou kweenie hoor",
+                    avatar = mAvatar(addAsChild = false) {
+                        +"K"
+                    }
+                )
+            }
+        ) {
+            // js https://github.com/data2viz/data2viz/blob/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-js/src/main/kotlin/EarthJs.kt
+            // common https://github.com/data2viz/data2viz/tree/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-common/src/main/kotlin
+
+            size = size(500, 500)
+
+            val allProjections = hashMapOf(
+                "albers" to albersProjection(),
+                "albersUSA" to albersUSAProjection {
+                    scale = 500.0
+                },
+                "azimuthalEqualArea" to azimuthalEqualAreaProjection(),
+                "azimuthalEquidistant" to azimuthalEquidistant(),
+                "conicConformal" to conicConformalProjection(),
+                "conicEqual" to conicEqualAreaProjection(),
+                "conicEquidistant" to conicEquidistantProjection(),
+                "equalEarth" to equalEarthProjection(),
+                "equirectangular" to equirectangularProjection(),
+                "gnomonic" to gnomonicProjection(),
+                "identity" to identityProjection(),
+                "mercator" to mercatorProjection(),
+                "naturalEarth" to naturalEarthProjection(),
+                "orthographic" to orthographicProjection(),
+                "stereographic" to stereographicProjection(),
+                "transverseMercator" to transverseMercatorProjection()
+            )
+            val allProjectionsNames = allProjections.keys.toList()
+
+            // val projectionName = "equirectangular" //TODO
+            val world = Data.geoJson // TODO
+
+            // val projection = allProjections[projectionName]!!
+
+            val geoPathNode = GeoPathNode().apply {
+                stroke = Colors.Web.black
+                strokeWidth = 1.0
+                fill = Colors.Web.whitesmoke
+                geoProjection = conicEqualAreaProjection {
+                    // Todo this is now focused on the us, focus on nl
+                    // parallels(29.5.deg, 45.5.deg)
+                    // scale = 1070.0
+                    // translate(480.0, 250.0)
+                    // rotate(96.0.deg, 0.0.deg)
+                    // center((-0.6).deg, 38.7.deg)
+                }
+                geoData = world
+                redrawPath()
+            }
+
+            add(geoPathNode)
+
+            geoPathNode.redrawPath()
+
         }
 
         // video {

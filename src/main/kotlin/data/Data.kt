@@ -7,6 +7,8 @@ import data.ExamenResultaatCategorie.COMBI
 import data.ExamenResultaatCategorie.HANDGESCHAKELD
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
+import io.data2viz.geojson.GeoJsonObject
+import io.data2viz.geojson.toGeoJsonObject
 import io.data2viz.time.Date
 import org.w3c.xhr.XMLHttpRequest
 
@@ -16,6 +18,19 @@ object Data {
 
     val opleiderToExamenlocaties: HashMap<String, HashSet<String>> = hashMapOf()
     val examenlocatieToOpleiders: HashMap<String, HashSet<String>> = hashMapOf()
+
+    var geoJson: GeoJsonObject? = null
+        get() {
+            if (field != null) return field
+            val xmlhttp = XMLHttpRequest()
+            xmlhttp.open("GET", "provincie_2020.geojson", false)
+
+            xmlhttp.send()
+            val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
+
+            field = result?.toGeoJsonObject()
+            return field
+        }
 
     private val csv: List<List<String>>?
         get() {

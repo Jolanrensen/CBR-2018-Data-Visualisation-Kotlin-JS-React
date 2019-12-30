@@ -1,3 +1,4 @@
+package data2viz
 import io.data2viz.viz.Viz
 import io.data2viz.viz.bindRendererOn
 import io.data2viz.viz.viz
@@ -20,7 +21,9 @@ class VizComponent(props: Props) : RComponent<VizComponent.Props, VizComponent.S
     override fun RBuilder.render() {
         canvas {
             ref {
-                viz(props.runOnViz).apply {
+                viz {
+                    clear()
+                    props.runOnViz(this)
                     try {
                         bindRendererOn(findDOMNode(it) as HTMLCanvasElement)
                     } catch (e: Exception) {

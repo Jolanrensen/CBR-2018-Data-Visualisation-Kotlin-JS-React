@@ -63,7 +63,14 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.6.12")
                 implementation("org.jetbrains:kotlin-react:16.9.0-pre.89-kotlin-1.3.60")
                 implementation("org.jetbrains:kotlin-react-dom:16.9.0-pre.89-kotlin-1.3.60")
-                implementation("io.data2viz:d2v-data2viz-js:0.8.0-RC1")
+
+                // implementation("io.data2viz:d2v-data2viz-common:0.8.0-RC5")
+                implementation("io.data2viz:d2v-data2viz-js:0.8.0-RC5")
+                // implementation("io.data2viz:d2v-geo-common:0.7.0-RC5")
+                // implementation("io.data2viz:d2v-data2viz-common:0.8.0-RC5")
+                // implementation("io.data2viz:d2v-shape-common:0.8.0-RC5")
+
+
                 implementation("org.jetbrains:kotlin-extensions:1.0.1-pre.89-kotlin-1.3.60")
                 implementation("org.jetbrains:kotlin-css:1.0.0-pre.89-kotlin-1.3.60")
                 implementation("org.jetbrains:kotlin-css-js:1.0.0-pre.89-kotlin-1.3.60")

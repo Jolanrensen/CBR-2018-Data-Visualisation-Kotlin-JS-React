@@ -1,0 +1,42 @@
+<component name="libraryTable">
+  <library name="io.data2viz:d2v-data2viz-common:0.8.0-RC5" type="repository">
+    <properties maven-id="io.data2viz:d2v-data2viz-common:0.8.0-RC5" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-data2viz-common/0.8.0-RC5/d2v-data2viz-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-common/1.3.50/kotlin-stdlib-common-1.3.50.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-axis-common/0.8.0-RC5/d2v-axis-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-chord-common/0.8.0-RC5/d2v-chord-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-color-common/0.8.0-RC5/d2v-color-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-contour-common/0.8.0-RC5/d2v-contour-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-core-common/0.8.0-RC5/d2v-core-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-delaunay-common/0.8.0-RC5/d2v-delaunay-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-dsv-common/0.8.0-RC5/d2v-dsv-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-ease-common/0.8.0-RC5/d2v-ease-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-force-common/0.8.0-RC5/d2v-force-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-format-common/0.8.0-RC5/d2v-format-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-geo-common/0.8.0-RC5/d2v-geo-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/geojson/geojson-common/0.6.0/geojson-common-0.6.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/kotlinx-coroutines-core-common/0.26.1/kotlinx-coroutines-core-common-0.26.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/atomicfu-common/0.11.5/atomicfu-common-0.11.5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-hexbin-common/0.8.0-RC5/d2v-hexbin-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-hierarchy-common/0.8.0-RC5/d2v-hierarchy-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-interpolate-common/0.8.0-RC5/d2v-interpolate-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-quadtree-common/0.8.0-RC5/d2v-quadtree-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-random-common/0.8.0-RC5/d2v-random-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-request-common/0.8.0-RC5/d2v-request-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-sankey-common/0.8.0-RC5/d2v-sankey-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-scale-common/0.8.0-RC5/d2v-scale-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-shape-common/0.8.0-RC5/d2v-shape-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-tests-common/0.8.0-RC5/d2v-tests-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-tile-common/0.8.0-RC5/d2v-tile-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-time-common/0.8.0-RC5/d2v-time-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-time-format-common/0.8.0-RC5/d2v-time-format-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-timer-common/0.8.0-RC5/d2v-timer-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-transition-common/0.8.0-RC5/d2v-transition-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-viz-common/0.8.0-RC5/d2v-viz-common-0.8.0-RC5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/data2viz/d2v-voronoi-common/0.8.0-RC5/d2v-voronoi-common-0.8.0-RC5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
