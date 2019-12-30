@@ -5,10 +5,10 @@ import react.RProps
 import react.RState
 import react.ReactElement
 
-abstract class FilterableList<T : FilterableList.FilterableListProps, U : FilterableList.FilterableListState<*>>(props: T) :
+abstract class FilterableList<T : FilterableList.FilterableListProps<*>, U : FilterableList.FilterableListState<*>>(props: T) :
     RComponent<T, U>(props) {
 
-    interface FilterableListProps : RProps {
+    interface FilterableListProps<Key: Any> : RProps {
         // String filter for current list
         var filter: String
 
@@ -16,13 +16,13 @@ abstract class FilterableList<T : FilterableList.FilterableListProps, U : Filter
         var setReloadRef: (ReloadItems) -> Unit
 
         // Set of keys representing all selected items in this list, don't forget to call onSelectionChanged
-        var selectedItemKeys: HashSet<String>
+        var selectedItemKeys: HashSet<Key>
 
         // Function that should be called whenever anything changes in selectedItemKeysDelegate
         var onSelectionChanged: () -> Unit
 
         // Set of keys representing all selected items in other relevant list
-        var selectedOtherItemKeys: HashSet<String>
+        var selectedOtherItemKeys: HashSet<Key>
     }
 
     interface FilterableListState<S: Any?> : RState {
@@ -31,6 +31,6 @@ abstract class FilterableList<T : FilterableList.FilterableListProps, U : Filter
     }
 }
 
-typealias CreateFilterableList = RBuilder.(handler: FilterableList.FilterableListProps.() -> Unit) -> ReactElement
+typealias CreateFilterableList<Key> = RBuilder.(handler: FilterableList.FilterableListProps<Key>.() -> Unit) -> ReactElement
 
 typealias ReloadItems = () -> Unit

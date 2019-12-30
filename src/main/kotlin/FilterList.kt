@@ -26,16 +26,16 @@ import react.RState
 import react.setState
 import styled.css
 
-class FilterList(props: Props) : RComponent<FilterList.Props, FilterList.State>(props) {
+class FilterList<Key: Any>(props: Props<Key>) : RComponent<FilterList.Props<Key>, FilterList.State>(props) {
 
-    interface Props : RProps {
-        var filterableListCreationFunction: CreateFilterableList
+    interface Props<Key: Any> : RProps {
+        var filterableListCreationFunction: CreateFilterableList<Key>
         var liveReload: Boolean
         var itemsName: String
 
         var setReloadRef: (ReloadItems) -> Unit
-        var selectedItemKeys: HashSet<String>
-        var selectedOtherItemKeys: HashSet<String>
+        var selectedItemKeys: HashSet<Key>
+        var selectedOtherItemKeys: HashSet<Key>
         var onSelectionChanged: () -> Unit
     }
 
@@ -44,7 +44,7 @@ class FilterList(props: Props) : RComponent<FilterList.Props, FilterList.State>(
         var reload: ReloadItems
     }
 
-    override fun State.init(props: Props) {
+    override fun State.init(props: Props<Key>) {
         filter = ""
         reload = {}
     }
@@ -116,8 +116,8 @@ class FilterList(props: Props) : RComponent<FilterList.Props, FilterList.State>(
     }
 }
 
-fun RBuilder.filterList(type: CreateFilterableList, itemsName: String = "items", handler: FilterList.Props.() -> Unit) =
-    child(FilterList::class) {
+fun <Key: Any> RBuilder.filterList(type: CreateFilterableList<Key>, itemsName: String = "items", handler: FilterList.Props<Key>.() -> Unit) =
+    child<FilterList.Props<Key>, FilterList<Key>> {
         attrs {
             filterableListCreationFunction = type
             liveReload = true

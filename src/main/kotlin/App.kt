@@ -1,4 +1,3 @@
-
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.MGridSize
 import com.ccfraser.muirwik.components.MGridSpacing
@@ -12,6 +11,8 @@ import com.ccfraser.muirwik.components.mGridContainer
 import com.ccfraser.muirwik.components.mGridItem
 import com.ccfraser.muirwik.components.mTypography
 import data.Data
+import data.Product
+import filterableLists.categorieProductList
 import filterableLists.examenlocatiesList
 import filterableLists.opleidersList
 import io.data2viz.color.Colors
@@ -25,14 +26,12 @@ import io.data2viz.viz.textAlign
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.css.Color
-import kotlinx.css.LinearDimension
 import kotlinx.css.backgroundColor
 import kotlinx.css.color
 import kotlinx.css.margin
 import kotlinx.css.mm
 import kotlinx.css.padding
 import kotlinx.css.px
-import kotlinx.css.width
 import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RComponent
@@ -43,36 +42,34 @@ import react.setState
 import styled.css
 import styled.styledDiv
 import styled.styledP
-import kotlin.browser.window
 
 class App(props: Props) : RComponent<App.Props, App.State>(props) {
-
-    val vizSize = 300.0
 
     interface State : RState {
         var welcomeText: String
         var circleColor: io.data2viz.color.Color
 
-        var opleiderFilter: String
         var refreshOpleiders: ReloadItems
         var selectedOpleiderKeys: HashSet<String>
 
-        var examenlocatieFilter: String
         var refreshExamenlocaties: ReloadItems
         var selectedExamenlocatieKeys: HashSet<String>
+
+        var selectedProducts: HashSet<Product>
+        var refreshProducts: ReloadItems
     }
 
     override fun State.init(props: Props) {
         welcomeText = "Hello world!"
         circleColor = Colors.rgb(255, 0, 0)
 
-        opleiderFilter = ""
         refreshOpleiders = {}
         selectedOpleiderKeys = hashSetOf()
 
-        examenlocatieFilter = ""
         refreshExamenlocaties = {}
         selectedExamenlocatieKeys = hashSetOf()
+
+        selectedProducts = hashSetOf()
     }
 
     private fun loadData() {
@@ -82,6 +79,7 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
             println("data loaded!")
             state.refreshOpleiders()
             state.refreshExamenlocaties()
+            state.refreshProducts()
         }
     }
 
@@ -126,11 +124,12 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                 }
             })
 
+
         vizComponentCard(
             runOnCard = {
-                css {
-                    width = LinearDimension(if (window.screen.availWidth > 720) "60%" else "90%")
-                }
+                // css {
+                //     width = LinearDimension(if (window.screen.availWidth > 720) "60%" else "90%")
+                // }
                 mCardHeader(
                     title = "Mooie grafiek",
                     subHeader = "Nou kweenie hoor",
@@ -172,6 +171,7 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                 }
             }
         }
+
 
         div {
             attrs {
@@ -247,6 +247,23 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                     selectedOtherItemKeys = state.selectedOpleiderKeys
                     onSelectionChanged = {
                         state.refreshOpleiders()
+                    }
+                }
+            }
+
+            mGridItem(
+                xs = MGridSize.cells4
+            ) {
+                filterList(categorieProductList, "producten/categoriën") {
+                    setReloadRef = {
+                        setState {
+                            refreshProducts = it
+                        }
+                    } // just execute reload as we don't have to wait for data
+                    selectedItemKeys = state.selectedProducts
+                    selectedOtherItemKeys = hashSetOf() // not used
+                    onSelectionChanged = {
+                        // TODO?
                     }
                 }
             }

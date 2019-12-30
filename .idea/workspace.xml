@@ -2,17 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/HoveringCard.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/VizComponentCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/VizComponentCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Base.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Base.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/reactWindow.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/reactWindowHelper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +178,9 @@
       <updated>1577194573200</updated>
       <workItem from="1577194574482" duration="12422000" />
       <workItem from="1577218895304" duration="4063000" />
-      <workItem from="1577627069447" duration="20066000" />
+      <workItem from="1577627069447" duration="20250000" />
+      <workItem from="1577707525861" duration="6515000" />
+      <workItem from="1577718978680" duration="10036000" />
     </task>
     <task id="LOCAL-00001" summary="fixed all errors, created two cooperating lists, opleider and examenlocatie">
       <created>1577205156703</created>
@@ -212,7 +210,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577659345248</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="more generalization, cleaning up">
+      <created>1577661592142</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1577661592142</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -221,7 +226,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fixed all errors, created two cooperating lists, opleider and examenlocatie" />
     <MESSAGE value="linted all, fixed live/hot reloading, created filterablelists for opleiders and examenlocaties" />
-    <option name="LAST_COMMIT_MESSAGE" value="linted all, fixed live/hot reloading, created filterablelists for opleiders and examenlocaties" />
+    <MESSAGE value="more generalization, cleaning up" />
+    <option name="LAST_COMMIT_MESSAGE" value="more generalization, cleaning up" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1533" y="484" key="#Project_Structure" timestamp="1577627188024">
@@ -240,42 +246,42 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="659" y="25" width="1552" height="1591" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577629556309" />
-    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2" timestamp="1577659345141">
+    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2" timestamp="1577661592049">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1577659345141" />
+    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1577661592049" />
     <state x="672" y="580" key="FileChooserDialogImpl" timestamp="1577194839081">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="672" y="580" key="FileChooserDialogImpl/0.25.2880.1595@0.25.2880.1595" timestamp="1577194839081" />
-    <state width="1937" height="335" key="GridCell.Tab.0.bottom" timestamp="1577657659403">
+    <state width="1551" height="335" key="GridCell.Tab.0.bottom" timestamp="1577727592996">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1937" height="335" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1577657659403" />
+    <state width="1551" height="335" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1577727592996" />
     <state width="2346" height="473" key="GridCell.Tab.0.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1577223083797" />
-    <state width="1937" height="335" key="GridCell.Tab.0.center" timestamp="1577657659402">
+    <state width="1551" height="335" key="GridCell.Tab.0.center" timestamp="1577727592994">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1937" height="335" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1577657659402" />
+    <state width="1551" height="335" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1577727592994" />
     <state width="2346" height="473" key="GridCell.Tab.0.center/0.50.4320.2380@0.50.4320.2380" timestamp="1577223083797" />
-    <state width="1937" height="335" key="GridCell.Tab.0.left" timestamp="1577657659400">
+    <state width="1551" height="335" key="GridCell.Tab.0.left" timestamp="1577727592993">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1937" height="335" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1577657659400" />
+    <state width="1551" height="335" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1577727592993" />
     <state width="2346" height="473" key="GridCell.Tab.0.left/0.50.4320.2380@0.50.4320.2380" timestamp="1577223083797" />
-    <state width="1937" height="335" key="GridCell.Tab.0.right" timestamp="1577657659403">
+    <state width="1551" height="335" key="GridCell.Tab.0.right" timestamp="1577727592995">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1937" height="335" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1577657659403" />
+    <state width="1551" height="335" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1577727592995" />
     <state width="2346" height="473" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1577223083797" />
     <state x="1420" y="457" width="1363" height="730" key="SettingsEditor" timestamp="1577627588255">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1420" y="457" width="1363" height="730" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1577627588255" />
-    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1577659348355">
+    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1577661594021">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1577659348355" />
+    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1577661594021" />
     <state x="413" y="435" width="851" height="522" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1577205108611">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>

@@ -1,7 +1,6 @@
 package filterableLists
 
 import FilterableList
-import ReloadItems
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemAvatar
 import com.ccfraser.muirwik.components.list.mListItemText
@@ -33,18 +32,19 @@ import toInt
 
 class OpleidersList(props: Props) : FilterableList<OpleidersList.Props, OpleidersList.State>(props) {
 
-    interface Props : FilterableList.FilterableListProps {
-        override var filter: String
-        override var setReloadRef: (ReloadItems) -> Unit
-        override var selectedItemKeys: HashSet<String>
-        override var onSelectionChanged: () -> Unit
-        override var selectedOtherItemKeys: HashSet<String>
-    }
+    interface Props : FilterableListProps<String>
+    // Available in props:
+    // var filter: String
+    // var setReloadRef: (ReloadItems) -> Unit
+    // var selectedItemKeys: HashSet<String>
+    // var onSelectionChanged: () -> Unit
+    // var selectedOtherItemKeys: HashSet<String>
 
     private val isOpleiderSelected = props.selectedItemKeys
     private val isExamenlocatieSelected = props.selectedOtherItemKeys
 
-    interface State : FilterableList.FilterableListState<Opleider>
+    interface State : FilterableListState<Opleider>
+    // var filteredItems: List<Opleider>
 
     override fun State.init(props: Props) {
         props.setReloadRef(::refreshOpleiders)
@@ -125,9 +125,7 @@ class OpleidersList(props: Props) : FilterableList<OpleidersList.Props, Opleider
                 }
             }
             mListItemText("${opleider.naam}, ${opleider.plaatsnaam} (${opleider.code})")
-            mCheckbox(
-                checked = opleider.code in isOpleiderSelected,
-                onChange = { _, newState -> toggleSelected(opleider.code, newState) })
+            mCheckbox(checked = opleider.code in isOpleiderSelected)
         }
     }
 
@@ -171,10 +169,3 @@ val opleidersList: RBuilder.(OpleidersList.Props.() -> Unit) -> ReactElement = {
         attrs(handler)
     }
 }
-
-// fun RBuilder.filterableLists.getOpleidersList(handler: filterableLists.OpleidersList.Props.() -> Unit): ReactElement {
-//     return child(filterableLists.OpleidersList::class) {
-//         attrs(handler)
-//     }
-// }
-

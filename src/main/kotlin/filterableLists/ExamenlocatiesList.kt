@@ -1,6 +1,6 @@
 package filterableLists
+
 import FilterableList
-import ReloadItems
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemAvatar
 import com.ccfraser.muirwik.components.list.mListItemText
@@ -32,18 +32,19 @@ import toInt
 
 class ExamenlocatiesList(props: Props) : FilterableList<ExamenlocatiesList.Props, ExamenlocatiesList.State>(props) {
 
-    interface Props : FilterableList.FilterableListProps {
-        override var filter: String
-        override var setReloadRef: (ReloadItems) -> Unit
-        override var selectedItemKeys: HashSet<String>
-        override var onSelectionChanged: () -> Unit
-        override var selectedOtherItemKeys: HashSet<String>
-    }
+    interface Props : FilterableListProps<String>
+    // Available in props:
+    // var filter: String
+    // var setReloadRef: (ReloadItems) -> Unit
+    // var selectedItemKeys: HashSet<String>
+    // var onSelectionChanged: () -> Unit
+    // var selectedOtherItemKeys: HashSet<String>
 
     private val isExamenlocatieSelected = props.selectedItemKeys
     private val isOpleiderSelected = props.selectedOtherItemKeys
 
     interface State : FilterableListState<Examenlocatie>
+    // var filteredItems: List<Examenlocatie>
 
     override fun State.init(props: Props) {
         props.setReloadRef(::refreshExamenlocaties)
@@ -96,8 +97,7 @@ class ExamenlocatiesList(props: Props) : FilterableList<ExamenlocatiesList.Props
         list?.scrollTo(0)
     }
 
-    private fun toggleSelected(examenlocatie: String?, newState: Boolean? = null) {
-        examenlocatie ?: return
+    private fun toggleSelected(examenlocatie: String, newState: Boolean? = null) {
         setState {
             if (newState ?: examenlocatie !in isExamenlocatieSelected)
                 isExamenlocatieSelected += examenlocatie
@@ -123,9 +123,7 @@ class ExamenlocatiesList(props: Props) : FilterableList<ExamenlocatiesList.Props
                 }
             }
             mListItemText("${examenlocatie.naam}, ${examenlocatie.plaatsnaam} (${examenlocatie.naam})")
-            mCheckbox(
-                checked = examenlocatie.naam in isExamenlocatieSelected,
-                onChange = { _, newState -> toggleSelected(examenlocatie.naam, newState) })
+            mCheckbox(checked = examenlocatie.naam in isExamenlocatieSelected)
         }
     }
 
