@@ -300,6 +300,7 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
 
             size = size(500, 500)
 
+            // example projections
             val allProjections = hashMapOf(
                 "albers" to albersProjection(),
                 "albersUSA" to albersUSAProjection {
@@ -322,8 +323,7 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
             )
             val allProjectionsNames = allProjections.keys.toList()
 
-            // val projectionName = "equirectangular" //TODO
-            val world = Data.geoJson // TODO
+            val world = Data.geoJson
 
             // val projection = allProjections[projectionName]!!
 

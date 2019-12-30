@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="opleider/categorielist">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/io_data2viz_d2v_data2viz_common_0_8_0_RC5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/io_data2viz_d2v_geo_common_0_7_0_RC4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data2viz/GeoPathNode.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/provincie_2020.geojson" afterDir="false" />
+    <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/VizComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data2viz/VizComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/VizComponentCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data2viz/VizComponentCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +179,7 @@
       <workItem from="1577218895304" duration="4063000" />
       <workItem from="1577627069447" duration="20250000" />
       <workItem from="1577707525861" duration="6515000" />
-      <workItem from="1577718978680" duration="18815000" />
+      <workItem from="1577718978680" duration="18882000" />
     </task>
     <task id="LOCAL-00001" summary="fixed all errors, created two cooperating lists, opleider and examenlocatie">
       <created>1577205156703</created>
@@ -232,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577731553252</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="starting with map">
+      <created>1577742259969</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1577742259969</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,7 +241,8 @@
     <MESSAGE value="linted all, fixed live/hot reloading, created filterablelists for opleiders and examenlocaties" />
     <MESSAGE value="more generalization, cleaning up" />
     <MESSAGE value="opleider/categorielist" />
-    <option name="LAST_COMMIT_MESSAGE" value="opleider/categorielist" />
+    <MESSAGE value="starting with map" />
+    <option name="LAST_COMMIT_MESSAGE" value="starting with map" />
   </component>
   <component name="WindowStateProjectService">
     <state x="378" y="275" width="1180" height="752" key="#Project_Structure" timestamp="1577737784118">
@@ -274,10 +273,10 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="701" y="409" width="524" height="480" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577737783004" />
-    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2" timestamp="1577734107589">
+    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2" timestamp="1577742259839">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1577734107589" />
+    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1577742259839" />
     <state x="672" y="580" width="864" height="510" key="FileChooserDialogImpl" timestamp="1577737378049">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
@@ -306,10 +305,10 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1420" y="457" width="1363" height="730" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1577627588255" />
-    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1577731557339">
+    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1577742262578">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1577731557339" />
+    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1577742262578" />
     <state x="893" y="872" width="788" height="227" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1577737781632">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
