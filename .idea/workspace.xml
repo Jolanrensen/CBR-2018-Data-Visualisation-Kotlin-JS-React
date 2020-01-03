@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="">
+    <list default="true" id="4cb68dff-52c1-4a85-92b5-91dc274354eb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,10 +49,15 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/build.gradle.kts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/App.kt" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="KonanWorkspace" KOTLIN_NATIVE_HOME="$USER_HOME$/.konan/kotlin-native-linux-1.3.61">
     <executables />
   </component>
   <component name="ProjectId" id="1VQoFFoAcuSoOPvn75TE0yElDtV" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -79,7 +84,7 @@
     <property name="project.structure.proportion" value="0.11976045" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -301,10 +306,11 @@
     </state>
     <state width="1614" height="335" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1577738175571" />
     <state width="2346" height="473" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1577223083797" />
-    <state x="1420" y="457" width="1363" height="730" key="SettingsEditor" timestamp="1577627588255">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state x="5742" y="390" width="1212" height="737" key="SettingsEditor" timestamp="1578070871099">
+      <screen x="4480" y="0" width="2560" height="1440" />
     </state>
     <state x="1420" y="457" width="1363" height="730" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1577627588255" />
+    <state x="5742" y="390" width="1212" height="737" key="SettingsEditor/4480.0.2560.1440/0.264.1920.1080/1920.0.2560.1440@4480.0.2560.1440" timestamp="1578070871099" />
     <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1577742262578">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
