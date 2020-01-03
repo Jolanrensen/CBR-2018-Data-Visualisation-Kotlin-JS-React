@@ -298,7 +298,7 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
             // js https://github.com/data2viz/data2viz/blob/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-js/src/main/kotlin/EarthJs.kt
             // common https://github.com/data2viz/data2viz/tree/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-common/src/main/kotlin
 
-            size = size(500, 500)
+            size = size(800, 900)
 
             // example projections
             val allProjections = hashMapOf(
@@ -333,11 +333,11 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                 fill = Colors.Web.whitesmoke
                 geoProjection = conicEqualAreaProjection {
                     // Todo this is now focused on the us, focus on nl
+                    scale = 15000.0
+                    center((((((5.0))))).deg, (((((52.72))))).deg)
                     // parallels(29.5.deg, 45.5.deg)
-                    // scale = 1070.0
                     // translate(480.0, 250.0)
                     // rotate(96.0.deg, 0.0.deg)
-                    // center((-0.6).deg, 38.7.deg)
                 }
                 geoData = world
                 redrawPath()
