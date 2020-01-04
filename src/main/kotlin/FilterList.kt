@@ -1,4 +1,3 @@
-
 import com.ccfraser.muirwik.components.MGridSize
 import com.ccfraser.muirwik.components.button.MIconEdge
 import com.ccfraser.muirwik.components.button.mIconButton
@@ -12,6 +11,9 @@ import com.ccfraser.muirwik.components.input.mFilledInput
 import com.ccfraser.muirwik.components.input.mInputAdornment
 import com.ccfraser.muirwik.components.input.mInputLabel
 import com.ccfraser.muirwik.components.input.margin
+import com.ccfraser.muirwik.components.list.mListItem
+import com.ccfraser.muirwik.components.list.mListItemText
+import com.ccfraser.muirwik.components.mCheckbox
 import com.ccfraser.muirwik.components.mGridContainer
 import com.ccfraser.muirwik.components.mGridItem
 import com.ccfraser.muirwik.components.persist
@@ -26,27 +28,53 @@ import react.RState
 import react.setState
 import styled.css
 
-class FilterList<Key: Any>(props: Props<Key>) : RComponent<FilterList.Props<Key>, FilterList.State>(props) {
+class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
+    RComponent<FilterList.Props<Key, Type>, FilterList.State<Type>>(props) {
 
-    interface Props<Key: Any> : RProps {
-        var filterableListCreationFunction: CreateFilterableList<Key>
+    interface Props<Key : Any, Type : Any?> : RProps {
+        var filterableListCreationFunction: CreateFilterableList<Key, Type>
         var liveReload: Boolean
         var itemsName: String
 
         var setReloadRef: (ReloadItems) -> Unit
-        var selectedItemKeys: HashSet<Key>
-        var selectedOtherItemKeys: HashSet<Key>
+        var selectedItemKeysDelegate: VarDelegate<Set<Key>>
+        var selectedOtherItemKeysDelegate: VarDelegate<Set<Key>>
         var onSelectionChanged: () -> Unit
+        var alwaysAllowSelectAll: Boolean
     }
 
-    interface State : RState {
+    private var selectedItemKeys by props.selectedItemKeysDelegate
+    private var selectedOtherItemKeys by props.selectedOtherItemKeysDelegate
+
+    interface State<Type> : RState {
         var filter: String
         var reload: ReloadItems
+        var filteredItems: List<Type>
     }
 
-    override fun State.init(props: Props<Key>) {
+    override fun State<Type>.init(props: Props<Key, Type>) {
         filter = ""
         reload = {}
+        filteredItems = listOf()
+    }
+
+    private val filterDelegate = delegateOf(state::filter)
+    private var filter by filterDelegate
+
+    private val filteredItemsDelegate = delegateOf(state::filteredItems)
+    private var filteredItems by filteredItemsDelegate
+
+    private var keyToType: ((Key) -> Type)? = null
+    private var typeToKey: ((Type) -> Key)? = null
+
+    private fun toggleSelectAllVisible() {
+        if (!filteredItems.all { typeToKey?.invoke(it) in selectedItemKeys }) {
+            selectedItemKeys += filteredItems.map { typeToKey!!(it) }
+        } else {
+            selectedItemKeys -= filteredItems.map { typeToKey!!(it) }
+        }
+
+        props.onSelectionChanged()
     }
 
     override fun RBuilder.render() {
@@ -70,10 +98,9 @@ class FilterList<Key: Any>(props: Props<Key>) : RComponent<FilterList.Props<Key>
                         type = InputType.text,
                         onChange = {
                             it.persist()
-                            setState {
-                                filter = it.targetInputValue
-                                if (props.liveReload) state.reload()
-                            }
+                            filter = it.targetInputValue
+                            if (props.liveReload) state.reload()
+
                         }
                     ) {
                         attrs {
@@ -97,17 +124,53 @@ class FilterList<Key: Any>(props: Props<Key>) : RComponent<FilterList.Props<Key>
                     }
                 }
             }
+
+            if (filter.isNotBlank() || selectedOtherItemKeys.isNotEmpty() || props.alwaysAllowSelectAll) {
+                mGridItem(xs = MGridSize.cells12) {
+                    mListItem(
+                        button = true,
+                        divider = true,
+                        dense = true,
+                        onClick = { toggleSelectAllVisible() }
+                    ) {
+                        mListItemText("(De)selecteer alle gefilterde ${props.itemsName}")
+                        mCheckbox(
+                            checked = filteredItems
+                                .asSequence()
+                                .map { typeToKey?.invoke(it) }
+                                .any { it in selectedItemKeys },
+                            indeterminate = filteredItems
+                                .asSequence()
+                                .map { typeToKey?.invoke(it) }
+                                .run {
+                                    !all { it in selectedItemKeys } && any { it in selectedItemKeys }
+                                }
+                        )
+                    }
+                }
+            }
+
             mGridItem(xs = MGridSize.cells12) {
                 props.filterableListCreationFunction(this) {
+                    filteredItemsDelegate = this@FilterList.filteredItemsDelegate
+                    selectedItemKeysDelegate = props.selectedItemKeysDelegate
+                    selectedOtherItemKeysDelegate = props.selectedOtherItemKeysDelegate
+
                     setReloadRef = {
                         setState {
                             reload = it
                         }
                         props.setReloadRef(it)
                     }
-                    filter = state.filter
-                    selectedItemKeys = props.selectedItemKeys
-                    selectedOtherItemKeys = props.selectedOtherItemKeys
+                    setKeyToTypeRef = {
+                        keyToType = it
+                    }
+                    setTypeToKeyRef = {
+                        typeToKey = it
+                    }
+
+                    filter = this@FilterList.filter
+
                     onSelectionChanged = props.onSelectionChanged
 
                 }
@@ -116,12 +179,17 @@ class FilterList<Key: Any>(props: Props<Key>) : RComponent<FilterList.Props<Key>
     }
 }
 
-fun <Key: Any> RBuilder.filterList(type: CreateFilterableList<Key>, itemsName: String = "items", handler: FilterList.Props<Key>.() -> Unit) =
-    child<FilterList.Props<Key>, FilterList<Key>> {
+fun <Key : Any, Type : Any?> RBuilder.filterList(
+    type: CreateFilterableList<Key, Type>,
+    itemsName: String = "items",
+    handler: FilterList.Props<Key, Type>.() -> Unit
+) =
+    child<FilterList.Props<Key, Type>, FilterList<Key, Type>> {
         attrs {
             filterableListCreationFunction = type
             liveReload = true
             this.itemsName = itemsName
+            alwaysAllowSelectAll = false
         }
         attrs(handler)
     }

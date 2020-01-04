@@ -5,10 +5,10 @@ import react.RProps
 import react.RState
 import react.ReactElement
 
-abstract class FilterableList<T : FilterableList.FilterableListProps<*>, U : FilterableList.FilterableListState<*>>(props: T) :
+abstract class FilterableList<T : FilterableList.FilterableListProps<*, *>, U : FilterableList.FilterableListState>(props: T) :
     RComponent<T, U>(props) {
 
-    interface FilterableListProps<Key: Any> : RProps {
+    interface FilterableListProps<Key: Any, Type: Any?> : RProps {
         // String filter for current list
         var filter: String
 
@@ -16,21 +16,27 @@ abstract class FilterableList<T : FilterableList.FilterableListProps<*>, U : Fil
         var setReloadRef: (ReloadItems) -> Unit
 
         // Set of keys representing all selected items in this list, don't forget to call onSelectionChanged
-        var selectedItemKeys: HashSet<Key>
+        var selectedItemKeysDelegate: VarDelegate<Set<Key>>
 
         // Function that should be called whenever anything changes in selectedItemKeysDelegate
         var onSelectionChanged: () -> Unit
 
         // Set of keys representing all selected items in other relevant list
-        var selectedOtherItemKeys: HashSet<Key>
+        var selectedOtherItemKeysDelegate: VarDelegate<Set<Key>>
+
+        // List representing all available items in list after filter is applied
+        var filteredItemsDelegate: VarDelegate<List<Type>>
+        // var getFilteredItems: () -> List<Type>
+        // var setFilteredItems: (List<Type>) -> Unit
+
+        // Function that should be implemented to convert a filterableList's key to type
+        var setKeyToTypeRef: ((Key) -> Type) -> Unit
+        var setTypeToKeyRef: ((Type) -> Key) -> Unit
     }
 
-    interface FilterableListState<S: Any?> : RState {
-        // List representing all available items in list after filter is applied
-        var filteredItems: List<S>
-    }
+    interface FilterableListState : RState
 }
 
-typealias CreateFilterableList<Key> = RBuilder.(handler: FilterableList.FilterableListProps<Key>.() -> Unit) -> ReactElement
+typealias CreateFilterableList<Key, Type> = RBuilder.(handler: FilterableList.FilterableListProps<Key, Type>.() -> Unit) -> ReactElement
 
 typealias ReloadItems = () -> Unit

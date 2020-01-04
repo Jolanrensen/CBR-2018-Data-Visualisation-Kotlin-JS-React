@@ -54,8 +54,10 @@ object Data {
         opleiders: Collection<String> = listOf(),
         examenlocaties: Collection<String> = listOf()
     ): List<Resultaat> {
+        println("Getting results for $opleiders $examenlocaties")
+        if (opleiders.isEmpty() || examenlocaties.isEmpty()) return listOf()
         csv?.let {
-            val data = it.drop(1).filter { it[0] in opleiders || it[13] in examenlocaties }
+            val data = it.drop(1).filter { it[0] in opleiders && it[13] in examenlocaties }
             val results = arrayListOf<Resultaat>()
             for ((i, line) in data.withIndex()) {
                 results.add(

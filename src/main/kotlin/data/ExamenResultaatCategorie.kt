@@ -4,10 +4,10 @@ import data.ExamenResultaatCategorie.AUTOMAAT
 import data.ExamenResultaatCategorie.COMBI
 import data.ExamenResultaatCategorie.HANDGESCHAKELD
 
-enum class ExamenResultaatCategorie {
-    HANDGESCHAKELD,
-    AUTOMAAT,
-    COMBI
+enum class ExamenResultaatCategorie(val title: String) {
+    HANDGESCHAKELD("Handgeschakeld"),
+    AUTOMAAT("Automaat"),
+    COMBI("Combi")
 }
 
 val Sequence<ExamenResultaatAantal>.handgeschakeld

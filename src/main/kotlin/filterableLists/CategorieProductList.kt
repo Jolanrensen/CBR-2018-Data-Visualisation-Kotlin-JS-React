@@ -23,6 +23,11 @@ import com.ccfraser.muirwik.components.transitions.mCollapse
 import data.Categorie
 import data.Product
 import data.producten
+import delegateOf
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlinx.css.Color
 import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
@@ -34,7 +39,6 @@ import kotlinx.css.padding
 import kotlinx.css.px
 import react.RBuilder
 import react.ReactElement
-import react.setState
 import styled.css
 import styled.styledDiv
 import toInt
@@ -42,91 +46,101 @@ import toInt
 class CategorieProductList(props: Props) :
     FilterableList<CategorieProductList.Props, CategorieProductList.State>(props) {
 
-    interface Props : FilterableListProps<Product>
+    interface Props : FilterableListProps<Product, Product>
     // Available in props
     // var filter: String
     // var setReloadRef: (ReloadItems) -> Unit
     // var selectedItemKeys: HashSet<Product>
     // var onSelectionChanged: () -> Unit
     // var selectedOtherItemKeys: HashSet<Product>
+    // var filteredItemsDelegate: ReadWriteProperty<Any?, List<Product>>
 
-    interface State : FilterableListState<Product> {
-        // var filteredItems: List<Product>
-        var expandedCategories: HashSet<Categorie>
+    private var filteredItems by props.filteredItemsDelegate
+
+    private var selectedItemKeys by props.selectedItemKeysDelegate
+
+    interface State : FilterableListState {
+        var expandedCategories: Set<Categorie>
     }
+
+    private val expandedCategoriesDelegate = delegateOf(state::expandedCategories)
+    private var expandedCategories by expandedCategoriesDelegate
 
     override fun State.init(props: Props) {
         props.setReloadRef(::refreshProducts)
-        filteredItems = listOf()
+        props.setKeyToTypeRef { it }
+        props.setTypeToKeyRef { it }
         expandedCategories = hashSetOf()
     }
 
-    private fun refreshProducts() {
-        val filterTerms = props.filter.split(" ", ", ", ",")
-        val score = hashMapOf<Product, Int>()
-        Product.values().forEach { product ->
-            filterTerms.forEach {
-                val naam = product.naam.contains(it, true)
-                val name = product.name.contains(it, true)
-                val categorienaam = product.categorie.naam.contains(it, true)
-                val categoriename = product.categorie.name.contains(it, true)
+    private val jobs = hashSetOf<Job>()
+    override fun componentWillUnmount() {
+        jobs.forEach { it.cancel() }
+    }
 
-                score[product] = (score[product] ?: 0) +
-                    naam.toInt() * 3 + name.toInt() * 3 + categorienaam.toInt() + categoriename.toInt()
+    private fun refreshProducts() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val filterTerms = props.filter.split(" ", ", ", ",")
+            val score = hashMapOf<Product, Int>()
+            Product.values().forEach { product ->
+                filterTerms.forEach {
+                    val naam = product.omschrijving.contains(it, true)
+                    val name = product.name.contains(it, true)
+                    val categorienaam = product.categorie.omschrijving.contains(it, true)
+                    val categoriename = product.categorie.name.contains(it, true)
+
+                    score[product] = (score[product] ?: 0) +
+                        naam.toInt() * 3 + name.toInt() * 3 + categorienaam.toInt() + categoriename.toInt()
+                }
             }
-        }
-        setState {
+
             val filteredProducts: List<Product>
             filteredItems = score.asSequence()
                 .filter { it.value != 0 }
                 .sortedByDescending { it.value }
-                .sortedByDescending { it.key in props.selectedItemKeys }
+                .sortedByDescending { it.key in selectedItemKeys }
                 .apply { filteredProducts = map { it.key }.toList() }
                 .map { it.key }
                 .toList()
 
             // deselect all previously selected opleiders that are no longer in filteredOpleiders
-            props.selectedItemKeys.filter { product ->
+            selectedItemKeys.filter { product ->
                 product !in filteredProducts
             }.apply {
                 forEach { key ->
-                    props.selectedItemKeys.remove(key)
+                    selectedItemKeys -= key
                 }
                 if (size > 0) props.onSelectionChanged()
             }
+
+        }.let {
+            jobs.add(it)
         }
     }
 
     private fun toggleExpandedCategorie(categorie: Categorie, newState: Boolean? = null) {
-        setState {
-            if (newState ?: categorie !in expandedCategories)
-                expandedCategories.add(categorie)
-            else
-                expandedCategories.remove(categorie)
-        }
+        if (newState ?: categorie !in expandedCategories)
+            expandedCategories += categorie
+        else
+            expandedCategories -= categorie
     }
 
     private fun toggleSelectedCategorie(categorie: Categorie, newState: Boolean? = null) {
-        setState {
-            if (newState ?: !categorie.producten.all { it in props.selectedItemKeys }) {
-                props.selectedItemKeys.addAll(categorie.producten)
-            } else {
-                props.selectedItemKeys.removeAll(categorie.producten)
-            }
+        if (newState ?: !categorie.producten.all { it in selectedItemKeys })
+            selectedItemKeys += categorie.producten
+        else
+            selectedItemKeys -= categorie.producten
 
-            props.onSelectionChanged()
-        }
+        props.onSelectionChanged()
     }
 
     private fun toggleSelectedProduct(product: Product, newState: Boolean? = null) {
-        setState {
-            if (newState ?: product !in props.selectedItemKeys)
-                props.selectedItemKeys.add(product)
-            else
-                props.selectedItemKeys.remove(product)
+        if (newState ?: product !in selectedItemKeys)
+            selectedItemKeys += product
+        else
+            selectedItemKeys -= product
 
-            props.onSelectionChanged()
-        }
+        props.onSelectionChanged()
     }
 
     override fun RBuilder.render() {
@@ -142,12 +156,15 @@ class CategorieProductList(props: Props) :
                         backgroundColor = Color(theme.palette.background.paper)
                     }
 
-                    val categories = state.filteredItems.map { it.categorie }.toHashSet()
+                    val categories = filteredItems.asSequence().map { it.categorie }
+                        .toHashSet()
+                        .toList()
+                        .sortedBy { it.name }
                     for (categorie in categories) {
                         mListItem(
                             dense = true,
                             button = true,
-                            selected = categorie.producten.any { it in props.selectedItemKeys },
+                            selected = categorie.producten.any { it in selectedItemKeys },
                             key = categorie.toString(),
                             divider = false
                         ) {
@@ -179,10 +196,10 @@ class CategorieProductList(props: Props) :
                                                 +categorie.name
                                             }
                                         }
-                                        mListItemText(categorie.naam)
+                                        mListItemText(categorie.omschrijving)
                                         mCheckbox(
-                                            checked = categorie.producten.any { it in props.selectedItemKeys },
-                                            indeterminate = !categorie.producten.all { it in props.selectedItemKeys } && categorie.producten.any { it in props.selectedItemKeys }
+                                            checked = categorie.producten.any { it in selectedItemKeys },
+                                            indeterminate = !categorie.producten.all { it in selectedItemKeys } && categorie.producten.any { it in selectedItemKeys }
                                         )
                                     }
                                 }
@@ -194,39 +211,42 @@ class CategorieProductList(props: Props) :
                                         css {
                                             padding(0.spacingUnits)
                                         }
-                                        mIconButton(if (categorie in state.expandedCategories) "expand_less" else "expand_more")
+                                        mIconButton(if (categorie in expandedCategories) "expand_less" else "expand_more")
                                     }
                                 }
                             }
                         }
-                        mCollapse(categorie in state.expandedCategories) {
+                        mCollapse(categorie in expandedCategories) {
                             mList(disablePadding = true) {
                                 css {
                                     backgroundColor = Color(theme.palette.background.paper)
                                 }
-                                for (product in state.filteredItems.filter { it.categorie == categorie }) {
+                                for (product in filteredItems
+                                    .asSequence()
+                                    .filter { it.categorie == categorie }
+                                    .sortedBy { it.name }
+                                ) {
                                     mListItem(
                                         button = true,
-                                        selected = product in props.selectedItemKeys,
+                                        selected = product in selectedItemKeys,
                                         key = product.toString(),
                                         divider = false,
                                         onClick = { toggleSelectedProduct(product) }
                                     ) {
 
-                                        mListItemText(product.naam) {
+                                        mListItemText(product.omschrijving) {
                                             css {
                                                 marginLeft = 8.spacingUnits
                                             }
 
                                         }
-                                        mCheckbox(checked = product in props.selectedItemKeys)
+                                        mCheckbox(checked = product in selectedItemKeys)
                                     }
                                 }
                             }
                         }
                     }
                 }
-
             }
             Unit
         }

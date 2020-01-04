@@ -10,6 +10,10 @@ import com.ccfraser.muirwik.components.spacingUnits
 import com.ccfraser.muirwik.components.themeContext
 import data.Data
 import data.Examenlocatie
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlinx.css.Color
 import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
@@ -24,56 +28,70 @@ import libs.styledReactList
 import react.RBuilder
 import react.ReactElement
 import react.buildElement
-import react.setState
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
 import toInt
 
-class ExamenlocatiesList(props: Props) : FilterableList<ExamenlocatiesList.Props, ExamenlocatiesList.State>(props) {
+class ExamenlocatiesList(props: Props) :
+    FilterableList<ExamenlocatiesList.Props, ExamenlocatiesList.State>(props) {
 
-    interface Props : FilterableListProps<String>
+    interface Props : FilterableListProps<String, Examenlocatie>
     // Available in props:
     // var filter: String
     // var setReloadRef: (ReloadItems) -> Unit
     // var selectedItemKeys: HashSet<String>
     // var onSelectionChanged: () -> Unit
     // var selectedOtherItemKeys: HashSet<String>
+    // var filteredItemsDelegate: ReadWriteProperty<Any?, List<Examenlocatie>>
 
-    private val isExamenlocatieSelected = props.selectedItemKeys
-    private val isOpleiderSelected = props.selectedOtherItemKeys
+    // not sure why "by props.filteredItemsDelegate" doesn't work
+    // private var filteredItems: List<Examenlocatie>
+    //     get() = props.filteredItemsDelegate.getValue(this, ::filteredItems)
+    //     set(value) = props.filteredItemsDelegate.setValue(this, ::filteredItems, value)
 
-    interface State : FilterableListState<Examenlocatie>
-    // var filteredItems: List<Examenlocatie>
+    var filteredItems by props.filteredItemsDelegate
+
+    private var isExamenlocatieSelected by props.selectedItemKeysDelegate
+    private val isOpleiderSelected by props.selectedOtherItemKeysDelegate
+
+    interface State : FilterableListState
 
     override fun State.init(props: Props) {
         props.setReloadRef(::refreshExamenlocaties)
-        filteredItems = listOf()
+        props.setKeyToTypeRef { Data.alleExamenlocaties[it]!! }
+        props.setTypeToKeyRef { it.naam }
     }
 
     private var list: ReactListRef? = null
 
+    private val jobs = hashSetOf<Job>()
+    override fun componentWillUnmount() {
+        jobs.forEach { it.cancel() }
+    }
+
     private fun refreshExamenlocaties() {
-        // println("refreshExamenlocations")
-        val filterTerms = props.filter.split(" ", ", ", ",")
-        val score = hashMapOf<String, Int>()
-        (if (isOpleiderSelected.isNotEmpty())
-            isOpleiderSelected.asSequence()
-                .map { Data.opleiderToExamenlocaties[it]!! }
-                .flatten()
-                .map { it to Data.alleExamenlocaties[it]!! }
-                .toMap()
-        else Data.alleExamenlocaties).forEach { (examNaam, examenlocatie) ->
-            filterTerms.forEach {
-                val naam = examNaam.contains(it, true)
-                val plaatsnaam = examenlocatie.plaatsnaam.contains(it, true)
-                val postcode = examenlocatie.postcode.contains(it, true)
-                val straatnaam = examenlocatie.straatnaam.contains(it, true)
-                score[examNaam] = (score[examNaam] ?: 0) +
-                    naam.toInt() * 3 + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
+        CoroutineScope(Dispatchers.Main).launch {
+            // println("refreshExamenlocations")
+            val filterTerms = props.filter.split(" ", ", ", ",")
+            val score = hashMapOf<String, Int>()
+            (if (isOpleiderSelected.isNotEmpty())
+                isOpleiderSelected.asSequence()
+                    .map { Data.opleiderToExamenlocaties[it]!! }
+                    .flatten()
+                    .map { it to Data.alleExamenlocaties[it]!! }
+                    .toMap()
+            else Data.alleExamenlocaties).forEach { (examNaam, examenlocatie) ->
+                filterTerms.forEach {
+                    val naam = examNaam.contains(it, true)
+                    val plaatsnaam = examenlocatie.plaatsnaam.contains(it, true)
+                    val postcode = examenlocatie.postcode.contains(it, true)
+                    val straatnaam = examenlocatie.straatnaam.contains(it, true)
+                    score[examNaam] = (score[examNaam] ?: 0) +
+                        naam.toInt() * 3 + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
+                }
             }
-        }
-        setState {
+
             val filteredExamenlocatieCodes: List<String>
             filteredItems = score.asSequence()
                 .filter { it.value != 0 }
@@ -88,28 +106,30 @@ class ExamenlocatiesList(props: Props) : FilterableList<ExamenlocatiesList.Props
                 naam !in filteredExamenlocatieCodes
             }.apply {
                 forEach { key ->
-                    isExamenlocatieSelected.remove(key)
+                    isExamenlocatieSelected -= key
                 }
                 if (size > 0) props.onSelectionChanged()
             }
-        }
 
-        list?.scrollTo(0)
+
+            list?.scrollTo(0)
+        }.let {
+            jobs.add(it)
+        }
     }
 
     private fun toggleSelected(examenlocatie: String, newState: Boolean? = null) {
-        setState {
-            if (newState ?: examenlocatie !in isExamenlocatieSelected)
-                isExamenlocatieSelected += examenlocatie
-            else
-                isExamenlocatieSelected -= examenlocatie
-
-            props.onSelectionChanged()
+        if (newState ?: examenlocatie !in isExamenlocatieSelected) {
+            isExamenlocatieSelected += examenlocatie
+        } else {
+            isExamenlocatieSelected -= examenlocatie
         }
+
+        props.onSelectionChanged()
     }
 
     private fun renderRow(index: Int, key: String) = buildElement {
-        val examenlocatie = state.filteredItems[index]
+        val examenlocatie = filteredItems[index]
         mListItem(
             button = true,
             selected = examenlocatie.naam in isExamenlocatieSelected,
@@ -139,14 +159,13 @@ class ExamenlocatiesList(props: Props) : FilterableList<ExamenlocatiesList.Props
             styledDiv {
                 css {
                     padding(1.spacingUnits)
-//                    display = Display.inlineFlex
                     overflow = Overflow.auto
                     maxHeight = 400.px
                 }
                 styledReactList {
                     css(themeStyles.list)
                     attrs {
-                        length = state.filteredItems.size
+                        length = filteredItems.size
                         itemRenderer = ::renderRow
                         type = "variable"
                         ref {

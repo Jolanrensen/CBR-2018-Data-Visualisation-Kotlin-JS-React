@@ -3,9 +3,9 @@ package data
 import data.ExamenResultaat.ONVOLDOENDE
 import data.ExamenResultaat.VOLDOENDE
 
-enum class ExamenResultaat {
-    VOLDOENDE,
-    ONVOLDOENDE
+enum class ExamenResultaat(val title: String) {
+    VOLDOENDE("Voldoende"),
+    ONVOLDOENDE("Onvoldoende")
 }
 
 val Sequence<ExamenResultaatAantal>.voldoende
