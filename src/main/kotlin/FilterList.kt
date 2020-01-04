@@ -133,7 +133,9 @@ class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
                         dense = true,
                         onClick = { toggleSelectAllVisible() }
                     ) {
-                        mListItemText("(De)selecteer alle gefilterde ${props.itemsName}")
+                        mListItemText("(De)selecteer alle${
+                        if (props.alwaysAllowSelectAll && selectedOtherItemKeys.isEmpty() && filter.isBlank()) 
+                            " " else " gefilterde "}${props.itemsName}")
                         mCheckbox(
                             checked = filteredItems
                                 .asSequence()

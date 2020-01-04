@@ -80,6 +80,8 @@ import io.data2viz.math.pct as percent
 
 class App(props: Props) : RComponent<App.Props, App.State>(props) {
 
+    interface Props : RProps
+
     interface State : RState {
         var welcomeText: String
         var circleColor: io.data2viz.color.Color
@@ -132,8 +134,6 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
         selectedOpleiderKeys.isNotEmpty() &&
             selectedExamenlocatieKeys.isNotEmpty() &&
             selectedProducts.isNotEmpty()
-
-    interface Props : RProps
 
     override fun RBuilder.render() {
         val currentResults = if (!selectionFinished())
