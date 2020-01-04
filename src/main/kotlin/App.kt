@@ -1,4 +1,3 @@
-
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.MGridSize
 import com.ccfraser.muirwik.components.MGridSpacing
@@ -20,6 +19,7 @@ import com.ccfraser.muirwik.components.table.mTableHead
 import com.ccfraser.muirwik.components.table.mTableRow
 import data.Data
 import data.ExamenResultaat
+import data.ExamenResultaat.VOLDOENDE
 import data.ExamenResultaatCategorie
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
@@ -325,8 +325,10 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                 }
             }
 
+            // TODO combine these two tables into one component
+
             mGridItem(
-                xs = MGridSize.cells4
+                xs = MGridSize.cells6
             ) {
                 hoveringCard {
                     css {
@@ -342,13 +344,15 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                                 ExamenResultaat.values().forEach {
                                     mTableCell(align = MTableCellAlign.right) { +it.title }
                                 }
+                                mTableCell(align = MTableCellAlign.right) { +"Percentage Voldoende" }
                             }
                         }
                         mTableBody {
-                            ExamenResultaatCategorie.values().forEach { categorie ->
+                            for (categorie in ExamenResultaatCategorie.values()) {
                                 mTableRow(key = categorie.title) {
                                     mTableCell { +categorie.title }
-                                    ExamenResultaat.values().forEach { resultaat ->
+                                    val examenResultaten = hashMapOf<ExamenResultaat, Int>()
+                                    for (resultaat in ExamenResultaat.values()) {
                                         mTableCell(align = MTableCellAlign.right) {
                                             +if (selectionFinished()) {
                                                 currentResults
@@ -361,15 +365,23 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                                                                     && it.examenResultaatCategorie == categorie
                                                                     && it.examenResultaat == resultaat
                                                             }.sumBy { it.aantal }
-                                                    }.toString()
+                                                    }
+                                                    .apply { examenResultaten[resultaat] = this }
+                                                    .toString()
                                             } else "-"
                                         }
+                                    }
+                                    mTableCell(align = MTableCellAlign.right) {
+                                        +if (selectionFinished())
+                                            "${(examenResultaten[VOLDOENDE]!!.toDouble() / examenResultaten.values.sum() * 100.0).toInt()}%"
+                                        else "-"
                                     }
                                 }
                             }
                             mTableRow {
                                 mTableCell { +"Totaal" }
-                                ExamenResultaat.values().forEach { resultaat ->
+                                val examenResultaten = hashMapOf<ExamenResultaat, Int>()
+                                for (resultaat in ExamenResultaat.values()) {
                                     mTableCell(align = MTableCellAlign.right) {
                                         +if (selectionFinished()) {
                                             currentResults
@@ -381,9 +393,16 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                                                             it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
                                                                 && it.examenResultaat == resultaat
                                                         }.sumBy { it.aantal }
-                                                }.toString()
+                                                }
+                                                .apply { examenResultaten[resultaat] = this }
+                                                .toString()
                                         } else "-"
                                     }
+                                }
+                                mTableCell(align = MTableCellAlign.right) {
+                                    +if (selectionFinished())
+                                        "${(examenResultaten[VOLDOENDE]!!.toDouble() / examenResultaten.values.sum() * 100.0).toInt()}%"
+                                    else "-"
                                 }
                             }
                         }
@@ -392,7 +411,7 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
             }
 
             mGridItem(
-                xs = MGridSize.cells4
+                xs = MGridSize.cells6
             ) {
                 hoveringCard {
                     css {
@@ -408,13 +427,15 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                                 ExamenResultaat.values().forEach {
                                     mTableCell(align = MTableCellAlign.right) { +it.title }
                                 }
+                                mTableCell(align = MTableCellAlign.right) { +"Percentage Voldoende" }
                             }
                         }
                         mTableBody {
-                            ExamenResultaatCategorie.values().forEach { categorie ->
+                            for (categorie in ExamenResultaatCategorie.values()) {
                                 mTableRow(key = categorie.title) {
                                     mTableCell { +categorie.title }
-                                    ExamenResultaat.values().forEach { resultaat ->
+                                    val examenResultaten = hashMapOf<ExamenResultaat, Int>()
+                                    for (resultaat in ExamenResultaat.values()) {
                                         mTableCell(align = MTableCellAlign.right) {
                                             +if (selectionFinished()) {
                                                 currentResults
@@ -427,15 +448,23 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                                                                     && it.examenResultaatCategorie == categorie
                                                                     && it.examenResultaat == resultaat
                                                             }.sumBy { it.aantal }
-                                                    }.toString()
+                                                    }
+                                                    .apply { examenResultaten[resultaat] = this }
+                                                    .toString()
                                             } else "-"
                                         }
+                                    }
+                                    mTableCell(align = MTableCellAlign.right) {
+                                        +if (selectionFinished())
+                                            "${(examenResultaten[VOLDOENDE]!!.toDouble() / examenResultaten.values.sum() * 100.0).toInt()}%"
+                                        else "-"
                                     }
                                 }
                             }
                             mTableRow {
                                 mTableCell { +"Totaal" }
-                                ExamenResultaat.values().forEach { resultaat ->
+                                val examenResultaten = hashMapOf<ExamenResultaat, Int>()
+                                for (resultaat in ExamenResultaat.values()) {
                                     mTableCell(align = MTableCellAlign.right) {
                                         +if (selectionFinished()) {
                                             currentResults
@@ -447,9 +476,16 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                                                             it.examenResultaatVersie == HEREXAMEN_OF_TOETS
                                                                 && it.examenResultaat == resultaat
                                                         }.sumBy { it.aantal }
-                                                }.toString()
+                                                }
+                                                .apply { examenResultaten[resultaat] = this }
+                                                .toString()
                                         } else "-"
                                     }
+                                }
+                                mTableCell(align = MTableCellAlign.right) {
+                                    +if (selectionFinished())
+                                        "${(examenResultaten[VOLDOENDE]!!.toDouble() / examenResultaten.values.sum() * 100.0).toInt()}%"
+                                    else "-"
                                 }
                             }
                         }

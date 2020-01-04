@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/reactList/Helper.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/ReactList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/reactList/ReactList.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,11 +88,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/kotlin/libs/ReactList" />
       <recent name="$PROJECT_DIR$/src/main/kotlin/data2viz" />
       <recent name="$PROJECT_DIR$/src/main/kotlin/filterableLists" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/src/main" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.run --continuous">
@@ -183,7 +186,7 @@
       <workItem from="1577707525861" duration="6515000" />
       <workItem from="1577718978680" duration="19109000" />
       <workItem from="1577973081251" duration="28910000" />
-      <workItem from="1578145946950" duration="10599000" />
+      <workItem from="1578145946950" duration="13867000" />
     </task>
     <task id="LOCAL-00001" summary="fixed all errors, created two cooperating lists, opleider and examenlocatie">
       <created>1577205156703</created>
@@ -248,7 +251,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578156038882</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="delegates, filters, results">
+      <created>1578156771381</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1578156771381</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,10 +302,10 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="701" y="409" width="524" height="480" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577737783004" />
-    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2" timestamp="1578156038728">
+    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2" timestamp="1578156771305">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1578156038728" />
+    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1578156771305" />
     <state x="672" y="580" width="864" height="510" key="FileChooserDialogImpl" timestamp="1577737378049">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
@@ -332,10 +342,10 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1420" y="457" width="1363" height="730" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1577627588255" />
-    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1578156041748">
+    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1578156773958">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1578156041748" />
+    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1578156773958" />
     <state x="893" y="872" width="788" height="227" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1577737781632">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>

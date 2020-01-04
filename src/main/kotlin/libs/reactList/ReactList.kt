@@ -1,8 +1,5 @@
-package libs
+package libs.reactList
 
-import com.ccfraser.muirwik.components.child
-import com.ccfraser.muirwik.components.createStyled
-import com.ccfraser.muirwik.components.setStyledPropsAndRunHandler
 import kotlinext.js.JsObject
 import react.RBuilder
 import react.RComponent
@@ -41,20 +38,19 @@ typealias ItemSizeGetter = (index: Int) -> Int
 typealias ScrollParentGetter = () -> ReactElement?
 
 external interface ReactListProps : StyledProps {
-    var axis: String?
-    /** 'x' or 'y' */
+    var axis: String? /** "x" or "y", default: "y" */
     var initialIndex: Int?
     var itemRenderer: ItemRenderer?
     var itemSizeEstimator: ItemSizeEstimator?
     var itemSizeGetter: ItemSizeGetter?
-    var length: Int?
-    var minSize: Int?
-    var pageSize: Int?
+    var length: Int? /** default: 0 */
+    var minSize: Int? /** default: 1 */
+    var pageSize: Int? /** default: 10 */
     var scrollParentGetter: ScrollParentGetter?
-    var threshold: Int?
-    var type: String?
-    var useStaticSize: Boolean?
-    var useTranslate3d: Boolean?
+    var threshold: Int? /** default: 100 */
+    var type: String? /** "simple", "variable", "uniform" or "simple", default: "simple" */
+    var useStaticSize: Boolean? /** default: false */
+    var useTranslate3d: Boolean? /** default: false */
 }
 
 fun ReactListProps.ref(ref: (ReactListRef) -> Unit) {

@@ -22,9 +22,9 @@ import kotlinx.css.overflow
 import kotlinx.css.padding
 import kotlinx.css.px
 import kotlinx.css.width
-import libs.ReactListRef
-import libs.ref
-import libs.styledReactList
+import libs.reactList.ReactListRef
+import libs.reactList.ref
+import libs.reactList.styledReactList
 import react.RBuilder
 import react.ReactElement
 import react.buildElement
