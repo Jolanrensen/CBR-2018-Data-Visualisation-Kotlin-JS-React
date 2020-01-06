@@ -27,7 +27,7 @@ object Data {
         get() {
             if (field != null) return field
             val xmlhttp = XMLHttpRequest()
-            xmlhttp.open("GET", "provincie_2020.geojson", false)
+            xmlhttp.open("GET", "gemeente_2020.geojson", false)
 
             xmlhttp.send()
             val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
