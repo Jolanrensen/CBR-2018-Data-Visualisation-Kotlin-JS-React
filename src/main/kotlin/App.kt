@@ -1,5 +1,5 @@
-
 import com.ccfraser.muirwik.components.MColor
+import com.ccfraser.muirwik.components.MGridAlignContent
 import com.ccfraser.muirwik.components.MGridSize
 import com.ccfraser.muirwik.components.MGridSpacing
 import com.ccfraser.muirwik.components.button.MButtonSize
@@ -10,17 +10,7 @@ import com.ccfraser.muirwik.components.mAvatar
 import com.ccfraser.muirwik.components.mGridContainer
 import com.ccfraser.muirwik.components.mGridItem
 import com.ccfraser.muirwik.components.mTypography
-import com.ccfraser.muirwik.components.spacingUnits
-import com.ccfraser.muirwik.components.table.MTableCellAlign
-import com.ccfraser.muirwik.components.table.mTable
-import com.ccfraser.muirwik.components.table.mTableBody
-import com.ccfraser.muirwik.components.table.mTableCell
-import com.ccfraser.muirwik.components.table.mTableHead
-import com.ccfraser.muirwik.components.table.mTableRow
 import data.Data
-import data.ExamenResultaat
-import data.ExamenResultaat.VOLDOENDE
-import data.ExamenResultaatCategorie
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 import data.Examenlocatie
@@ -57,17 +47,12 @@ import io.data2viz.viz.textAlign
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.css.Color
-import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
 import kotlinx.css.color
 import kotlinx.css.margin
-import kotlinx.css.marginTop
 import kotlinx.css.mm
-import kotlinx.css.overflowX
 import kotlinx.css.padding
-import kotlinx.css.pct
 import kotlinx.css.px
-import kotlinx.css.width
 import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RComponent
@@ -259,10 +244,14 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
         }
 
         mGridContainer(
-            spacing = MGridSpacing.spacing1
+            spacing = MGridSpacing.spacing3,
+            alignContent = MGridAlignContent.center
         ) {
             mGridItem(
-                xs = MGridSize.cells4
+                xs = MGridSize.cells12,
+                md = MGridSize.cells6,
+                lg = MGridSize.cells4,
+                xl = MGridSize.cells2
             ) {
                 filterList(opleidersList, "opleiders") {
                     itemsDataDelegate = alleOpleidersDataDelegate.toValDelegate()
@@ -273,7 +262,10 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
             }
 
             mGridItem(
-                xs = MGridSize.cells4
+                xs = MGridSize.cells12,
+                md = MGridSize.cells6,
+                lg = MGridSize.cells4,
+                xl = MGridSize.cells2
             ) {
                 filterList(examenlocatiesList, "examenlocaties") {
                     itemsDataDelegate = alleExamenlocatiesDataDelegate.toValDelegate()
@@ -284,7 +276,10 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
             }
 
             mGridItem(
-                xs = MGridSize.cells4
+                xs = MGridSize.cells12,
+                md = MGridSize.cells12,
+                lg = MGridSize.cells4,
+                xl = MGridSize.cells3
             ) {
                 filterList(categorieProductList, "categorieën/producten") {
                     alwaysAllowSelectAll = true
@@ -294,167 +289,41 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
                 }
             }
 
-            // TODO combine these two tables into one component
-
             mGridItem(
-                xs = MGridSize.cells6
+                xs = MGridSize.cells12,
+                md = MGridSize.cells12,
+                lg = MGridSize.cells12,
+                xl = MGridSize.cells5
             ) {
-                hoveringCard {
-                    css {
-                        width = 100.pct
-                        marginTop = 3.spacingUnits
-                        overflowX = Overflow.auto
-                    }
-                    mTable {
-                        mTableHead {
-                            mTableRow {
-                                mTableCell { +EERSTE_EXAMEN_OF_TOETS.title }
-                                ExamenResultaat.values().forEach {
-                                    mTableCell(align = MTableCellAlign.right) { +it.title }
-                                }
-                                mTableCell(align = MTableCellAlign.right) { +"Percentage Voldoende" }
-                            }
-                        }
-                        mTableBody {
-                            for (categorie in ExamenResultaatCategorie.values()) {
-                                mTableRow(key = categorie.title) {
-                                    mTableCell { +categorie.title }
-                                    val examenResultaten = hashMapOf<ExamenResultaat, Int>()
-                                    for (resultaat in ExamenResultaat.values()) {
-                                        mTableCell(align = MTableCellAlign.right) {
-                                            +if (selectionFinished()) {
-                                                currentResults
-                                                    .filter { it.product in selectedProducts }
-                                                    .sumBy {
-                                                        it.examenResultaatAantallen
-                                                            .asSequence()
-                                                            .filter {
-                                                                it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
-                                                                    && it.examenResultaatCategorie == categorie
-                                                                    && it.examenResultaat == resultaat
-                                                            }.sumBy { it.aantal }
-                                                    }
-                                                    .apply { examenResultaten[resultaat] = this }
-                                                    .toString()
-                                            } else "-"
-                                        }
-                                    }
-                                    mTableCell(align = MTableCellAlign.right) {
-                                        +if (selectionFinished())
-                                            "${(examenResultaten[VOLDOENDE]!!.toDouble() / examenResultaten.values.sum() * 100.0).toInt()}%"
-                                        else "-"
-                                    }
-                                }
-                            }
-                            mTableRow {
-                                mTableCell { +"Totaal" }
-                                val examenResultaten = hashMapOf<ExamenResultaat, Int>()
-                                for (resultaat in ExamenResultaat.values()) {
-                                    mTableCell(align = MTableCellAlign.right) {
-                                        +if (selectionFinished()) {
-                                            currentResults
-                                                .filter { it.product in selectedProducts }
-                                                .sumBy {
-                                                    it.examenResultaatAantallen
-                                                        .asSequence()
-                                                        .filter {
-                                                            it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
-                                                                && it.examenResultaat == resultaat
-                                                        }.sumBy { it.aantal }
-                                                }
-                                                .apply { examenResultaten[resultaat] = this }
-                                                .toString()
-                                        } else "-"
-                                    }
-                                }
-                                mTableCell(align = MTableCellAlign.right) {
-                                    +if (selectionFinished())
-                                        "${(examenResultaten[VOLDOENDE]!!.toDouble() / examenResultaten.values.sum() * 100.0).toInt()}%"
-                                    else "-"
-                                }
-                            }
+                mGridContainer(
+                    spacing = MGridSpacing.spacing3,
+                    alignContent = MGridAlignContent.center
+                ) {
+                    mGridItem(
+                        xs = MGridSize.cells12,
+                        md = MGridSize.cells6,
+                        lg = MGridSize.cells6,
+                        xl = MGridSize.cells12
+                    ) {
+                        resultCard {
+                            examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS
+                            this.currentResults = currentResults
+                            selectionFinished = ::selectionFinished
+                            selectedProducts = this@App.selectedProducts
                         }
                     }
-                }
-            }
 
-            mGridItem(
-                xs = MGridSize.cells6
-            ) {
-                hoveringCard {
-                    css {
-                        width = 100.pct
-                        marginTop = 3.spacingUnits
-                        overflowX = Overflow.auto
-                    }
-                    mTable {
-                        mTableHead {
-                            mTableRow {
-                                mTableCell { +HEREXAMEN_OF_TOETS.title }
-                                ExamenResultaat.values().forEach {
-                                    mTableCell(align = MTableCellAlign.right) { +it.title }
-                                }
-                                mTableCell(align = MTableCellAlign.right) { +"Percentage Voldoende" }
-                            }
-                        }
-                        mTableBody {
-                            for (categorie in ExamenResultaatCategorie.values()) {
-                                mTableRow(key = categorie.title) {
-                                    mTableCell { +categorie.title }
-                                    val examenResultaten = hashMapOf<ExamenResultaat, Int>()
-                                    for (resultaat in ExamenResultaat.values()) {
-                                        mTableCell(align = MTableCellAlign.right) {
-                                            +if (selectionFinished()) {
-                                                currentResults
-                                                    .filter { it.product in selectedProducts }
-                                                    .sumBy {
-                                                        it.examenResultaatAantallen
-                                                            .asSequence()
-                                                            .filter {
-                                                                it.examenResultaatVersie == HEREXAMEN_OF_TOETS
-                                                                    && it.examenResultaatCategorie == categorie
-                                                                    && it.examenResultaat == resultaat
-                                                            }.sumBy { it.aantal }
-                                                    }
-                                                    .apply { examenResultaten[resultaat] = this }
-                                                    .toString()
-                                            } else "-"
-                                        }
-                                    }
-                                    mTableCell(align = MTableCellAlign.right) {
-                                        +if (selectionFinished())
-                                            "${(examenResultaten[VOLDOENDE]!!.toDouble() / examenResultaten.values.sum() * 100.0).toInt()}%"
-                                        else "-"
-                                    }
-                                }
-                            }
-                            mTableRow {
-                                mTableCell { +"Totaal" }
-                                val examenResultaten = hashMapOf<ExamenResultaat, Int>()
-                                for (resultaat in ExamenResultaat.values()) {
-                                    mTableCell(align = MTableCellAlign.right) {
-                                        +if (selectionFinished()) {
-                                            currentResults
-                                                .filter { it.product in selectedProducts }
-                                                .sumBy {
-                                                    it.examenResultaatAantallen
-                                                        .asSequence()
-                                                        .filter {
-                                                            it.examenResultaatVersie == HEREXAMEN_OF_TOETS
-                                                                && it.examenResultaat == resultaat
-                                                        }.sumBy { it.aantal }
-                                                }
-                                                .apply { examenResultaten[resultaat] = this }
-                                                .toString()
-                                        } else "-"
-                                    }
-                                }
-                                mTableCell(align = MTableCellAlign.right) {
-                                    +if (selectionFinished())
-                                        "${(examenResultaten[VOLDOENDE]!!.toDouble() / examenResultaten.values.sum() * 100.0).toInt()}%"
-                                    else "-"
-                                }
-                            }
+                    mGridItem(
+                        xs = MGridSize.cells12,
+                        md = MGridSize.cells6,
+                        lg = MGridSize.cells6,
+                        xl = MGridSize.cells12
+                    ) {
+                        resultCard {
+                            examenResultaatVersie = HEREXAMEN_OF_TOETS
+                            this.currentResults = currentResults
+                            selectionFinished = ::selectionFinished
+                            selectedProducts = this@App.selectedProducts
                         }
                     }
                 }

@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/HoveringCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/HoveringCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data2viz/VizComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data2viz/VizComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data2viz/VizComponentCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data2viz/VizComponentCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +192,7 @@
       <workItem from="1578257074602" duration="5133000" />
       <workItem from="1578314446259" duration="597000" />
       <workItem from="1578316304143" duration="1926000" />
-      <workItem from="1578320918728" duration="1825000" />
+      <workItem from="1578320918728" duration="4321000" />
     </task>
     <task id="LOCAL-00001" summary="fixed all errors, created two cooperating lists, opleider and examenlocatie">
       <created>1577205156703</created>
@@ -287,7 +278,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578318211220</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="filteredItems is now function, renamed and moved all props and states">
+      <created>1578322902286</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1578322902286</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -302,7 +300,8 @@
     <MESSAGE value="delegates, filters, results" />
     <MESSAGE value="added percentages" />
     <MESSAGE value="filteredItems is now function" />
-    <option name="LAST_COMMIT_MESSAGE" value="filteredItems is now function" />
+    <MESSAGE value="filteredItems is now function, renamed and moved all props and states" />
+    <option name="LAST_COMMIT_MESSAGE" value="filteredItems is now function, renamed and moved all props and states" />
   </component>
   <component name="WindowStateProjectService">
     <state x="378" y="275" width="1180" height="752" key="#Project_Structure" timestamp="1577737784118">
