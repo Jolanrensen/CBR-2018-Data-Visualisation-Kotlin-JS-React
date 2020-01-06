@@ -24,10 +24,7 @@ import data.Categorie
 import data.Product
 import data.producten
 import delegateOf
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlinx.css.Color
 import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
@@ -44,7 +41,7 @@ import styled.styledDiv
 import toInt
 
 class CategorieProductList(props: Props) :
-    FilterableList<CategorieProductList.Props, CategorieProductList.State>(props) {
+    FilterableList<Product, Product, CategorieProductList.Props, CategorieProductList.State>(props) {
 
     interface Props : FilterableListProps<Product, Product>
     // Available in props
@@ -55,9 +52,46 @@ class CategorieProductList(props: Props) :
     // var selectedOtherItemKeys: HashSet<Product>
     // var filteredItemsDelegate: ReadWriteProperty<Any?, List<Product>>
 
-    private var filteredItems by props.filteredItemsDelegate
+    override fun getFilteredItems(): List<Product> {
+        val filterTerms = props.filter.split(" ", ", ", ",")
+        val score = hashMapOf<Product, Int>()
+        Product.values().forEach { product -> // Todo maybe replace with itemsDataDelegate
+            filterTerms.forEach {
+                val naam = product.omschrijving.contains(it, true)
+                val name = product.name.contains(it, true)
+                val categorienaam = product.categorie.omschrijving.contains(it, true)
+                val categoriename = product.categorie.name.contains(it, true)
 
-    private var selectedItemKeys by props.selectedItemKeysDelegate
+                score[product] = (score[product] ?: 0) +
+                    naam.toInt() * 3 + name.toInt() * 3 + categorienaam.toInt() + categoriename.toInt()
+            }
+        }
+
+        val filteredProducts: List<Product>
+        val result = score.asSequence()
+            .filter { it.value != 0 }
+            .sortedByDescending { it.value }
+            .sortedByDescending { it.key in isProductSelected }
+            .apply { filteredProducts = map { it.key }.toList() }
+            .map { it.key }
+            .toList()
+
+        // deselect all previously selected opleiders that are no longer in filteredOpleiders
+        isProductSelected.filter { product ->
+            product !in filteredProducts
+        }.apply {
+            forEach { key ->
+                isProductSelected -= key
+            }
+            if (size > 0) props.onSelectionChanged()
+        }
+        return result
+    }
+
+    override fun keyToType(key: Product) = key
+    override fun typeToKey(type: Product) = type
+
+    private var isProductSelected by props.selectedItemKeysDelegate
 
     interface State : FilterableListState {
         var expandedCategories: Set<Categorie>
@@ -67,9 +101,9 @@ class CategorieProductList(props: Props) :
     private var expandedCategories by expandedCategoriesDelegate
 
     override fun State.init(props: Props) {
-        props.setReloadRef(::refreshProducts)
-        props.setKeyToTypeRef { it }
-        props.setTypeToKeyRef { it }
+        // props.setReloadRef {}
+        // props.setKeyToTypeRef { it }
+        // props.setTypeToKeyRef { it }
         expandedCategories = hashSetOf()
     }
 
@@ -78,45 +112,45 @@ class CategorieProductList(props: Props) :
         jobs.forEach { it.cancel() }
     }
 
-    private fun refreshProducts() {
-        CoroutineScope(Dispatchers.Main).launch {
-            val filterTerms = props.filter.split(" ", ", ", ",")
-            val score = hashMapOf<Product, Int>()
-            Product.values().forEach { product ->
-                filterTerms.forEach {
-                    val naam = product.omschrijving.contains(it, true)
-                    val name = product.name.contains(it, true)
-                    val categorienaam = product.categorie.omschrijving.contains(it, true)
-                    val categoriename = product.categorie.name.contains(it, true)
-
-                    score[product] = (score[product] ?: 0) +
-                        naam.toInt() * 3 + name.toInt() * 3 + categorienaam.toInt() + categoriename.toInt()
-                }
-            }
-
-            val filteredProducts: List<Product>
-            filteredItems = score.asSequence()
-                .filter { it.value != 0 }
-                .sortedByDescending { it.value }
-                .sortedByDescending { it.key in selectedItemKeys }
-                .apply { filteredProducts = map { it.key }.toList() }
-                .map { it.key }
-                .toList()
-
-            // deselect all previously selected opleiders that are no longer in filteredOpleiders
-            selectedItemKeys.filter { product ->
-                product !in filteredProducts
-            }.apply {
-                forEach { key ->
-                    selectedItemKeys -= key
-                }
-                if (size > 0) props.onSelectionChanged()
-            }
-
-        }.let {
-            jobs.add(it)
-        }
-    }
+    // private fun refreshProducts() {
+    //     CoroutineScope(Dispatchers.Main).launch {
+    //         val filterTerms = props.filter.split(" ", ", ", ",")
+    //         val score = hashMapOf<Product, Int>()
+    //         Product.values().forEach { product ->
+    //             filterTerms.forEach {
+    //                 val naam = product.omschrijving.contains(it, true)
+    //                 val name = product.name.contains(it, true)
+    //                 val categorienaam = product.categorie.omschrijving.contains(it, true)
+    //                 val categoriename = product.categorie.name.contains(it, true)
+    //
+    //                 score[product] = (score[product] ?: 0) +
+    //                     naam.toInt() * 3 + name.toInt() * 3 + categorienaam.toInt() + categoriename.toInt()
+    //             }
+    //         }
+    //
+    //         val filteredProducts: List<Product>
+    //         filteredItems = score.asSequence()
+    //             .filter { it.value != 0 }
+    //             .sortedByDescending { it.value }
+    //             .sortedByDescending { it.key in isProductSelected }
+    //             .apply { filteredProducts = map { it.key }.toList() }
+    //             .map { it.key }
+    //             .toList()
+    //
+    //         // deselect all previously selected opleiders that are no longer in filteredOpleiders
+    //         isProductSelected.filter { product ->
+    //             product !in filteredProducts
+    //         }.apply {
+    //             forEach { key ->
+    //                 isProductSelected -= key
+    //             }
+    //             if (size > 0) props.onSelectionChanged()
+    //         }
+    //
+    //     }.let {
+    //         jobs.add(it)
+    //     }
+    // }
 
     private fun toggleExpandedCategorie(categorie: Categorie, newState: Boolean? = null) {
         if (newState ?: categorie !in expandedCategories)
@@ -126,24 +160,25 @@ class CategorieProductList(props: Props) :
     }
 
     private fun toggleSelectedCategorie(categorie: Categorie, newState: Boolean? = null) {
-        if (newState ?: !categorie.producten.all { it in selectedItemKeys })
-            selectedItemKeys += categorie.producten
+        if (newState ?: !categorie.producten.all { it in isProductSelected })
+            isProductSelected += categorie.producten
         else
-            selectedItemKeys -= categorie.producten
+            isProductSelected -= categorie.producten
 
         props.onSelectionChanged()
     }
 
     private fun toggleSelectedProduct(product: Product, newState: Boolean? = null) {
-        if (newState ?: product !in selectedItemKeys)
-            selectedItemKeys += product
+        if (newState ?: product !in isProductSelected)
+            isProductSelected += product
         else
-            selectedItemKeys -= product
+            isProductSelected -= product
 
         props.onSelectionChanged()
     }
 
     override fun RBuilder.render() {
+        val filteredItems = getFilteredItems()
         themeContext.Consumer { theme ->
             styledDiv {
                 css {
@@ -164,7 +199,7 @@ class CategorieProductList(props: Props) :
                         mListItem(
                             dense = true,
                             button = true,
-                            selected = categorie.producten.any { it in selectedItemKeys },
+                            selected = categorie.producten.any { it in isProductSelected },
                             key = categorie.toString(),
                             divider = false
                         ) {
@@ -198,8 +233,8 @@ class CategorieProductList(props: Props) :
                                         }
                                         mListItemText(categorie.omschrijving)
                                         mCheckbox(
-                                            checked = categorie.producten.any { it in selectedItemKeys },
-                                            indeterminate = !categorie.producten.all { it in selectedItemKeys } && categorie.producten.any { it in selectedItemKeys }
+                                            checked = categorie.producten.any { it in isProductSelected },
+                                            indeterminate = !categorie.producten.all { it in isProductSelected } && categorie.producten.any { it in isProductSelected }
                                         )
                                     }
                                 }
@@ -228,7 +263,7 @@ class CategorieProductList(props: Props) :
                                 ) {
                                     mListItem(
                                         button = true,
-                                        selected = product in selectedItemKeys,
+                                        selected = product in isProductSelected,
                                         key = product.toString(),
                                         divider = false,
                                         onClick = { toggleSelectedProduct(product) }
@@ -240,7 +275,7 @@ class CategorieProductList(props: Props) :
                                             }
 
                                         }
-                                        mCheckbox(checked = product in selectedItemKeys)
+                                        mCheckbox(checked = product in isProductSelected)
                                     }
                                 }
                             }

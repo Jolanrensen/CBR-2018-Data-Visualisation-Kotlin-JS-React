@@ -1,3 +1,4 @@
+
 import com.ccfraser.muirwik.components.MGridSize
 import com.ccfraser.muirwik.components.button.MIconEdge
 import com.ccfraser.muirwik.components.button.mIconButton
@@ -25,53 +26,60 @@ import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
-import react.setState
+import react.ref
 import styled.css
 
-class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
-    RComponent<FilterList.Props<Key, Type>, FilterList.State<Type>>(props) {
+abstract class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
+    RComponent<FilterList.Props<Key, Type>, FilterList.State>(props) {
 
-    interface Props<Key : Any, Type : Any?> : RProps {
+    interface Props<Key : Any, Type: Any?> : RProps {
         var filterableListCreationFunction: CreateFilterableList<Key, Type>
         var liveReload: Boolean
         var itemsName: String
 
-        var setReloadRef: (ReloadItems) -> Unit
+        // var setReloadRef: (ReloadItems) -> Unit
         var selectedItemKeysDelegate: VarDelegate<Set<Key>>
         var selectedOtherItemKeysDelegate: VarDelegate<Set<Key>>
         var onSelectionChanged: () -> Unit
         var alwaysAllowSelectAll: Boolean
+
+        var itemsDataDelegate: ValDelegate<Map<Key, Type>>
     }
 
     private var selectedItemKeys by props.selectedItemKeysDelegate
     private var selectedOtherItemKeys by props.selectedOtherItemKeysDelegate
 
-    interface State<Type> : RState {
+    interface State : RState {
         var filter: String
-        var reload: ReloadItems
-        var filteredItems: List<Type>
+        // var reload: ReloadItems
+        // var filteredItems: List<Type>
     }
 
-    override fun State<Type>.init(props: Props<Key, Type>) {
+    override fun State.init(props: Props<Key, Type>) {
         filter = ""
-        reload = {}
-        filteredItems = listOf()
+        // reload = {}
+        // filteredItems = listOf()
     }
 
     private val filterDelegate = delegateOf(state::filter)
     private var filter by filterDelegate
 
-    private val filteredItemsDelegate = delegateOf(state::filteredItems)
-    private var filteredItems by filteredItemsDelegate
+    // private val filteredItemsDelegate = delegateOf(state::filteredItems)
+    // private var filteredItems by filteredItemsDelegate
 
-    private var keyToType: ((Key) -> Type)? = null
-    private var typeToKey: ((Type) -> Key)? = null
+    private var filterableList: FilterableList<Key, Type, *, *>? = null
+    private fun getFilteredItems() = filterableList?.getFilteredItems() ?: listOf()
+
+
+    private fun typeToKey(type: Type) = filterableList?.typeToKey(type)
+    private fun keyToType(key: Key) = filterableList?.keyToType(key)
 
     private fun toggleSelectAllVisible() {
-        if (!filteredItems.all { typeToKey?.invoke(it) in selectedItemKeys }) {
-            selectedItemKeys += filteredItems.map { typeToKey!!(it) }
+        val filteredItems = getFilteredItems()
+        if (!filteredItems.all { typeToKey(it) in selectedItemKeys }) {
+            selectedItemKeys += filteredItems.map { typeToKey(it)!! }
         } else {
-            selectedItemKeys -= filteredItems.map { typeToKey!!(it) }
+            selectedItemKeys -= filteredItems.map { typeToKey(it)!! }
         }
 
         props.onSelectionChanged()
@@ -99,7 +107,7 @@ class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
                         onChange = {
                             it.persist()
                             filter = it.targetInputValue
-                            if (props.liveReload) state.reload()
+                            // if (props.liveReload) state.reload()
 
                         }
                     ) {
@@ -109,14 +117,14 @@ class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
                                 when (it.key) {
                                     "Enter" -> {
                                         it.preventDefault()
-                                        state.reload()
+                                        // state.reload()
                                     }
                                 }
                             }
                             endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
                                 mIconButton(
                                     iconName = "search",
-                                    onClick = { state.reload() },
+                                    onClick = { /*state.reload()*/ },
                                     edge = MIconEdge.end
                                 )
                             }
@@ -136,14 +144,15 @@ class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
                         mListItemText("(De)selecteer alle${
                         if (props.alwaysAllowSelectAll && selectedOtherItemKeys.isEmpty() && filter.isBlank()) 
                             " " else " gefilterde "}${props.itemsName}")
+                        val filteredItems = getFilteredItems()
                         mCheckbox(
                             checked = filteredItems
                                 .asSequence()
-                                .map { typeToKey?.invoke(it) }
+                                .map { typeToKey(it) }
                                 .any { it in selectedItemKeys },
                             indeterminate = filteredItems
                                 .asSequence()
-                                .map { typeToKey?.invoke(it) }
+                                .map { typeToKey(it) }
                                 .run {
                                     !all { it in selectedItemKeys } && any { it in selectedItemKeys }
                                 }
@@ -154,26 +163,31 @@ class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
 
             mGridItem(xs = MGridSize.cells12) {
                 props.filterableListCreationFunction(this) {
-                    filteredItemsDelegate = this@FilterList.filteredItemsDelegate
+                    // filteredItemsDelegate = this@FilterList.filteredItemsDelegate
                     selectedItemKeysDelegate = props.selectedItemKeysDelegate
                     selectedOtherItemKeysDelegate = props.selectedOtherItemKeysDelegate
 
-                    setReloadRef = {
-                        setState {
-                            reload = it
-                        }
-                        props.setReloadRef(it)
+                    ref<FilterableList<Key, Type, *, *>> {
+                        filterableList = it
                     }
-                    setKeyToTypeRef = {
-                        keyToType = it
-                    }
-                    setTypeToKeyRef = {
-                        typeToKey = it
-                    }
+
+                    // setReloadRef = {
+                    //     setState {
+                    //         reload = it
+                    //     }
+                    //     props.setReloadRef(it)
+                    // }
+                    // setKeyToTypeRef = {
+                    //     keyToType = it
+                    // }
+                    // setTypeToKeyRef = {
+                    //     typeToKey = it
+                    // }
 
                     filter = this@FilterList.filter
 
                     onSelectionChanged = props.onSelectionChanged
+                    itemsDataDelegate = props.itemsDataDelegate
 
                 }
             }

@@ -1,3 +1,4 @@
+
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.MGridSize
 import com.ccfraser.muirwik.components.MGridSpacing
@@ -23,6 +24,8 @@ import data.ExamenResultaat.VOLDOENDE
 import data.ExamenResultaatCategorie
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
+import data.Examenlocatie
+import data.Opleider
 import data.Product
 import data2viz.GeoPathNode
 import data2viz.vizComponentCard
@@ -83,30 +86,41 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
     interface Props : RProps
 
     interface State : RState {
+        var alleOpleidersData: Map<String, Opleider>
+        var alleExamenlocatiesData: Map<String, Examenlocatie>
+
         var welcomeText: String
         var circleColor: io.data2viz.color.Color
 
-        var refreshOpleiders: ReloadItems
+        // var refreshOpleiders: ReloadItems
         var selectedOpleiderKeys: Set<String>
 
-        var refreshExamenlocaties: ReloadItems
+        // var refreshExamenlocaties: ReloadItems
         var selectedExamenlocatieKeys: Set<String>
 
         var selectedProducts: Set<Product>
-        var refreshProducts: ReloadItems
+        // var refreshProducts: ReloadItems
     }
 
     override fun State.init(props: Props) {
+        alleOpleidersData = mapOf()
+        alleExamenlocatiesData = mapOf()
         welcomeText = "Hello world!"
         circleColor = Colors.rgb(255, 0, 0)
 
-        refreshOpleiders = {}
+        // refreshOpleiders = {}
         selectedOpleiderKeys = setOf()
-        refreshExamenlocaties = {}
+        // refreshExamenlocaties = {}
         selectedExamenlocatieKeys = setOf()
         selectedProducts = setOf()
-        refreshProducts = {}
+        // refreshProducts = {}
     }
+
+    private val alleOpleidersDataDelegate = delegateOf(state::alleOpleidersData)
+    private var alleOpleidersData by alleOpleidersDataDelegate
+
+    private val alleExamenlocatiesDataDelegate = delegateOf(state::alleExamenlocatiesData)
+    private var alleExamenlocatiesData by alleExamenlocatiesDataDelegate
 
     private val selectedOpleiderKeysDelegate = delegateOf(state::selectedOpleiderKeys)
     private var selectedOpleiderKeys by selectedOpleiderKeysDelegate
@@ -118,15 +132,19 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
     private var selectedProducts by selectedProductsDelegate
 
     private fun loadData() {
-        if (Data.alleOpleiders.isNotEmpty()) return
+        if (Data.isLoaded) return
         GlobalScope.launch {
-            Data.buildData()
+            // TODO
+            val (alleOpleiders, alleExamenlocaties) = Data.buildData()
+            alleOpleidersData = alleOpleiders
+            alleExamenlocatiesData = alleExamenlocaties
+
             println("data loaded!")
-            state.apply {
-                refreshOpleiders()
-                refreshExamenlocaties()
-                refreshProducts()
-            }
+            // state.apply {
+            //     refreshOpleiders()
+            //     refreshExamenlocaties()
+            //     refreshProducts()
+            // }
         }
     }
 
@@ -261,7 +279,7 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                         onClick = {
                             Data.buildData()
                             println("data loaded!")
-                            state.refreshOpleiders()
+                            // state.refreshOpleiders()
                         })
                 }
             }
@@ -274,16 +292,17 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                 xs = MGridSize.cells4
             ) {
                 filterList(opleidersList, "opleiders") {
-                    setReloadRef = {
-                        setState {
-                            refreshOpleiders = it
-                        }
-                    }
+                    // setReloadRef = {
+                    //     setState {
+                    //         refreshOpleiders = it
+                    //     }
+                    // }
                     // liveReload = false
+                    itemsDataDelegate = alleOpleidersDataDelegate.toValDelegate()
                     selectedItemKeysDelegate = selectedOpleiderKeysDelegate
                     selectedOtherItemKeysDelegate = selectedExamenlocatieKeysDelegate
                     onSelectionChanged = {
-                        state.refreshExamenlocaties()
+                        // state.refreshExamenlocaties()
                     }
                 }
             }
@@ -292,16 +311,17 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                 xs = MGridSize.cells4
             ) {
                 filterList(examenlocatiesList, "examenlocaties") {
-                    setReloadRef = {
-                        setState {
-                            refreshExamenlocaties = it
-                        }
-                    }
+                    // setReloadRef = {
+                    //     setState {
+                    //         refreshExamenlocaties = it
+                    //     }
+                    // }
                     // liveReload = false
+                    itemsDataDelegate = alleExamenlocatiesDataDelegate.toValDelegate()
                     selectedItemKeysDelegate = selectedExamenlocatieKeysDelegate
                     selectedOtherItemKeysDelegate = selectedOpleiderKeysDelegate
                     onSelectionChanged = {
-                        state.refreshOpleiders()
+                        // state.refreshOpleiders()
                     }
                 }
             }
@@ -310,11 +330,12 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                 xs = MGridSize.cells4
             ) {
                 filterList(categorieProductList, "categorieën/producten") {
-                    setReloadRef = {
-                        setState {
-                            refreshProducts = it
-                        }
-                    }
+                    // setReloadRef = {
+                    //     setState {
+                    //         refreshProducts = it
+                    //     }
+                    // }
+
                     alwaysAllowSelectAll = true
                     // liveReload = false
                     selectedItemKeysDelegate = selectedProductsDelegate

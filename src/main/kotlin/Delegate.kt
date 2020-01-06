@@ -17,6 +17,9 @@ class ValDelegate<T>(
     override val get: () -> T
 ) : VarDelegate<T>(get = get, set = {})
 
+fun <T> VarDelegate<T>.toValDelegate() = delegateOf(get)
+fun <T> ValDelegate<T>.toVarDelegate() = this as VarDelegate<T>
+
 fun <T> delegateOf(
     get: () -> T
 ) = ValDelegate(get)

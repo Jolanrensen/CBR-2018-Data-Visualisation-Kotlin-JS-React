@@ -13,8 +13,12 @@ import io.data2viz.time.Date
 import org.w3c.xhr.XMLHttpRequest
 
 object Data {
-    val alleOpleiders = hashMapOf<String, Opleider>()
-    val alleExamenlocaties = hashMapOf<String, Examenlocatie>()
+
+    val isLoaded
+        get() = alleOpleiders.isNotEmpty() && alleExamenlocaties.isNotEmpty()
+
+    private val alleOpleiders = hashMapOf<String, Opleider>()
+    private val alleExamenlocaties = hashMapOf<String, Examenlocatie>()
 
     val opleiderToExamenlocaties: HashMap<String, HashSet<String>> = hashMapOf()
     val examenlocatieToOpleiders: HashMap<String, HashSet<String>> = hashMapOf()
@@ -149,7 +153,7 @@ object Data {
         } ?: throw IllegalArgumentException("Couldn't read data")
     }
 
-    fun buildData() {
+    fun buildData(): Pair<Map<String, Opleider>, Map<String, Examenlocatie>> {
         csv?.let {
             val data = it.drop(1)
             for (line in data) {
@@ -206,6 +210,7 @@ object Data {
                 }
             }
         } ?: throw IllegalArgumentException("Couldn't read data")
+        return alleOpleiders to alleExamenlocaties
     }
 }
 

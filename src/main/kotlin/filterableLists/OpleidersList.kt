@@ -10,10 +10,7 @@ import com.ccfraser.muirwik.components.spacingUnits
 import com.ccfraser.muirwik.components.themeContext
 import data.Data
 import data.Opleider
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlinx.css.Color
 import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
@@ -33,7 +30,7 @@ import styled.css
 import styled.styledDiv
 import toInt
 
-class OpleidersList(props: Props) : FilterableList<OpleidersList.Props, OpleidersList.State>(props) {
+class OpleidersList(props: Props) : FilterableList<String, Opleider, OpleidersList.Props, OpleidersList.State>(props) {
 
     interface Props : FilterableListProps<String, Opleider>
     // Available in props:
@@ -44,16 +41,20 @@ class OpleidersList(props: Props) : FilterableList<OpleidersList.Props, Opleider
     // var selectedOtherItemKeys: HashSet<String>
     // var filteredItemsDelegate: ReadWriteProperty<Any?, List<Opleider>>
 
-    private var filteredItems by props.filteredItemsDelegate
+    override fun keyToType(key: String) = alleOpleidersData[key] ?: error("opleider $key does not exist")
+    override fun typeToKey(type: Opleider) = type.code
+
     private var isOpleiderSelected by props.selectedItemKeysDelegate
     private var isExamenlocatieSelected by props.selectedOtherItemKeysDelegate
+    private val alleOpleidersData by props.itemsDataDelegate
+
 
     interface State : FilterableListState
 
     override fun State.init(props: Props) {
-        props.setReloadRef(::refreshOpleiders)
-        props.setKeyToTypeRef { Data.alleOpleiders[it]!! }
-        props.setTypeToKeyRef { it.code }
+        // props.setReloadRef { getFilteredItems() }
+        // props.setKeyToTypeRef {  }
+        // props.setTypeToKeyRef { it.code }
     }
 
     private var list: ReactListRef? = null
@@ -63,53 +64,98 @@ class OpleidersList(props: Props) : FilterableList<OpleidersList.Props, Opleider
         jobs.forEach { it.cancel() }
     }
 
-    private fun refreshOpleiders() {
-        CoroutineScope(Dispatchers.Main).launch {
-            // println("refreshOpleiders")
-            val filterTerms = props.filter.split(" ", ", ", ",")
-            val score = hashMapOf<String, Int>()
-            (if (isExamenlocatieSelected.isNotEmpty())
-                isExamenlocatieSelected.asSequence()
-                    .map { Data.examenlocatieToOpleiders[it]!! }
-                    .flatten()
-                    .map { it to Data.alleOpleiders[it]!! }
-                    .toMap()
-            else Data.alleOpleiders).forEach { (oplCode, opleider) ->
-                filterTerms.forEach {
-                    val naam = opleider.naam.contains(it, true)
-                    val code = oplCode.contains(it, true)
-                    val plaatsnaam = opleider.plaatsnaam.contains(it, true)
-                    val postcode = opleider.postcode.contains(it, true)
-                    val straatnaam = opleider.straatnaam.contains(it, true)
-                    score[oplCode] = (score[oplCode] ?: 0) +
-                        naam.toInt() * 3 + code.toInt() + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
-                }
+    override fun getFilteredItems(): List<Opleider> {
+        val filterTerms = props.filter.split(" ", ", ", ",")
+        val score = hashMapOf<String, Int>()
+        (if (isExamenlocatieSelected.isNotEmpty())
+            isExamenlocatieSelected.asSequence()
+                .map { Data.examenlocatieToOpleiders[it]!! }
+                .flatten()
+                .map { it to (alleOpleidersData[it] ?: error("opleier $it does not exist")) }
+                .toMap()
+        else alleOpleidersData).forEach { (oplCode, opleider) ->
+            filterTerms.forEach {
+                val naam = opleider.naam.contains(it, true)
+                val code = oplCode.contains(it, true)
+                val plaatsnaam = opleider.plaatsnaam.contains(it, true)
+                val postcode = opleider.postcode.contains(it, true)
+                val straatnaam = opleider.straatnaam.contains(it, true)
+                score[oplCode] = (score[oplCode] ?: 0) +
+                    naam.toInt() * 3 + code.toInt() + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
             }
-
-            val filteredOpleiderCodes: List<String>
-            filteredItems = score.asSequence()
-                .filter { it.value != 0 }
-                .sortedByDescending { it.value }
-                .sortedByDescending { it.key in isOpleiderSelected }
-                .apply { filteredOpleiderCodes = map { it.key }.toList() }
-                .map { Data.alleOpleiders[it.key]!! }
-                .toList()
-
-            // deselect all previously selected opleiders that are no longer in filteredOpleiders
-            isOpleiderSelected.filter { code ->
-                code !in filteredOpleiderCodes
-            }.apply {
-                forEach { key ->
-                    isOpleiderSelected -= key
-                }
-                if (size > 0) props.onSelectionChanged()
-            }
-
-            list?.scrollTo(0)
-        }.let {
-            jobs.add(it)
         }
+
+        val filteredOpleiderCodes: List<String>
+        val result = score.asSequence()
+            .filter { it.value != 0 }
+            .sortedByDescending { it.value }
+            .sortedByDescending { it.key in isOpleiderSelected }
+            .apply { filteredOpleiderCodes = map { it.key }.toList() }
+            .map { alleOpleidersData[it.key] ?: error("opleider $it does not exist") }
+            .toList()
+
+        // deselect all previously selected opleiders that are no longer in filteredOpleiders
+        isOpleiderSelected.filter { code ->
+            code !in filteredOpleiderCodes
+        }.apply {
+            forEach { key ->
+                isOpleiderSelected -= key
+            }
+            if (size > 0) props.onSelectionChanged()
+        }
+
+        list?.scrollTo(0)
+
+        return result
     }
+
+    // private fun refreshOpleiders() {
+    //     CoroutineScope(Dispatchers.Main).launch {
+    //         // println("refreshOpleiders")
+    //         val filterTerms = props.filter.split(" ", ", ", ",")
+    //         val score = hashMapOf<String, Int>()
+    //         (if (isExamenlocatieSelected.isNotEmpty())
+    //             isExamenlocatieSelected.asSequence()
+    //                 .map { Data.examenlocatieToOpleiders[it]!! }
+    //                 .flatten()
+    //                 .map { it to Data.alleOpleiders[it]!! }
+    //                 .toMap()
+    //         else Data.alleOpleiders).forEach { (oplCode, opleider) ->
+    //             filterTerms.forEach {
+    //                 val naam = opleider.naam.contains(it, true)
+    //                 val code = oplCode.contains(it, true)
+    //                 val plaatsnaam = opleider.plaatsnaam.contains(it, true)
+    //                 val postcode = opleider.postcode.contains(it, true)
+    //                 val straatnaam = opleider.straatnaam.contains(it, true)
+    //                 score[oplCode] = (score[oplCode] ?: 0) +
+    //                     naam.toInt() * 3 + code.toInt() + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
+    //             }
+    //         }
+    //
+    //         val filteredOpleiderCodes: List<String>
+    //         filteredItems = score.asSequence()
+    //             .filter { it.value != 0 }
+    //             .sortedByDescending { it.value }
+    //             .sortedByDescending { it.key in isOpleiderSelected }
+    //             .apply { filteredOpleiderCodes = map { it.key }.toList() }
+    //             .map { Data.alleOpleiders[it.key]!! }
+    //             .toList()
+    //
+    //         // deselect all previously selected opleiders that are no longer in filteredOpleiders
+    //         isOpleiderSelected.filter { code ->
+    //             code !in filteredOpleiderCodes
+    //         }.apply {
+    //             forEach { key ->
+    //                 isOpleiderSelected -= key
+    //             }
+    //             if (size > 0) props.onSelectionChanged()
+    //         }
+    //
+    //         list?.scrollTo(0)
+    //     }.let {
+    //         jobs.add(it)
+    //     }
+    // }
 
     private fun toggleSelected(opleider: String?, newState: Boolean? = null) {
         opleider ?: return
@@ -121,7 +167,7 @@ class OpleidersList(props: Props) : FilterableList<OpleidersList.Props, Opleider
         props.onSelectionChanged()
     }
 
-    private fun renderRow(index: Int, key: String) = buildElement {
+    private fun renderRow(filteredItems: List<Opleider>, index: Int, key: String) = buildElement {
         val opleider = filteredItems[index]
         mListItem(
             button = true,
@@ -141,6 +187,7 @@ class OpleidersList(props: Props) : FilterableList<OpleidersList.Props, Opleider
     }
 
     override fun RBuilder.render() {
+        val filteredItems = getFilteredItems()
         themeContext.Consumer { theme ->
             val themeStyles = object : StyleSheet("ComponentStyles", isStatic = true) {
                 val list by css {
@@ -159,7 +206,9 @@ class OpleidersList(props: Props) : FilterableList<OpleidersList.Props, Opleider
                     css(themeStyles.list)
                     attrs {
                         length = filteredItems.size
-                        itemRenderer = ::renderRow
+                        itemRenderer = { index, key ->
+                            renderRow(filteredItems, index, key)
+                        }
                         type = "variable"
                         ref {
                             list = it

@@ -10,10 +10,7 @@ import com.ccfraser.muirwik.components.spacingUnits
 import com.ccfraser.muirwik.components.themeContext
 import data.Data
 import data.Examenlocatie
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlinx.css.Color
 import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
@@ -34,7 +31,7 @@ import styled.styledDiv
 import toInt
 
 class ExamenlocatiesList(props: Props) :
-    FilterableList<ExamenlocatiesList.Props, ExamenlocatiesList.State>(props) {
+    FilterableList<String, Examenlocatie, ExamenlocatiesList.Props, ExamenlocatiesList.State>(props) {
 
     interface Props : FilterableListProps<String, Examenlocatie>
     // Available in props:
@@ -50,17 +47,20 @@ class ExamenlocatiesList(props: Props) :
     //     get() = props.filteredItemsDelegate.getValue(this, ::filteredItems)
     //     set(value) = props.filteredItemsDelegate.setValue(this, ::filteredItems, value)
 
-    var filteredItems by props.filteredItemsDelegate
+
+    override fun keyToType(key: String) = alleExamenlocatiesData[key] ?: error("Examenlocatie $key does not exist")
+    override fun typeToKey(type: Examenlocatie) = type.naam
 
     private var isExamenlocatieSelected by props.selectedItemKeysDelegate
     private val isOpleiderSelected by props.selectedOtherItemKeysDelegate
+    private val alleExamenlocatiesData by props.itemsDataDelegate
 
     interface State : FilterableListState
 
     override fun State.init(props: Props) {
-        props.setReloadRef(::refreshExamenlocaties)
-        props.setKeyToTypeRef { Data.alleExamenlocaties[it]!! }
-        props.setTypeToKeyRef { it.naam }
+        // props.setReloadRef(::refreshExamenlocaties)
+        // props.setKeyToTypeRef { Data.alleExamenlocaties[it]!! }
+        // props.setTypeToKeyRef { it.naam }
     }
 
     private var list: ReactListRef? = null
@@ -70,53 +70,97 @@ class ExamenlocatiesList(props: Props) :
         jobs.forEach { it.cancel() }
     }
 
-    private fun refreshExamenlocaties() {
-        CoroutineScope(Dispatchers.Main).launch {
-            // println("refreshExamenlocations")
-            val filterTerms = props.filter.split(" ", ", ", ",")
-            val score = hashMapOf<String, Int>()
-            (if (isOpleiderSelected.isNotEmpty())
-                isOpleiderSelected.asSequence()
-                    .map { Data.opleiderToExamenlocaties[it]!! }
-                    .flatten()
-                    .map { it to Data.alleExamenlocaties[it]!! }
-                    .toMap()
-            else Data.alleExamenlocaties).forEach { (examNaam, examenlocatie) ->
-                filterTerms.forEach {
-                    val naam = examNaam.contains(it, true)
-                    val plaatsnaam = examenlocatie.plaatsnaam.contains(it, true)
-                    val postcode = examenlocatie.postcode.contains(it, true)
-                    val straatnaam = examenlocatie.straatnaam.contains(it, true)
-                    score[examNaam] = (score[examNaam] ?: 0) +
-                        naam.toInt() * 3 + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
-                }
+    override fun getFilteredItems(): List<Examenlocatie> {
+        // println("refreshExamenlocations")
+        val filterTerms = props.filter.split(" ", ", ", ",")
+        val score = hashMapOf<String, Int>()
+        (if (isOpleiderSelected.isNotEmpty())
+            isOpleiderSelected.asSequence()
+                .map { Data.opleiderToExamenlocaties[it]!! }
+                .flatten()
+                .map { it to (alleExamenlocatiesData[it] ?: error("Examenlocatie $it does not exist")) }
+                .toMap()
+        else alleExamenlocatiesData).forEach { (examNaam, examenlocatie) ->
+            filterTerms.forEach {
+                val naam = examNaam.contains(it, true)
+                val plaatsnaam = examenlocatie.plaatsnaam.contains(it, true)
+                val postcode = examenlocatie.postcode.contains(it, true)
+                val straatnaam = examenlocatie.straatnaam.contains(it, true)
+                score[examNaam] = (score[examNaam] ?: 0) +
+                    naam.toInt() * 3 + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
             }
-
-            val filteredExamenlocatieCodes: List<String>
-            filteredItems = score.asSequence()
-                .filter { it.value != 0 }
-                .sortedByDescending { it.value }
-                .sortedByDescending { it.key in isExamenlocatieSelected }
-                .apply { filteredExamenlocatieCodes = map { it.key }.toList() }
-                .map { Data.alleExamenlocaties[it.key]!! }
-                .toList()
-
-            // deselect all previously selected examenlocaties that are no longer in filteredExamenlocaties
-            isExamenlocatieSelected.filter { naam ->
-                naam !in filteredExamenlocatieCodes
-            }.apply {
-                forEach { key ->
-                    isExamenlocatieSelected -= key
-                }
-                if (size > 0) props.onSelectionChanged()
-            }
-
-
-            list?.scrollTo(0)
-        }.let {
-            jobs.add(it)
         }
+
+        val filteredExamenlocatieCodes: List<String>
+        val result = score.asSequence()
+            .filter { it.value != 0 }
+            .sortedByDescending { it.value }
+            .sortedByDescending { it.key in isExamenlocatieSelected }
+            .apply { filteredExamenlocatieCodes = map { it.key }.toList() }
+            .map { alleExamenlocatiesData[it.key] ?: error("Examenlocatie $it does not exist") }
+            .toList()
+
+        // deselect all previously selected examenlocaties that are no longer in filteredExamenlocaties
+        isExamenlocatieSelected.filter { naam ->
+            naam !in filteredExamenlocatieCodes
+        }.apply {
+            forEach { key ->
+                isExamenlocatieSelected -= key
+            }
+            if (size > 0) props.onSelectionChanged()
+        }
+
+        list?.scrollTo(0)
+        return result
     }
+
+    // private fun refreshExamenlocaties() {
+    //     CoroutineScope(Dispatchers.Main).launch {
+    //         // println("refreshExamenlocations")
+    //         val filterTerms = props.filter.split(" ", ", ", ",")
+    //         val score = hashMapOf<String, Int>()
+    //         (if (isOpleiderSelected.isNotEmpty())
+    //             isOpleiderSelected.asSequence()
+    //                 .map { Data.opleiderToExamenlocaties[it]!! }
+    //                 .flatten()
+    //                 .map { it to (alleExamenlocatiesData[it] ?: error("Examenlocatie $it does not exist")) }
+    //                 .toMap()
+    //         else alleExamenlocatiesData).forEach { (examNaam, examenlocatie) ->
+    //             filterTerms.forEach {
+    //                 val naam = examNaam.contains(it, true)
+    //                 val plaatsnaam = examenlocatie.plaatsnaam.contains(it, true)
+    //                 val postcode = examenlocatie.postcode.contains(it, true)
+    //                 val straatnaam = examenlocatie.straatnaam.contains(it, true)
+    //                 score[examNaam] = (score[examNaam] ?: 0) +
+    //                     naam.toInt() * 3 + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
+    //             }
+    //         }
+    //
+    //         val filteredExamenlocatieCodes: List<String>
+    //         filteredItems = score.asSequence()
+    //             .filter { it.value != 0 }
+    //             .sortedByDescending { it.value }
+    //             .sortedByDescending { it.key in isExamenlocatieSelected }
+    //             .apply { filteredExamenlocatieCodes = map { it.key }.toList() }
+    //             .map { alleExamenlocatiesData[it.key] ?: error("Examenlocatie $it does not exist") }
+    //             .toList()
+    //
+    //         // deselect all previously selected examenlocaties that are no longer in filteredExamenlocaties
+    //         isExamenlocatieSelected.filter { naam ->
+    //             naam !in filteredExamenlocatieCodes
+    //         }.apply {
+    //             forEach { key ->
+    //                 isExamenlocatieSelected -= key
+    //             }
+    //             if (size > 0) props.onSelectionChanged()
+    //         }
+    //
+    //
+    //         list?.scrollTo(0)
+    //     }.let {
+    //         jobs.add(it)
+    //     }
+    // }
 
     private fun toggleSelected(examenlocatie: String, newState: Boolean? = null) {
         if (newState ?: examenlocatie !in isExamenlocatieSelected) {
@@ -128,7 +172,7 @@ class ExamenlocatiesList(props: Props) :
         props.onSelectionChanged()
     }
 
-    private fun renderRow(index: Int, key: String) = buildElement {
+    private fun renderRow(filteredItems: List<Examenlocatie>, index: Int, key: String) = buildElement {
         val examenlocatie = filteredItems[index]
         mListItem(
             button = true,
@@ -142,12 +186,13 @@ class ExamenlocatiesList(props: Props) :
                     +examenlocatie.naam.first().toString()
                 }
             }
-            mListItemText("${examenlocatie.naam}, ${examenlocatie.plaatsnaam} (${examenlocatie.naam})")
+            mListItemText(examenlocatie.naam)
             mCheckbox(checked = examenlocatie.naam in isExamenlocatieSelected)
         }
     }
 
     override fun RBuilder.render() {
+        val filteredItems = getFilteredItems()
         themeContext.Consumer { theme ->
             val themeStyles = object : StyleSheet("ComponentStyles", isStatic = true) {
                 val list by css {
@@ -166,7 +211,9 @@ class ExamenlocatiesList(props: Props) :
                     css(themeStyles.list)
                     attrs {
                         length = filteredItems.size
-                        itemRenderer = ::renderRow
+                        itemRenderer = { index, key ->
+                            renderRow(filteredItems, index, key)
+                        }
                         type = "variable"
                         ref {
                             list = it
@@ -179,7 +226,7 @@ class ExamenlocatiesList(props: Props) :
     }
 }
 
-val examenlocatiesList: RBuilder.(ExamenlocatiesList.Props.() -> Unit) -> ReactElement = { handler ->
+val examenlocatiesList: RBuilder.(handler: ExamenlocatiesList.Props.() -> Unit) -> ReactElement = { handler ->
     child(ExamenlocatiesList::class) {
         attrs(handler)
     }
