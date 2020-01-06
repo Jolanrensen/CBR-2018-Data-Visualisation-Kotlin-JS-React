@@ -1,6 +1,8 @@
 package filterableLists
 
 import FilterableList
+import FilterableListProps
+import FilterableListState
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemAvatar
 import com.ccfraser.muirwik.components.list.mListItemText
@@ -10,7 +12,6 @@ import com.ccfraser.muirwik.components.spacingUnits
 import com.ccfraser.muirwik.components.themeContext
 import data.Data
 import data.Examenlocatie
-import kotlinx.coroutines.Job
 import kotlinx.css.Color
 import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
@@ -30,23 +31,19 @@ import styled.css
 import styled.styledDiv
 import toInt
 
-class ExamenlocatiesList(props: Props) :
-    FilterableList<String, Examenlocatie, ExamenlocatiesList.Props, ExamenlocatiesList.State>(props) {
+interface ExamenlocatiesListProps : FilterableListProps<String, Examenlocatie>
+// Available in props:
+// var filter: String
+// var setReloadRef: (ReloadItems) -> Unit
+// var selectedItemKeys: HashSet<String>
+// var onSelectionChanged: () -> Unit
+// var selectedOtherItemKeys: HashSet<String>
+// var filteredItemsDelegate: ReadWriteProperty<Any?, List<Examenlocatie>>
 
-    interface Props : FilterableListProps<String, Examenlocatie>
-    // Available in props:
-    // var filter: String
-    // var setReloadRef: (ReloadItems) -> Unit
-    // var selectedItemKeys: HashSet<String>
-    // var onSelectionChanged: () -> Unit
-    // var selectedOtherItemKeys: HashSet<String>
-    // var filteredItemsDelegate: ReadWriteProperty<Any?, List<Examenlocatie>>
+interface ExamenlocatiesListState : FilterableListState
 
-    // not sure why "by props.filteredItemsDelegate" doesn't work
-    // private var filteredItems: List<Examenlocatie>
-    //     get() = props.filteredItemsDelegate.getValue(this, ::filteredItems)
-    //     set(value) = props.filteredItemsDelegate.setValue(this, ::filteredItems, value)
-
+class ExamenlocatiesList(props: ExamenlocatiesListProps) :
+    FilterableList<String, Examenlocatie, ExamenlocatiesListProps, ExamenlocatiesListState>(props) {
 
     override fun keyToType(key: String) = alleExamenlocatiesData[key] ?: error("Examenlocatie $key does not exist")
     override fun typeToKey(type: Examenlocatie) = type.naam
@@ -55,20 +52,9 @@ class ExamenlocatiesList(props: Props) :
     private val isOpleiderSelected by props.selectedOtherItemKeysDelegate
     private val alleExamenlocatiesData by props.itemsDataDelegate
 
-    interface State : FilterableListState
-
-    override fun State.init(props: Props) {
-        // props.setReloadRef(::refreshExamenlocaties)
-        // props.setKeyToTypeRef { Data.alleExamenlocaties[it]!! }
-        // props.setTypeToKeyRef { it.naam }
-    }
+    override fun ExamenlocatiesListState.init(props: ExamenlocatiesListProps) {}
 
     private var list: ReactListRef? = null
-
-    private val jobs = hashSetOf<Job>()
-    override fun componentWillUnmount() {
-        jobs.forEach { it.cancel() }
-    }
 
     override fun getFilteredItems(): List<Examenlocatie> {
         // println("refreshExamenlocations")
@@ -113,54 +99,6 @@ class ExamenlocatiesList(props: Props) :
         list?.scrollTo(0)
         return result
     }
-
-    // private fun refreshExamenlocaties() {
-    //     CoroutineScope(Dispatchers.Main).launch {
-    //         // println("refreshExamenlocations")
-    //         val filterTerms = props.filter.split(" ", ", ", ",")
-    //         val score = hashMapOf<String, Int>()
-    //         (if (isOpleiderSelected.isNotEmpty())
-    //             isOpleiderSelected.asSequence()
-    //                 .map { Data.opleiderToExamenlocaties[it]!! }
-    //                 .flatten()
-    //                 .map { it to (alleExamenlocatiesData[it] ?: error("Examenlocatie $it does not exist")) }
-    //                 .toMap()
-    //         else alleExamenlocatiesData).forEach { (examNaam, examenlocatie) ->
-    //             filterTerms.forEach {
-    //                 val naam = examNaam.contains(it, true)
-    //                 val plaatsnaam = examenlocatie.plaatsnaam.contains(it, true)
-    //                 val postcode = examenlocatie.postcode.contains(it, true)
-    //                 val straatnaam = examenlocatie.straatnaam.contains(it, true)
-    //                 score[examNaam] = (score[examNaam] ?: 0) +
-    //                     naam.toInt() * 3 + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
-    //             }
-    //         }
-    //
-    //         val filteredExamenlocatieCodes: List<String>
-    //         filteredItems = score.asSequence()
-    //             .filter { it.value != 0 }
-    //             .sortedByDescending { it.value }
-    //             .sortedByDescending { it.key in isExamenlocatieSelected }
-    //             .apply { filteredExamenlocatieCodes = map { it.key }.toList() }
-    //             .map { alleExamenlocatiesData[it.key] ?: error("Examenlocatie $it does not exist") }
-    //             .toList()
-    //
-    //         // deselect all previously selected examenlocaties that are no longer in filteredExamenlocaties
-    //         isExamenlocatieSelected.filter { naam ->
-    //             naam !in filteredExamenlocatieCodes
-    //         }.apply {
-    //             forEach { key ->
-    //                 isExamenlocatieSelected -= key
-    //             }
-    //             if (size > 0) props.onSelectionChanged()
-    //         }
-    //
-    //
-    //         list?.scrollTo(0)
-    //     }.let {
-    //         jobs.add(it)
-    //     }
-    // }
 
     private fun toggleSelected(examenlocatie: String, newState: Boolean? = null) {
         if (newState ?: examenlocatie !in isExamenlocatieSelected) {
@@ -226,8 +164,9 @@ class ExamenlocatiesList(props: Props) :
     }
 }
 
-val examenlocatiesList: RBuilder.(handler: ExamenlocatiesList.Props.() -> Unit) -> ReactElement = { handler ->
-    child(ExamenlocatiesList::class) {
-        attrs(handler)
+val examenlocatiesList: RBuilder.(handler: ExamenlocatiesListProps.() -> Unit) -> ReactElement =
+    { handler ->
+        child(ExamenlocatiesList::class) {
+            attrs(handler)
+        }
     }
-}

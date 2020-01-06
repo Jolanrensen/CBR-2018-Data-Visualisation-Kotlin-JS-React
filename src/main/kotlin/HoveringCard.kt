@@ -10,17 +10,17 @@ import react.dom.div
 import react.setState
 import styled.StyledHandler
 
-class HoveringCard(props: Props) : RComponent<HoveringCard.Props, HoveringCard.State>(props) {
+interface HoveringCardProps : MCardProps {
+    var runOnCard: StyledHandler<MCardProps>?
+}
 
-    interface Props : MCardProps {
-        var runOnCard: StyledHandler<MCardProps>?
-    }
+interface HoveringCardState : RState {
+    var raised: Boolean
+}
 
-    interface State : RState {
-        var raised: Boolean
-    }
+class HoveringCard(props: HoveringCardProps) : RComponent<HoveringCardProps, HoveringCardState>(props) {
 
-    override fun State.init(props: Props) {
+    override fun HoveringCardState.init(props: HoveringCardProps) {
         raised = false
     }
 

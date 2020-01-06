@@ -1,6 +1,8 @@
 package filterableLists
 
 import FilterableList
+import FilterableListProps
+import FilterableListState
 import com.ccfraser.muirwik.components.MGridAlignItems
 import com.ccfraser.muirwik.components.MGridDirection
 import com.ccfraser.muirwik.components.MGridJustify
@@ -24,7 +26,6 @@ import data.Categorie
 import data.Product
 import data.producten
 import delegateOf
-import kotlinx.coroutines.Job
 import kotlinx.css.Color
 import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
@@ -40,22 +41,29 @@ import styled.css
 import styled.styledDiv
 import toInt
 
-class CategorieProductList(props: Props) :
-    FilterableList<Product, Product, CategorieProductList.Props, CategorieProductList.State>(props) {
+interface CategorieProductListProps : FilterableListProps<Product, Product>
+// Available in props
+// var filter: String
+// var setReloadRef: (ReloadItems) -> Unit
+// var selectedItemKeys: HashSet<Product>
+// var onSelectionChanged: () -> Unit
+// var selectedOtherItemKeys: HashSet<Product>
+// var filteredItemsDelegate: ReadWriteProperty<Any?, List<Product>>
 
-    interface Props : FilterableListProps<Product, Product>
-    // Available in props
-    // var filter: String
-    // var setReloadRef: (ReloadItems) -> Unit
-    // var selectedItemKeys: HashSet<Product>
-    // var onSelectionChanged: () -> Unit
-    // var selectedOtherItemKeys: HashSet<Product>
-    // var filteredItemsDelegate: ReadWriteProperty<Any?, List<Product>>
+interface CategorieProductListState : FilterableListState {
+    var expandedCategories: Set<Categorie>
+}
+
+class CategorieProductList(props: CategorieProductListProps) :
+    FilterableList<Product, Product, CategorieProductListProps, CategorieProductListState>(
+        props
+    ) {
 
     override fun getFilteredItems(): List<Product> {
         val filterTerms = props.filter.split(" ", ", ", ",")
         val score = hashMapOf<Product, Int>()
-        Product.values().forEach { product -> // Todo maybe replace with itemsDataDelegate
+        Product.values().forEach { product ->
+            // Todo maybe replace with itemsDataDelegate
             filterTerms.forEach {
                 val naam = product.omschrijving.contains(it, true)
                 val name = product.name.contains(it, true)
@@ -93,64 +101,12 @@ class CategorieProductList(props: Props) :
 
     private var isProductSelected by props.selectedItemKeysDelegate
 
-    interface State : FilterableListState {
-        var expandedCategories: Set<Categorie>
-    }
-
     private val expandedCategoriesDelegate = delegateOf(state::expandedCategories)
     private var expandedCategories by expandedCategoriesDelegate
 
-    override fun State.init(props: Props) {
-        // props.setReloadRef {}
-        // props.setKeyToTypeRef { it }
-        // props.setTypeToKeyRef { it }
+    override fun CategorieProductListState.init(props: CategorieProductListProps) {
         expandedCategories = hashSetOf()
     }
-
-    private val jobs = hashSetOf<Job>()
-    override fun componentWillUnmount() {
-        jobs.forEach { it.cancel() }
-    }
-
-    // private fun refreshProducts() {
-    //     CoroutineScope(Dispatchers.Main).launch {
-    //         val filterTerms = props.filter.split(" ", ", ", ",")
-    //         val score = hashMapOf<Product, Int>()
-    //         Product.values().forEach { product ->
-    //             filterTerms.forEach {
-    //                 val naam = product.omschrijving.contains(it, true)
-    //                 val name = product.name.contains(it, true)
-    //                 val categorienaam = product.categorie.omschrijving.contains(it, true)
-    //                 val categoriename = product.categorie.name.contains(it, true)
-    //
-    //                 score[product] = (score[product] ?: 0) +
-    //                     naam.toInt() * 3 + name.toInt() * 3 + categorienaam.toInt() + categoriename.toInt()
-    //             }
-    //         }
-    //
-    //         val filteredProducts: List<Product>
-    //         filteredItems = score.asSequence()
-    //             .filter { it.value != 0 }
-    //             .sortedByDescending { it.value }
-    //             .sortedByDescending { it.key in isProductSelected }
-    //             .apply { filteredProducts = map { it.key }.toList() }
-    //             .map { it.key }
-    //             .toList()
-    //
-    //         // deselect all previously selected opleiders that are no longer in filteredOpleiders
-    //         isProductSelected.filter { product ->
-    //             product !in filteredProducts
-    //         }.apply {
-    //             forEach { key ->
-    //                 isProductSelected -= key
-    //             }
-    //             if (size > 0) props.onSelectionChanged()
-    //         }
-    //
-    //     }.let {
-    //         jobs.add(it)
-    //     }
-    // }
 
     private fun toggleExpandedCategorie(categorie: Categorie, newState: Boolean? = null) {
         if (newState ?: categorie !in expandedCategories)
@@ -288,8 +244,9 @@ class CategorieProductList(props: Props) :
     }
 }
 
-val categorieProductList: RBuilder.(CategorieProductList.Props.() -> Unit) -> ReactElement = { handler ->
-    child(CategorieProductList::class) {
-        attrs(handler)
+val categorieProductList: RBuilder.(CategorieProductListProps.() -> Unit) -> ReactElement =
+    { handler ->
+        child(CategorieProductList::class) {
+            attrs(handler)
+        }
     }
-}

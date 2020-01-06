@@ -1,4 +1,5 @@
 package data2viz
+
 import com.ccfraser.muirwik.components.card.MCardProps
 import com.ccfraser.muirwik.components.card.mCardContent
 import hoveringCard
@@ -14,14 +15,14 @@ import styled.StyledHandler
 import styled.css
 import styled.styledDiv
 
-class VizComponentCard(props: Props) : RComponent<VizComponentCard.Props, VizComponentCard.State>(props) {
+interface VizComponentCardProps : RProps {
+    var runOnCard: StyledHandler<MCardProps>
+    var runOnViz: Viz.() -> Unit
+}
 
-    interface Props : RProps {
-        var runOnCard: StyledHandler<MCardProps>
-        var runOnViz: Viz.() -> Unit
-    }
+interface VizComponentCardState : RState
 
-    interface State : RState
+class VizComponentCard(props: VizComponentCardProps) : RComponent<VizComponentCardProps, VizComponentCardState>(props) {
 
     override fun RBuilder.render() {
         styledDiv {

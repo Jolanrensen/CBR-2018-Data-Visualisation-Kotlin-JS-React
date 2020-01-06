@@ -1,6 +1,8 @@
 package filterableLists
 
 import FilterableList
+import FilterableListProps
+import FilterableListState
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemAvatar
 import com.ccfraser.muirwik.components.list.mListItemText
@@ -10,7 +12,6 @@ import com.ccfraser.muirwik.components.spacingUnits
 import com.ccfraser.muirwik.components.themeContext
 import data.Data
 import data.Opleider
-import kotlinx.coroutines.Job
 import kotlinx.css.Color
 import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
@@ -30,16 +31,19 @@ import styled.css
 import styled.styledDiv
 import toInt
 
-class OpleidersList(props: Props) : FilterableList<String, Opleider, OpleidersList.Props, OpleidersList.State>(props) {
+interface OpleidersListProps : FilterableListProps<String, Opleider>
+// Available in props:
+// var filter: String
+// var setReloadRef: (ReloadItems) -> Unit
+// var selectedItemKeys: HashSet<String>
+// var onSelectionChanged: () -> Unit
+// var selectedOtherItemKeys: HashSet<String>
+// var filteredItemsDelegate: ReadWriteProperty<Any?, List<Opleider>>
 
-    interface Props : FilterableListProps<String, Opleider>
-    // Available in props:
-    // var filter: String
-    // var setReloadRef: (ReloadItems) -> Unit
-    // var selectedItemKeys: HashSet<String>
-    // var onSelectionChanged: () -> Unit
-    // var selectedOtherItemKeys: HashSet<String>
-    // var filteredItemsDelegate: ReadWriteProperty<Any?, List<Opleider>>
+interface OpleidersListState : FilterableListState
+
+class OpleidersList(props: OpleidersListProps) :
+    FilterableList<String, Opleider, OpleidersListProps, OpleidersListState>(props) {
 
     override fun keyToType(key: String) = alleOpleidersData[key] ?: error("opleider $key does not exist")
     override fun typeToKey(type: Opleider) = type.code
@@ -48,21 +52,9 @@ class OpleidersList(props: Props) : FilterableList<String, Opleider, OpleidersLi
     private var isExamenlocatieSelected by props.selectedOtherItemKeysDelegate
     private val alleOpleidersData by props.itemsDataDelegate
 
-
-    interface State : FilterableListState
-
-    override fun State.init(props: Props) {
-        // props.setReloadRef { getFilteredItems() }
-        // props.setKeyToTypeRef {  }
-        // props.setTypeToKeyRef { it.code }
-    }
+    override fun OpleidersListState.init(props: OpleidersListProps) {}
 
     private var list: ReactListRef? = null
-
-    private val jobs = hashSetOf<Job>()
-    override fun componentWillUnmount() {
-        jobs.forEach { it.cancel() }
-    }
 
     override fun getFilteredItems(): List<Opleider> {
         val filterTerms = props.filter.split(" ", ", ", ",")
@@ -108,54 +100,6 @@ class OpleidersList(props: Props) : FilterableList<String, Opleider, OpleidersLi
 
         return result
     }
-
-    // private fun refreshOpleiders() {
-    //     CoroutineScope(Dispatchers.Main).launch {
-    //         // println("refreshOpleiders")
-    //         val filterTerms = props.filter.split(" ", ", ", ",")
-    //         val score = hashMapOf<String, Int>()
-    //         (if (isExamenlocatieSelected.isNotEmpty())
-    //             isExamenlocatieSelected.asSequence()
-    //                 .map { Data.examenlocatieToOpleiders[it]!! }
-    //                 .flatten()
-    //                 .map { it to Data.alleOpleiders[it]!! }
-    //                 .toMap()
-    //         else Data.alleOpleiders).forEach { (oplCode, opleider) ->
-    //             filterTerms.forEach {
-    //                 val naam = opleider.naam.contains(it, true)
-    //                 val code = oplCode.contains(it, true)
-    //                 val plaatsnaam = opleider.plaatsnaam.contains(it, true)
-    //                 val postcode = opleider.postcode.contains(it, true)
-    //                 val straatnaam = opleider.straatnaam.contains(it, true)
-    //                 score[oplCode] = (score[oplCode] ?: 0) +
-    //                     naam.toInt() * 3 + code.toInt() + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
-    //             }
-    //         }
-    //
-    //         val filteredOpleiderCodes: List<String>
-    //         filteredItems = score.asSequence()
-    //             .filter { it.value != 0 }
-    //             .sortedByDescending { it.value }
-    //             .sortedByDescending { it.key in isOpleiderSelected }
-    //             .apply { filteredOpleiderCodes = map { it.key }.toList() }
-    //             .map { Data.alleOpleiders[it.key]!! }
-    //             .toList()
-    //
-    //         // deselect all previously selected opleiders that are no longer in filteredOpleiders
-    //         isOpleiderSelected.filter { code ->
-    //             code !in filteredOpleiderCodes
-    //         }.apply {
-    //             forEach { key ->
-    //                 isOpleiderSelected -= key
-    //             }
-    //             if (size > 0) props.onSelectionChanged()
-    //         }
-    //
-    //         list?.scrollTo(0)
-    //     }.let {
-    //         jobs.add(it)
-    //     }
-    // }
 
     private fun toggleSelected(opleider: String?, newState: Boolean? = null) {
         opleider ?: return
@@ -215,7 +159,6 @@ class OpleidersList(props: Props) : FilterableList<String, Opleider, OpleidersLi
                         }
                     }
                 }
-
             }
             Unit
         }
@@ -223,7 +166,7 @@ class OpleidersList(props: Props) : FilterableList<String, Opleider, OpleidersLi
 }
 
 // as for a fun RBuilder.opleiderslist, its ::filterableLists.getOpleidersList wouldn't be an extension function anymore
-val opleidersList: RBuilder.(OpleidersList.Props.() -> Unit) -> ReactElement = { handler ->
+val opleidersList: RBuilder.(OpleidersListProps.() -> Unit) -> ReactElement = { handler ->
     child(OpleidersList::class) {
         attrs(handler)
     }

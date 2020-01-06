@@ -29,47 +29,37 @@ import react.RState
 import react.ref
 import styled.css
 
-abstract class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
-    RComponent<FilterList.Props<Key, Type>, FilterList.State>(props) {
+interface FilterListProps<Key : Any, Type : Any?> : RProps {
+    var filterableListCreationFunction: CreateFilterableList<Key, Type>
+    var liveReload: Boolean
+    var itemsName: String
+    var selectedItemKeysDelegate: VarDelegate<Set<Key>>
+    var selectedOtherItemKeysDelegate: VarDelegate<Set<Key>>
+    var onSelectionChanged: () -> Unit
+    var alwaysAllowSelectAll: Boolean
 
-    interface Props<Key : Any, Type: Any?> : RProps {
-        var filterableListCreationFunction: CreateFilterableList<Key, Type>
-        var liveReload: Boolean
-        var itemsName: String
+    var itemsDataDelegate: ValDelegate<Map<Key, Type>>
+}
 
-        // var setReloadRef: (ReloadItems) -> Unit
-        var selectedItemKeysDelegate: VarDelegate<Set<Key>>
-        var selectedOtherItemKeysDelegate: VarDelegate<Set<Key>>
-        var onSelectionChanged: () -> Unit
-        var alwaysAllowSelectAll: Boolean
+interface FilterListState : RState {
+    var filter: String
+}
 
-        var itemsDataDelegate: ValDelegate<Map<Key, Type>>
-    }
+class FilterList<Key : Any, Type : Any?>(props: FilterListProps<Key, Type>) :
+    RComponent<FilterListProps<Key, Type>, FilterListState>(props) {
 
     private var selectedItemKeys by props.selectedItemKeysDelegate
     private var selectedOtherItemKeys by props.selectedOtherItemKeysDelegate
 
-    interface State : RState {
-        var filter: String
-        // var reload: ReloadItems
-        // var filteredItems: List<Type>
-    }
-
-    override fun State.init(props: Props<Key, Type>) {
+    override fun FilterListState.init(props: FilterListProps<Key, Type>) {
         filter = ""
-        // reload = {}
-        // filteredItems = listOf()
     }
 
     private val filterDelegate = delegateOf(state::filter)
     private var filter by filterDelegate
 
-    // private val filteredItemsDelegate = delegateOf(state::filteredItems)
-    // private var filteredItems by filteredItemsDelegate
-
     private var filterableList: FilterableList<Key, Type, *, *>? = null
     private fun getFilteredItems() = filterableList?.getFilteredItems() ?: listOf()
-
 
     private fun typeToKey(type: Type) = filterableList?.typeToKey(type)
     private fun keyToType(key: Key) = filterableList?.keyToType(key)
@@ -107,24 +97,21 @@ abstract class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
                         onChange = {
                             it.persist()
                             filter = it.targetInputValue
-                            // if (props.liveReload) state.reload()
-
                         }
                     ) {
                         attrs {
                             margin = MInputMargin.dense
-                            onKeyPress = {
-                                when (it.key) {
-                                    "Enter" -> {
-                                        it.preventDefault()
-                                        // state.reload()
-                                    }
-                                }
-                            }
+                            // onKeyPress = {
+                            //     when (it.key) {
+                            //         "Enter" -> {
+                            //             it.preventDefault()
+                            //         }
+                            //     }
+                            // }
                             endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
                                 mIconButton(
                                     iconName = "search",
-                                    onClick = { /*state.reload()*/ },
+                                    // onClick = { /*state.reload()*/ },
                                     edge = MIconEdge.end
                                 )
                             }
@@ -141,9 +128,11 @@ abstract class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
                         dense = true,
                         onClick = { toggleSelectAllVisible() }
                     ) {
-                        mListItemText("(De)selecteer alle${
-                        if (props.alwaysAllowSelectAll && selectedOtherItemKeys.isEmpty() && filter.isBlank()) 
-                            " " else " gefilterde "}${props.itemsName}")
+                        mListItemText(
+                            "(De)selecteer alle${
+                            if (props.alwaysAllowSelectAll && selectedOtherItemKeys.isEmpty() && filter.isBlank())
+                                " " else " gefilterde "}${props.itemsName}"
+                        )
                         val filteredItems = getFilteredItems()
                         mCheckbox(
                             checked = filteredItems
@@ -163,26 +152,12 @@ abstract class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
 
             mGridItem(xs = MGridSize.cells12) {
                 props.filterableListCreationFunction(this) {
-                    // filteredItemsDelegate = this@FilterList.filteredItemsDelegate
                     selectedItemKeysDelegate = props.selectedItemKeysDelegate
                     selectedOtherItemKeysDelegate = props.selectedOtherItemKeysDelegate
 
                     ref<FilterableList<Key, Type, *, *>> {
                         filterableList = it
                     }
-
-                    // setReloadRef = {
-                    //     setState {
-                    //         reload = it
-                    //     }
-                    //     props.setReloadRef(it)
-                    // }
-                    // setKeyToTypeRef = {
-                    //     keyToType = it
-                    // }
-                    // setTypeToKeyRef = {
-                    //     typeToKey = it
-                    // }
 
                     filter = this@FilterList.filter
 
@@ -198,9 +173,9 @@ abstract class FilterList<Key : Any, Type : Any?>(props: Props<Key, Type>) :
 fun <Key : Any, Type : Any?> RBuilder.filterList(
     type: CreateFilterableList<Key, Type>,
     itemsName: String = "items",
-    handler: FilterList.Props<Key, Type>.() -> Unit
+    handler: FilterListProps<Key, Type>.() -> Unit
 ) =
-    child<FilterList.Props<Key, Type>, FilterList<Key, Type>> {
+    child<FilterListProps<Key, Type>, FilterList<Key, Type>> {
         attrs {
             filterableListCreationFunction = type
             liveReload = true

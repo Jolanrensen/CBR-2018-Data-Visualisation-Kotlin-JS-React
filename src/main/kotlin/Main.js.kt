@@ -1,7 +1,6 @@
 
 import react.dom.render
 import kotlin.browser.document
-import kotlin.browser.window
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty0
 
@@ -9,7 +8,7 @@ external fun alert(message: Any?)
 
 fun main() {
     println("Hello Kotlin/JS")
-    window.onload = {
+    // window.onload = {
         val root = document.getElementById("root")
         render(root) {
             app()
@@ -37,7 +36,7 @@ fun main() {
         //             .sumBy { it.aantal }
         //     }
         // }")
-    }
+    // }
 }
 
 fun Boolean.toInt() = if (this) 1 else 0

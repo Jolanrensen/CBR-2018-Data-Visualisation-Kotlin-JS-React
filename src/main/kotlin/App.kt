@@ -4,7 +4,6 @@ import com.ccfraser.muirwik.components.MGridSize
 import com.ccfraser.muirwik.components.MGridSpacing
 import com.ccfraser.muirwik.components.button.MButtonSize
 import com.ccfraser.muirwik.components.button.mButton
-import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
 import com.ccfraser.muirwik.components.mAvatar
@@ -81,39 +80,31 @@ import styled.styledDiv
 import styled.styledP
 import io.data2viz.math.pct as percent
 
-class App(props: Props) : RComponent<App.Props, App.State>(props) {
+interface AppProps : RProps
 
-    interface Props : RProps
+interface AppState : RState {
+    var alleOpleidersData: Map<String, Opleider>
+    var alleExamenlocatiesData: Map<String, Examenlocatie>
 
-    interface State : RState {
-        var alleOpleidersData: Map<String, Opleider>
-        var alleExamenlocatiesData: Map<String, Examenlocatie>
+    var welcomeText: String
+    var circleColor: io.data2viz.color.Color
 
-        var welcomeText: String
-        var circleColor: io.data2viz.color.Color
+    var selectedOpleiderKeys: Set<String>
+    var selectedExamenlocatieKeys: Set<String>
+    var selectedProducts: Set<Product>
+}
 
-        // var refreshOpleiders: ReloadItems
-        var selectedOpleiderKeys: Set<String>
+class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
 
-        // var refreshExamenlocaties: ReloadItems
-        var selectedExamenlocatieKeys: Set<String>
-
-        var selectedProducts: Set<Product>
-        // var refreshProducts: ReloadItems
-    }
-
-    override fun State.init(props: Props) {
+    override fun AppState.init(props: AppProps) {
         alleOpleidersData = mapOf()
         alleExamenlocatiesData = mapOf()
         welcomeText = "Hello world!"
         circleColor = Colors.rgb(255, 0, 0)
 
-        // refreshOpleiders = {}
         selectedOpleiderKeys = setOf()
-        // refreshExamenlocaties = {}
         selectedExamenlocatieKeys = setOf()
         selectedProducts = setOf()
-        // refreshProducts = {}
     }
 
     private val alleOpleidersDataDelegate = delegateOf(state::alleOpleidersData)
@@ -134,17 +125,10 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
     private fun loadData() {
         if (Data.isLoaded) return
         GlobalScope.launch {
-            // TODO
             val (alleOpleiders, alleExamenlocaties) = Data.buildData()
             alleOpleidersData = alleOpleiders
             alleExamenlocatiesData = alleExamenlocaties
-
             println("data loaded!")
-            // state.apply {
-            //     refreshOpleiders()
-            //     refreshExamenlocaties()
-            //     refreshProducts()
-            // }
         }
     }
 
@@ -271,17 +255,6 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
 
                     }
                 }
-
-                mCardActions {
-                    mButton("Load data",
-                        color = MColor.primary,
-                        size = MButtonSize.medium,
-                        onClick = {
-                            Data.buildData()
-                            println("data loaded!")
-                            // state.refreshOpleiders()
-                        })
-                }
             }
         }
 
@@ -292,18 +265,10 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                 xs = MGridSize.cells4
             ) {
                 filterList(opleidersList, "opleiders") {
-                    // setReloadRef = {
-                    //     setState {
-                    //         refreshOpleiders = it
-                    //     }
-                    // }
-                    // liveReload = false
                     itemsDataDelegate = alleOpleidersDataDelegate.toValDelegate()
                     selectedItemKeysDelegate = selectedOpleiderKeysDelegate
                     selectedOtherItemKeysDelegate = selectedExamenlocatieKeysDelegate
-                    onSelectionChanged = {
-                        // state.refreshExamenlocaties()
-                    }
+                    onSelectionChanged = {}
                 }
             }
 
@@ -311,18 +276,10 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                 xs = MGridSize.cells4
             ) {
                 filterList(examenlocatiesList, "examenlocaties") {
-                    // setReloadRef = {
-                    //     setState {
-                    //         refreshExamenlocaties = it
-                    //     }
-                    // }
-                    // liveReload = false
                     itemsDataDelegate = alleExamenlocatiesDataDelegate.toValDelegate()
                     selectedItemKeysDelegate = selectedExamenlocatieKeysDelegate
                     selectedOtherItemKeysDelegate = selectedOpleiderKeysDelegate
-                    onSelectionChanged = {
-                        // state.refreshOpleiders()
-                    }
+                    onSelectionChanged = {}
                 }
             }
 
@@ -330,19 +287,10 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                 xs = MGridSize.cells4
             ) {
                 filterList(categorieProductList, "categorieën/producten") {
-                    // setReloadRef = {
-                    //     setState {
-                    //         refreshProducts = it
-                    //     }
-                    // }
-
                     alwaysAllowSelectAll = true
-                    // liveReload = false
                     selectedItemKeysDelegate = selectedProductsDelegate
                     selectedOtherItemKeysDelegate = delegateOf { setOf<Product>() } // not used
-                    onSelectionChanged = {
-                        // TODO?
-                    }
+                    onSelectionChanged = {}
                 }
             }
 
@@ -358,7 +306,6 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                         overflowX = Overflow.auto
                     }
                     mTable {
-                        //css { minWidth = 700.px }
                         mTableHead {
                             mTableRow {
                                 mTableCell { +EERSTE_EXAMEN_OF_TOETS.title }
@@ -441,7 +388,6 @@ class App(props: Props) : RComponent<App.Props, App.State>(props) {
                         overflowX = Overflow.auto
                     }
                     mTable {
-                        //css { minWidth = 700.px }
                         mTableHead {
                             mTableRow {
                                 mTableCell { +HEREXAMEN_OF_TOETS.title }

@@ -1,4 +1,5 @@
 package data2viz
+
 import io.data2viz.viz.Viz
 import io.data2viz.viz.bindRendererOn
 import io.data2viz.viz.viz
@@ -10,13 +11,14 @@ import react.RState
 import react.dom.canvas
 import react.dom.findDOMNode
 
-class VizComponent(props: Props) : RComponent<VizComponent.Props, VizComponent.State>(props) {
+interface VizComponentState : RState
 
-    interface State : RState
+interface VizComponentProps : RProps {
+    var runOnViz: Viz.() -> Unit
+}
 
-    interface Props : RProps {
-        var runOnViz: Viz.() -> Unit
-    }
+class VizComponent(props: VizComponentProps) :
+    RComponent<VizComponentProps, VizComponentState>(props) {
 
     override fun RBuilder.render() {
         canvas {
