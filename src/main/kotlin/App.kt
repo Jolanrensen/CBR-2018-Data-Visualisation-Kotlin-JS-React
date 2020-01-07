@@ -25,6 +25,7 @@ import io.data2viz.color.Colors
 import io.data2viz.geo.projection.conicEqualAreaProjection
 import io.data2viz.geom.point
 import io.data2viz.math.deg
+import io.data2viz.viz.KPointerClick
 import io.data2viz.viz.TextHAlign
 import io.data2viz.viz.TextVAlign
 import io.data2viz.viz.textAlign
@@ -331,46 +332,28 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
             // js https://github.com/data2viz/data2viz/blob/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-js/src/main/kotlin/EarthJs.kt
             // common https://github.com/data2viz/data2viz/tree/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-common/src/main/kotlin
 
-            // size = size(600, 850)
+            val nederland = Data.geoJson!! // geometry type is polygon/multipolygon for each
+            val rijdingen = hashMapOf<String, ArrayList<Opleider>>()
 
-            // example projections
-            // val allProjections = hashMapOf(
-            //     "albers" to albersProjection(),
-            //     "albersUSA" to albersUSAProjection {
-            //         scale = 500.0
-            //     },
-            //     "azimuthalEqualArea" to azimuthalEqualAreaProjection(),
-            //     "azimuthalEquidistant" to azimuthalEquidistant(),
-            //     "conicConformal" to conicConformalProjection(),
-            //     "conicEqual" to conicEqualAreaProjection(),
-            //     "conicEquidistant" to conicEquidistantProjection(),
-            //     "equalEarth" to equalEarthProjection(),
-            //     "equirectangular" to equirectangularProjection(),
-            //     "gnomonic" to gnomonicProjection(),
-            //     "identity" to identityProjection(),
-            //     "mercator" to mercatorProjection(),
-            //     "naturalEarth" to naturalEarthProjection(),
-            //     "orthographic" to orthographicProjection(),
-            //     "stereographic" to stereographicProjection(),
-            //     "transverseMercator" to transverseMercatorProjection()
-            // )
-            // val allProjectionsNames = allProjections.keys.toList()
+            for (gemeente in nederland.features) {
+                rijdingen[gemeente.properties.statnaam]?.addAll(
+                    alleOpleidersData.values.filter { it.plaatsnaam.toLowerCase() == gemeente.properties.statnaam.toLowerCase() }
+                )
+                // when (it.geometry) {
+                //     is Polygon -> {it.geometry.coordinates}// println("polygon" + it.geometry)
+                //     is MultiPolygon -> {}//println("multipolygon" + it.geometry)
+                // }
+            }
 
-            val nederland = Data.geoJson
-
-            // val projection = allProjections[projectionName]!!
+            println(rijdingen)
 
             val geoPathNode = GeoPathNode().apply {
                 stroke = Colors.Web.black
                 strokeWidth = 1.0
                 fill = Colors.Web.whitesmoke
                 geoProjection = conicEqualAreaProjection {
-                    // Todo this is now focused on the us, focus on nl
                     scale = 15000.0
                     center(6.5.deg, 52.72.deg)
-                    // parallels(29.5.deg, 45.5.deg)
-                    // translate(480.0, 250.0)
-                    // rotate(96.0.deg, 0.0.deg)
                 }
                 geoData = nederland
                 redrawPath()
@@ -378,8 +361,18 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
 
             add(geoPathNode)
 
-            geoPathNode.redrawPath()
+            circle {
+                fill = Colors.rgb(255, 0, 0)
+                radius = 10.0
+                x = 300.0
+                y = 425.0
+            }
 
+            on(KPointerClick) {
+                println("Pointer click:: ${it.pos}")
+            }
+
+            geoPathNode.redrawPath()
         }
 
         // video {
