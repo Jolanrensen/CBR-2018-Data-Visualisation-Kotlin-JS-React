@@ -1,3 +1,4 @@
+
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.MGridAlignContent
 import com.ccfraser.muirwik.components.MGridSize
@@ -16,6 +17,7 @@ import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 import data.Examenlocatie
 import data.Opleider
 import data.Product
+import data.toData2Viz
 import data2viz.GeoPathNode
 import data2viz.vizComponentCard
 import filterableLists.categorieProductList
@@ -122,7 +124,7 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
                 backgroundColor = Color.green
             }
 
-            +(state.welcomeText)
+            +state.welcomeText
 
             attrs.onClickFunction = {
                 setState {
@@ -336,16 +338,17 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
             val rijdingen = hashMapOf<String, ArrayList<Opleider>>()
 
             for (gemeente in nederland.features) {
-                rijdingen[gemeente.properties.statnaam]?.addAll(
-                    alleOpleidersData.values.filter { it.plaatsnaam.toLowerCase() == gemeente.properties.statnaam.toLowerCase() }
-                )
+                // println(gemeente)
+                // rijdingen[gemeente.properties.statnaam]?.addAll(
+                //     alleOpleidersData.values.filter { it.plaatsnaam.toLowerCase() == gemeente.properties.statnaam.toLowerCase() }
+                // )
                 // when (it.geometry) {
                 //     is Polygon -> {it.geometry.coordinates}// println("polygon" + it.geometry)
                 //     is MultiPolygon -> {}//println("multipolygon" + it.geometry)
                 // }
             }
 
-            println(rijdingen)
+            console.log(nederland.features[0])
 
             val geoPathNode = GeoPathNode().apply {
                 stroke = Colors.Web.black
@@ -355,7 +358,7 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
                     scale = 15000.0
                     center(6.5.deg, 52.72.deg)
                 }
-                geoData = nederland
+                geoData = nederland.toData2Viz()
                 redrawPath()
             }
 

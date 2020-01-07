@@ -13,6 +13,8 @@ fun main() {
         render(root) {
             app()
         }
+
+
         // Data.buildData()
         // val opleider = Data.alleOpleiders.values.find {
         //     it.naam.contains("ANWB") && it.plaatsnaam == "BREDA"

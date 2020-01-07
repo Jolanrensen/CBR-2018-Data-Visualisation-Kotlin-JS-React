@@ -63,7 +63,7 @@ class OpleidersList(props: OpleidersListProps) :
             isExamenlocatieSelected.asSequence()
                 .map { Data.examenlocatieToOpleiders[it]!! }
                 .flatten()
-                .map { it to (alleOpleidersData[it] ?: error("opleier $it does not exist")) }
+                .map { it to (alleOpleidersData[it] ?: error("opleider $it does not exist")) }
                 .toMap()
         else alleOpleidersData).forEach { (oplCode, opleider) ->
             filterTerms.forEach {
