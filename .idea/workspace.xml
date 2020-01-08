@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="kaartje doet het weer">
+    <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/gemeente_2018.geojson" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/opleiderresultaten-met-gemeentes.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/gemeente_2020.geojson" beforeDir="false" />
     </list>
     <list id="5faa54e2-a235-48b1-a895-0f9e4f12745d" name="kaartje doet het weer" comment="kaartje doet het weer" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,7 +57,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="backup" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -195,6 +203,7 @@
       <workItem from="1578342236815" duration="7234000" />
       <workItem from="1578399738726" duration="26886000" />
       <workItem from="1578481708979" duration="456000" />
+      <workItem from="1578512459352" duration="5068000" />
     </task>
     <task id="LOCAL-00001" summary="fixed all errors, created two cooperating lists, opleider and examenlocatie">
       <created>1577205156703</created>
@@ -390,29 +399,29 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="672" y="580" width="864" height="510" key="FileChooserDialogImpl/0.25.2880.1595@0.25.2880.1595" timestamp="1577737378049" />
-    <state width="1872" height="201" key="GridCell.Tab.0.bottom" timestamp="1578432922814">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state width="1392" height="333" key="GridCell.Tab.0.bottom" timestamp="1578513587597">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1835" height="334" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1578349481039" />
-    <state width="3139" height="471" key="GridCell.Tab.0.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1578318236569" />
+    <state width="1392" height="333" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1578513587597" />
+    <state width="2809" height="469" key="GridCell.Tab.0.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1578482568746" />
     <state width="1872" height="201" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578432922814" />
-    <state width="1872" height="201" key="GridCell.Tab.0.center" timestamp="1578432922814">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state width="1392" height="333" key="GridCell.Tab.0.center" timestamp="1578513587596">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1835" height="334" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1578349481039" />
-    <state width="3139" height="471" key="GridCell.Tab.0.center/0.50.4320.2380@0.50.4320.2380" timestamp="1578318236569" />
+    <state width="1392" height="333" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1578513587596" />
+    <state width="2809" height="469" key="GridCell.Tab.0.center/0.50.4320.2380@0.50.4320.2380" timestamp="1578482568746" />
     <state width="1872" height="201" key="GridCell.Tab.0.center/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578432922814" />
-    <state width="1872" height="201" key="GridCell.Tab.0.left" timestamp="1578432922814">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state width="1392" height="333" key="GridCell.Tab.0.left" timestamp="1578513587596">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1835" height="334" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1578349481038" />
-    <state width="3139" height="471" key="GridCell.Tab.0.left/0.50.4320.2380@0.50.4320.2380" timestamp="1578318236568" />
+    <state width="1392" height="333" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1578513587596" />
+    <state width="2809" height="469" key="GridCell.Tab.0.left/0.50.4320.2380@0.50.4320.2380" timestamp="1578482568746" />
     <state width="1872" height="201" key="GridCell.Tab.0.left/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578432922814" />
-    <state width="1872" height="201" key="GridCell.Tab.0.right" timestamp="1578432922814">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state width="1392" height="333" key="GridCell.Tab.0.right" timestamp="1578513587597">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1835" height="334" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1578349481039" />
-    <state width="3139" height="471" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1578318236569" />
+    <state width="1392" height="333" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1578513587597" />
+    <state width="2809" height="469" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1578482568746" />
     <state width="1872" height="201" key="GridCell.Tab.0.right/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578432922814" />
     <state x="566" y="167" width="2304" height="1302" key="MergeDialog" timestamp="1578155912421">
       <screen x="0" y="25" width="2880" height="1595" />

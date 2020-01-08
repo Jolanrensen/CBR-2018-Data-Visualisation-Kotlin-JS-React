@@ -34,7 +34,8 @@ object Data {
         get() {
             if (field != null) return field
             val xmlhttp = XMLHttpRequest()
-            xmlhttp.open("GET", "gemeente_2020.geojson", false)
+            // data from https://cartomap.github.io/nl/
+            xmlhttp.open("GET", "gemeente_2018.geojson", false)
 
             xmlhttp.send()
             val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
@@ -46,7 +47,8 @@ object Data {
     private val csv: List<List<String>>?
         get() {
             val xmlhttp = XMLHttpRequest()
-            xmlhttp.open("GET", "opleiderresultaten-01072017-tm-30062018.csv", false)
+            // data from overheid cbr, gemeentes toegevoegd met https://www.cbs.nl/nl-nl/maatwerk/2018/36/buurt-wijk-en-gemeente-2018-voor-postcode-huisnummer
+            xmlhttp.open("GET", "opleiderresultaten-met-gemeentes.csv", false)
 
             xmlhttp.send()
             val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
@@ -164,56 +166,63 @@ object Data {
         csv?.let {
             val data = it.drop(1)
             for (line in data) {
-                val opleider = alleOpleiders.getOrPut(line[0]) {
-                    Opleider(
-                        code = line[0],
-                        naam = line[1],
-                        startdatum = line[2].split('-').let {
-                            Date(
-                                day = it[0].toInt(),
-                                month = it[1].toInt(),
-                                year = it[2].toInt(),
-                                hour = 0,
-                                minute = 0,
-                                second = 0,
-                                millisecond = 0
-                            )
-                        },
-                        einddatum = line[3].split('-').let {
-                            Date(
-                                day = it[0].toInt(),
-                                month = it[1].toInt(),
-                                year = it[2].toInt(),
-                                hour = 0,
-                                minute = 0,
-                                second = 0,
-                                millisecond = 0
-                            )
-                        },
-                        straatnaam = line[4],
-                        huisnummer = line[5],
-                        huisnummerToevoeging = line[6],
-                        postcode = line[7],
-                        plaatsnaam = line[8]
-                    )
-                }
+                try {
+                    val opleider = alleOpleiders.getOrPut(line[0]) {
+                        Opleider(
+                            code = line[0],
+                            naam = line[1],
+                            startdatum = line[2].split('-').let {
+                                Date(
+                                    day = it[0].toInt(),
+                                    month = it[1].toInt(),
+                                    year = it[2].toInt(),
+                                    hour = 0,
+                                    minute = 0,
+                                    second = 0,
+                                    millisecond = 0
+                                )
+                            },
+                            einddatum = line[3].split('-').let {
+                                Date(
+                                    day = it[0].toInt(),
+                                    month = it[1].toInt(),
+                                    year = it[2].toInt(),
+                                    hour = 0,
+                                    minute = 0,
+                                    second = 0,
+                                    millisecond = 0
+                                )
+                            },
+                            straatnaam = line[4],
+                            huisnummer = line[5],
+                            huisnummerToevoeging = line[6],
+                            postcode = line[7],
+                            plaatsnaam = line[8],
+                            gemeente = line[37]
+                        )
+                    }
 
-                val examenlocatie = alleExamenlocaties.getOrPut(line[13]) {
-                    Examenlocatie(
-                        naam = line[13],
-                        straatnaam = line[14],
-                        huisnummer = line[15],
-                        huisnummerToevoeging = line[16],
-                        postcode = line[17],
-                        plaatsnaam = line[18]
-                    )
-                }
+                    val examenlocatie = alleExamenlocaties.getOrPut(line[13]) {
+                        Examenlocatie(
+                            naam = line[13],
+                            straatnaam = line[14],
+                            huisnummer = line[15],
+                            huisnummerToevoeging = line[16],
+                            postcode = line[17],
+                            plaatsnaam = line[18],
+                            gemeente = line[38]
+                        )
+                    }
 
-                opleiderToExamenlocaties.apply {
-                    get(opleider.code)?.add(examenlocatie.naam) ?: set(opleider.code, hashSetOf(examenlocatie.naam))
-                }
-                examenlocatieToOpleiders.apply {
-                    get(examenlocatie.naam)?.add(opleider.code) ?: set(examenlocatie.naam, hashSetOf(opleider.code))
+
+                    opleiderToExamenlocaties.apply {
+                        get(opleider.code)?.add(examenlocatie.naam) ?: set(opleider.code, hashSetOf(examenlocatie.naam))
+                    }
+                    examenlocatieToOpleiders.apply {
+                        get(examenlocatie.naam)?.add(opleider.code) ?: set(examenlocatie.naam, hashSetOf(opleider.code))
+                    }
+                } catch (e: Exception) {
+                    // console.error(line, e)
                 }
             }
         } ?: throw IllegalArgumentException("Couldn't read data")

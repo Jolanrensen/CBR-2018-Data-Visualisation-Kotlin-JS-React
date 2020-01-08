@@ -1,4 +1,3 @@
-
 import data.Data
 import data.Opleider
 import data.toData2Viz
@@ -39,23 +38,34 @@ class NederlandVizMap(props: NederlandMapProps) : RPureComponent<NederlandMapPro
                         *props.alleOpleidersData
                             .values
                             .filter { opleider ->
-                                opleider.plaatsnaam.contains(
+                                opleider.gemeente.contains(
                                     gemeente.properties.statnaam,
                                     true
-                                )
+                                ) ||
+                                    gemeente.properties.statnaam.contains(
+                                        opleider.gemeente,
+                                        true
+                                    )
                             }.toTypedArray()
                     )
                 }.toTypedArray()
             )
 
-            val opleiders = rijdingen.values.flatten()
-            println(props.alleOpleidersData.values.filter { it !in opleiders }.map { it.plaatsnaam })
+            // println(rijdingen.map { it.key.properties.statnaam })
+
+            // val opleiders = rijdingen.values.flatten()
+            // println(props.alleOpleidersData.values.filter { it !in opleiders }.map { it.gemeente }.toSet())
+
+            val maxNoOpleiders = rijdingen.values.map { it.size }.max()!!.toDouble()
 
             for ((feature, opleiders) in rijdingen) {
                 GeoPathNode().apply {
                     stroke = Colors.Web.black
                     strokeWidth = 1.0
-                    fill = if (opleiders.isEmpty()) Colors.Web.white else Colors.Web.blue
+                    fill = Colors.Web.black
+                        .withGreen((opleiders.size.toDouble() / maxNoOpleiders * 255.0).toInt())
+                        .withRed((255.0 / (opleiders.size.toDouble() / maxNoOpleiders * 255.0)).toInt())
+
                     geoProjection = conicEqualAreaProjection {
                         scale = 15000.0
                         center(6.5.deg, 52.72.deg)
@@ -66,52 +76,17 @@ class NederlandVizMap(props: NederlandMapProps) : RPureComponent<NederlandMapPro
                 }
             }
 
-            // val geoPathNode = GeoPathNode().apply {
-            //     stroke = Colors.Web.black
-            //     strokeWidth = 1.0
-            //     fill = Colors.Web.whitesmoke
-            //     geoProjection = conicEqualAreaProjection {
-            //         scale = 15000.0
-            //         center(6.5.deg, 52.72.deg)
-            //     }
-            //     geoData = nederland.toData2Viz()
-            //     redrawPath()
+            // circle {
+            //     fill = Colors.rgb(255, 0, 0)
+            //     radius = 10.0
+            //     x = 300.0
+            //     y = 425.0
             // }
-            //
-            // add(geoPathNode)
-            //
-            // val bredaNode = GeoPathNode().apply {
-            //     stroke = Colors.Web.black
-            //     strokeWidth = 1.0
-            //     fill = state.circleColor
-            //     geoProjection = conicEqualAreaProjection {
-            //         scale = 15000.0
-            //         center(6.5.deg, 52.72.deg)
-            //     }
-            //     val breda = FeatureCollection(
-            //         nederland.features.filter { it.properties.statnaam.contains("breda", true) }
-            //             .map { it.toData2Viz() }
-            //             .toTypedArray()
-            //     )
-            //     geoData = breda
-            //     redrawPath()
-            // }
-            //
-            // add(bredaNode)
-
-            circle {
-                fill = Colors.rgb(255, 0, 0)
-                radius = 10.0
-                x = 300.0
-                y = 425.0
-            }
 
             // on(KPointerClick) {
             //     println("Pointer click:: ${it.pos}")
             // }
 
-            // geoPathNode.redrawPath()
-            // bredaNode.redrawPath()
         }
     }
 }

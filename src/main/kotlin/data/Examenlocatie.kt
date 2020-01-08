@@ -6,5 +6,6 @@ data class Examenlocatie(
     val huisnummer: String,
     val huisnummerToevoeging: String = "",
     val postcode: String,
-    val plaatsnaam: String
+    val plaatsnaam: String,
+    val gemeente: String
 )

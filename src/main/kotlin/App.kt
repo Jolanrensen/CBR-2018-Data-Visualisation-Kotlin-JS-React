@@ -1,4 +1,3 @@
-
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.MGridAlignContent
 import com.ccfraser.muirwik.components.MGridSize
@@ -137,7 +136,6 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
                 }
             })
 
-
         // vizComponentCard(
         //     width = 800.0,
         //     height = 250.0,
@@ -181,7 +179,6 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
         //         }
         //     }
         // }
-
 
         div {
             attrs {
@@ -318,9 +315,6 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
                 }
             }
         }
-
-
-
 
         // video {
         //     attrs {
