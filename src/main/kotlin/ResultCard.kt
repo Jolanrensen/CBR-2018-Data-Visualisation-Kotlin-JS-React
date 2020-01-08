@@ -1,3 +1,4 @@
+
 import com.ccfraser.muirwik.components.spacingUnits
 import com.ccfraser.muirwik.components.table.MTableCellAlign
 import com.ccfraser.muirwik.components.table.mTable
@@ -15,8 +16,8 @@ import kotlinx.css.marginTop
 import kotlinx.css.overflowX
 import kotlinx.css.pct
 import kotlinx.css.width
+import libs.RPureComponent
 import react.RBuilder
-import react.RComponent
 import react.RProps
 import react.RState
 import styled.css
@@ -30,7 +31,7 @@ interface ResultCardProps : RProps {
 
 interface ResultCardState : RState
 
-class ResultCard(props: ResultCardProps) : RComponent<ResultCardProps, ResultCardState>(props) {
+class ResultCard(props: ResultCardProps) : RPureComponent<ResultCardProps, ResultCardState>(props) {
 
     override fun RBuilder.render() {
         hoveringCard {

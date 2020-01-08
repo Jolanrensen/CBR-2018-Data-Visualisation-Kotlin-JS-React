@@ -17,20 +17,10 @@ import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 import data.Examenlocatie
 import data.Opleider
 import data.Product
-import data.toData2Viz
-import data2viz.GeoPathNode
-import data2viz.vizComponentCard
 import filterableLists.categorieProductList
 import filterableLists.examenlocatiesList
 import filterableLists.opleidersList
 import io.data2viz.color.Colors
-import io.data2viz.geo.projection.conicEqualAreaProjection
-import io.data2viz.geom.point
-import io.data2viz.math.deg
-import io.data2viz.viz.KPointerClick
-import io.data2viz.viz.TextHAlign
-import io.data2viz.viz.TextVAlign
-import io.data2viz.viz.textAlign
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.css.Color
@@ -50,7 +40,6 @@ import react.setState
 import styled.css
 import styled.styledDiv
 import styled.styledP
-import io.data2viz.math.pct as percent
 
 interface AppProps : RProps
 
@@ -110,14 +99,6 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
             selectedProducts.isNotEmpty()
 
     override fun RBuilder.render() {
-        val currentResults = if (!selectionFinished())
-            sequenceOf()
-        else
-            Data.getResults(
-                selectedOpleiderKeys,
-                selectedExamenlocatieKeys
-            ).asSequence()
-
         styledDiv {
             css {
                 padding(vertical = 16.px)
@@ -157,48 +138,49 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
             })
 
 
-        vizComponentCard(
-            width = 800.0,
-            height = 250.0,
-            runOnCard = {
-                mCardHeader(
-                    title = "Mooie grafiek",
-                    subHeader = "Nou kweenie hoor",
-                    avatar = mAvatar(addAsChild = false) {
-                        +"gg"
-                    }
-                )
-            }
-        ) {
-            (0 until 360 step 30).forEach {
-                val angle = it.deg
-                val position = point(250 + angle.cos * 100, 125 + angle.sin * 100)
-                val color = state.circleColor
-
-                circle {
-                    // draw a circle with "pure-color"
-                    fill = color
-                    radius = 25.0
-                    x = position.x
-                    y = position.y
-                }
-                circle {
-                    // draw a circle with the desaturated color
-                    fill = color.desaturate(10.0)
-                    radius = 25.0
-                    x = position.x + 270
-                    y = position.y
-                }
-                text {
-                    // indicate the perceived lightness of the color
-                    x = position.x
-                    y = position.y
-                    textColor = if (color.luminance() > 50.percent) Colors.Web.black else Colors.Web.white
-                    textContent = "${(color.luminance().value * 100).toInt()}%"
-                    textAlign = textAlign(TextHAlign.MIDDLE, TextVAlign.MIDDLE)
-                }
-            }
-        }
+        // vizComponentCard(
+        //     width = 800.0,
+        //     height = 250.0,
+        //     runOnCard = {
+        //         mCardHeader(
+        //             title = "Mooie grafiek",
+        //             subHeader = "Nou kweenie hoor",
+        //             avatar = mAvatar(addAsChild = false) {
+        //                 +"gg"
+        //             }
+        //         )
+        //     }
+        // ) {
+        //     println("reloading bolletjes")
+        //     (0 until 360 step 30).forEach {
+        //         val angle = it.deg
+        //         val position = point(250 + angle.cos * 100, 125 + angle.sin * 100)
+        //         val color = state.circleColor
+        //
+        //         circle {
+        //             // draw a circle with "pure-color"
+        //             fill = color
+        //             radius = 25.0
+        //             x = position.x
+        //             y = position.y
+        //         }
+        //         circle {
+        //             // draw a circle with the desaturated color
+        //             fill = color.desaturate(10.0)
+        //             radius = 25.0
+        //             x = position.x + 270
+        //             y = position.y
+        //         }
+        //         text {
+        //             // indicate the perceived lightness of the color
+        //             x = position.x
+        //             y = position.y
+        //             textColor = if (color.luminance() > 50.percent) Colors.Web.black else Colors.Web.white
+        //             textContent = "${(color.luminance().value * 100).toInt()}%"
+        //             textAlign = textAlign(TextHAlign.MIDDLE, TextVAlign.MIDDLE)
+        //         }
+        //     }
+        // }
 
 
         div {
@@ -286,6 +268,13 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
                     spacing = MGridSpacing.spacing3,
                     alignContent = MGridAlignContent.center
                 ) {
+                    val currentResults = if (!selectionFinished())
+                        sequenceOf()
+                    else
+                        Data.getResults(
+                            selectedOpleiderKeys,
+                            selectedExamenlocatieKeys
+                        ).asSequence()
                     mGridItem(
                         xs = MGridSize.cells12,
                         md = MGridSize.cells6,
@@ -315,68 +304,23 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
                     }
                 }
             }
-        }
 
-
-        vizComponentCard(
-            width = 600.0,
-            height = 850.0,
-            runOnCard = {
-                mCardHeader(
-                    title = "Kaartje",
-                    subHeader = "Nou kweenie hoor",
-                    avatar = mAvatar(addAsChild = false) {
-                        +"K"
+            mGridItem(xs = MGridSize.cells12) {
+                hoveringCard {
+                    mCardContent {
+                        nederlandMap {
+                            attrs {
+                                alleOpleidersData = this@App.alleOpleidersData
+                                color = state.circleColor
+                            }
+                        }
                     }
-                )
-            }
-        ) {
-            // js https://github.com/data2viz/data2viz/blob/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-js/src/main/kotlin/EarthJs.kt
-            // common https://github.com/data2viz/data2viz/tree/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-common/src/main/kotlin
-
-            val nederland = Data.geoJson!! // geometry type is polygon/multipolygon for each
-            val rijdingen = hashMapOf<String, ArrayList<Opleider>>()
-
-            for (gemeente in nederland.features) {
-                // println(gemeente)
-                // rijdingen[gemeente.properties.statnaam]?.addAll(
-                //     alleOpleidersData.values.filter { it.plaatsnaam.toLowerCase() == gemeente.properties.statnaam.toLowerCase() }
-                // )
-                // when (it.geometry) {
-                //     is Polygon -> {it.geometry.coordinates}// println("polygon" + it.geometry)
-                //     is MultiPolygon -> {}//println("multipolygon" + it.geometry)
-                // }
-            }
-
-            console.log(nederland.features[0])
-
-            val geoPathNode = GeoPathNode().apply {
-                stroke = Colors.Web.black
-                strokeWidth = 1.0
-                fill = Colors.Web.whitesmoke
-                geoProjection = conicEqualAreaProjection {
-                    scale = 15000.0
-                    center(6.5.deg, 52.72.deg)
                 }
-                geoData = nederland.toData2Viz()
-                redrawPath()
             }
-
-            add(geoPathNode)
-
-            circle {
-                fill = Colors.rgb(255, 0, 0)
-                radius = 10.0
-                x = 300.0
-                y = 425.0
-            }
-
-            on(KPointerClick) {
-                println("Pointer click:: ${it.pos}")
-            }
-
-            geoPathNode.redrawPath()
         }
+
+
+
 
         // video {
         //     attrs {

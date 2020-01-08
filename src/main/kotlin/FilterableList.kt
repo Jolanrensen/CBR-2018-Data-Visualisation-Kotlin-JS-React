@@ -1,6 +1,6 @@
 
+import libs.RPureComponent
 import react.RBuilder
-import react.RComponent
 import react.RProps
 import react.RState
 import react.ReactElement
@@ -25,7 +25,7 @@ interface FilterableListProps<Key: Any, Type: Any?> : RProps {
 interface FilterableListState : RState
 
 abstract class FilterableList<Key: Any, Type: Any?, Props : FilterableListProps<Key, Type>, State : FilterableListState>(props: Props) :
-    RComponent<Props, State>(props) {
+    RPureComponent<Props, State>(props) {
 
     abstract fun getFilteredItems(): List<Type>
     abstract fun keyToType(key: Key): Type
