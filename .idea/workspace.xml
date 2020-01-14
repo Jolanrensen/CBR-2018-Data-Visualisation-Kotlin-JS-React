@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/gemeente_2018.geojson" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/opleiderresultaten-met-gemeentes.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/gemeente_2020.geojson" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data2viz/GeoPathNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data2viz/GeoPathNode.kt" afterDir="false" />
     </list>
     <list id="5faa54e2-a235-48b1-a895-0f9e4f12745d" name="kaartje doet het weer" comment="kaartje doet het weer" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +56,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="MERGE" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="KonanWorkspace" KOTLIN_NATIVE_HOME="$USER_HOME$/.konan/kotlin-native-linux-1.3.61">
     <executables />
@@ -93,7 +88,7 @@
     <property name="project.structure.proportion" value="0.11976045" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Kotlin" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -204,6 +199,9 @@
       <workItem from="1578399738726" duration="26886000" />
       <workItem from="1578481708979" duration="456000" />
       <workItem from="1578512459352" duration="5068000" />
+      <workItem from="1578948813188" duration="770000" />
+      <workItem from="1578949967079" duration="7526000" />
+      <workItem from="1579029986424" duration="5812000" />
     </task>
     <task id="LOCAL-00001" summary="fixed all errors, created two cooperating lists, opleider and examenlocatie">
       <created>1577205156703</created>
@@ -380,6 +378,10 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1557" y="545" width="549" height="626" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577737570767" />
+    <state x="1494" y="549" width="691" height="543" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1578948866538">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="1494" y="549" width="691" height="543" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1578948866538" />
     <state x="3319" y="25" width="1035" height="1055" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1578409402889">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
@@ -389,38 +391,38 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="701" y="409" width="524" height="480" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577737783004" />
-    <state x="3313" y="163" width="1477" height="829" key="CommitChangelistDialog2" timestamp="1578410172605">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state x="1019" y="266" width="1477" height="829" key="CommitChangelistDialog2" timestamp="1578517555311">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1578344757824" />
+    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1578517555311" />
     <state x="1529" y="374" key="CommitChangelistDialog2/0.50.4320.2380@0.50.4320.2380" timestamp="1578318210878" />
     <state x="3313" y="163" width="1477" height="829" key="CommitChangelistDialog2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578410172605" />
     <state x="672" y="580" width="864" height="510" key="FileChooserDialogImpl" timestamp="1577737378049">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="672" y="580" width="864" height="510" key="FileChooserDialogImpl/0.25.2880.1595@0.25.2880.1595" timestamp="1577737378049" />
-    <state width="1392" height="333" key="GridCell.Tab.0.bottom" timestamp="1578513587597">
+    <state width="1930" height="333" key="GridCell.Tab.0.bottom" timestamp="1579035299202">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1392" height="333" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1578513587597" />
+    <state width="1930" height="333" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1579035299202" />
     <state width="2809" height="469" key="GridCell.Tab.0.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1578482568746" />
     <state width="1872" height="201" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578432922814" />
-    <state width="1392" height="333" key="GridCell.Tab.0.center" timestamp="1578513587596">
+    <state width="1930" height="333" key="GridCell.Tab.0.center" timestamp="1579035299202">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1392" height="333" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1578513587596" />
+    <state width="1930" height="333" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1579035299202" />
     <state width="2809" height="469" key="GridCell.Tab.0.center/0.50.4320.2380@0.50.4320.2380" timestamp="1578482568746" />
     <state width="1872" height="201" key="GridCell.Tab.0.center/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578432922814" />
-    <state width="1392" height="333" key="GridCell.Tab.0.left" timestamp="1578513587596">
+    <state width="1930" height="333" key="GridCell.Tab.0.left" timestamp="1579035299201">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1392" height="333" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1578513587596" />
+    <state width="1930" height="333" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1579035299201" />
     <state width="2809" height="469" key="GridCell.Tab.0.left/0.50.4320.2380@0.50.4320.2380" timestamp="1578482568746" />
     <state width="1872" height="201" key="GridCell.Tab.0.left/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578432922814" />
-    <state width="1392" height="333" key="GridCell.Tab.0.right" timestamp="1578513587597">
+    <state width="1930" height="333" key="GridCell.Tab.0.right" timestamp="1579035299202">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1392" height="333" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1578513587597" />
+    <state width="1930" height="333" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1579035299202" />
     <state width="2809" height="469" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1578482568746" />
     <state width="1872" height="201" key="GridCell.Tab.0.right/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578432922814" />
     <state x="566" y="167" width="2304" height="1302" key="MergeDialog" timestamp="1578155912421">
@@ -432,14 +434,14 @@
     </state>
     <state x="1729" y="539" width="597" height="562" key="MultipleFileMergeDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1578155915788" />
     <state x="2594" y="709" width="1194" height="1160" key="MultipleFileMergeDialog/0.50.4320.2380@0.50.4320.2380" timestamp="1578481894044" />
-    <state x="1420" y="457" width="1363" height="730" key="SettingsEditor" timestamp="1577627588255">
+    <state x="980" y="191" width="1557" height="1076" key="SettingsEditor" timestamp="1579030579526">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1420" y="457" width="1363" height="730" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1577627588255" />
-    <state x="3175" y="361" width="677" height="355" key="Vcs.Push.Dialog.v2" timestamp="1578410174602">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state x="980" y="191" width="1557" height="1076" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1579030579526" />
+    <state x="443" y="558" width="677" height="355" key="Vcs.Push.Dialog.v2" timestamp="1578517558118">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1578344469310" />
+    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1578517558118" />
     <state x="665" y="809" key="Vcs.Push.Dialog.v2/0.50.4320.2380@0.50.4320.2380" timestamp="1578318219351" />
     <state x="3175" y="361" width="677" height="355" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578410174602" />
     <state x="893" y="872" width="788" height="227" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1577737781632">
@@ -450,10 +452,10 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="413" y="435" width="851" height="522" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577205108611" />
-    <state x="4055" y="485" width="538" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1578410194343">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state x="1763" y="742" width="528" height="156" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1578951741330">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1763" y="742" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.2880.1595@0.25.2880.1595" timestamp="1578155789046" />
+    <state x="1763" y="742" width="528" height="156" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.2880.1595@0.25.2880.1595" timestamp="1578951741330" />
     <state x="4055" y="485" width="538" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578410194343" />
     <state x="1762" y="814" width="2203" height="660" key="git4idea.ui.GitUnstashDialog" timestamp="1578481894092">
       <screen x="0" y="50" width="4320" height="2380" />

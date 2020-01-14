@@ -1,3 +1,4 @@
+
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.MGridAlignContent
 import com.ccfraser.muirwik.components.MGridSize
@@ -52,6 +53,8 @@ interface AppState : RState {
     var selectedOpleiderKeys: Set<String>
     var selectedExamenlocatieKeys: Set<String>
     var selectedProducts: Set<Product>
+
+    var selectedGemeenteNaam: String
 }
 
 class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
@@ -65,6 +68,8 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
         selectedOpleiderKeys = setOf()
         selectedExamenlocatieKeys = setOf()
         selectedProducts = setOf()
+
+        selectedGemeenteNaam = "-"
     }
 
     private val alleOpleidersDataDelegate = delegateOf(state::alleOpleidersData)
@@ -305,10 +310,17 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
             mGridItem(xs = MGridSize.cells12) {
                 hoveringCard {
                     mCardContent {
+                        +state.selectedGemeenteNaam
                         nederlandMap {
                             attrs {
                                 alleOpleidersData = this@App.alleOpleidersData
                                 color = state.circleColor
+
+                                selectedGemeenteNaam = {
+                                    setState {
+                                        selectedGemeenteNaam = it ?: "-"
+                                    }
+                                }
                             }
                         }
                     }
