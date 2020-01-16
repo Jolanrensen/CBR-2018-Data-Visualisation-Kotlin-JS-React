@@ -33,30 +33,29 @@ interface FilterListProps<Key : Any, Type : Any?> : RProps {
     var filterableListCreationFunction: CreateFilterableList<Key, Type>
     var liveReload: Boolean
     var itemsName: String
-    var selectedItemKeysDelegate: VarDelegate<Set<Key>>
-    var selectedOtherItemKeysDelegate: VarDelegate<Set<Key>>
+    var selectedItemKeysDelegate: StateDelegate<Set<Key>>
+    var selectedOtherItemKeysDelegate: StateDelegate<Set<Key>>
     var onSelectionChanged: () -> Unit
     var alwaysAllowSelectAll: Boolean
 
-    var itemsDataDelegate: ValDelegate<Map<Key, Type>>
+    var itemsData: Map<Key, Type>
 }
 
 interface FilterListState : RState {
     var filter: String
 }
 
-class FilterList<Key : Any, Type : Any?>(props: FilterListProps<Key, Type>) :
-    RComponent<FilterListProps<Key, Type>, FilterListState>(props) {
+class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
+    RComponent<FilterListProps<Key, Type>, FilterListState>(prps) {
 
-    private var selectedItemKeys by props.selectedItemKeysDelegate
-    private var selectedOtherItemKeys by props.selectedOtherItemKeysDelegate
+    private var selectedItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedItemKeysDelegate)
+    private var selectedOtherItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedOtherItemKeysDelegate)
 
     override fun FilterListState.init(props: FilterListProps<Key, Type>) {
         filter = ""
     }
 
-    private val filterDelegate = delegateOf(state::filter)
-    private var filter by filterDelegate
+    private var filter by stateDelegateOf(FilterListState::filter)
 
     private var filterableList: FilterableList<Key, Type, *, *>? = null
     private fun getFilteredItems() = filterableList?.getFilteredItems() ?: listOf()
@@ -162,7 +161,7 @@ class FilterList<Key : Any, Type : Any?>(props: FilterListProps<Key, Type>) :
                     filter = this@FilterList.filter
 
                     onSelectionChanged = props.onSelectionChanged
-                    itemsDataDelegate = props.itemsDataDelegate
+                    itemsData = props.itemsData
 
                 }
             }

@@ -31,7 +31,7 @@ interface ResultCardProps : RProps {
 
 interface ResultCardState : RState
 
-class ResultCard(props: ResultCardProps) : RPureComponent<ResultCardProps, ResultCardState>(props) {
+class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, ResultCardState>(prps) {
 
     override fun RBuilder.render() {
         hoveringCard {

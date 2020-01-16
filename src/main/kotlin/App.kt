@@ -54,10 +54,10 @@ interface AppState : RState {
     var selectedExamenlocatieKeys: Set<String>
     var selectedProducts: Set<Product>
 
-    var selectedGemeenteNaam: String
+    var selectedGemeentenaam: String
 }
 
-class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
+class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
     override fun AppState.init(props: AppProps) {
         alleOpleidersData = mapOf()
@@ -69,23 +69,18 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
         selectedExamenlocatieKeys = setOf()
         selectedProducts = setOf()
 
-        selectedGemeenteNaam = "-"
+        selectedGemeentenaam = "-"
     }
 
-    private val alleOpleidersDataDelegate = delegateOf(state::alleOpleidersData)
-    private var alleOpleidersData by alleOpleidersDataDelegate
+    private var alleOpleidersData by stateDelegateOf(AppState::alleOpleidersData)
+    private var alleExamenlocatiesData by stateDelegateOf(AppState::alleExamenlocatiesData)
+    private var selectedOpleiderKeys by stateDelegateOf(AppState::selectedOpleiderKeys)
 
-    private val alleExamenlocatiesDataDelegate = delegateOf(state::alleExamenlocatiesData)
-    private var alleExamenlocatiesData by alleExamenlocatiesDataDelegate
+    private var selectedExamenlocatieKeys by stateDelegateOf(AppState::selectedExamenlocatieKeys)
 
-    private val selectedOpleiderKeysDelegate = delegateOf(state::selectedOpleiderKeys)
-    private var selectedOpleiderKeys by selectedOpleiderKeysDelegate
+    private var selectedProducts by stateDelegateOf(AppState::selectedProducts)
 
-    private val selectedExamenlocatieKeysDelegate = delegateOf(state::selectedExamenlocatieKeys)
-    private var selectedExamenlocatieKeys by selectedExamenlocatieKeysDelegate
-
-    private var selectedProductsDelegate = delegateOf(state::selectedProducts)
-    private var selectedProducts by selectedProductsDelegate
+    private var selectedGemeentenaam by stateDelegateOf(AppState::selectedGemeentenaam)
 
     private fun loadData() {
         if (Data.isLoaded) return
@@ -225,9 +220,9 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
                 xl = MGridSize.cells2
             ) {
                 filterList(opleidersList, "opleiders") {
-                    itemsDataDelegate = alleOpleidersDataDelegate.toValDelegate()
-                    selectedItemKeysDelegate = selectedOpleiderKeysDelegate
-                    selectedOtherItemKeysDelegate = selectedExamenlocatieKeysDelegate
+                    itemsData = alleOpleidersData
+                    selectedItemKeysDelegate = stateDelegateOf(AppState::selectedOpleiderKeys)
+                    selectedOtherItemKeysDelegate = stateDelegateOf(AppState::selectedExamenlocatieKeys)
                     onSelectionChanged = {}
                 }
             }
@@ -239,9 +234,9 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
                 xl = MGridSize.cells2
             ) {
                 filterList(examenlocatiesList, "examenlocaties") {
-                    itemsDataDelegate = alleExamenlocatiesDataDelegate.toValDelegate()
-                    selectedItemKeysDelegate = selectedExamenlocatieKeysDelegate
-                    selectedOtherItemKeysDelegate = selectedOpleiderKeysDelegate
+                    itemsData = alleExamenlocatiesData
+                    selectedItemKeysDelegate = stateDelegateOf(AppState::selectedExamenlocatieKeys)
+                    selectedOtherItemKeysDelegate = stateDelegateOf(AppState::selectedOpleiderKeys)
                     onSelectionChanged = {}
                 }
             }
@@ -254,8 +249,8 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
             ) {
                 filterList(categorieProductList, "categorieën/producten") {
                     alwaysAllowSelectAll = true
-                    selectedItemKeysDelegate = selectedProductsDelegate
-                    selectedOtherItemKeysDelegate = delegateOf { setOf<Product>() } // not used
+                    selectedItemKeysDelegate = stateDelegateOf(AppState::selectedProducts)
+                    selectedOtherItemKeysDelegate = stateDelegateOf(setOf()) // not used
                     onSelectionChanged = {}
                 }
             }
@@ -310,17 +305,24 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
             mGridItem(xs = MGridSize.cells12) {
                 hoveringCard {
                     mCardContent {
-                        +state.selectedGemeenteNaam
+                        +selectedGemeentenaam
                         nederlandMap {
                             attrs {
                                 alleOpleidersData = this@App.alleOpleidersData
-                                color = state.circleColor
 
-                                selectedGemeenteNaam = {
-                                    setState {
-                                        selectedGemeenteNaam = it ?: "-"
-                                    }
-                                }
+                                // this combi works
+                                // sele = state.selectedGemeentenaam
+                                // setSele = { setState { selectedGemeentenaam = it } }
+
+                                // does not work at all
+                                // sele = stateDelegateOf(state::selectedGemeentenaam)
+
+                                // this works
+                                // sele = StateDelegate(state.selectedGemeentenaam) {
+                                //     setState { selectedGemeentenaam = it }
+                                // }
+
+                                selectedGemeentenaam = stateAsProp(AppState::selectedGemeentenaam)
                             }
                         }
                     }

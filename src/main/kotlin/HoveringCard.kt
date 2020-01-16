@@ -18,9 +18,9 @@ interface HoveringCardState : RState {
     var raised: Boolean
 }
 
-class HoveringCard(props: HoveringCardProps) : RComponent<HoveringCardProps, HoveringCardState>(props) {
+class HoveringCard(prps: HoveringCardProps) : RComponent<HoveringCardProps, HoveringCardState>(prps) {
 
-    override fun HoveringCardState.init(props: HoveringCardProps) {
+    override fun HoveringCardState.init(prps: HoveringCardProps) {
         raised = false
     }
 

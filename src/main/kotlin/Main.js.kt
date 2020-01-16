@@ -1,8 +1,6 @@
 
 import react.dom.render
 import kotlin.browser.document
-import kotlin.reflect.KMutableProperty0
-import kotlin.reflect.KProperty0
 
 external fun alert(message: Any?)
 
@@ -56,10 +54,3 @@ fun main() {
 }
 
 fun Boolean.toInt() = if (this) 1 else 0
-
-val <T> KMutableProperty0<T>.delegate
-    get() = delegateOf(::get, ::set)
-
-val <T> KProperty0<T>.delegate
-    get() = delegateOf(::get)
-

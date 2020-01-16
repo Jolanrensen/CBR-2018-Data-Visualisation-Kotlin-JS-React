@@ -14,10 +14,10 @@ open class GeoPathNode(
     path: PathGeom = PathGeom()
 ): PathNode(path) {
 
-    fun redrawPath(): GeoPath {
+    fun redrawPath(): PathGeom {
         val geoPath = geoPath(geoProjection, path)
         clearPath()
         geoPath.project(geoData!!)
-        return geoPath;
+        return geoPath.path!! as PathGeom;
     }
 }

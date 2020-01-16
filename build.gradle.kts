@@ -1,6 +1,6 @@
 plugins {
-    kotlin("js") version "1.3.61"
-    kotlin("kapt") version "1.3.61"
+    kotlin("js") version "1.3.70-eap-42"
+    kotlin("kapt") version "1.3.70-eap-42"
     id("com.diffplug.gradle.spotless") version "3.26.1"
 }
 
@@ -12,12 +12,14 @@ group = "org.example"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
     mavenCentral()
     jcenter()
     maven(url = "https://dl.bintray.com/kotlin/kotlinx")
-    maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
     maven(url = "https://kotlin.bintray.com/js-externals")
     maven(url = "https://kotlin.bintray.com/kotlin-js-wrappers")
+    maven(url = "https://jitpack.io")
+    maven(url = "https://dl.bintray.com/korlibs/korlibs")
 }
 
 // attempt at linter
@@ -55,8 +57,8 @@ kotlin {
         main {
             dependencies {
                 implementation(npm("webpack", "4.41.2"))
-                implementation(npm("webpack-cli", "3.3.9"))
-                implementation(npm("webpack-dev-server", "3.8.2"))
+                implementation(npm("webpack-cli", "3.3.10"))
+                implementation(npm("webpack-dev-server", "3.9.0"))
 
                 implementation("org.jetbrains:annotations:16.0.2")
                 implementation(kotlin("stdlib-js"))
@@ -92,6 +94,8 @@ kotlin {
 
                 implementation(npm("styled-components"))
                 implementation(npm("jquery"))
+
+                implementation("com.soywiz:korma-js:0.20.0")
             }
         }
     }
