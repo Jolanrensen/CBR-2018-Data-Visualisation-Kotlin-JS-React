@@ -11,16 +11,14 @@ import data.ExamenResultaatCategorie
 import data.ExamenResultaatVersie
 import data.Product
 import data.Resultaat
-import kotlinx.css.Overflow
-import kotlinx.css.marginTop
-import kotlinx.css.overflowX
-import kotlinx.css.pct
-import kotlinx.css.width
+import kotlinx.css.*
 import libs.RPureComponent
 import react.RBuilder
 import react.RProps
 import react.RState
+import react.dom.div
 import styled.css
+import styled.styledDiv
 
 interface ResultCardProps : RProps {
     var examenResultaatVersie: ExamenResultaatVersie

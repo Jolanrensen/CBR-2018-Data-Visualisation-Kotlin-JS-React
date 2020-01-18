@@ -54,7 +54,7 @@ interface AppState : RState {
     var selectedExamenlocatieKeys: Set<String>
     var selectedProducts: Set<Product>
 
-    var selectedGemeentenaam: String
+    var selectedGemeente: NederlandVizMap.Gemeente?
 }
 
 class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
@@ -69,7 +69,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
         selectedExamenlocatieKeys = setOf()
         selectedProducts = setOf()
 
-        selectedGemeentenaam = "-"
+        selectedGemeente = null
     }
 
     private var alleOpleidersData by stateDelegateOf(AppState::alleOpleidersData)
@@ -80,7 +80,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
     private var selectedProducts by stateDelegateOf(AppState::selectedProducts)
 
-    private var selectedGemeentenaam by stateDelegateOf(AppState::selectedGemeentenaam)
+    private var selectedGemeente by stateDelegateOf(AppState::selectedGemeente)
 
     private fun loadData() {
         if (Data.isLoaded) return
@@ -305,7 +305,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
             mGridItem(xs = MGridSize.cells12) {
                 hoveringCard {
                     mCardContent {
-                        +selectedGemeentenaam
+                        +(selectedGemeente?.feature?.properties?.statnaam ?: "-")
                         nederlandMap {
                             attrs {
                                 alleOpleidersData = this@App.alleOpleidersData
@@ -322,7 +322,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                 //     setState { selectedGemeentenaam = it }
                                 // }
 
-                                selectedGemeentenaam = stateAsProp(AppState::selectedGemeentenaam)
+                                selectedGemeente = stateAsProp(AppState::selectedGemeente)
                             }
                         }
                     }

@@ -1,4 +1,8 @@
 
+import data.Data
+import data.Product
+import data.automaat
+import data.eersteExamen
 import react.dom.render
 import kotlin.browser.document
 
@@ -13,9 +17,9 @@ fun main() {
     }
 
     // Data.buildData()
-    // val opleider = Data.alleOpleiders.values.find {
-    //     it.naam.contains("ANWB") && it.plaatsnaam == "BREDA"
-    // }!!
+//     val opleider = Data.alleOpleiders.values.find {
+//         it.naam.contains("ANWB") && it.plaatsnaam == "BREDA"
+//     }!!
     //
     // println("${
     // Data.getResults(listOf(opleider)).asSequence()
@@ -27,13 +31,14 @@ fun main() {
     //             .sumBy { it.aantal }
     //     }
     // }/${
-    // Data.getResults(listOf(opleider)).asSequence()
-    //     .filter { it.product == Product.A || it.product == Product.A_NO }
-    //     .sumBy {
-    //         it.examenResultaatAantallen.asSequence()
-    //             .eersteExamen
-    //             .sumBy { it.aantal }
-    //     }
+//     Data.getResults(listOf(opleider)).asSequence()
+//         .filter { it.product == Product.A || it.product == Product.A_NO }
+//         .sumBy {
+//             it.examenResultaatAantallen.asSequence()
+//                 .eersteExamen
+//                 .automaat
+//                 .sumBy { it.aantal }
+//         }
     // }")
     // }
     // val xmlhttp = XMLHttpRequest()

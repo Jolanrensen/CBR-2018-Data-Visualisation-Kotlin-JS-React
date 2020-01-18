@@ -2,35 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="059694ea-fced-4a47-8f2c-49e429e683b3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/HelperFunctions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/jolanrensen.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/trapezoidal_v2.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinCodeInsightSettings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/io_data2viz_d2v_data2viz_common_0_8_0_RC5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/io_data2viz_d2v_geo_common_0_7_0_RC4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Delegate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Delegate.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/HoveringCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/HoveringCard.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data2viz/GeoPathNode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data2viz/GeoPathNode.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ChildPropDelegate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/ChildPropDelegate.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Popover.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/Popover.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data2viz/VizComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data2viz/VizComponent.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +56,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -158,12 +138,29 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579201888635</updated>
-      <workItem from="1579201891167" duration="14219000" />
+      <workItem from="1579201891167" duration="14490000" />
+      <workItem from="1579266340622" duration="158000" />
+      <workItem from="1579266522275" duration="4301000" />
+      <workItem from="1579271056448" duration="8352000" />
+      <workItem from="1579362670338" duration="3777000" />
+      <workItem from="1579382320065" duration="5075000" />
     </task>
+    <task id="LOCAL-00001" summary="had to push">
+      <created>1579217544158</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1579217544158</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="had to push" />
+    <option name="LAST_COMMIT_MESSAGE" value="had to push" />
   </component>
   <component name="WindowStateProjectService">
     <state x="3472" y="203" width="1128" height="747" key="#Project_Structure" timestamp="1579205224628">
@@ -174,33 +171,61 @@
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="3298" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579205894224" />
+    <state x="3084" y="136" width="1501" height="829" key="CommitChangelistDialog2" timestamp="1579217543571">
+      <screen x="2880" y="0" width="1920" height="1080" />
+    </state>
+    <state x="3084" y="136" width="1501" height="829" key="CommitChangelistDialog2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579217543571" />
     <state x="3803" y="334" key="FileChooserDialogImpl" timestamp="1579205834639">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="3803" y="334" key="FileChooserDialogImpl/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579205834639" />
-    <state width="1872" height="279" key="GridCell.Tab.0.bottom" timestamp="1579214683793">
+    <state width="1889" height="456" key="GridCell.Tab.0.bottom" timestamp="1579382403126">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state width="1889" height="456" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1579382403126" />
+    <state width="1872" height="279" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579279843138" />
+    <state width="1889" height="456" key="GridCell.Tab.0.center" timestamp="1579382403126">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state width="1889" height="456" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1579382403126" />
+    <state width="1872" height="279" key="GridCell.Tab.0.center/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579279843138" />
+    <state width="1889" height="456" key="GridCell.Tab.0.left" timestamp="1579382403125">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state width="1889" height="456" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1579382403125" />
+    <state width="1872" height="279" key="GridCell.Tab.0.left/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579279843138" />
+    <state width="1889" height="456" key="GridCell.Tab.0.right" timestamp="1579382403126">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state width="1889" height="456" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1579382403126" />
+    <state width="1872" height="279" key="GridCell.Tab.0.right/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579279843138" />
+    <state width="1872" height="345" key="GridCell.Tab.1.bottom" timestamp="1579270789688">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state width="1872" height="279" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579214683793" />
-    <state width="1872" height="279" key="GridCell.Tab.0.center" timestamp="1579214683793">
+    <state width="1872" height="345" key="GridCell.Tab.1.bottom/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579270789688" />
+    <state width="1872" height="345" key="GridCell.Tab.1.center" timestamp="1579270789688">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state width="1872" height="279" key="GridCell.Tab.0.center/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579214683793" />
-    <state width="1872" height="279" key="GridCell.Tab.0.left" timestamp="1579214683793">
+    <state width="1872" height="345" key="GridCell.Tab.1.center/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579270789688" />
+    <state width="1872" height="345" key="GridCell.Tab.1.left" timestamp="1579270789688">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state width="1872" height="279" key="GridCell.Tab.0.left/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579214683793" />
-    <state width="1872" height="279" key="GridCell.Tab.0.right" timestamp="1579214683793">
+    <state width="1872" height="345" key="GridCell.Tab.1.left/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579270789688" />
+    <state width="1872" height="345" key="GridCell.Tab.1.right" timestamp="1579270789688">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state width="1872" height="279" key="GridCell.Tab.0.right/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579214683793" />
+    <state width="1872" height="345" key="GridCell.Tab.1.right/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579270789688" />
     <state x="3306" y="187" width="1149" height="871" key="SettingsEditor" timestamp="1579205249638">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="3306" y="187" width="1149" height="871" key="SettingsEditor/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579205249638" />
-    <state x="3348" y="236" width="983" height="632" key="find.popup" timestamp="1579210625850">
+    <state x="3435" y="276" width="800" height="548" key="Vcs.Push.Dialog.v2" timestamp="1579217548023">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state x="3348" y="236" width="983" height="632" key="find.popup/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579210625850" />
+    <state x="3435" y="276" width="800" height="548" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579217548023" />
+    <state x="3348" y="236" width="983" height="632" key="find.popup" timestamp="1579267041144">
+      <screen x="2880" y="0" width="1920" height="1080" />
+    </state>
+    <state x="3348" y="236" width="983" height="632" key="find.popup/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579267041144" />
   </component>
 </project>
