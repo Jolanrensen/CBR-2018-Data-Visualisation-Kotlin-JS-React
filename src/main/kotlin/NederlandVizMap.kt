@@ -33,14 +33,21 @@ interface NederlandMapState : RState
 
 class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, NederlandMapState>(prps) {
 
+    // maybe change this to setter only
+    var selectedGemeenteState by propDelegateOf(NederlandMapProps::selectedGemeente)
 
-    var selectedGemeente by propDelegateOf(NederlandMapProps::selectedGemeente)
+    var selectedGemeente: Gemeente? = selectedGemeenteState
+        set(value) {
+            field = value
+            selectedGemeenteState = value
+        }
+
     val alleOpleidersData by readOnlyPropDelegateOf(NederlandMapProps::alleOpleidersData)
 
 
     override fun shouldComponentUpdate(nextProps: NederlandMapProps, nextState: NederlandMapState) =
         props.alleOpleidersData != nextProps.alleOpleidersData
-                || props.selectedGemeente != nextProps.selectedGemeente
+    //|| props.selectedGemeente != nextProps.selectedGemeente
 
     private val nederland = Data.geoJson!! // geometry type is polygon/multipolygon for each
 
@@ -141,16 +148,18 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
             // js https://github.com/data2viz/data2viz/blob/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-js/src/main/kotlin/EarthJs.kt
             // common https://github.com/data2viz/data2viz/tree/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-common/src/main/kotlin
 
-
-            gemeentes.forEach {
-                it.geoPathNode.fill = getGemeenteColor(
+            fun drawGemeentes() {
+                clear()
+                gemeentes.forEach {
+                    it.geoPathNode.fill = getGemeenteColor(
                         selectedGemeente == it,
                         it.opleiders.size
                     )
-                it.geoPathNode.redrawPath()
-                add(it.geoPathNode)
-
+                    it.geoPathNode.redrawPath()
+                    add(it.geoPathNode)
+                }
             }
+            drawGemeentes()
 
 //            circle {
 //                fill = Colors.rgb(255, 0, 0)
@@ -172,6 +181,8 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
 
                 if (selectedGemeente != new) {
                     selectedGemeente = new
+                    drawGemeentes()
+                    render()
                 }
             }
         }
