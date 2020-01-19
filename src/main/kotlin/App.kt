@@ -1,4 +1,3 @@
-
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.MGridAlignContent
 import com.ccfraser.muirwik.components.MGridSize
@@ -11,18 +10,15 @@ import com.ccfraser.muirwik.components.mAvatar
 import com.ccfraser.muirwik.components.mGridContainer
 import com.ccfraser.muirwik.components.mGridItem
 import com.ccfraser.muirwik.components.mTypography
-import data.Data
+import data.*
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
-import data.Examenlocatie
-import data.Opleider
-import data.Product
 import filterableLists.categorieProductList
 import filterableLists.examenlocatiesList
 import filterableLists.opleidersList
 import io.data2viz.color.Colors
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.promise
 import kotlinx.css.Color
 import kotlinx.css.backgroundColor
 import kotlinx.css.color
@@ -31,12 +27,8 @@ import kotlinx.css.mm
 import kotlinx.css.padding
 import kotlinx.css.px
 import kotlinx.html.js.onClickFunction
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
+import react.*
 import react.dom.div
-import react.setState
 import styled.css
 import styled.styledDiv
 import styled.styledP
@@ -83,19 +75,21 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
     private var selectedGemeente by stateDelegateOf(AppState::selectedGemeente)
 
     private fun loadData() {
-        if (Data.isLoaded) return
-        GlobalScope.launch {
-            val (alleOpleiders, alleExamenlocaties) = Data.buildData()
-            alleOpleidersData = alleOpleiders
-            alleExamenlocatiesData = alleExamenlocaties
+        if (Data.hasStartedLoading) return
+        GlobalScope.promise {
+            //val (alleOpleiders, alleExamenlocaties) = Data.getOpleidersAndExamenlocaties()
+            Data.buildAllData()
+
+            alleOpleidersData = Data.alleOpleiders
+            alleExamenlocatiesData = Data.alleExamenlocaties
             println("data loaded!")
         }
     }
 
     private fun selectionFinished() =
         selectedOpleiderKeys.isNotEmpty() &&
-            selectedExamenlocatieKeys.isNotEmpty() &&
-            selectedProducts.isNotEmpty()
+                selectedExamenlocatieKeys.isNotEmpty() &&
+                selectedProducts.isNotEmpty()
 
     override fun RBuilder.render() {
         styledDiv {
@@ -265,13 +259,29 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                     spacing = MGridSpacing.spacing3,
                     alignContent = MGridAlignContent.center
                 ) {
-                    val currentResults = if (!selectionFinished())
+                    val currentResults: Sequence<Resultaat> = if (!selectionFinished())
                         sequenceOf()
-                    else
-                        Data.getResults(
-                            selectedOpleiderKeys,
-                            selectedExamenlocatieKeys
-                        ).asSequence()
+                    else (Data.opleiderToResultaten
+                        .asSequence()
+                        .filter { it.key in selectedOpleiderKeys }
+                        .map { it.value }
+                        .flatten()
+                        .asIterable()
+
+                            intersect
+
+                            Data.examenlocatieToResultaten
+                                .asSequence()
+                                .filter { it.key in selectedExamenlocatieKeys }
+                                .map { it.value }
+                                .flatten()
+                                .asIterable()
+                            ).asSequence()
+
+//                    Data.getResults(
+//                        selectedOpleiderKeys,
+//                        selectedExamenlocatieKeys
+//                    )
                     mGridItem(
                         xs = MGridSize.cells12,
                         md = MGridSize.cells6,
@@ -305,7 +315,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
             mGridItem(xs = MGridSize.cells12) {
                 hoveringCard {
                     mCardContent {
-                        +(selectedGemeente?.feature?.properties?.statnaam ?: "-")
+                        +(selectedGemeente?.let { "${it.name}, slagingspercentage: ${(it.slagingspercentage * 100.0).toInt()}%" }
+                            ?: "-")
                         nederlandMap {
                             attrs {
                                 alleOpleidersData = this@App.alleOpleidersData

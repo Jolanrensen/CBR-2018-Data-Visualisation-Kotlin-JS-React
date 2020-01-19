@@ -1,7 +1,4 @@
-import data.Data
-import data.Feature
-import data.Opleider
-import data.toData2Viz
+import data.*
 import data2viz.GeoPathNode
 import data2viz.vizComponent
 import io.data2viz.color.Color
@@ -53,32 +50,46 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
 
     data class Gemeente(
         val feature: Feature<Data.GemeentesProperties>,
-        val opleiders: List<Opleider> = listOf(),
+        val opleiders: Collection<Opleider> = setOf(),
+        val examenlocaties: Collection<Examenlocatie> = setOf(),
         val geoPathNode: GeoPathNode,
-        val hiddenGeoPathNode: GeoPathNode
-    )
+        val hiddenGeoPathNode: GeoPathNode,
+        val slagingspercentage: Double
+    ) {
+        val name get() = feature.properties.statnaam
+    }
 
     private val idColorToGemeente = hashMapOf<Int, Gemeente>()
 
-    private fun getGemeenteColor(selected: Boolean, opleidersSize: Int?): HslColor {
-        val maxNoOpleiders = 470 // den haag
-        val greenRedAngleDiff = Colors.Web.green.toHsl().h.rad - Colors.Web.red.toHsl().h.rad
+    private fun getGemeenteColor(selected: Boolean, gemeente: Gemeente): HslColor {
+//        val maxNoOpleiders = 470 // den haag
 
-        return Colors.hsl(
-            hue = Angle(opleidersSize!!.toDouble() / maxNoOpleiders * greenRedAngleDiff),
-            saturation = 100.pct,
-            lightness = if (selected) 20.pct else 50.pct
-        )
+        return if (gemeente.opleiders.isEmpty()) {
+            Colors.Web.black.toHsl()
+        } else {
+            val greenRedAngleDiff = Colors.Web.green.toHsl().h.rad - Colors.Web.red.toHsl().h.rad
+
+            Colors.hsl(
+                hue = Angle(gemeente.slagingspercentage * greenRedAngleDiff),
+                saturation = 100.pct,
+                lightness = if (selected) 20.pct else 50.pct
+            )
+        }
     }
 
     private val gemeentes: Collection<Gemeente> by lazy {
         println("calculating 'gemeentes'")
-        nederland.features.map { feature ->
-            val opleiders = alleOpleidersData
-                .values
+        val result = nederland.features.mapIndexed { index, feature ->
+            val opleiderCodes = hashSetOf<String>()
+            val opleiders = Data.alleOpleiders
+                .asSequence()
                 .filter {
-                    it.gemeente.toLowerCase() == feature.properties.statnaam.toLowerCase()
+                    it.value.gemeente.toLowerCase() == feature.properties.statnaam.toLowerCase()
                 }
+                .apply { opleiderCodes += map { it.key } }
+                .map { it.value }
+                .toSet()
+
 
             fun GeoPathNode.runOnNode() {
                 stroke = Colors.Web.black
@@ -88,16 +99,10 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
                     center(6.5.deg, 52.72.deg)
                 }
                 geoData = feature.toData2Viz()
-
-                //redrawPath()
-
-                //vectorPath = path.toVectorPath()
             }
 
-            //var vectorPath: VectorPath
             val geoPathNode = GeoPathNode().apply {
                 runOnNode()
-                fill = getGemeenteColor(false, opleiders.size)
             }
             var idColor: Color?
             val hiddenGeoPathNode = GeoPathNode().apply {
@@ -113,17 +118,39 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
                 strokeWidth = null
             }
 
+            val ourResults = Data.opleiderToResultaten
+                .asSequence()
+                .filter { it.key in opleiderCodes }
+                .map { it.value }
+                .flatten()
+            val totaalVoldoende = ourResults
+                .sumBy {
+                    it.examenResultaatAantallen
+                        .filter { it.examenResultaat == ExamenResultaat.VOLDOENDE }
+                        .sumBy { it.aantal }
+                }
+            val totaal = ourResults
+                .sumBy {
+                    it.examenResultaatAantallen
+                        .sumBy { it.aantal }
+                }
+
             val gemeente = Gemeente(
                 feature = feature,
                 opleiders = opleiders,
                 geoPathNode = geoPathNode,
-                hiddenGeoPathNode = hiddenGeoPathNode
+                hiddenGeoPathNode = hiddenGeoPathNode,
+                slagingspercentage = totaalVoldoende.toDouble() / totaal.toDouble()
             )
+
+            geoPathNode.fill = getGemeenteColor(false, gemeente)
             idColorToGemeente[idColor!!.rgb] = gemeente
 
-
+            println("${index.toDouble() / nederland.features.size.toDouble() * 100}%")
             gemeente
         }
+
+        result
     }
 
     override fun RBuilder.render() {
@@ -153,7 +180,7 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
                 gemeentes.forEach {
                     it.geoPathNode.fill = getGemeenteColor(
                         selectedGemeente == it,
-                        it.opleiders.size
+                        it
                     )
                     it.geoPathNode.redrawPath()
                     add(it.geoPathNode)
