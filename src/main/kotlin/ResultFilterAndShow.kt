@@ -125,26 +125,26 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                         xl = MGridSize.cells12
                     ) {
                         resultCard {
-                            examenResultaatVersie = ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
+//                            examenResultaatVersie = ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
                             this.currentResults = currentResults
                             selectionFinished = ::selectionFinished
                             selectedProducts = this@ResultFilterAndShow.selectedProducts
                         }
                     }
 
-                    mGridItem(
-                        xs = MGridSize.cells12,
-                        md = MGridSize.cells6,
-                        lg = MGridSize.cells6,
-                        xl = MGridSize.cells12
-                    ) {
-                        resultCard {
-                            examenResultaatVersie = ExamenResultaatVersie.HEREXAMEN_OF_TOETS
-                            this.currentResults = currentResults
-                            selectionFinished = ::selectionFinished
-                            selectedProducts = this@ResultFilterAndShow.selectedProducts
-                        }
-                    }
+//                    mGridItem(
+//                        xs = MGridSize.cells12,
+//                        md = MGridSize.cells6,
+//                        lg = MGridSize.cells6,
+//                        xl = MGridSize.cells12
+//                    ) {
+//                        resultCard {
+////                            examenResultaatVersie = ExamenResultaatVersie.HEREXAMEN_OF_TOETS
+//                            this.currentResults = currentResults
+//                            selectionFinished = ::selectionFinished
+//                            selectedProducts = this@ResultFilterAndShow.selectedProducts
+//                        }
+//                    }
                 }
             }
         }

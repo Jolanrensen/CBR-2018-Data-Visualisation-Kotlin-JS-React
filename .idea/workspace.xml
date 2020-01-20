@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="059694ea-fced-4a47-8f2c-49e429e683b3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +143,7 @@
       <workItem from="1579459763359" duration="9484000" />
       <workItem from="1579540345310" duration="221000" />
       <workItem from="1579541443833" duration="1063000" />
-      <workItem from="1579550420750" duration="3739000" />
+      <workItem from="1579550420750" duration="4407000" />
     </task>
     <task id="LOCAL-00001" summary="had to push">
       <created>1579217544158</created>
@@ -167,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579388462079</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="resultfilterandshow">
+      <created>1579554211534</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1579554211534</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,7 +182,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="had to push" />
     <MESSAGE value="2nd canvas trick works!" />
-    <option name="LAST_COMMIT_MESSAGE" value="2nd canvas trick works!" />
+    <MESSAGE value="resultfilterandshow" />
+    <option name="LAST_COMMIT_MESSAGE" value="resultfilterandshow" />
   </component>
   <component name="WindowStateProjectService">
     <state x="3472" y="203" width="1128" height="747" key="#Project_Structure" timestamp="1579205224628">
@@ -191,10 +198,10 @@
       <screen x="0" y="50" width="4320" height="2380" />
     </state>
     <state x="1677" y="639" width="955" height="1154" key="#com.intellij.ide.util.MemberChooser/0.50.4320.2380@0.50.4320.2380" timestamp="1579541788336" />
-    <state x="306" y="226" width="1469" height="829" key="CommitChangelistDialog2" timestamp="1579472601067">
+    <state x="306" y="226" width="1469" height="829" key="CommitChangelistDialog2" timestamp="1579554211264">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="306" y="226" width="1469" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1579472601067" />
+    <state x="306" y="226" width="1469" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1579554211264" />
     <state x="3084" y="136" width="1501" height="829" key="CommitChangelistDialog2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579217543571" />
     <state x="3803" y="334" key="FileChooserDialogImpl" timestamp="1579205834639">
       <screen x="2880" y="0" width="1920" height="1080" />
@@ -244,10 +251,10 @@
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="3306" y="187" width="1149" height="871" key="SettingsEditor/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579205249638" />
-    <state x="833" y="433" width="800" height="548" key="Vcs.Push.Dialog.v2" timestamp="1579472604119">
+    <state x="833" y="433" width="800" height="548" key="Vcs.Push.Dialog.v2" timestamp="1579554214219">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="833" y="433" width="800" height="548" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1579472604119" />
+    <state x="833" y="433" width="800" height="548" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1579554214219" />
     <state x="3435" y="276" width="800" height="548" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1579217548023" />
     <state x="3348" y="236" width="983" height="632" key="find.popup" timestamp="1579267041144">
       <screen x="2880" y="0" width="1920" height="1080" />

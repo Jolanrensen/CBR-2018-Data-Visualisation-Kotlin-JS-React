@@ -1,4 +1,5 @@
-
+import com.ccfraser.muirwik.components.mSwitch
+import com.ccfraser.muirwik.components.mSwitchWithLabel
 import com.ccfraser.muirwik.components.spacingUnits
 import com.ccfraser.muirwik.components.table.MTableCellAlign
 import com.ccfraser.muirwik.components.table.mTable
@@ -6,30 +7,37 @@ import com.ccfraser.muirwik.components.table.mTableBody
 import com.ccfraser.muirwik.components.table.mTableCell
 import com.ccfraser.muirwik.components.table.mTableHead
 import com.ccfraser.muirwik.components.table.mTableRow
-import data.ExamenResultaat
-import data.ExamenResultaatCategorie
-import data.ExamenResultaatVersie
-import data.Product
-import data.Resultaat
+import data.*
+import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
+import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 import kotlinx.css.*
-import libs.RPureComponent
 import react.RBuilder
+import react.RComponent
 import react.RProps
 import react.RState
-import react.dom.div
 import styled.css
-import styled.styledDiv
 
 interface ResultCardProps : RProps {
-    var examenResultaatVersie: ExamenResultaatVersie
     var currentResults: Sequence<Resultaat>
     var selectionFinished: () -> Boolean
     var selectedProducts: Set<Product>
 }
 
-interface ResultCardState : RState
+interface ResultCardState : RState {
+    var examenResultaatVersie: ExamenResultaatVersie
+}
 
-class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, ResultCardState>(prps) {
+class ResultCard(prps: ResultCardProps) : RComponent<ResultCardProps, ResultCardState>(prps) {
+
+    val currentResults by readOnlyPropDelegateOf(ResultCardProps::currentResults)
+    val selectionFinished by readOnlyPropDelegateOf(ResultCardProps::selectionFinished)
+    val selectedProducts by readOnlyPropDelegateOf(ResultCardProps::selectedProducts)
+
+    override fun ResultCardState.init(props: ResultCardProps) {
+        examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS
+    }
+
+    var examenResultaatVersie by stateDelegateOf(ResultCardState::examenResultaatVersie)
 
     override fun RBuilder.render() {
         hoveringCard {
@@ -41,7 +49,17 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
             mTable {
                 mTableHead {
                     mTableRow {
-                        mTableCell { +props.examenResultaatVersie.title }
+                        mTableCell {
+                            mSwitchWithLabel(
+                                label = examenResultaatVersie.title,
+                                checked = examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS,
+                                onChange = { _, _ ->
+                                    examenResultaatVersie = when (examenResultaatVersie) {
+                                        EERSTE_EXAMEN_OF_TOETS -> HEREXAMEN_OF_TOETS
+                                        HEREXAMEN_OF_TOETS -> EERSTE_EXAMEN_OF_TOETS
+                                    }
+                                })
+                        }
                         ExamenResultaat.values().forEach {
                             mTableCell(align = MTableCellAlign.right) { +it.title }
                         }
@@ -55,17 +73,17 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                             val examenResultaten = hashMapOf<ExamenResultaat, Int>()
                             for (resultaat in ExamenResultaat.values()) {
                                 mTableCell(align = MTableCellAlign.right) {
-                                    +if (props.selectionFinished()) {
-                                        props.currentResults
+                                    +if (selectionFinished()) {
+                                        currentResults
                                             .asSequence()
-                                            .filter { it.product in props.selectedProducts }
+                                            .filter { it.product in selectedProducts }
                                             .sumBy {
                                                 it.examenResultaatAantallen
                                                     .asSequence()
                                                     .filter {
-                                                        it.examenResultaatVersie == props.examenResultaatVersie
-                                                            && it.examenResultaatCategorie == categorie
-                                                            && it.examenResultaat == resultaat
+                                                        it.examenResultaatVersie == examenResultaatVersie
+                                                                && it.examenResultaatCategorie == categorie
+                                                                && it.examenResultaat == resultaat
                                                     }.sumBy { it.aantal }
                                             }
                                             .apply { examenResultaten[resultaat] = this }
@@ -74,8 +92,9 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                                 }
                             }
                             mTableCell(align = MTableCellAlign.right) {
-                                +if (props.selectionFinished())
-                                    "${(examenResultaten[ExamenResultaat.VOLDOENDE]!!.toDouble() / examenResultaten.values.sum() * 100.0).toInt()}%"
+                                +if (selectionFinished())
+                                    "${(examenResultaten[ExamenResultaat.VOLDOENDE]!!.toDouble() / examenResultaten.values
+                                        .sum() * 100.0).toInt()}%"
                                 else "-"
                             }
                         }
@@ -85,16 +104,16 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         val examenResultaten = hashMapOf<ExamenResultaat, Int>()
                         for (resultaat in ExamenResultaat.values()) {
                             mTableCell(align = MTableCellAlign.right) {
-                                +if (props.selectionFinished()) {
-                                    props.currentResults
+                                +if (selectionFinished()) {
+                                    currentResults
                                         .asSequence()
-                                        .filter { it.product in props.selectedProducts }
+                                        .filter { it.product in selectedProducts }
                                         .sumBy {
                                             it.examenResultaatAantallen
                                                 .asSequence()
                                                 .filter {
-                                                    it.examenResultaatVersie == props.examenResultaatVersie
-                                                        && it.examenResultaat == resultaat
+                                                    it.examenResultaatVersie == examenResultaatVersie
+                                                            && it.examenResultaat == resultaat
                                                 }.sumBy { it.aantal }
                                         }
                                         .apply { examenResultaten[resultaat] = this }
@@ -103,8 +122,9 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                             }
                         }
                         mTableCell(align = MTableCellAlign.right) {
-                            +if (props.selectionFinished())
-                                "${(examenResultaten[ExamenResultaat.VOLDOENDE]!!.toDouble() / examenResultaten.values.sum() * 100.0).toInt()}%"
+                            +if (selectionFinished())
+                                "${(examenResultaten[ExamenResultaat.VOLDOENDE]!!.toDouble() / examenResultaten.values
+                                    .sum() * 100.0).toInt()}%"
                             else "-"
                         }
                     }
