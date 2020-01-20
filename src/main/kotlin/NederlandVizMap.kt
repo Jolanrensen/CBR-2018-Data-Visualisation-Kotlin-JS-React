@@ -22,8 +22,8 @@ import kotlin.lazy
 import kotlin.random.Random
 
 interface NederlandMapProps : RProps {
-    var alleOpleidersData: Map<String, Opleider>
     var selectedGemeente: StateAsProp<NederlandVizMap.Gemeente?>
+    var dataLoaded: Boolean
 }
 
 interface NederlandMapState : RState
@@ -39,11 +39,11 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
             selectedGemeenteState = value
         }
 
-    val alleOpleidersData by readOnlyPropDelegateOf(NederlandMapProps::alleOpleidersData)
+    val dataLoaded by readOnlyPropDelegateOf(NederlandMapProps::dataLoaded)
 
 
     override fun shouldComponentUpdate(nextProps: NederlandMapProps, nextState: NederlandMapState) =
-        props.alleOpleidersData != nextProps.alleOpleidersData
+        props.dataLoaded != nextProps.dataLoaded
     //|| props.selectedGemeente != nextProps.selectedGemeente
 
     private val nederland = Data.geoJson!! // geometry type is polygon/multipolygon for each
@@ -146,7 +146,7 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
             geoPathNode.fill = getGemeenteColor(false, gemeente)
             idColorToGemeente[idColor!!.rgb] = gemeente
 
-            println("${index.toDouble() / nederland.features.size.toDouble() * 100}%")
+//            println("${index.toDouble() / nederland.features.size.toDouble() * 100}%")
             gemeente
         }
 
@@ -154,7 +154,8 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
     }
 
     override fun RBuilder.render() {
-        if (alleOpleidersData.isEmpty()) return
+        if (!dataLoaded) return
+//        if (alleOpleidersData.isEmpty()) return
 
         var hiddenViz: Viz?
         var hiddenCanvas: HTMLCanvasElement? = null
@@ -217,5 +218,5 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
 }
 
 fun RBuilder.nederlandMap(handler: RElementBuilder<NederlandMapProps>.() -> Unit) = child(NederlandVizMap::class) {
-    handler(this)
+    handler()
 }

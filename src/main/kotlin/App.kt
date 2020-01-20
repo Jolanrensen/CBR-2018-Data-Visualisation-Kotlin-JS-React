@@ -36,15 +36,10 @@ import styled.styledP
 interface AppProps : RProps
 
 interface AppState : RState {
-    var alleOpleidersData: Map<String, Opleider>
-    var alleExamenlocatiesData: Map<String, Examenlocatie>
+    var dataLoaded: Boolean
 
     var welcomeText: String
     var circleColor: io.data2viz.color.Color
-
-    var selectedOpleiderKeys: Set<String>
-    var selectedExamenlocatieKeys: Set<String>
-    var selectedProducts: Set<Product>
 
     var selectedGemeente: NederlandVizMap.Gemeente?
 }
@@ -52,44 +47,25 @@ interface AppState : RState {
 class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
     override fun AppState.init(props: AppProps) {
-        alleOpleidersData = mapOf()
-        alleExamenlocatiesData = mapOf()
+        dataLoaded = false
         welcomeText = "Hello world!"
         circleColor = Colors.rgb(255, 0, 0)
-
-        selectedOpleiderKeys = setOf()
-        selectedExamenlocatieKeys = setOf()
-        selectedProducts = setOf()
 
         selectedGemeente = null
     }
 
-    private var alleOpleidersData by stateDelegateOf(AppState::alleOpleidersData)
-    private var alleExamenlocatiesData by stateDelegateOf(AppState::alleExamenlocatiesData)
-    private var selectedOpleiderKeys by stateDelegateOf(AppState::selectedOpleiderKeys)
-
-    private var selectedExamenlocatieKeys by stateDelegateOf(AppState::selectedExamenlocatieKeys)
-
-    private var selectedProducts by stateDelegateOf(AppState::selectedProducts)
-
     private var selectedGemeente by stateDelegateOf(AppState::selectedGemeente)
+    private var dataLoaded by stateDelegateOf(AppState::dataLoaded)
 
     private fun loadData() {
         if (Data.hasStartedLoading) return
         GlobalScope.promise {
-            //val (alleOpleiders, alleExamenlocaties) = Data.getOpleidersAndExamenlocaties()
             Data.buildAllData()
 
-            alleOpleidersData = Data.alleOpleiders
-            alleExamenlocatiesData = Data.alleExamenlocaties
             println("data loaded!")
+            dataLoaded = true
         }
     }
-
-    private fun selectionFinished() =
-        selectedOpleiderKeys.isNotEmpty() &&
-                selectedExamenlocatieKeys.isNotEmpty() &&
-                selectedProducts.isNotEmpty()
 
     override fun RBuilder.render() {
         styledDiv {
@@ -203,115 +179,17 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
             }
         }
 
+        (0 .. 1).forEach { _ ->
+            resultFilterAndShow {
+                dataLoaded = this@App.dataLoaded
+                // TODO
+            }
+        }
+
         mGridContainer(
             spacing = MGridSpacing.spacing3,
             alignContent = MGridAlignContent.center
         ) {
-            mGridItem(
-                xs = MGridSize.cells12,
-                md = MGridSize.cells6,
-                lg = MGridSize.cells4,
-                xl = MGridSize.cells2
-            ) {
-                filterList(opleidersList, "opleiders") {
-                    itemsData = alleOpleidersData
-                    selectedItemKeysDelegate = stateDelegateOf(AppState::selectedOpleiderKeys)
-                    selectedOtherItemKeysDelegate = stateDelegateOf(AppState::selectedExamenlocatieKeys)
-                    onSelectionChanged = {}
-                }
-            }
-
-            mGridItem(
-                xs = MGridSize.cells12,
-                md = MGridSize.cells6,
-                lg = MGridSize.cells4,
-                xl = MGridSize.cells2
-            ) {
-                filterList(examenlocatiesList, "examenlocaties") {
-                    itemsData = alleExamenlocatiesData
-                    selectedItemKeysDelegate = stateDelegateOf(AppState::selectedExamenlocatieKeys)
-                    selectedOtherItemKeysDelegate = stateDelegateOf(AppState::selectedOpleiderKeys)
-                    onSelectionChanged = {}
-                }
-            }
-
-            mGridItem(
-                xs = MGridSize.cells12,
-                md = MGridSize.cells12,
-                lg = MGridSize.cells4,
-                xl = MGridSize.cells3
-            ) {
-                filterList(categorieProductList, "categorieën/producten") {
-                    alwaysAllowSelectAll = true
-                    selectedItemKeysDelegate = stateDelegateOf(AppState::selectedProducts)
-                    selectedOtherItemKeysDelegate = stateDelegateOf(setOf()) // not used
-                    onSelectionChanged = {}
-                }
-            }
-
-            mGridItem(
-                xs = MGridSize.cells12,
-                md = MGridSize.cells12,
-                lg = MGridSize.cells12,
-                xl = MGridSize.cells5
-            ) {
-                mGridContainer(
-                    spacing = MGridSpacing.spacing3,
-                    alignContent = MGridAlignContent.center
-                ) {
-                    val currentResults: Sequence<Resultaat> = if (!selectionFinished())
-                        sequenceOf()
-                    else (Data.opleiderToResultaten
-                        .asSequence()
-                        .filter { it.key in selectedOpleiderKeys }
-                        .map { it.value }
-                        .flatten()
-                        .asIterable()
-
-                            intersect
-
-                            Data.examenlocatieToResultaten
-                                .asSequence()
-                                .filter { it.key in selectedExamenlocatieKeys }
-                                .map { it.value }
-                                .flatten()
-                                .asIterable()
-                            ).asSequence()
-
-//                    Data.getResults(
-//                        selectedOpleiderKeys,
-//                        selectedExamenlocatieKeys
-//                    )
-                    mGridItem(
-                        xs = MGridSize.cells12,
-                        md = MGridSize.cells6,
-                        lg = MGridSize.cells6,
-                        xl = MGridSize.cells12
-                    ) {
-                        resultCard {
-                            examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS
-                            this.currentResults = currentResults
-                            selectionFinished = ::selectionFinished
-                            selectedProducts = this@App.selectedProducts
-                        }
-                    }
-
-                    mGridItem(
-                        xs = MGridSize.cells12,
-                        md = MGridSize.cells6,
-                        lg = MGridSize.cells6,
-                        xl = MGridSize.cells12
-                    ) {
-                        resultCard {
-                            examenResultaatVersie = HEREXAMEN_OF_TOETS
-                            this.currentResults = currentResults
-                            selectionFinished = ::selectionFinished
-                            selectedProducts = this@App.selectedProducts
-                        }
-                    }
-                }
-            }
-
             mGridItem(xs = MGridSize.cells12) {
                 hoveringCard {
                     mCardContent {
@@ -319,7 +197,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                             ?: "-")
                         nederlandMap {
                             attrs {
-                                alleOpleidersData = this@App.alleOpleidersData
+                                dataLoaded = this@App.dataLoaded
 
                                 // this combi works
                                 // sele = state.selectedGemeentenaam
