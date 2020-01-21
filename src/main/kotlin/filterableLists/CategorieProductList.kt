@@ -25,7 +25,6 @@ import com.ccfraser.muirwik.components.transitions.mCollapse
 import data.Categorie
 import data.Product
 import data.producten
-import delegateOf
 import kotlinx.css.Color
 import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
@@ -35,8 +34,11 @@ import kotlinx.css.maxHeight
 import kotlinx.css.overflow
 import kotlinx.css.padding
 import kotlinx.css.px
+import propDelegateOf
 import react.RBuilder
 import react.ReactElement
+import readOnlyPropDelegateOf
+import stateDelegateOf
 import styled.css
 import styled.styledDiv
 import toInt
@@ -54,13 +56,21 @@ interface CategorieProductListState : FilterableListState {
     var expandedCategories: Set<Categorie>
 }
 
-class CategorieProductList(props: CategorieProductListProps) :
-    FilterableList<Product, Product, CategorieProductListProps, CategorieProductListState>(
-        props
-    ) {
+class CategorieProductList(prps: CategorieProductListProps) :
+    FilterableList<Product, Product, CategorieProductListProps, CategorieProductListState>(prps) {
+
+    private var isProductSelected by propDelegateOf(CategorieProductListProps::selectedItemKeys)
+    private val filter by readOnlyPropDelegateOf(CategorieProductListProps::filter)
+    private val onSelectionChanged by readOnlyPropDelegateOf(CategorieProductListProps::onSelectionChanged)
+
+    private var expandedCategories by stateDelegateOf(CategorieProductListState::expandedCategories)
+
+    override fun CategorieProductListState.init(props: CategorieProductListProps) {
+        expandedCategories = hashSetOf()
+    }
 
     override fun getFilteredItems(): List<Product> {
-        val filterTerms = props.filter.split(" ", ", ", ",")
+        val filterTerms = filter.split(" ", ", ", ",")
         val score = hashMapOf<Product, Int>()
         Product.values().forEach { product ->
             // Todo maybe replace with itemsDataDelegate
@@ -91,7 +101,7 @@ class CategorieProductList(props: CategorieProductListProps) :
             forEach { key ->
                 isProductSelected -= key
             }
-            if (size > 0) props.onSelectionChanged()
+            if (size > 0) onSelectionChanged()
         }
         return result
     }
@@ -99,14 +109,6 @@ class CategorieProductList(props: CategorieProductListProps) :
     override fun keyToType(key: Product) = key
     override fun typeToKey(type: Product) = type
 
-    private var isProductSelected by props.selectedItemKeysDelegate
-
-    private val expandedCategoriesDelegate = delegateOf(state::expandedCategories)
-    private var expandedCategories by expandedCategoriesDelegate
-
-    override fun CategorieProductListState.init(props: CategorieProductListProps) {
-        expandedCategories = hashSetOf()
-    }
 
     private fun toggleExpandedCategorie(categorie: Categorie, newState: Boolean? = null) {
         if (newState ?: categorie !in expandedCategories)
@@ -121,7 +123,7 @@ class CategorieProductList(props: CategorieProductListProps) :
         else
             isProductSelected -= categorie.producten
 
-        props.onSelectionChanged()
+        onSelectionChanged()
     }
 
     private fun toggleSelectedProduct(product: Product, newState: Boolean? = null) {
@@ -130,7 +132,7 @@ class CategorieProductList(props: CategorieProductListProps) :
         else
             isProductSelected -= product
 
-        props.onSelectionChanged()
+        onSelectionChanged()
     }
 
     override fun RBuilder.render() {
@@ -190,7 +192,9 @@ class CategorieProductList(props: CategorieProductListProps) :
                                         mListItemText(categorie.omschrijving)
                                         mCheckbox(
                                             checked = categorie.producten.any { it in isProductSelected },
-                                            indeterminate = !categorie.producten.all { it in isProductSelected } && categorie.producten.any { it in isProductSelected }
+                                            indeterminate = !categorie.producten
+                                                .all { it in isProductSelected } && categorie.producten
+                                                .any { it in isProductSelected }
                                         )
                                     }
                                 }

@@ -1,23 +1,30 @@
-
+import kotlinext.js.jsObject
+import org.w3c.dom.MessageEvent
+import org.w3c.dom.Worker
+import org.w3c.dom.url.URL
+import org.w3c.files.Blob
+import org.w3c.workers.ServiceWorkerGlobalScope
 import react.dom.render
 import kotlin.browser.document
-import kotlin.reflect.KMutableProperty0
-import kotlin.reflect.KProperty0
 
 external fun alert(message: Any?)
 
 fun main() {
     println("Hello Kotlin/JS")
+//    runAsync {
+//        println("hello world")
+//    }
     // window.onload = {
     val root = document.getElementById("root")
     render(root) {
         app()
     }
 
+
     // Data.buildData()
-    // val opleider = Data.alleOpleiders.values.find {
-    //     it.naam.contains("ANWB") && it.plaatsnaam == "BREDA"
-    // }!!
+//     val opleider = Data.alleOpleiders.values.find {
+//         it.naam.contains("ANWB") && it.plaatsnaam == "BREDA"
+//     }!!
     //
     // println("${
     // Data.getResults(listOf(opleider)).asSequence()
@@ -29,13 +36,14 @@ fun main() {
     //             .sumBy { it.aantal }
     //     }
     // }/${
-    // Data.getResults(listOf(opleider)).asSequence()
-    //     .filter { it.product == Product.A || it.product == Product.A_NO }
-    //     .sumBy {
-    //         it.examenResultaatAantallen.asSequence()
-    //             .eersteExamen
-    //             .sumBy { it.aantal }
-    //     }
+//     Data.getResults(listOf(opleider)).asSequence()
+//         .filter { it.product == Product.A || it.product == Product.A_NO }
+//         .sumBy {
+//             it.examenResultaatAantallen.asSequence()
+//                 .eersteExamen
+//                 .automaat
+//                 .sumBy { it.aantal }
+//         }
     // }")
     // }
     // val xmlhttp = XMLHttpRequest()
@@ -57,9 +65,44 @@ fun main() {
 
 fun Boolean.toInt() = if (this) 1 else 0
 
-val <T> KMutableProperty0<T>.delegate
-    get() = delegateOf(::get, ::set)
+external val self: ServiceWorkerGlobalScope
+fun runAsync(run: (MessageEvent) -> Unit) =
+    Worker(
+        URL.createObjectURL(
+            Blob(
+                arrayOf(
+                    { self.onmessage = run }()
+                ),
+                jsObject { type = "text/javascript" }
+            )
+        )
+    ).apply { postMessage(null) }
 
-val <T> KProperty0<T>.delegate
-    get() = delegateOf(::get)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

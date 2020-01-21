@@ -1,84 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/gemeente_2018.geojson" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/opleiderresultaten-met-gemeentes.csv" afterDir="false" />
+    <list default="true" id="774f62ac-417e-42ca-a84a-c37de57262e9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinScripting.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Delegate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Delegate.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/gemeente_2020.geojson" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
     </list>
-    <list id="5faa54e2-a235-48b1-a895-0f9e4f12745d" name="kaartje doet het weer" comment="kaartje doet het weer" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="CodeInsightWorkspaceSettings">
-    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
   </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Kotlin Class" />
-        <option value="Kotlin File" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="backup" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
-  <component name="KonanWorkspace" KOTLIN_NATIVE_HOME="$USER_HOME$/.konan/kotlin-native-linux-1.3.61">
+  <component name="KonanWorkspace" KOTLIN_NATIVE_HOME="$USER_HOME$/.konan/kotlin-native-linux-1.3.70-eap-14002">
     <executables />
   </component>
-  <component name="ProjectId" id="1VQoFFoAcuSoOPvn75TE0yElDtV" />
+  <component name="ProjectId" id="1WgC7iC1OFLhdzszGpNdzXfJ4SI" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="Downloaded.Files.Path.Enabled" value="false" />
-    <property name="Repository.Attach.Annotations" value="false" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -89,42 +54,13 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.11976045" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.web.browsers" />
   </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/kotlin/libs/ReactList" />
-      <recent name="$PROJECT_DIR$/src/main/kotlin/data2viz" />
-      <recent name="$PROJECT_DIR$/src/main/kotlin/filterableLists" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/main/resources" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Gradle.run --continuous">
-    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="run" />
-          </list>
-        </option>
-        <option name="vmOptions" value="" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="run --continuous" type="GradleRunConfiguration" factoryName="Gradle">
+  <component name="RunManager">
+    <configuration name="2IMV20-Visualization-and-Interaction [browserRun]" type="KotlinGradleRunConfiguration" factoryName="Kotlin Gradle" nameIsGenerated="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -135,7 +71,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="run" />
+            <option value="browserRun" />
           </list>
         </option>
         <option name="vmOptions" value="" />
@@ -143,29 +79,6 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="run" type="GradleRunConfiguration" factoryName="Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="run" />
-          </list>
-        </option>
-        <option name="vmOptions" value="" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <list>
-      <item itemvalue="Gradle.run" />
-      <item itemvalue="Gradle.run --continuous" />
-    </list>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -184,288 +97,51 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d08a20ed-27ea-452a-aaff-813654eeecfe" name="Default Changelist" comment="" />
-      <created>1577194573200</created>
+      <changelist id="774f62ac-417e-42ca-a84a-c37de57262e9" name="Default Changelist" comment="" />
+      <created>1579561685254</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1577194573200</updated>
-      <workItem from="1577194574482" duration="12422000" />
-      <workItem from="1577218895304" duration="4063000" />
-      <workItem from="1577627069447" duration="20250000" />
-      <workItem from="1577707525861" duration="6515000" />
-      <workItem from="1577718978680" duration="19109000" />
-      <workItem from="1577973081251" duration="28910000" />
-      <workItem from="1578145946950" duration="15978000" />
-      <workItem from="1578257074602" duration="5133000" />
-      <workItem from="1578314446259" duration="597000" />
-      <workItem from="1578316304143" duration="1926000" />
-      <workItem from="1578320918728" duration="4504000" />
-      <workItem from="1578342236815" duration="7234000" />
-      <workItem from="1578399738726" duration="26886000" />
-      <workItem from="1578481708979" duration="456000" />
-      <workItem from="1578512459352" duration="5068000" />
+      <updated>1579561685254</updated>
+      <workItem from="1579561686446" duration="1829000" />
+      <workItem from="1579620930742" duration="6298000" />
     </task>
-    <task id="LOCAL-00001" summary="fixed all errors, created two cooperating lists, opleider and examenlocatie">
-      <created>1577205156703</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1577205156703</updated>
-    </task>
-    <task id="LOCAL-00002" summary="fixed all errors, created two cooperating lists, opleider and examenlocatie">
-      <created>1577207243113</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1577207243113</updated>
-    </task>
-    <task id="LOCAL-00003" summary="linted all, fixed live/hot reloading, created filterablelists for opleiders and examenlocaties">
-      <created>1577658664552</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1577658664552</updated>
-    </task>
-    <task id="LOCAL-00004" summary="linted all, fixed live/hot reloading, created filterablelists for opleiders and examenlocaties">
-      <created>1577659345248</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1577659345248</updated>
-    </task>
-    <task id="LOCAL-00005" summary="more generalization, cleaning up">
-      <created>1577661592142</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1577661592142</updated>
-    </task>
-    <task id="LOCAL-00006" summary="opleider/categorielist">
-      <created>1577731553252</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1577731553252</updated>
-    </task>
-    <task id="LOCAL-00007" summary="starting with map">
-      <created>1577742259969</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1577742259969</updated>
-    </task>
-    <task id="LOCAL-00008" summary="starting with map">
-      <created>1577742311566</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1577742311566</updated>
-    </task>
-    <task id="LOCAL-00009" summary="delegates, filters, results">
-      <created>1578156038882</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1578156038882</updated>
-    </task>
-    <task id="LOCAL-00010" summary="delegates, filters, results">
-      <created>1578156771381</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1578156771381</updated>
-    </task>
-    <task id="LOCAL-00011" summary="added percentages">
-      <created>1578160045409</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1578160045409</updated>
-    </task>
-    <task id="LOCAL-00012" summary="filteredItems is now function">
-      <created>1578318211220</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1578318211220</updated>
-    </task>
-    <task id="LOCAL-00013" summary="filteredItems is now function, renamed and moved all props and states">
-      <created>1578322902286</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1578322902286</updated>
-    </task>
-    <task id="LOCAL-00014" summary="resultcard and responsive ui">
-      <created>1578325318781</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1578325318781</updated>
-    </task>
-    <task id="LOCAL-00015" summary="centered vizcomponentcard, added gemeente">
-      <created>1578344467199</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1578344467199</updated>
-    </task>
-    <task id="LOCAL-00016" summary="gemeentes">
-      <created>1578401959250</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1578401959250</updated>
-    </task>
-    <task id="LOCAL-00017" summary="kaartje doet het weer">
-      <created>1578410172712</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1578410172712</updated>
-    </task>
-    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed all errors, created two cooperating lists, opleider and examenlocatie" />
-    <MESSAGE value="linted all, fixed live/hot reloading, created filterablelists for opleiders and examenlocaties" />
-    <MESSAGE value="more generalization, cleaning up" />
-    <MESSAGE value="opleider/categorielist" />
-    <MESSAGE value="starting with map" />
-    <MESSAGE value="delegates, filters, results" />
-    <MESSAGE value="added percentages" />
-    <MESSAGE value="filteredItems is now function" />
-    <MESSAGE value="filteredItems is now function, renamed and moved all props and states" />
-    <MESSAGE value="resultcard and responsive ui" />
-    <MESSAGE value="centered vizcomponentcard, added gemeente" />
-    <MESSAGE value="gemeentes" />
-    <MESSAGE value="kaartje doet het weer" />
-    <option name="LAST_COMMIT_MESSAGE" value="kaartje doet het weer" />
-  </component>
   <component name="WindowStateProjectService">
-    <state x="378" y="275" width="1180" height="752" key="#Project_Structure" timestamp="1577737784118">
+    <state x="1739" y="484" key="#Project_Structure" timestamp="1579562924893">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="378" y="275" width="1180" height="752" key="#Project_Structure/0.25.2880.1595@0.25.2880.1595" timestamp="1577737784118" />
-    <state x="347" y="480" width="1116" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1577196648398">
+    <state x="1739" y="484" key="#Project_Structure/0.25.2880.1595@0.25.2880.1595" timestamp="1579562924893" />
+    <state x="1618" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579620959345">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="347" y="480" width="1116" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577196648398" />
-    <state x="1639" y="627" width="810" height="387" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1577740664555">
+    <state x="1618" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1579620959345" />
+    <state x="1927" y="580" key="FileChooserDialogImpl" timestamp="1579561908694">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1639" y="627" width="810" height="387" key="#com.intellij.fileTypes.FileTypeChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1577740664555" />
-    <state x="1642" y="541" width="490" height="558" key="#com.intellij.ide.util.MemberChooser" timestamp="1577636751976">
+    <state x="1927" y="580" key="FileChooserDialogImpl/0.25.2880.1595@0.25.2880.1595" timestamp="1579561908694" />
+    <state width="1731" height="457" key="GridCell.Tab.0.bottom" timestamp="1579627317202">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1642" y="541" width="490" height="558" key="#com.intellij.ide.util.MemberChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1577636751976" />
-    <state x="1557" y="545" width="549" height="626" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog" timestamp="1577737570767">
+    <state width="1731" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1579627317202" />
+    <state width="1731" height="457" key="GridCell.Tab.0.center" timestamp="1579627317202">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1557" y="545" width="549" height="626" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577737570767" />
-    <state x="3319" y="25" width="1035" height="1055" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1578409402889">
-      <screen x="2880" y="0" width="1920" height="1080" />
-    </state>
-    <state x="659" y="25" width="1552" height="1591" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1578322598522" />
-    <state x="3319" y="25" width="1035" height="1055" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578409402889" />
-    <state x="701" y="409" width="524" height="480" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1577737783004">
+    <state width="1731" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1579627317202" />
+    <state width="1731" height="457" key="GridCell.Tab.0.left" timestamp="1579627317202">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="701" y="409" width="524" height="480" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577737783004" />
-    <state x="3313" y="163" width="1477" height="829" key="CommitChangelistDialog2" timestamp="1578410172605">
-      <screen x="2880" y="0" width="1920" height="1080" />
-    </state>
-    <state x="1019" y="266" width="1491" height="1074" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1578344757824" />
-    <state x="1529" y="374" key="CommitChangelistDialog2/0.50.4320.2380@0.50.4320.2380" timestamp="1578318210878" />
-    <state x="3313" y="163" width="1477" height="829" key="CommitChangelistDialog2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578410172605" />
-    <state x="672" y="580" width="864" height="510" key="FileChooserDialogImpl" timestamp="1577737378049">
+    <state width="1731" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1579627317202" />
+    <state width="1731" height="457" key="GridCell.Tab.0.right" timestamp="1579627317202">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="672" y="580" width="864" height="510" key="FileChooserDialogImpl/0.25.2880.1595@0.25.2880.1595" timestamp="1577737378049" />
-    <state width="1392" height="333" key="GridCell.Tab.0.bottom" timestamp="1578513587597">
+    <state width="1731" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1579627317202" />
+    <state x="1408" y="457" key="SettingsEditor" timestamp="1579621040575">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1392" height="333" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1578513587597" />
-    <state width="2809" height="469" key="GridCell.Tab.0.bottom/0.50.4320.2380@0.50.4320.2380" timestamp="1578482568746" />
-    <state width="1872" height="201" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578432922814" />
-    <state width="1392" height="333" key="GridCell.Tab.0.center" timestamp="1578513587596">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state width="1392" height="333" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1578513587596" />
-    <state width="2809" height="469" key="GridCell.Tab.0.center/0.50.4320.2380@0.50.4320.2380" timestamp="1578482568746" />
-    <state width="1872" height="201" key="GridCell.Tab.0.center/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578432922814" />
-    <state width="1392" height="333" key="GridCell.Tab.0.left" timestamp="1578513587596">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state width="1392" height="333" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1578513587596" />
-    <state width="2809" height="469" key="GridCell.Tab.0.left/0.50.4320.2380@0.50.4320.2380" timestamp="1578482568746" />
-    <state width="1872" height="201" key="GridCell.Tab.0.left/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578432922814" />
-    <state width="1392" height="333" key="GridCell.Tab.0.right" timestamp="1578513587597">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state width="1392" height="333" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1578513587597" />
-    <state width="2809" height="469" key="GridCell.Tab.0.right/0.50.4320.2380@0.50.4320.2380" timestamp="1578482568746" />
-    <state width="1872" height="201" key="GridCell.Tab.0.right/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578432922814" />
-    <state x="566" y="167" width="2304" height="1302" key="MergeDialog" timestamp="1578155912421">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state x="566" y="167" width="2304" height="1302" key="MergeDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1578155912421" />
-    <state x="2594" y="709" width="1194" height="1160" key="MultipleFileMergeDialog" timestamp="1578481894044">
-      <screen x="0" y="50" width="4320" height="2380" />
-    </state>
-    <state x="1729" y="539" width="597" height="562" key="MultipleFileMergeDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1578155915788" />
-    <state x="2594" y="709" width="1194" height="1160" key="MultipleFileMergeDialog/0.50.4320.2380@0.50.4320.2380" timestamp="1578481894044" />
-    <state x="1420" y="457" width="1363" height="730" key="SettingsEditor" timestamp="1577627588255">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state x="1420" y="457" width="1363" height="730" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1577627588255" />
-    <state x="3175" y="361" width="677" height="355" key="Vcs.Push.Dialog.v2" timestamp="1578410174602">
-      <screen x="2880" y="0" width="1920" height="1080" />
-    </state>
-    <state x="443" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1578344469310" />
-    <state x="665" y="809" key="Vcs.Push.Dialog.v2/0.50.4320.2380@0.50.4320.2380" timestamp="1578318219351" />
-    <state x="3175" y="361" width="677" height="355" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578410174602" />
-    <state x="893" y="872" width="788" height="227" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1577737781632">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state x="893" y="872" width="788" height="227" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.25.2880.1595@0.25.2880.1595" timestamp="1577737781632" />
-    <state x="413" y="435" width="851" height="522" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1577205108611">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state x="413" y="435" width="851" height="522" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1577205108611" />
-    <state x="4055" y="485" width="538" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1578410194343">
-      <screen x="2880" y="0" width="1920" height="1080" />
-    </state>
-    <state x="1763" y="742" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.2880.1595@0.25.2880.1595" timestamp="1578155789046" />
-    <state x="4055" y="485" width="538" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578410194343" />
-    <state x="1762" y="814" width="2203" height="660" key="git4idea.ui.GitUnstashDialog" timestamp="1578481894092">
-      <screen x="0" y="50" width="4320" height="2380" />
-    </state>
-    <state x="1762" y="814" width="2203" height="660" key="git4idea.ui.GitUnstashDialog/0.50.4320.2380@0.50.4320.2380" timestamp="1578481894092" />
-    <state x="3504" y="254" key="run.anything.popup" timestamp="1578412225293">
-      <screen x="2880" y="0" width="1920" height="1080" />
-    </state>
-    <state x="3504" y="254" key="run.anything.popup/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1578412225293" />
-    <state x="1709" y="392" width="675" height="678" key="search.everywhere.popup" timestamp="1578349240972">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state x="1709" y="392" width="675" height="678" key="search.everywhere.popup/0.25.2880.1595@0.25.2880.1595" timestamp="1578349240972" />
+    <state x="1408" y="457" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1579621040575" />
   </component>
 </project>

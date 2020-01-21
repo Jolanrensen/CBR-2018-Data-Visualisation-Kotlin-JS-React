@@ -23,9 +23,11 @@ import kotlinx.css.width
 import libs.reactList.ReactListRef
 import libs.reactList.ref
 import libs.reactList.styledReactList
+import propDelegateOf
 import react.RBuilder
 import react.ReactElement
 import react.buildElement
+import readOnlyPropDelegateOf
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
@@ -42,15 +44,17 @@ interface ExamenlocatiesListProps : FilterableListProps<String, Examenlocatie>
 
 interface ExamenlocatiesListState : FilterableListState
 
-class ExamenlocatiesList(props: ExamenlocatiesListProps) :
-    FilterableList<String, Examenlocatie, ExamenlocatiesListProps, ExamenlocatiesListState>(props) {
+class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
+    FilterableList<String, Examenlocatie, ExamenlocatiesListProps, ExamenlocatiesListState>(prps) {
 
     override fun keyToType(key: String) = alleExamenlocatiesData[key] ?: error("Examenlocatie $key does not exist")
     override fun typeToKey(type: Examenlocatie) = type.naam
 
-    private var isExamenlocatieSelected by props.selectedItemKeysDelegate
-    private val isOpleiderSelected by props.selectedOtherItemKeysDelegate
-    private val alleExamenlocatiesData by props.itemsDataDelegate
+    private var isExamenlocatieSelected by propDelegateOf(ExamenlocatiesListProps::selectedItemKeys)
+    private val isOpleiderSelected by propDelegateOf(ExamenlocatiesListProps::selectedOtherItemKeys)
+    private val alleExamenlocatiesData by readOnlyPropDelegateOf(ExamenlocatiesListProps::itemsData)
+    private val filter by readOnlyPropDelegateOf(ExamenlocatiesListProps::filter)
+    private val onSelectionChanged by readOnlyPropDelegateOf(ExamenlocatiesListProps::onSelectionChanged)
 
     override fun ExamenlocatiesListState.init(props: ExamenlocatiesListProps) {}
 
@@ -58,7 +62,7 @@ class ExamenlocatiesList(props: ExamenlocatiesListProps) :
 
     override fun getFilteredItems(): List<Examenlocatie> {
         // println("refreshExamenlocations")
-        val filterTerms = props.filter.split(" ", ", ", ",")
+        val filterTerms = filter.split(" ", ", ", ",")
         val score = hashMapOf<String, Int>()
         (if (isOpleiderSelected.isNotEmpty())
             isOpleiderSelected.asSequence()
@@ -93,7 +97,7 @@ class ExamenlocatiesList(props: ExamenlocatiesListProps) :
             forEach { key ->
                 isExamenlocatieSelected -= key
             }
-            if (size > 0) props.onSelectionChanged()
+            if (size > 0) onSelectionChanged()
         }
 
         list?.scrollTo(0)
@@ -107,7 +111,7 @@ class ExamenlocatiesList(props: ExamenlocatiesListProps) :
             isExamenlocatieSelected -= examenlocatie
         }
 
-        props.onSelectionChanged()
+        onSelectionChanged()
     }
 
     private fun renderRow(filteredItems: List<Examenlocatie>, index: Int, key: String) = buildElement {

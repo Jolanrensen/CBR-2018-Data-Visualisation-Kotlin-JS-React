@@ -11,14 +11,6 @@ import com.ccfraser.muirwik.components.mGridContainer
 import com.ccfraser.muirwik.components.mGridItem
 import com.ccfraser.muirwik.components.mTypography
 import data.Data
-import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
-import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
-import data.Examenlocatie
-import data.Opleider
-import data.Product
-import filterableLists.categorieProductList
-import filterableLists.examenlocatiesList
-import filterableLists.opleidersList
 import io.data2viz.color.Colors
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,12 +22,8 @@ import kotlinx.css.mm
 import kotlinx.css.padding
 import kotlinx.css.px
 import kotlinx.html.js.onClickFunction
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
+import react.*
 import react.dom.div
-import react.setState
 import styled.css
 import styled.styledDiv
 import styled.styledP
@@ -43,59 +31,36 @@ import styled.styledP
 interface AppProps : RProps
 
 interface AppState : RState {
-    var alleOpleidersData: Map<String, Opleider>
-    var alleExamenlocatiesData: Map<String, Examenlocatie>
+    var dataLoaded: Boolean
 
     var welcomeText: String
     var circleColor: io.data2viz.color.Color
 
-    var selectedOpleiderKeys: Set<String>
-    var selectedExamenlocatieKeys: Set<String>
-    var selectedProducts: Set<Product>
+    var selectedGemeente: NederlandVizMap.Gemeente?
 }
 
-class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
+class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
     override fun AppState.init(props: AppProps) {
-        alleOpleidersData = mapOf()
-        alleExamenlocatiesData = mapOf()
+        dataLoaded = false
         welcomeText = "Hello world!"
         circleColor = Colors.rgb(255, 0, 0)
 
-        selectedOpleiderKeys = setOf()
-        selectedExamenlocatieKeys = setOf()
-        selectedProducts = setOf()
+        selectedGemeente = null
     }
 
-    private val alleOpleidersDataDelegate = delegateOf(state::alleOpleidersData)
-    private var alleOpleidersData by alleOpleidersDataDelegate
-
-    private val alleExamenlocatiesDataDelegate = delegateOf(state::alleExamenlocatiesData)
-    private var alleExamenlocatiesData by alleExamenlocatiesDataDelegate
-
-    private val selectedOpleiderKeysDelegate = delegateOf(state::selectedOpleiderKeys)
-    private var selectedOpleiderKeys by selectedOpleiderKeysDelegate
-
-    private val selectedExamenlocatieKeysDelegate = delegateOf(state::selectedExamenlocatieKeys)
-    private var selectedExamenlocatieKeys by selectedExamenlocatieKeysDelegate
-
-    private var selectedProductsDelegate = delegateOf(state::selectedProducts)
-    private var selectedProducts by selectedProductsDelegate
+    private var selectedGemeente by stateDelegateOf(AppState::selectedGemeente)
+    private var dataLoaded by stateDelegateOf(AppState::dataLoaded)
 
     private fun loadData() {
-        if (Data.isLoaded) return
-        GlobalScope.launch {
-            val (alleOpleiders, alleExamenlocaties) = Data.buildData()
-            alleOpleidersData = alleOpleiders
-            alleExamenlocatiesData = alleExamenlocaties
+        if (Data.hasStartedLoading) return
+        runAsync {
+            Data.buildAllData()
+
             println("data loaded!")
+            dataLoaded = true
         }
     }
-
-    private fun selectionFinished() =
-        selectedOpleiderKeys.isNotEmpty() &&
-            selectedExamenlocatieKeys.isNotEmpty() &&
-            selectedProducts.isNotEmpty()
 
     override fun RBuilder.render() {
         styledDiv {
@@ -209,106 +174,39 @@ class App(props: AppProps) : RComponent<AppProps, AppState>(props) {
             }
         }
 
+        (0..1).forEach { _ ->
+            resultFilterAndShow {
+                dataLoaded = this@App.dataLoaded
+                // TODO
+            }
+        }
+
         mGridContainer(
             spacing = MGridSpacing.spacing3,
             alignContent = MGridAlignContent.center
         ) {
-            mGridItem(
-                xs = MGridSize.cells12,
-                md = MGridSize.cells6,
-                lg = MGridSize.cells4,
-                xl = MGridSize.cells2
-            ) {
-                filterList(opleidersList, "opleiders") {
-                    itemsDataDelegate = alleOpleidersDataDelegate.toValDelegate()
-                    selectedItemKeysDelegate = selectedOpleiderKeysDelegate
-                    selectedOtherItemKeysDelegate = selectedExamenlocatieKeysDelegate
-                    onSelectionChanged = {}
-                }
-            }
-
-            mGridItem(
-                xs = MGridSize.cells12,
-                md = MGridSize.cells6,
-                lg = MGridSize.cells4,
-                xl = MGridSize.cells2
-            ) {
-                filterList(examenlocatiesList, "examenlocaties") {
-                    itemsDataDelegate = alleExamenlocatiesDataDelegate.toValDelegate()
-                    selectedItemKeysDelegate = selectedExamenlocatieKeysDelegate
-                    selectedOtherItemKeysDelegate = selectedOpleiderKeysDelegate
-                    onSelectionChanged = {}
-                }
-            }
-
-            mGridItem(
-                xs = MGridSize.cells12,
-                md = MGridSize.cells12,
-                lg = MGridSize.cells4,
-                xl = MGridSize.cells3
-            ) {
-                filterList(categorieProductList, "categorieën/producten") {
-                    alwaysAllowSelectAll = true
-                    selectedItemKeysDelegate = selectedProductsDelegate
-                    selectedOtherItemKeysDelegate = delegateOf { setOf<Product>() } // not used
-                    onSelectionChanged = {}
-                }
-            }
-
-            mGridItem(
-                xs = MGridSize.cells12,
-                md = MGridSize.cells12,
-                lg = MGridSize.cells12,
-                xl = MGridSize.cells5
-            ) {
-                mGridContainer(
-                    spacing = MGridSpacing.spacing3,
-                    alignContent = MGridAlignContent.center
-                ) {
-                    val currentResults = if (!selectionFinished())
-                        sequenceOf()
-                    else
-                        Data.getResults(
-                            selectedOpleiderKeys,
-                            selectedExamenlocatieKeys
-                        ).asSequence()
-                    mGridItem(
-                        xs = MGridSize.cells12,
-                        md = MGridSize.cells6,
-                        lg = MGridSize.cells6,
-                        xl = MGridSize.cells12
-                    ) {
-                        resultCard {
-                            examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS
-                            this.currentResults = currentResults
-                            selectionFinished = ::selectionFinished
-                            selectedProducts = this@App.selectedProducts
-                        }
-                    }
-
-                    mGridItem(
-                        xs = MGridSize.cells12,
-                        md = MGridSize.cells6,
-                        lg = MGridSize.cells6,
-                        xl = MGridSize.cells12
-                    ) {
-                        resultCard {
-                            examenResultaatVersie = HEREXAMEN_OF_TOETS
-                            this.currentResults = currentResults
-                            selectionFinished = ::selectionFinished
-                            selectedProducts = this@App.selectedProducts
-                        }
-                    }
-                }
-            }
-
             mGridItem(xs = MGridSize.cells12) {
                 hoveringCard {
                     mCardContent {
+                        +(selectedGemeente?.let { "${it.name}, Slagingspercentage eerste keer: ${(it.slagingspercentage * 100.0).toInt()}%" }
+                            ?: "-")
                         nederlandMap {
                             attrs {
-                                alleOpleidersData = this@App.alleOpleidersData
-                                color = state.circleColor
+                                dataLoaded = this@App.dataLoaded
+
+                                // this combi works
+                                // sele = state.selectedGemeentenaam
+                                // setSele = { setState { selectedGemeentenaam = it } }
+
+                                // does not work at all
+                                // sele = stateDelegateOf(state::selectedGemeentenaam)
+
+                                // this works
+                                // sele = StateDelegate(state.selectedGemeentenaam) {
+                                //     setState { selectedGemeentenaam = it }
+                                // }
+
+                                selectedGemeente = stateAsProp(AppState::selectedGemeente)
                             }
                         }
                     }

@@ -12,7 +12,7 @@ import kotlin.reflect.KProperty
  * @param childPropName The name of the child prop.
  *
  */
-class ChildPropDelegate<T>(private val propName: String, private val childPropName: String) :
+class ChildStateDelegate<T>(private val propName: String, private val childPropName: String) :
     ReadWriteProperty<RProps, T> {
     override fun getValue(thisRef: RProps, property: KProperty<*>): T {
         return thisRef.asDynamic()[propName][childPropName] as T
@@ -27,9 +27,9 @@ class ChildPropDelegate<T>(private val propName: String, private val childPropNa
 }
 
 /**
- * Same as [ChildPropDelegate] but allows nullable props
+ * Same as [ChildStateDelegate] but allows nullable props
  */
-class ChildPropDelegateNullable<T>(val propName: String, val childPropName: String) {
+class ChildStateDelegateNullable<T>(val propName: String, val childPropName: String) {
     inline operator fun <reified T> getValue(thisRef: RProps, property: KProperty<*>): T? {
 
         return when {

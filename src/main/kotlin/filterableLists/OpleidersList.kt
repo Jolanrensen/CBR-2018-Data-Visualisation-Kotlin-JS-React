@@ -23,9 +23,11 @@ import kotlinx.css.width
 import libs.reactList.ReactListRef
 import libs.reactList.ref
 import libs.reactList.styledReactList
+import propDelegateOf
 import react.RBuilder
 import react.ReactElement
 import react.buildElement
+import readOnlyPropDelegateOf
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
@@ -42,22 +44,24 @@ interface OpleidersListProps : FilterableListProps<String, Opleider>
 
 interface OpleidersListState : FilterableListState
 
-class OpleidersList(props: OpleidersListProps) :
-    FilterableList<String, Opleider, OpleidersListProps, OpleidersListState>(props) {
+class OpleidersList(prps: OpleidersListProps) :
+    FilterableList<String, Opleider, OpleidersListProps, OpleidersListState>(prps) {
 
     override fun keyToType(key: String) = alleOpleidersData[key] ?: error("opleider $key does not exist")
     override fun typeToKey(type: Opleider) = type.code
 
-    private var isOpleiderSelected by props.selectedItemKeysDelegate
-    private var isExamenlocatieSelected by props.selectedOtherItemKeysDelegate
-    private val alleOpleidersData by props.itemsDataDelegate
+    private var isOpleiderSelected by propDelegateOf(OpleidersListProps::selectedItemKeys)
+    private var isExamenlocatieSelected by propDelegateOf(OpleidersListProps::selectedOtherItemKeys)
+    private val alleOpleidersData by readOnlyPropDelegateOf(OpleidersListProps::itemsData)
+    private val filter by readOnlyPropDelegateOf(OpleidersListProps::filter)
+    private val onSelectionChanged by readOnlyPropDelegateOf(OpleidersListProps::onSelectionChanged)
 
     override fun OpleidersListState.init(props: OpleidersListProps) {}
 
     private var list: ReactListRef? = null
 
     override fun getFilteredItems(): List<Opleider> {
-        val filterTerms = props.filter.split(" ", ", ", ",")
+        val filterTerms = filter.split(" ", ", ", ",")
         val score = hashMapOf<String, Int>()
         (if (isExamenlocatieSelected.isNotEmpty())
             isExamenlocatieSelected.asSequence()
@@ -93,7 +97,7 @@ class OpleidersList(props: OpleidersListProps) :
             forEach { key ->
                 isOpleiderSelected -= key
             }
-            if (size > 0) props.onSelectionChanged()
+            if (size > 0) onSelectionChanged()
         }
 
         list?.scrollTo(0)
@@ -108,7 +112,7 @@ class OpleidersList(props: OpleidersListProps) :
         else
             isOpleiderSelected -= opleider
 
-        props.onSelectionChanged()
+        onSelectionChanged()
     }
 
     private fun renderRow(filteredItems: List<Opleider>, index: Int, key: String) = buildElement {

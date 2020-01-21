@@ -74,15 +74,15 @@ var MPopoverProps.anchorOriginVertical by EnumPropToStringNullable(
 /**
  * anchorOriginHorizontal and anchorOriginHorizontalNumeric are mutually exclusive. Setting one will cause the other to be null.
  */
-var MPopoverProps.anchorOriginHorizontalNumeric: Int? by ChildPropDelegateNullable("anchorOrigin", "horizontal")
+var MPopoverProps.anchorOriginHorizontalNumeric: Int? by ChildStateDelegateNullable("anchorOrigin", "horizontal")
 
 /**
  * anchorOriginVertical and anchorOriginVerticalNumeric are mutually exclusive. Setting one will cause the other to be null.
  */
-var MPopoverProps.anchorOriginVerticalNumeric: Int? by ChildPropDelegateNullable("anchorOrigin", "vertical")
+var MPopoverProps.anchorOriginVerticalNumeric: Int? by ChildStateDelegateNullable("anchorOrigin", "vertical")
 
-var MPopoverProps.anchorPositionLeft: Int? by ChildPropDelegateNullable("anchorPosition", "left")
-var MPopoverProps.anchorPositionTop: Int? by ChildPropDelegateNullable("anchorPosition", "top")
+var MPopoverProps.anchorPositionLeft: Int? by ChildStateDelegateNullable("anchorPosition", "left")
+var MPopoverProps.anchorPositionTop: Int? by ChildStateDelegateNullable("anchorPosition", "top")
 var MPopoverProps.anchorReference by EnumPropToString(MPopoverAnchorRef.values())
 
 /**
@@ -102,12 +102,12 @@ var MPopoverProps.transformOriginVertical by EnumPropToStringNullable(
 /**
  * transformOriginHorizontal and transformOriginHorizontalNumeric are mutually exclusive. Setting one will cause the other to be null.
  */
-var MPopoverProps.transformOriginHorizontalNumeric: Int? by ChildPropDelegateNullable("TransformOrigin", "horizontal")
+var MPopoverProps.transformOriginHorizontalNumeric: Int? by ChildStateDelegateNullable("TransformOrigin", "horizontal")
 
 /**
  * transformOriginVertical and transformOriginVerticalNumeric are mutually exclusive. Setting one will cause the other to be null.
  */
-var MPopoverProps.transformOriginVerticalNumeric: Int? by ChildPropDelegateNullable("TransformOrigin", "vertical")
+var MPopoverProps.transformOriginVerticalNumeric: Int? by ChildStateDelegateNullable("TransformOrigin", "vertical")
 
 var MPopoverProps.transitionComponent by TransitionComponentDelegate()
 var MPopoverProps.transitionDuration by TransitionDurationWithAutoDelegate()

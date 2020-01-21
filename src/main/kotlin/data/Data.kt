@@ -2,9 +2,7 @@ package data
 
 import data.ExamenResultaat.ONVOLDOENDE
 import data.ExamenResultaat.VOLDOENDE
-import data.ExamenResultaatCategorie.AUTOMAAT
-import data.ExamenResultaatCategorie.COMBI
-import data.ExamenResultaatCategorie.HANDGESCHAKELD
+import data.ExamenResultaatCategorie.*
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 import io.data2viz.time.Date
@@ -12,14 +10,18 @@ import org.w3c.xhr.XMLHttpRequest
 
 object Data {
 
-    val isLoaded
-        get() = alleOpleiders.isNotEmpty() && alleExamenlocaties.isNotEmpty()
+    var hasStartedLoading = false
 
-    private val alleOpleiders = hashMapOf<String, Opleider>()
-    private val alleExamenlocaties = hashMapOf<String, Examenlocatie>()
+    val alleOpleiders = hashMapOf<String, Opleider>()
+    val alleExamenlocaties = hashMapOf<String, Examenlocatie>()
 
     val opleiderToExamenlocaties: HashMap<String, HashSet<String>> = hashMapOf()
     val examenlocatieToOpleiders: HashMap<String, HashSet<String>> = hashMapOf()
+
+    val opleiderToResultaten: HashMap<String, HashSet<Resultaat>> = hashMapOf()
+    val examenlocatieToResultaten: HashMap<String, HashSet<Resultaat>> = hashMapOf()
+
+    private var alleResultaten: HashSet<Resultaat> = hashSetOf()
 
     interface GemeentesProperties {
         val statcode: String
@@ -58,114 +60,12 @@ object Data {
                 ?.map { it.split(';') }
         }
 
-    fun getResults(
-        opleiders: Collection<Opleider> = listOf(),
-        examenlocaties: Collection<Examenlocatie> = listOf()
-    ) = getResults(opleiders.map { it.code }, examenlocaties.map { it.naam })
-
-    fun getResults(
-        opleiders: Collection<String> = listOf(),
-        examenlocaties: Collection<String> = listOf()
-    ): List<Resultaat> {
-        println("Getting results for $opleiders $examenlocaties")
-        if (opleiders.isEmpty() || examenlocaties.isEmpty()) return listOf()
-        csv?.let {
-            val data = it.drop(1).filter { it[0] in opleiders && it[13] in examenlocaties }
-            val results = arrayListOf<Resultaat>()
-            for ((i, line) in data.withIndex()) {
-                results.add(
-                    Resultaat(
-                        id = i,
-                        opleider = alleOpleiders[line[0]]!!,
-                        product = Product.valueOf(
-                            line[11].replace('-', '_')
-                        ),
-                        examenlocatie = alleExamenlocaties[line[13]]!!,
-                        examenResultaatAantallen = listOf(
-                            ExamenResultaatAantal(
-                                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-                                examenResultaatCategorie = AUTOMAAT,
-                                examenResultaat = VOLDOENDE,
-                                aantal = line[23].toInt()
-                            ),
-                            ExamenResultaatAantal(
-                                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-                                examenResultaatCategorie = AUTOMAAT,
-                                examenResultaat = ONVOLDOENDE,
-                                aantal = line[24].toInt()
-                            ),
-                            ExamenResultaatAantal(
-                                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-                                examenResultaatCategorie = COMBI,
-                                examenResultaat = VOLDOENDE,
-                                aantal = line[25].toInt()
-                            ),
-                            ExamenResultaatAantal(
-                                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-                                examenResultaatCategorie = COMBI,
-                                examenResultaat = ONVOLDOENDE,
-                                aantal = line[26].toInt()
-                            ),
-                            ExamenResultaatAantal(
-                                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-                                examenResultaatCategorie = HANDGESCHAKELD,
-                                examenResultaat = VOLDOENDE,
-                                aantal = line[27].toInt()
-                            ),
-                            ExamenResultaatAantal(
-                                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-                                examenResultaatCategorie = HANDGESCHAKELD,
-                                examenResultaat = ONVOLDOENDE,
-                                aantal = line[28].toInt()
-                            ),
-                            ExamenResultaatAantal(
-                                examenResultaatVersie = HEREXAMEN_OF_TOETS,
-                                examenResultaatCategorie = AUTOMAAT,
-                                examenResultaat = VOLDOENDE,
-                                aantal = line[31].toInt()
-                            ),
-                            ExamenResultaatAantal(
-                                examenResultaatVersie = HEREXAMEN_OF_TOETS,
-                                examenResultaatCategorie = AUTOMAAT,
-                                examenResultaat = ONVOLDOENDE,
-                                aantal = line[32].toInt()
-                            ),
-                            ExamenResultaatAantal(
-                                examenResultaatVersie = HEREXAMEN_OF_TOETS,
-                                examenResultaatCategorie = COMBI,
-                                examenResultaat = VOLDOENDE,
-                                aantal = line[33].toInt()
-                            ),
-                            ExamenResultaatAantal(
-                                examenResultaatVersie = HEREXAMEN_OF_TOETS,
-                                examenResultaatCategorie = COMBI,
-                                examenResultaat = ONVOLDOENDE,
-                                aantal = line[34].toInt()
-                            ),
-                            ExamenResultaatAantal(
-                                examenResultaatVersie = HEREXAMEN_OF_TOETS,
-                                examenResultaatCategorie = HANDGESCHAKELD,
-                                examenResultaat = VOLDOENDE,
-                                aantal = line[35].toInt()
-                            ),
-                            ExamenResultaatAantal(
-                                examenResultaatVersie = HEREXAMEN_OF_TOETS,
-                                examenResultaatCategorie = HANDGESCHAKELD,
-                                examenResultaat = ONVOLDOENDE,
-                                aantal = line[36].toInt()
-                            )
-                        )
-                    )
-                )
-            }
-            return results
-        } ?: throw IllegalArgumentException("Couldn't read data")
-    }
-
-    fun buildData(): Pair<Map<String, Opleider>, Map<String, Examenlocatie>> {
+    fun buildAllData() {
+        hasStartedLoading = true
         csv?.let {
             val data = it.drop(1)
-            for (line in data) {
+
+            for ((i, line) in data.withIndex()) {
                 try {
                     val opleider = alleOpleiders.getOrPut(line[0]) {
                         Opleider(
@@ -214,147 +114,202 @@ object Data {
                         )
                     }
 
+                    val resultaat = getResult(i, line)
 
-                    opleiderToExamenlocaties.apply {
-                        get(opleider.code)?.add(examenlocatie.naam) ?: set(opleider.code, hashSetOf(examenlocatie.naam))
-                    }
-                    examenlocatieToOpleiders.apply {
-                        get(examenlocatie.naam)?.add(opleider.code) ?: set(examenlocatie.naam, hashSetOf(opleider.code))
-                    }
+                    alleResultaten.add(resultaat)
+
+                    opleiderToExamenlocaties.getOrPut(opleider.code, { hashSetOf() })
+                        .add(examenlocatie.naam)
+                    examenlocatieToOpleiders.getOrPut(examenlocatie.naam, { hashSetOf() })
+                        .add(opleider.code)
+
+                    opleiderToResultaten.getOrPut(opleider.code, { hashSetOf() })
+                        .add(resultaat)
+                    examenlocatieToResultaten.getOrPut(examenlocatie.naam, { hashSetOf() })
+                        .add(resultaat)
+
                 } catch (e: Exception) {
-                    // console.error(line, e)
                 }
             }
-        } ?: throw IllegalArgumentException("Couldn't read data")
-        return alleOpleiders to alleExamenlocaties
+        }
     }
+
+
+//    fun getResults(
+//        opleiders: Collection<Opleider> = alleOpleiders.values,
+//        examenlocaties: Collection<Examenlocatie> = alleExamenlocaties.values
+//    ) = getResults(opleiders.map { it.code }, examenlocaties.map { it.naam })
+//
+//    fun getResults(
+//        opleiders: Collection<String> = listOf(),
+//        examenlocaties: Collection<String> = listOf()
+//    ) = //        println("Getting results for $opleiders $examenlocaties")
+//        if (opleiders.isEmpty() || examenlocaties.isEmpty()) {
+//            sequenceOf()
+//        } else {
+//            csv?.let {
+//                val data = it.drop(1).filter { it[0] in opleiders && it[13] in examenlocaties }
+//                sequence {
+//                    for ((i, line) in data.withIndex())
+//                        yield(getResult(i, line))
+//                }
+//            } ?: throw IllegalArgumentException("Couldn't read data")
+//        }
+
+    private fun getResult(id: Int, line: List<String>) = Resultaat(
+        id = id,
+        opleider = alleOpleiders[line[0]]!!,
+        product = Product.valueOf(
+            line[11].replace('-', '_')
+        ),
+        examenlocatie = alleExamenlocaties[line[13]]!!,
+        examenResultaatAantallen = listOf(
+            ExamenResultaatAantal(
+                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
+                examenResultaatCategorie = AUTOMAAT,
+                examenResultaat = VOLDOENDE,
+                aantal = line[23].toInt()
+            ),
+            ExamenResultaatAantal(
+                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
+                examenResultaatCategorie = AUTOMAAT,
+                examenResultaat = ONVOLDOENDE,
+                aantal = line[24].toInt()
+            ),
+            ExamenResultaatAantal(
+                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
+                examenResultaatCategorie = COMBI,
+                examenResultaat = VOLDOENDE,
+                aantal = line[25].toInt()
+            ),
+            ExamenResultaatAantal(
+                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
+                examenResultaatCategorie = COMBI,
+                examenResultaat = ONVOLDOENDE,
+                aantal = line[26].toInt()
+            ),
+            ExamenResultaatAantal(
+                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
+                examenResultaatCategorie = HANDGESCHAKELD,
+                examenResultaat = VOLDOENDE,
+                aantal = line[27].toInt()
+            ),
+            ExamenResultaatAantal(
+                examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
+                examenResultaatCategorie = HANDGESCHAKELD,
+                examenResultaat = ONVOLDOENDE,
+                aantal = line[28].toInt()
+            ),
+            ExamenResultaatAantal(
+                examenResultaatVersie = HEREXAMEN_OF_TOETS,
+                examenResultaatCategorie = AUTOMAAT,
+                examenResultaat = VOLDOENDE,
+                aantal = line[31].toInt()
+            ),
+            ExamenResultaatAantal(
+                examenResultaatVersie = HEREXAMEN_OF_TOETS,
+                examenResultaatCategorie = AUTOMAAT,
+                examenResultaat = ONVOLDOENDE,
+                aantal = line[32].toInt()
+            ),
+            ExamenResultaatAantal(
+                examenResultaatVersie = HEREXAMEN_OF_TOETS,
+                examenResultaatCategorie = COMBI,
+                examenResultaat = VOLDOENDE,
+                aantal = line[33].toInt()
+            ),
+            ExamenResultaatAantal(
+                examenResultaatVersie = HEREXAMEN_OF_TOETS,
+                examenResultaatCategorie = COMBI,
+                examenResultaat = ONVOLDOENDE,
+                aantal = line[34].toInt()
+            ),
+            ExamenResultaatAantal(
+                examenResultaatVersie = HEREXAMEN_OF_TOETS,
+                examenResultaatCategorie = HANDGESCHAKELD,
+                examenResultaat = VOLDOENDE,
+                aantal = line[35].toInt()
+            ),
+            ExamenResultaatAantal(
+                examenResultaatVersie = HEREXAMEN_OF_TOETS,
+                examenResultaatCategorie = HANDGESCHAKELD,
+                examenResultaat = ONVOLDOENDE,
+                aantal = line[36].toInt()
+            )
+        )
+    )
+
+    // builds dataset for opleiders and examenlocaties
+//    fun getOpleidersAndExamenlocaties(): Pair<Map<String, Opleider>, Map<String, Examenlocatie>> {
+//        if (alleOpleiders.isNotEmpty() && alleExamenlocaties.isNotEmpty())
+//            return alleOpleiders to alleExamenlocaties
+//        csv?.let {
+//            val data = it.drop(1)
+//            for (line in data) {
+//                try {
+//                    val opleider = alleOpleiders.getOrPut(line[0]) {
+//                        Opleider(
+//                            code = line[0],
+//                            naam = line[1],
+//                            startdatum = line[2].split('-').let {
+//                                Date(
+//                                    day = it[0].toInt(),
+//                                    month = it[1].toInt(),
+//                                    year = it[2].toInt(),
+//                                    hour = 0,
+//                                    minute = 0,
+//                                    second = 0,
+//                                    millisecond = 0
+//                                )
+//                            },
+//                            einddatum = line[3].split('-').let {
+//                                Date(
+//                                    day = it[0].toInt(),
+//                                    month = it[1].toInt(),
+//                                    year = it[2].toInt(),
+//                                    hour = 0,
+//                                    minute = 0,
+//                                    second = 0,
+//                                    millisecond = 0
+//                                )
+//                            },
+//                            straatnaam = line[4],
+//                            huisnummer = line[5],
+//                            huisnummerToevoeging = line[6],
+//                            postcode = line[7],
+//                            plaatsnaam = line[8],
+//                            gemeente = line[37]
+//                        )
+//                    }
+//
+//                    val examenlocatie = alleExamenlocaties.getOrPut(line[13]) {
+//                        Examenlocatie(
+//                            naam = line[13],
+//                            straatnaam = line[14],
+//                            huisnummer = line[15],
+//                            huisnummerToevoeging = line[16],
+//                            postcode = line[17],
+//                            plaatsnaam = line[18],
+//                            gemeente = line[38]
+//                        )
+//                    }
+//
+//
+//                    opleiderToExamenlocaties.apply {
+//                        get(opleider.code)?.add(examenlocatie.naam) ?: set(opleider.code, hashSetOf(examenlocatie.naam))
+//                    }
+//                    examenlocatieToOpleiders.apply {
+//                        get(examenlocatie.naam)?.add(opleider.code) ?: set(examenlocatie.naam, hashSetOf(opleider.code))
+//                    }
+//                } catch (e: Exception) {
+//                    // console.error(line, e)
+//                }
+//            }
+//        } ?: throw IllegalArgumentException("Couldn't read data")
+//        return alleOpleiders to alleExamenlocaties
+//    }
 }
 
-// No ram can handle this
-//for ((i, line) in data.withIndex()) {
-//    alleResultaten.add(
-//        Resultaat(
-//            id = i,
-//            opleider = Data.alleOpleiders.getOrPut(line[0]) {
-//                Opleider(
-//                    code = line[0],
-//                    naam = line[1],
-//                    startdatum = line[2].split('-').let {
-//                        Date(
-//                            day = it[0].toInt(),
-//                            month = it[1].toInt(),
-//                            year = it[2].toInt(),
-//                            hour = 0,
-//                            minute = 0,
-//                            second = 0,
-//                            millisecond = 0
-//                        )
-//                    },
-//                    einddatum = line[3].split('-').let {
-//                        Date(
-//                            day = it[0].toInt(),
-//                            month = it[1].toInt(),
-//                            year = it[2].toInt(),
-//                            hour = 0,
-//                            minute = 0,
-//                            second = 0,
-//                            millisecond = 0
-//                        )
-//                    },
-//                    straatnaam = line[4],
-//                    huisnummer = line[5],
-//                    huisnummerToevoeging = line[6],
-//                    postcode = line[7],
-//                    plaatsnaam = line[8]
-//                )
-//            },
-//            product = Product.valueOf(
-//                line[11].replace('-', '_')
-//            ),
-//            examenlocatie = Data.alleExamenLocaties.getOrPut(line[13]) {
-//                Examenlocatie(
-//                    naam = line[13],
-//                    straatnaam = line[14],
-//                    huisnummer = line[15],
-//                    huisnummerToevoeging = line[16],
-//                    postcode = line[17],
-//                    plaatsnaam = line[18]
-//                )
-//            },
-//            examenResultaatAantallen = listOf(
-//                ExamenResultaatAantal(
-//                    examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-//                    examenResultaatCategorie = AUTOMAAT,
-//                    examenResultaat = VOLDOENDE,
-//                    aantal = line[23].toInt()
-//                ),
-//                ExamenResultaatAantal(
-//                    examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-//                    examenResultaatCategorie = AUTOMAAT,
-//                    examenResultaat = ONVOLDOENDE,
-//                    aantal = line[24].toInt()
-//                ),
-//                ExamenResultaatAantal(
-//                    examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-//                    examenResultaatCategorie = COMBI,
-//                    examenResultaat = VOLDOENDE,
-//                    aantal = line[25].toInt()
-//                ),
-//                ExamenResultaatAantal(
-//                    examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-//                    examenResultaatCategorie = COMBI,
-//                    examenResultaat = ONVOLDOENDE,
-//                    aantal = line[26].toInt()
-//                ),
-//                ExamenResultaatAantal(
-//                    examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-//                    examenResultaatCategorie = HANDGESCHAKELD,
-//                    examenResultaat = VOLDOENDE,
-//                    aantal = line[27].toInt()
-//                ),
-//                ExamenResultaatAantal(
-//                    examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-//                    examenResultaatCategorie = HANDGESCHAKELD,
-//                    examenResultaat = ONVOLDOENDE,
-//                    aantal = line[28].toInt()
-//                ),
-//                ExamenResultaatAantal(
-//                    examenResultaatVersie = HEREXAMEN_OF_TOETS,
-//                    examenResultaatCategorie = AUTOMAAT,
-//                    examenResultaat = VOLDOENDE,
-//                    aantal = line[31].toInt()
-//                ),
-//                ExamenResultaatAantal(
-//                    examenResultaatVersie = HEREXAMEN_OF_TOETS,
-//                    examenResultaatCategorie = AUTOMAAT,
-//                    examenResultaat = ONVOLDOENDE,
-//                    aantal = line[32].toInt()
-//                ),
-//                ExamenResultaatAantal(
-//                    examenResultaatVersie = HEREXAMEN_OF_TOETS,
-//                    examenResultaatCategorie = COMBI,
-//                    examenResultaat = VOLDOENDE,
-//                    aantal = line[33].toInt()
-//                ),
-//                ExamenResultaatAantal(
-//                    examenResultaatVersie = HEREXAMEN_OF_TOETS,
-//                    examenResultaatCategorie = COMBI,
-//                    examenResultaat = ONVOLDOENDE,
-//                    aantal = line[34].toInt()
-//                ),
-//                ExamenResultaatAantal(
-//                    examenResultaatVersie = HEREXAMEN_OF_TOETS,
-//                    examenResultaatCategorie = HANDGESCHAKELD,
-//                    examenResultaat = VOLDOENDE,
-//                    aantal = line[35].toInt()
-//                ),
-//                ExamenResultaatAantal(
-//                    examenResultaatVersie = HEREXAMEN_OF_TOETS,
-//                    examenResultaatCategorie = HANDGESCHAKELD,
-//                    examenResultaat = ONVOLDOENDE,
-//                    aantal = line[36].toInt()
-//                )
-//            )
-//        )
-//    )
-//}
+
+
+
