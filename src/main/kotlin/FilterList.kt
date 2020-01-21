@@ -1,5 +1,4 @@
-
-import com.ccfraser.muirwik.components.MGridSize
+import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.MIconEdge
 import com.ccfraser.muirwik.components.button.mIconButton
 import com.ccfraser.muirwik.components.form.MFormControlMargin
@@ -14,29 +13,22 @@ import com.ccfraser.muirwik.components.input.mInputLabel
 import com.ccfraser.muirwik.components.input.margin
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemText
-import com.ccfraser.muirwik.components.mCheckbox
-import com.ccfraser.muirwik.components.mGridContainer
-import com.ccfraser.muirwik.components.mGridItem
-import com.ccfraser.muirwik.components.persist
-import com.ccfraser.muirwik.components.targetInputValue
-import kotlinx.css.LinearDimension
-import kotlinx.css.padding
+import kotlinx.css.*
 import kotlinx.html.InputType
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
-import react.ref
+import react.*
 import styled.css
+import styled.styledDiv
 
 interface FilterListProps<Key : Any, Type : Any?> : RProps {
     var filterableListCreationFunction: CreateFilterableList<Key, Type>
     var liveReload: Boolean
     var itemsName: String
-    var selectedItemKeysDelegate: StateDelegate<Set<Key>>
-    var selectedOtherItemKeysDelegate: StateDelegate<Set<Key>>
+    var selectedItemKeys: StateAsProp<Set<Key>>
+    var selectedOtherItemKeys: StateAsProp<Set<Key>>
     var onSelectionChanged: () -> Unit
     var alwaysAllowSelectAll: Boolean
+
+    var dataLoaded: Boolean
 
     var itemsData: Map<Key, Type>
 }
@@ -48,8 +40,9 @@ interface FilterListState : RState {
 class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
     RComponent<FilterListProps<Key, Type>, FilterListState>(prps) {
 
-    private var selectedItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedItemKeysDelegate)
-    private var selectedOtherItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedOtherItemKeysDelegate)
+    private var selectedItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedItemKeys)
+    private var selectedOtherItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedOtherItemKeys)
+    private val dataLoaded by readOnlyPropDelegateOf(FilterListProps<Key, Type>::dataLoaded)
 
     override fun FilterListState.init(props: FilterListProps<Key, Type>) {
         filter = ""
@@ -150,19 +143,27 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
             }
 
             mGridItem(xs = MGridSize.cells12) {
-                props.filterableListCreationFunction(this) {
-                    selectedItemKeysDelegate = props.selectedItemKeysDelegate
-                    selectedOtherItemKeysDelegate = props.selectedOtherItemKeysDelegate
+                if (dataLoaded)
+                    props.filterableListCreationFunction(this) {
+                        selectedItemKeys = props.selectedItemKeys
+                        selectedOtherItemKeys = props.selectedOtherItemKeys
 
-                    ref<FilterableList<Key, Type, *, *>> {
-                        filterableList = it
+                        ref<FilterableList<Key, Type, *, *>> {
+                            filterableList = it
+                        }
+
+                        filter = this@FilterList.filter
+
+                        onSelectionChanged = props.onSelectionChanged
+                        itemsData = props.itemsData
+
                     }
-
-                    filter = this@FilterList.filter
-
-                    onSelectionChanged = props.onSelectionChanged
-                    itemsData = props.itemsData
-
+                else styledDiv {
+                    css {
+                        display = Display.flex
+                        justifyContent = JustifyContent.center
+                    }
+                    mCircularProgress()
                 }
             }
         }

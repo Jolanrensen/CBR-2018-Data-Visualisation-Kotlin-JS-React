@@ -52,8 +52,8 @@ fun <S : RState, T> Component<*, S>.stateAsProp(stateItem: KMutableProperty1<S, 
         }
     }
 
-fun <S : RState, T> Component<*, S>.stateDelegateOf(default: T) =
-    StateDelegate({ default })
+fun <S : RState, T> Component<*, S>.stateAsProp(default: T) =
+    StateAsProp(default)
 
 // class ValPropDelegate<T>(
 //     val get: () -> T

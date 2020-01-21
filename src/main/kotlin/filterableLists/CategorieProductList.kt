@@ -59,7 +59,7 @@ interface CategorieProductListState : FilterableListState {
 class CategorieProductList(prps: CategorieProductListProps) :
     FilterableList<Product, Product, CategorieProductListProps, CategorieProductListState>(prps) {
 
-    private var isProductSelected by propDelegateOf(CategorieProductListProps::selectedItemKeysDelegate)
+    private var isProductSelected by propDelegateOf(CategorieProductListProps::selectedItemKeys)
     private val filter by readOnlyPropDelegateOf(CategorieProductListProps::filter)
     private val onSelectionChanged by readOnlyPropDelegateOf(CategorieProductListProps::onSelectionChanged)
 

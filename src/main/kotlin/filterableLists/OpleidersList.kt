@@ -50,8 +50,8 @@ class OpleidersList(prps: OpleidersListProps) :
     override fun keyToType(key: String) = alleOpleidersData[key] ?: error("opleider $key does not exist")
     override fun typeToKey(type: Opleider) = type.code
 
-    private var isOpleiderSelected by propDelegateOf(OpleidersListProps::selectedItemKeysDelegate)
-    private var isExamenlocatieSelected by propDelegateOf(OpleidersListProps::selectedOtherItemKeysDelegate)
+    private var isOpleiderSelected by propDelegateOf(OpleidersListProps::selectedItemKeys)
+    private var isExamenlocatieSelected by propDelegateOf(OpleidersListProps::selectedOtherItemKeys)
     private val alleOpleidersData by readOnlyPropDelegateOf(OpleidersListProps::itemsData)
     private val filter by readOnlyPropDelegateOf(OpleidersListProps::filter)
     private val onSelectionChanged by readOnlyPropDelegateOf(OpleidersListProps::onSelectionChanged)

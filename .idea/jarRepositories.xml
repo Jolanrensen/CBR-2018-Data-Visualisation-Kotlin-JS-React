@@ -27,9 +27,24 @@
       <option name="url" value="https://kotlin.bintray.com/kotlin-js-wrappers" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="maven7" />
+      <option name="name" value="maven7" />
+      <option name="url" value="https://dl.bintray.com/soywiz/soywiz" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven6" />
+      <option name="name" value="maven6" />
+      <option name="url" value="https://dl.bintray.com/korlibs/korlibs" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="BintrayJCenter" />
       <option name="name" value="BintrayJCenter" />
       <option name="url" value="https://jcenter.bintray.com/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven5" />
+      <option name="name" value="maven5" />
+      <option name="url" value="https://jitpack.io" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="maven" />
@@ -40,16 +55,6 @@
       <option name="id" value="maven3" />
       <option name="name" value="maven3" />
       <option name="url" value="https://kotlin.bintray.com/js-externals" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="maven6" />
-      <option name="name" value="maven6" />
-      <option name="url" value="https://dl.bintray.com/korlibs/korlibs" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="maven5" />
-      <option name="name" value="maven5" />
-      <option name="url" value="https://jitpack.io" />
     </remote-repository>
   </component>
 </project>

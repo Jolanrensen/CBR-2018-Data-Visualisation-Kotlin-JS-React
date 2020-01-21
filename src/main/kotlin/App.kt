@@ -10,15 +10,10 @@ import com.ccfraser.muirwik.components.mAvatar
 import com.ccfraser.muirwik.components.mGridContainer
 import com.ccfraser.muirwik.components.mGridItem
 import com.ccfraser.muirwik.components.mTypography
-import data.*
-import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
-import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
-import filterableLists.categorieProductList
-import filterableLists.examenlocatiesList
-import filterableLists.opleidersList
+import data.Data
 import io.data2viz.color.Colors
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.promise
+import kotlinx.coroutines.launch
 import kotlinx.css.Color
 import kotlinx.css.backgroundColor
 import kotlinx.css.color
@@ -59,7 +54,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
     private fun loadData() {
         if (Data.hasStartedLoading) return
-        GlobalScope.promise {
+        runAsync {
             Data.buildAllData()
 
             println("data loaded!")
@@ -179,7 +174,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
             }
         }
 
-        (0 .. 1).forEach { _ ->
+        (0..1).forEach { _ ->
             resultFilterAndShow {
                 dataLoaded = this@App.dataLoaded
                 // TODO
@@ -193,7 +188,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
             mGridItem(xs = MGridSize.cells12) {
                 hoveringCard {
                     mCardContent {
-                        +(selectedGemeente?.let { "${it.name}, slagingspercentage: ${(it.slagingspercentage * 100.0).toInt()}%" }
+                        +(selectedGemeente?.let { "${it.name}, Slagingspercentage eerste keer: ${(it.slagingspercentage * 100.0).toInt()}%" }
                             ?: "-")
                         nederlandMap {
                             attrs {

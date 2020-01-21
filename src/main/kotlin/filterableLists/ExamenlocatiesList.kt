@@ -50,8 +50,8 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
     override fun keyToType(key: String) = alleExamenlocatiesData[key] ?: error("Examenlocatie $key does not exist")
     override fun typeToKey(type: Examenlocatie) = type.naam
 
-    private var isExamenlocatieSelected by propDelegateOf(ExamenlocatiesListProps::selectedItemKeysDelegate)
-    private val isOpleiderSelected by propDelegateOf(ExamenlocatiesListProps::selectedOtherItemKeysDelegate)
+    private var isExamenlocatieSelected by propDelegateOf(ExamenlocatiesListProps::selectedItemKeys)
+    private val isOpleiderSelected by propDelegateOf(ExamenlocatiesListProps::selectedOtherItemKeys)
     private val alleExamenlocatiesData by readOnlyPropDelegateOf(ExamenlocatiesListProps::itemsData)
     private val filter by readOnlyPropDelegateOf(ExamenlocatiesListProps::filter)
     private val onSelectionChanged by readOnlyPropDelegateOf(ExamenlocatiesListProps::onSelectionChanged)

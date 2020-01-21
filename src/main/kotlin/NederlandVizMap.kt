@@ -1,3 +1,4 @@
+import com.ccfraser.muirwik.components.mCircularProgress
 import data.*
 import data2viz.GeoPathNode
 import data2viz.vizComponent
@@ -10,15 +11,13 @@ import io.data2viz.math.deg
 import io.data2viz.math.pct
 import io.data2viz.viz.KMouseMove
 import io.data2viz.viz.Viz
+import kotlinx.css.*
 import org.khronos.webgl.get
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
-import react.RBuilder
-import react.RComponent
-import react.RElementBuilder
-import react.RProps
-import react.RState
-import kotlin.lazy
+import react.*
+import styled.css
+import styled.styledDiv
 import kotlin.random.Random
 
 interface NederlandMapProps : RProps {
@@ -26,7 +25,9 @@ interface NederlandMapProps : RProps {
     var dataLoaded: Boolean
 }
 
-interface NederlandMapState : RState
+interface NederlandMapState : RState {
+    var gemeentes: List<NederlandVizMap.Gemeente>
+}
 
 class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, NederlandMapState>(prps) {
 
@@ -41,9 +42,16 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
 
     val dataLoaded by readOnlyPropDelegateOf(NederlandMapProps::dataLoaded)
 
+    override fun NederlandMapState.init(props: NederlandMapProps) {
+        gemeentes = listOf()
+    }
+
+    var gemeentes by stateDelegateOf(NederlandMapState::gemeentes)
+
 
     override fun shouldComponentUpdate(nextProps: NederlandMapProps, nextState: NederlandMapState) =
         props.dataLoaded != nextProps.dataLoaded
+                || state.gemeentes != nextState.gemeentes
     //|| props.selectedGemeente != nextProps.selectedGemeente
 
     private val nederland = Data.geoJson!! // geometry type is polygon/multipolygon for each
@@ -63,7 +71,6 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
 
     private fun getGemeenteColor(selected: Boolean, gemeente: Gemeente): HslColor {
 //        val maxNoOpleiders = 470 // den haag
-
         return if (gemeente.opleiders.isEmpty()) {
             Colors.Web.black.toHsl()
         } else {
@@ -77,85 +84,105 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
         }
     }
 
-    private val gemeentes: Collection<Gemeente> by lazy {
+
+    private var alreadyCalculatingGemeentes = false
+    private fun calculateGemeentes() {
+        if (gemeentes.isNotEmpty() || alreadyCalculatingGemeentes) return
+        alreadyCalculatingGemeentes = true
         println("calculating 'gemeentes'")
-        val result = nederland.features.mapIndexed { index, feature ->
-            val opleiderCodes = hashSetOf<String>()
-            val opleiders = Data.alleOpleiders
-                .asSequence()
-                .filter {
-                    it.value.gemeente.toLowerCase() == feature.properties.statnaam.toLowerCase()
-                }
-                .apply { opleiderCodes += map { it.key } }
-                .map { it.value }
-                .toSet()
+
+        runAsync {
+            gemeentes = nederland.features.mapIndexed { index, feature ->
+                val opleiderCodes = hashSetOf<String>()
+                val opleiders = Data.alleOpleiders
+                    .asSequence()
+                    .filter {
+                        it.value.gemeente.toLowerCase() == feature.properties.statnaam.toLowerCase()
+                    }
+                    .apply { opleiderCodes += map { it.key } }
+                    .map { it.value }
+                    .toSet()
 
 
-            fun GeoPathNode.runOnNode() {
-                stroke = Colors.Web.black
-                strokeWidth = 1.0
-                geoProjection = conicEqualAreaProjection {
-                    scale = 15000.0
-                    center(6.5.deg, 52.72.deg)
-                }
-                geoData = feature.toData2Viz()
-            }
-
-            val geoPathNode = GeoPathNode().apply {
-                runOnNode()
-            }
-            var idColor: Color?
-            val hiddenGeoPathNode = GeoPathNode().apply {
-                runOnNode()
-                do {
-                    idColor = Colors.rgb(
-                        red = Random.nextInt(0, 255),
-                        green = Random.nextInt(0, 255),
-                        blue = Random.nextInt(0, 255)
-                    )
-                } while (idColor!!.rgb in idColorToGemeente)
-                fill = idColor
-                strokeWidth = null
-            }
-
-            val ourResults = Data.opleiderToResultaten
-                .asSequence()
-                .filter { it.key in opleiderCodes }
-                .map { it.value }
-                .flatten()
-            val totaalVoldoende = ourResults
-                .sumBy {
-                    it.examenResultaatAantallen
-                        .filter { it.examenResultaat == ExamenResultaat.VOLDOENDE }
-                        .sumBy { it.aantal }
-                }
-            val totaal = ourResults
-                .sumBy {
-                    it.examenResultaatAantallen
-                        .sumBy { it.aantal }
+                fun GeoPathNode.runOnNode() {
+                    stroke = Colors.Web.black
+                    strokeWidth = 1.0
+                    geoProjection = conicEqualAreaProjection {
+                        scale = 15000.0
+                        center(6.5.deg, 52.72.deg)
+                    }
+                    geoData = feature.toData2Viz()
                 }
 
-            val gemeente = Gemeente(
-                feature = feature,
-                opleiders = opleiders,
-                geoPathNode = geoPathNode,
-                hiddenGeoPathNode = hiddenGeoPathNode,
-                slagingspercentage = totaalVoldoende.toDouble() / totaal.toDouble()
-            )
+                val geoPathNode = GeoPathNode().apply {
+                    runOnNode()
+                }
+                var idColor: Color?
+                val hiddenGeoPathNode = GeoPathNode().apply {
+                    runOnNode()
+                    do {
+                        idColor = Colors.rgb(
+                            red = Random.nextInt(0, 255),
+                            green = Random.nextInt(0, 255),
+                            blue = Random.nextInt(0, 255)
+                        )
+                    } while (idColor!!.rgb in idColorToGemeente)
+                    fill = idColor
+                    strokeWidth = null
+                }
 
-            geoPathNode.fill = getGemeenteColor(false, gemeente)
-            idColorToGemeente[idColor!!.rgb] = gemeente
+                val ourResults = Data.opleiderToResultaten
+                    .asSequence()
+                    .filter { it.key in opleiderCodes }
+                    .map { it.value }
+                    .flatten()
+                val totaalVoldoende = ourResults
+                    .sumBy {
+                        it.examenResultaatAantallen
+                            .filter { it.examenResultaat == ExamenResultaat.VOLDOENDE }
+                            .sumBy { it.aantal }
+                    }
+                val totaal = ourResults
+                    .sumBy {
+                        it.examenResultaatAantallen
+                            .sumBy { it.aantal }
+                    }
+
+                val gemeente = Gemeente(
+                    feature = feature,
+                    opleiders = opleiders,
+                    geoPathNode = geoPathNode,
+                    hiddenGeoPathNode = hiddenGeoPathNode,
+                    slagingspercentage = totaalVoldoende.toDouble() / totaal.toDouble()
+                )
+
+                geoPathNode.fill = getGemeenteColor(false, gemeente)
+                idColorToGemeente[idColor!!.rgb] = gemeente
 
 //            println("${index.toDouble() / nederland.features.size.toDouble() * 100}%")
-            gemeente
+                gemeente
+            }
         }
-
-        result
     }
 
+
     override fun RBuilder.render() {
-        if (!dataLoaded) return
-//        if (alleOpleidersData.isEmpty()) return
+        fun showLoading() {
+            styledDiv {
+                css {
+                    display = Display.flex
+                    justifyContent = JustifyContent.center
+                }
+                mCircularProgress()
+            }
+        }
+
+        if (!dataLoaded) return showLoading()
+        if (gemeentes.isEmpty()) return {
+            showLoading()
+            calculateGemeentes()
+        }()
+
 
         var hiddenViz: Viz?
         var hiddenCanvas: HTMLCanvasElement? = null
@@ -165,20 +192,23 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
             runOnHiddenViz = { it ->
                 hiddenCanvas = it
                 hiddenViz = this
-                gemeentes.forEach {
+                this@NederlandVizMap.gemeentes.forEach {
                     it.hiddenGeoPathNode.redrawPath()
                     hiddenViz!!.add(it.hiddenGeoPathNode)
                 }
             }
         ) {
 
-            println("rendering card!, gemeentes size: ${gemeentes.size}, idColorToGemeente size: ${idColorToGemeente.size}")
+            println(
+                "rendering card!, gemeentes size: ${this@NederlandVizMap.gemeentes
+                    .size}, idColorToGemeente size: ${idColorToGemeente.size}"
+            )
             // js https://github.com/data2viz/data2viz/blob/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-js/src/main/kotlin/EarthJs.kt
             // common https://github.com/data2viz/data2viz/tree/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-common/src/main/kotlin
 
             fun drawGemeentes() {
                 clear()
-                gemeentes.forEach {
+                this@NederlandVizMap.gemeentes.forEach {
                     it.geoPathNode.fill = getGemeenteColor(
                         selectedGemeente == it,
                         it

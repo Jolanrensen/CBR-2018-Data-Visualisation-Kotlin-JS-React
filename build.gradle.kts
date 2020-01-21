@@ -20,6 +20,7 @@ repositories {
     maven(url = "https://kotlin.bintray.com/kotlin-js-wrappers")
     maven(url = "https://jitpack.io")
     maven(url = "https://dl.bintray.com/korlibs/korlibs")
+    maven(url = "https://dl.bintray.com/soywiz/soywiz")
 }
 
 // attempt at linter
@@ -96,6 +97,9 @@ kotlin {
                 implementation(npm("jquery"))
 
                 implementation("com.soywiz:korma-js:0.20.0")
+
+//                implementation(npm("cluster"))
+//                implementation("com.soywiz:kworker-js:0.9.0")
             }
         }
     }

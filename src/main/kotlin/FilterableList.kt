@@ -10,13 +10,13 @@ interface FilterableListProps<Key : Any, Type : Any?> : RProps {
     var filter: String
 
     // Set of keys representing all selected items in this list, don't forget to call onSelectionChanged
-    var selectedItemKeysDelegate: StateDelegate<Set<Key>>
+    var selectedItemKeys: StateAsProp<Set<Key>>
 
     // Function that should be called whenever anything changes in selectedItemKeysDelegate
     var onSelectionChanged: () -> Unit
 
     // Set of keys representing all selected items in other relevant list
-    var selectedOtherItemKeysDelegate: StateDelegate<Set<Key>>
+    var selectedOtherItemKeys: StateAsProp<Set<Key>>
 
     // Delegate to data for items in the list
     var itemsData: Map<Key, Type>
