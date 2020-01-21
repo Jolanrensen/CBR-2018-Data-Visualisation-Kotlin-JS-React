@@ -2,23 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="774f62ac-417e-42ca-a84a-c37de57262e9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinScripting.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/InlineWorker.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/RunOnWorker.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinScripting.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Delegate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Delegate.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/trapezoidal_v2.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +23,34 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="Kotlin File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -44,6 +66,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -104,6 +127,7 @@
       <updated>1579561685254</updated>
       <workItem from="1579561686446" duration="1829000" />
       <workItem from="1579620930742" duration="6298000" />
+      <workItem from="1579633659833" duration="14264000" />
     </task>
     <servers />
   </component>
@@ -115,30 +139,34 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1739" y="484" key="#Project_Structure/0.25.2880.1595@0.25.2880.1595" timestamp="1579562924893" />
-    <state x="1618" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579620959345">
+    <state x="1618" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579632538380">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1618" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1579620959345" />
+    <state x="1618" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1579632538380" />
+    <state x="1670" y="541" width="480" height="554" key="#com.intellij.ide.util.MemberChooser" timestamp="1579638675868">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="1670" y="541" width="480" height="554" key="#com.intellij.ide.util.MemberChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1579638675868" />
     <state x="1927" y="580" key="FileChooserDialogImpl" timestamp="1579561908694">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1927" y="580" key="FileChooserDialogImpl/0.25.2880.1595@0.25.2880.1595" timestamp="1579561908694" />
-    <state width="1731" height="457" key="GridCell.Tab.0.bottom" timestamp="1579627317202">
+    <state width="1862" height="457" key="GridCell.Tab.0.bottom" timestamp="1579635586294">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1731" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1579627317202" />
-    <state width="1731" height="457" key="GridCell.Tab.0.center" timestamp="1579627317202">
+    <state width="1862" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1579635586294" />
+    <state width="1862" height="457" key="GridCell.Tab.0.center" timestamp="1579635586293">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1731" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1579627317202" />
-    <state width="1731" height="457" key="GridCell.Tab.0.left" timestamp="1579627317202">
+    <state width="1862" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1579635586293" />
+    <state width="1862" height="457" key="GridCell.Tab.0.left" timestamp="1579635586293">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1731" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1579627317202" />
-    <state width="1731" height="457" key="GridCell.Tab.0.right" timestamp="1579627317202">
+    <state width="1862" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1579635586293" />
+    <state width="1862" height="457" key="GridCell.Tab.0.right" timestamp="1579635586294">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1731" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1579627317202" />
+    <state width="1862" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1579635586294" />
     <state x="1408" y="457" key="SettingsEditor" timestamp="1579621040575">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>

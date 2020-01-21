@@ -11,9 +11,6 @@ external fun alert(message: Any?)
 
 fun main() {
     println("Hello Kotlin/JS")
-//    runAsync {
-//        println("hello world")
-//    }
     // window.onload = {
     val root = document.getElementById("root")
     render(root) {
@@ -66,17 +63,28 @@ fun main() {
 fun Boolean.toInt() = if (this) 1 else 0
 
 external val self: ServiceWorkerGlobalScope
-fun runAsync(run: (MessageEvent) -> Unit) =
-    Worker(
+fun runAsync(run: (evt: MessageEvent) -> Unit) {
+    var worker: Worker? = null
+    fun terminate() = worker!!.terminate()
+
+    worker = Worker(
         URL.createObjectURL(
             Blob(
                 arrayOf(
-                    { self.onmessage = run }()
+                    {
+                        self.onmessage = {
+                            run(it)
+                            terminate()
+                        }
+                    }()
                 ),
                 jsObject { type = "text/javascript" }
             )
         )
-    ).apply { postMessage(null) }
+    ).apply {
+        postMessage(null)
+    }
+}
 
 
 

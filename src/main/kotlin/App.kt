@@ -22,6 +22,7 @@ import kotlinx.css.mm
 import kotlinx.css.padding
 import kotlinx.css.px
 import kotlinx.html.js.onClickFunction
+import org.w3c.dom.Worker
 import react.*
 import react.dom.div
 import styled.css

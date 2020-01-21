@@ -11,10 +11,13 @@ import io.data2viz.math.deg
 import io.data2viz.math.pct
 import io.data2viz.viz.KMouseMove
 import io.data2viz.viz.Viz
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.css.*
 import org.khronos.webgl.get
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
+import org.w3c.dom.Worker
 import react.*
 import styled.css
 import styled.styledDiv
@@ -85,13 +88,15 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
     }
 
 
+
     private var alreadyCalculatingGemeentes = false
     private fun calculateGemeentes() {
         if (gemeentes.isNotEmpty() || alreadyCalculatingGemeentes) return
-        alreadyCalculatingGemeentes = true
-        println("calculating 'gemeentes'")
-
         runAsync {
+            if (gemeentes.isNotEmpty() || alreadyCalculatingGemeentes) return@runAsync
+            alreadyCalculatingGemeentes = true
+            println("calculating 'gemeentes'")
+
             gemeentes = nederland.features.mapIndexed { index, feature ->
                 val opleiderCodes = hashSetOf<String>()
                 val opleiders = Data.alleOpleiders
