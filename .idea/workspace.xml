@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="774f62ac-417e-42ca-a84a-c37de57262e9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinScripting.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/InlineWorker.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/RunOnWorker.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/trapezoidal_v2.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,6 +119,7 @@
       <workItem from="1579561686446" duration="1829000" />
       <workItem from="1579620930742" duration="6298000" />
       <workItem from="1579633659833" duration="14264000" />
+      <workItem from="1579694915787" duration="778000" />
     </task>
     <servers />
   </component>
@@ -147,29 +139,37 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1670" y="541" width="480" height="554" key="#com.intellij.ide.util.MemberChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1579638675868" />
+    <state x="1393" y="406" width="1477" height="829" key="CommitChangelistDialog2" timestamp="1579648821470">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="1393" y="406" width="1477" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1579648821470" />
     <state x="1927" y="580" key="FileChooserDialogImpl" timestamp="1579561908694">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1927" y="580" key="FileChooserDialogImpl/0.25.2880.1595@0.25.2880.1595" timestamp="1579561908694" />
-    <state width="1862" height="457" key="GridCell.Tab.0.bottom" timestamp="1579635586294">
+    <state width="1309" height="457" key="GridCell.Tab.0.bottom" timestamp="1579695126742">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1862" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1579635586294" />
-    <state width="1862" height="457" key="GridCell.Tab.0.center" timestamp="1579635586293">
+    <state width="1309" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1579695126742" />
+    <state width="1309" height="457" key="GridCell.Tab.0.center" timestamp="1579695126742">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1862" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1579635586293" />
-    <state width="1862" height="457" key="GridCell.Tab.0.left" timestamp="1579635586293">
+    <state width="1309" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1579695126742" />
+    <state width="1309" height="457" key="GridCell.Tab.0.left" timestamp="1579695126741">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1862" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1579635586293" />
-    <state width="1862" height="457" key="GridCell.Tab.0.right" timestamp="1579635586294">
+    <state width="1309" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1579695126741" />
+    <state width="1309" height="457" key="GridCell.Tab.0.right" timestamp="1579695126742">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1862" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1579635586294" />
+    <state width="1309" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1579695126742" />
     <state x="1408" y="457" key="SettingsEditor" timestamp="1579621040575">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1408" y="457" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1579621040575" />
+    <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1579648823777">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1579648823777" />
   </component>
 </project>
