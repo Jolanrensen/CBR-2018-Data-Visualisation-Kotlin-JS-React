@@ -1,4 +1,11 @@
+import data.Data
+import data.Examenlocatie
+import kotlinext.js.asJsObject
 import kotlinext.js.jsObject
+import libs.*
+import libs.kworker.JobDescriptor
+import libs.kworker.Jobs
+import libs.kworker.JobsMainSync
 import org.w3c.dom.MessageEvent
 import org.w3c.dom.Worker
 import org.w3c.dom.url.URL
@@ -9,8 +16,98 @@ import kotlin.browser.document
 
 external fun alert(message: Any?)
 
+object DemoXorJob : JobDescriptor {
+    override suspend fun execute(args: Array<Any?>): Array<Any?> {
+        val arg0 = args[0] as String
+        val arg1 = args[1] as String
+
+
+        val map = jsObjectOf<Examenlocatie>()
+        map["dkfmslkdm"] = Examenlocatie(
+            naam = arg0,
+            straatnaam = arg0,
+            huisnummer = arg0,
+            huisnummerToevoeging = arg1,
+            postcode = arg1,
+            plaatsnaam = arg1,
+            gemeente = arg1
+        )
+        map["qwerty"] = Examenlocatie(
+            naam = arg0,
+            straatnaam = arg0,
+            huisnummer = arg0,
+            huisnummerToevoeging = arg1,
+            postcode = arg1,
+            plaatsnaam = arg1,
+            gemeente = arg1
+        )
+
+        return arrayOf(
+            map
+        )
+    }
+}
+
+
 fun main() {
     println("Hello Kotlin/JS")
+
+
+    // registering all workers + test
+    JobsMainSync({
+        register(DemoXorJob)
+        register(Data.BuildAllDataJob)
+    }, {
+        val array: Array<Any?> = arrayOf("eerste", "tweede")
+
+        println(array.toList())
+
+//        val res = Jobs().execute(
+//                DemoXorJob,
+//                array
+//            )[0] as JavaScriptObject<Examenlocatie>
+//
+//
+//        console.log("examenlocatie: ", res)
+    })
+
+//
+//    WorkerInterfaceImplBrowser.runEntry(EmptyCoroutineContext) {
+//        WorkerFork({
+//            while (true) {
+//                val message = recv()
+//                println("IN WORKER ${getWorkerId()} $message")
+//                send(WorkerMessage("reply", "demo"))
+//            }
+//        }, {
+//            val worker1 = Worker()
+//            val worker2 = Worker()
+//            println("Sending messages")
+//            worker1.send(WorkerMessage("hello", "world"))
+//            worker1.send(WorkerMessage("hello", "world"))
+//            worker1.send(WorkerMessage("hello", "world"))
+//
+//            val workerId = getWorkerId()
+//            println("IN MAIN $workerId ${worker1.recv()}")
+//            println("IN MAIN $workerId ${worker1.recv()}")
+//            println("IN MAIN $workerId ${worker1.recv()}")
+//            worker2.send(WorkerMessage("hello", "world"))
+//            worker2.send(WorkerMessage("hello", "world"))
+//            println("IN MAIN $workerId ${worker2.recv()}")
+//            println("IN MAIN $workerId ${worker2.recv()}")
+//
+//            // @TODO: Kotlin.JS BUG! getWorkerId() is not appended
+//            //println("IN MAIN ${getWorkerId()} ${worker1.recv()}")
+//            //println("IN MAIN ${getWorkerId()} ${worker1.recv()}")
+//            //println("IN MAIN ${getWorkerId()} ${worker1.recv()}")
+//            //worker2.send(WorkerMessage("hello", "world"))
+//            //worker2.send(WorkerMessage("hello", "world"))
+//            //println("IN MAIN ${getWorkerId()} ${worker2.recv()}")
+//            //println("IN MAIN ${getWorkerId()} ${worker2.recv()}")
+//        })
+//    }
+
+
     // window.onload = {
     val root = document.getElementById("root")
     render(root) {

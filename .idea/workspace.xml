@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="774f62ac-417e-42ca-a84a-c37de57262e9" name="Default Changelist" comment="">
+    <list default="true" id="9b343326-1edb-4145-829a-a5117bae9044" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Constants.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/JsObject.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/kworker/Jobs.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/kworker/Worker.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/kworker/WorkerJs.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/kworker/WorkerJsBrowser.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/libs/kworker/internal.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinScripting.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/org.example.2IMV20-Visualization-and-Interaction.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatVersie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatVersie.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Product.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Product.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Resultaat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Resultaat.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,41 +40,26 @@
       <ProjectState />
     </projectState>
   </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="Kotlin File" />
+        <option value="Kotlin Interface" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="KonanWorkspace" KOTLIN_NATIVE_HOME="$USER_HOME$/.konan/kotlin-native-linux-1.3.70-eap-14002">
     <executables />
   </component>
-  <component name="ProjectId" id="1WgC7iC1OFLhdzszGpNdzXfJ4SI" />
+  <component name="ProjectId" id="1Wl443Zr4L2GbXw1gpBEI3wAZAx" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -71,7 +81,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.web.browsers" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager">
     <configuration name="2IMV20-Visualization-and-Interaction [browserRun]" type="KotlinGradleRunConfiguration" factoryName="Kotlin Gradle" nameIsGenerated="true">
@@ -79,7 +89,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--continuous" />
+        <option name="scriptParameters" value="-t" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -94,32 +104,18 @@
       <method v="2" />
     </configuration>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="774f62ac-417e-42ca-a84a-c37de57262e9" name="Default Changelist" comment="" />
-      <created>1579561685254</created>
+      <changelist id="9b343326-1edb-4145-829a-a5117bae9044" name="Default Changelist" comment="" />
+      <created>1579710652534</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1579561685254</updated>
-      <workItem from="1579561686446" duration="1829000" />
-      <workItem from="1579620930742" duration="6298000" />
-      <workItem from="1579633659833" duration="14264000" />
-      <workItem from="1579694915787" duration="778000" />
+      <updated>1579710652534</updated>
+      <workItem from="1579710654024" duration="16896000" />
+      <workItem from="1579792366645" duration="22379000" />
     </task>
     <servers />
   </component>
@@ -127,49 +123,33 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1739" y="484" key="#Project_Structure" timestamp="1579562924893">
+    <state x="1574" y="484" key="#Project_Structure" timestamp="1579710688856">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1739" y="484" key="#Project_Structure/0.25.2880.1595@0.25.2880.1595" timestamp="1579562924893" />
-    <state x="1618" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579632538380">
+    <state x="1574" y="484" key="#Project_Structure/0.25.2880.1595@0.25.2880.1595" timestamp="1579710688856" />
+    <state x="1458" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579712624065">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1618" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1579632538380" />
-    <state x="1670" y="541" width="480" height="554" key="#com.intellij.ide.util.MemberChooser" timestamp="1579638675868">
+    <state x="1458" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1579712624065" />
+    <state x="1915" y="541" width="480" height="546" key="#com.intellij.ide.util.MemberChooser" timestamp="1579811809879">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1670" y="541" width="480" height="554" key="#com.intellij.ide.util.MemberChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1579638675868" />
-    <state x="1393" y="406" width="1477" height="829" key="CommitChangelistDialog2" timestamp="1579648821470">
+    <state x="1915" y="541" width="480" height="546" key="#com.intellij.ide.util.MemberChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1579811809879" />
+    <state width="2832" height="457" key="GridCell.Tab.0.bottom" timestamp="1579820797575">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1393" y="406" width="1477" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1579648821470" />
-    <state x="1927" y="580" key="FileChooserDialogImpl" timestamp="1579561908694">
+    <state width="2832" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1579820797575" />
+    <state width="2832" height="457" key="GridCell.Tab.0.center" timestamp="1579820797575">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1927" y="580" key="FileChooserDialogImpl/0.25.2880.1595@0.25.2880.1595" timestamp="1579561908694" />
-    <state width="1309" height="457" key="GridCell.Tab.0.bottom" timestamp="1579695126742">
+    <state width="2832" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1579820797575" />
+    <state width="2832" height="457" key="GridCell.Tab.0.left" timestamp="1579820797574">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1309" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1579695126742" />
-    <state width="1309" height="457" key="GridCell.Tab.0.center" timestamp="1579695126742">
+    <state width="2832" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1579820797574" />
+    <state width="2832" height="457" key="GridCell.Tab.0.right" timestamp="1579820797575">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1309" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1579695126742" />
-    <state width="1309" height="457" key="GridCell.Tab.0.left" timestamp="1579695126741">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state width="1309" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1579695126741" />
-    <state width="1309" height="457" key="GridCell.Tab.0.right" timestamp="1579695126742">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state width="1309" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1579695126742" />
-    <state x="1408" y="457" key="SettingsEditor" timestamp="1579621040575">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state x="1408" y="457" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1579621040575" />
-    <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1579648823777">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1579648823777" />
+    <state width="2832" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1579820797575" />
   </component>
 </project>

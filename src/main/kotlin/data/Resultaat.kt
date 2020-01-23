@@ -1,7 +1,7 @@
 package data
 
 data class Resultaat(
-    val id: Int,
+    val id: String,
     val opleider: Opleider,
     val product: Product,
     val examenlocatie: Examenlocatie,
@@ -9,4 +9,5 @@ data class Resultaat(
 ) {
     val categorie: Categorie
         get() = product.categorie
+
 }

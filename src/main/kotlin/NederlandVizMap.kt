@@ -14,6 +14,10 @@ import io.data2viz.viz.Viz
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.css.*
+import libs.asSequence
+import libs.entries
+import libs.get
+import libs.iterator
 import org.khronos.webgl.get
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
@@ -139,7 +143,7 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
                 val ourResults = Data.opleiderToResultaten
                     .asSequence()
                     .filter { it.key in opleiderCodes }
-                    .map { it.value }
+                    .map { it.value.map { Data.alleResultaten[it] ?: error("") } }
                     .flatten()
                 val totaalVoldoende = ourResults
                     .sumBy {

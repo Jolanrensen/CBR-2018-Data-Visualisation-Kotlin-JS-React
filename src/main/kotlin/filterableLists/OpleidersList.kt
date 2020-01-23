@@ -20,6 +20,7 @@ import kotlinx.css.overflow
 import kotlinx.css.padding
 import kotlinx.css.px
 import kotlinx.css.width
+import libs.get
 import libs.reactList.ReactListRef
 import libs.reactList.ref
 import libs.reactList.styledReactList
@@ -66,7 +67,7 @@ class OpleidersList(prps: OpleidersListProps) :
         (if (isExamenlocatieSelected.isNotEmpty())
             isExamenlocatieSelected.asSequence()
                 .map { Data.examenlocatieToOpleiders[it]!! }
-                .flatten()
+                .flatMap { it.asSequence() }
                 .map { it to (alleOpleidersData[it] ?: error("opleider $it does not exist")) }
                 .toMap()
         else alleOpleidersData).forEach { (oplCode, opleider) ->

@@ -5,23 +5,34 @@ import data.ExamenResultaat.VOLDOENDE
 import data.ExamenResultaatCategorie.*
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
-import io.data2viz.time.Date
+import fromJsonToMap
+import kotlinx.serialization.PrimitiveKind
+import libs.JsObject
+import libs.*
+import libs.jsObjectOf
+import libs.kworker.JobDescriptor
+import libs.kworker.Jobs
+import libs.kworker.JobsMainSync
+import libs.set
+import org.khronos.webgl.ArrayBuffer
 import org.w3c.xhr.XMLHttpRequest
+import toJsonString
+
 
 object Data {
 
     var hasStartedLoading = false
 
-    val alleOpleiders = hashMapOf<String, Opleider>()
-    val alleExamenlocaties = hashMapOf<String, Examenlocatie>()
+    var alleOpleiders: JsObject<Opleider> = jsObjectOf()
+    var alleExamenlocaties: JsObject<Examenlocatie> = jsObjectOf()
 
-    val opleiderToExamenlocaties: HashMap<String, HashSet<String>> = hashMapOf()
-    val examenlocatieToOpleiders: HashMap<String, HashSet<String>> = hashMapOf()
+    var opleiderToExamenlocaties: JsObject<ArrayList<String>> = jsObjectOf()
+    var examenlocatieToOpleiders: JsObject<ArrayList<String>> = jsObjectOf()
 
-    val opleiderToResultaten: HashMap<String, HashSet<Resultaat>> = hashMapOf()
-    val examenlocatieToResultaten: HashMap<String, HashSet<Resultaat>> = hashMapOf()
+    var opleiderToResultaten: JsObject<ArrayList<String>> = jsObjectOf()
+    var examenlocatieToResultaten: JsObject<ArrayList<String>> = jsObjectOf()
 
-    private var alleResultaten: HashSet<Resultaat> = hashSetOf()
+    var alleResultaten: JsObject<Resultaat> = jsObjectOf()
 
     interface GemeentesProperties {
         val statcode: String
@@ -46,12 +57,12 @@ object Data {
             return field
         }
 
-    private val csv: List<List<String>>?
-        get() {
+    object BuildAllDataJob : JobDescriptor {
+        private fun getCsv(): List<List<String>>? {
             val xmlhttp = XMLHttpRequest()
             // data from overheid cbr, gemeentes toegevoegd met https://www.cbs.nl/nl-nl/maatwerk/2018/36/buurt-wijk-en-gemeente-2018-voor-postcode-huisnummer
-            xmlhttp.open("GET", "opleiderresultaten-met-gemeentes.csv", false)
-
+            // TODO don't hardcode localhost lol
+            xmlhttp.open("GET", "http://localhost:8080/opleiderresultaten-met-gemeentes.csv", false)
             xmlhttp.send()
             val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
 
@@ -60,103 +71,135 @@ object Data {
                 ?.map { it.split(';') }
         }
 
-    fun buildAllData() {
-        hasStartedLoading = true
-        csv?.let {
-            val data = it.drop(1)
+        override suspend fun execute(args: Array<Any?>): Array<Any?> {
+            println("started loading csv in the background")
 
-            for ((i, line) in data.withIndex()) {
-                try {
-                    val opleider = alleOpleiders.getOrPut(line[0]) {
-                        Opleider(
-                            code = line[0],
-                            naam = line[1],
-                            startdatum = line[2].split('-').let {
-                                Date(
-                                    day = it[0].toInt(),
-                                    month = it[1].toInt(),
-                                    year = it[2].toInt(),
-                                    hour = 0,
-                                    minute = 0,
-                                    second = 0,
-                                    millisecond = 0
-                                )
-                            },
-                            einddatum = line[3].split('-').let {
-                                Date(
-                                    day = it[0].toInt(),
-                                    month = it[1].toInt(),
-                                    year = it[2].toInt(),
-                                    hour = 0,
-                                    minute = 0,
-                                    second = 0,
-                                    millisecond = 0
-                                )
-                            },
-                            straatnaam = line[4],
-                            huisnummer = line[5],
-                            huisnummerToevoeging = line[6],
-                            postcode = line[7],
-                            plaatsnaam = line[8],
-                            gemeente = line[37]
-                        )
+            val alleOpleiders: JsObject<Opleider> = jsObjectOf()
+            val alleExamenlocaties: JsObject<Examenlocatie> = jsObjectOf()
+
+            val opleiderToExamenlocaties: JsObject<ArrayList<String>> = jsObjectOf()
+            val examenlocatieToOpleiders: JsObject<ArrayList<String>> = jsObjectOf()
+
+            val opleiderToResultaten: JsObject<ArrayList<String>> = jsObjectOf()
+            val examenlocatieToResultaten: JsObject<ArrayList<String>> = jsObjectOf()
+
+            val alleResultaten: JsObject<Resultaat> = jsObjectOf()
+
+            getCsv()?.let {
+                val data = it.drop(1)
+
+                for ((i, line) in data.withIndex()) {
+                    try {
+                        val opleider = alleOpleiders.getOrPut(line[0]) {
+                            Opleider(
+                                code = line[0],
+                                naam = line[1],
+                                _startdatum = line[2].split('-').let {
+                                    kotlin.js.Date(
+                                        day = it[0].toInt(),
+                                        month = it[1].toInt(),
+                                        year = it[2].toInt(),
+                                        hour = 0,
+                                        minute = 0,
+                                        second = 0,
+                                        millisecond = 0
+                                    ).toDateString()
+                                },
+                                _einddatum = line[3].split('-').let {
+                                    kotlin.js.Date(
+                                        day = it[0].toInt(),
+                                        month = it[1].toInt(),
+                                        year = it[2].toInt(),
+                                        hour = 0,
+                                        minute = 0,
+                                        second = 0,
+                                        millisecond = 0
+                                    ).toDateString()
+                                },
+                                straatnaam = line[4],
+                                huisnummer = line[5],
+                                huisnummerToevoeging = line[6],
+                                postcode = line[7],
+                                plaatsnaam = line[8],
+                                gemeente = line[37]
+                            )
+                        }
+
+                        val examenlocatie = alleExamenlocaties.getOrPut(line[13]) {
+                            Examenlocatie(
+                                naam = line[13],
+                                straatnaam = line[14],
+                                huisnummer = line[15],
+                                huisnummerToevoeging = line[16],
+                                postcode = line[17],
+                                plaatsnaam = line[18],
+                                gemeente = line[38]
+                            )
+                        }
+
+                        val resultaat = getResult(i.toString(), line, alleOpleiders, alleExamenlocaties)
+
+                        alleResultaten[resultaat.id] = resultaat
+
+                        opleiderToExamenlocaties.getOrPut(opleider.code) { arrayListOf() }
+                            .add(examenlocatie.naam)
+                        examenlocatieToOpleiders.getOrPut(examenlocatie.naam) { arrayListOf() }
+                            .add(opleider.code)
+
+                        opleiderToResultaten.getOrPut(opleider.code) { arrayListOf() }
+                            .add(resultaat.id)
+                        examenlocatieToResultaten.getOrPut(examenlocatie.naam) { arrayListOf() }
+                            .add(resultaat.id)
+
+                    } catch (e: Exception) {
                     }
-
-                    val examenlocatie = alleExamenlocaties.getOrPut(line[13]) {
-                        Examenlocatie(
-                            naam = line[13],
-                            straatnaam = line[14],
-                            huisnummer = line[15],
-                            huisnummerToevoeging = line[16],
-                            postcode = line[17],
-                            plaatsnaam = line[18],
-                            gemeente = line[38]
-                        )
-                    }
-
-                    val resultaat = getResult(i, line)
-
-                    alleResultaten.add(resultaat)
-
-                    opleiderToExamenlocaties.getOrPut(opleider.code, { hashSetOf() })
-                        .add(examenlocatie.naam)
-                    examenlocatieToOpleiders.getOrPut(examenlocatie.naam, { hashSetOf() })
-                        .add(opleider.code)
-
-                    opleiderToResultaten.getOrPut(opleider.code, { hashSetOf() })
-                        .add(resultaat)
-                    examenlocatieToResultaten.getOrPut(examenlocatie.naam, { hashSetOf() })
-                        .add(resultaat)
-
-                } catch (e: Exception) {
                 }
             }
+
+            return arrayOf(
+                alleOpleiders,
+                alleExamenlocaties,
+                opleiderToExamenlocaties,
+                examenlocatieToOpleiders,
+                opleiderToResultaten,
+                examenlocatieToResultaten,
+                alleResultaten
+            )
         }
     }
 
 
-//    fun getResults(
-//        opleiders: Collection<Opleider> = alleOpleiders.values,
-//        examenlocaties: Collection<Examenlocatie> = alleExamenlocaties.values
-//    ) = getResults(opleiders.map { it.code }, examenlocaties.map { it.naam })
-//
-//    fun getResults(
-//        opleiders: Collection<String> = listOf(),
-//        examenlocaties: Collection<String> = listOf()
-//    ) = //        println("Getting results for $opleiders $examenlocaties")
-//        if (opleiders.isEmpty() || examenlocaties.isEmpty()) {
-//            sequenceOf()
-//        } else {
-//            csv?.let {
-//                val data = it.drop(1).filter { it[0] in opleiders && it[13] in examenlocaties }
-//                sequence {
-//                    for ((i, line) in data.withIndex())
-//                        yield(getResult(i, line))
-//                }
-//            } ?: throw IllegalArgumentException("Couldn't read data")
-//        }
+    @Suppress("UNCHECKED_CAST", "UNCHECKED_CAST_TO_EXTERNAL_INTERFACE")
+    fun buildAllData(callback: () -> Unit) {
+        hasStartedLoading = true
 
-    private fun getResult(id: Int, line: List<String>) = Resultaat(
+
+        println("started loading csv in the foreground 1")
+        JobsMainSync({
+            //register(BuildAllDataJob)
+        }, {
+            println("started loading csv in the foreground 2")
+
+            Jobs().execute(BuildAllDataJob, arrayOf())
+                .let {
+                    alleOpleiders = it[0] as JsObject<Opleider>
+                    alleExamenlocaties = it[1] as JsObject<Examenlocatie>
+                    opleiderToExamenlocaties = it[2] as JsObject<ArrayList<String>>
+                    examenlocatieToOpleiders = it[3] as JsObject<ArrayList<String>>
+                    opleiderToResultaten = it[4] as JsObject<ArrayList<String>>
+                    examenlocatieToResultaten = it[5] as JsObject<ArrayList<String>>
+                    alleResultaten = it[6] as JsObject<Resultaat>
+                }
+            callback()
+        })
+    }
+
+    internal fun getResult(
+        id: String,
+        line: List<String>,
+        alleOpleiders: JsObject<Opleider>,
+        alleExamenlocaties: JsObject<Examenlocatie>
+    ) = Resultaat(
         id = id,
         opleider = alleOpleiders[line[0]]!!,
         product = Product.valueOf(

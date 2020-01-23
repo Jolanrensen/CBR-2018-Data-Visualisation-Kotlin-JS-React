@@ -1,5 +1,7 @@
 package data
 
+import kotlinx.serialization.Serializable
+
 enum class Product(val omschrijving: String, val categorie: Categorie) {
     A("praktijkexamen motor verkeersdeelneming A", Categorie.A),
     A1("praktijkexamen motor verkeersdeelneming A1", Categorie.A1),

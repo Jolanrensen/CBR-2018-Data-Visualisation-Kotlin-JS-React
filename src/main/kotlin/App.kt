@@ -38,11 +38,10 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
     private var selectedGemeente by stateDelegateOf(AppState::selectedGemeente)
     private var dataLoaded by stateDelegateOf(AppState::dataLoaded)
 
+
     private fun loadData() {
         if (Data.hasStartedLoading) return
-        runAsync {
-            Data.buildAllData()
-
+        Data.buildAllData {
             println("data loaded!")
             dataLoaded = true
         }
@@ -272,7 +271,7 @@ fun RBuilder.spacer() {
         styledDiv {
             css(themeStyles.toolbar)
         }
-        mDivider {  }
+        mDivider { }
     }
 }
 

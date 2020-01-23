@@ -2,6 +2,7 @@ package data
 
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
+import kotlinx.serialization.Serializable
 
 enum class ExamenResultaatVersie(val title: String) {
     EERSTE_EXAMEN_OF_TOETS("Eerste examen of -toets"),
