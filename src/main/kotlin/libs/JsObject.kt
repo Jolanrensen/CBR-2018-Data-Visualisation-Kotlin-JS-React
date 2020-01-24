@@ -14,33 +14,35 @@ external interface JsObject<T : Any?> {
     fun propertyIsEnumerable(v: String): Boolean
 }
 
-fun <T : Any?> JsObject<T>.iterator(): MutableIterator<MutableMap.MutableEntry<String, T>> = entries.iterator()
+fun <T : Any?> JsObject<T>.iterator() = entries.iterator()
 
 fun <T : Any?> JsObject<T>.asSequence() = entries.asSequence()
 
-fun <T: Any?> JsObject<T>.toMap() = mapOf(*entries.map { it.toPair() }.toTypedArray())
+fun <T : Any?> JsObject<T>.toMap() = mapOf(*entries.toTypedArray())
 
 val <T : Any?> JsObject<T>.size: Int
-    get() = Object.keys(this).size
+    get() = keys.size
 
-val <T : Any?> JsObject<T>.entries: MutableSet<MutableMap.MutableEntry<String, T>>
-    get() = keys.map {
-        object : MutableMap.MutableEntry<String, T> {
-            override val key: String = it
-            override val value: T = this@entries.asDynamic()[it]
-            override fun setValue(newValue: T): T {
-                val prev = value
-                this@entries.asDynamic()[key] = newValue
-                return prev
-            }
-        }
-    }.toMutableSet()
+//val <T : Any?> JsObject<T>.entries: MutableSet<MutableMap.MutableEntry<String, T>>
+//    get() = keys.map {
+//        object : MutableMap.MutableEntry<String, T> {
+//            override val key: String = it
+//            override val value: T = this@entries.asDynamic()[it]
+//            override fun setValue(newValue: T): T {
+//                val prev = value
+//                this@entries.asDynamic()[key] = newValue
+//                return prev
+//            }
+//        }
+//    }.toMutableSet()
 
-val <T : Any?> JsObject<T>.keys: MutableSet<String>
-    get() = Object.keys(this).toMutableSet()
+val <T : Any?> JsObject<T>.entries: Set<Pair<String, T>> get() = keys.map { it to get(it)!! }.toSet()
 
-val <T : Any?> JsObject<T>.values: MutableCollection<T>
-    get() = Object.keys(this).map { asDynamic()[it] }.toMutableList()
+val <T : Any?> JsObject<T>.keys: Set<String>
+    get() = setOf(*Object.keys(this@keys))
+
+val <T : Any?> JsObject<T>.values: Set<T>
+    get() = keys.map { get(it)!! }.toSet()
 
 
 operator fun <T : Any?> JsObject<T>.contains(key: String) = containsKey(key)
@@ -49,7 +51,7 @@ fun <T : Any?> JsObject<T>.containsKey(key: String) = keys.contains(key)
 
 fun <T : Any?> JsObject<T>.containsValue(value: T) = values.contains(value)
 
-operator fun <T : Any?> JsObject<T>.get(key: String): T? = asDynamic()[key]
+operator fun <T : Any?> JsObject<T>.get(key: String?): T? = key?.let { asDynamic()[it] }
 
 inline fun <T : Any?> JsObject<T>.getOrElse(key: String, defaultValue: () -> T): T = get(key) ?: defaultValue()
 
@@ -75,6 +77,7 @@ inline fun <T : Any?> JsObject<T>.getOrPut(key: String, defaultValue: () -> T): 
 }
 
 fun <T : Any?> JsObject<T>.isEmpty() = keys.isEmpty()
+fun <T : Any?> JsObject<T>.isNotEmpty() = !isEmpty()
 
 fun <T : Any?> JsObject<T>.clear() {
     keys.forEach {
@@ -150,3 +153,9 @@ fun <T : Any?> jsObjectOf(vararg pairs: Pair<String, T>) = jsObject<JsObject<T>>
 fun <T : Any?> jsObjectOf(map: Map<String, T>) = jsObject<JsObject<T>> {
     putAll(map)
 }
+
+fun <T> Array<T>.push(item: T) {
+    asDynamic().push(item)
+}
+
+fun <T> Array<T>.pop(): T = asDynamic().pop() as T

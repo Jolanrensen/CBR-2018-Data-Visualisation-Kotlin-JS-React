@@ -26,11 +26,11 @@ object Data {
     var alleOpleiders: JsObject<Opleider> = jsObjectOf()
     var alleExamenlocaties: JsObject<Examenlocatie> = jsObjectOf()
 
-    var opleiderToExamenlocaties: JsObject<ArrayList<String>> = jsObjectOf()
-    var examenlocatieToOpleiders: JsObject<ArrayList<String>> = jsObjectOf()
+    var opleiderToExamenlocaties: JsObject<Array<String>> = jsObjectOf()
+    var examenlocatieToOpleiders: JsObject<Array<String>> = jsObjectOf()
 
-    var opleiderToResultaten: JsObject<ArrayList<String>> = jsObjectOf()
-    var examenlocatieToResultaten: JsObject<ArrayList<String>> = jsObjectOf()
+    var opleiderToResultaten: JsObject<Array<String>> = jsObjectOf()
+    var examenlocatieToResultaten: JsObject<Array<String>> = jsObjectOf()
 
     var alleResultaten: JsObject<Resultaat> = jsObjectOf()
 
@@ -48,7 +48,8 @@ object Data {
             if (field != null) return field
             val xmlhttp = XMLHttpRequest()
             // data from https://cartomap.github.io/nl/
-            xmlhttp.open("GET", "gemeente_2018.geojson", false)
+            // TODO don't hardcode localhost lol
+            xmlhttp.open("GET", "http://localhost:8080/gemeente_2018.geojson", false)
 
             xmlhttp.send()
             val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
@@ -76,12 +77,11 @@ object Data {
 
             val alleOpleiders: JsObject<Opleider> = jsObjectOf()
             val alleExamenlocaties: JsObject<Examenlocatie> = jsObjectOf()
+            val opleiderToExamenlocaties: JsObject<Array<String>> = jsObjectOf()
+            val examenlocatieToOpleiders: JsObject<Array<String>> = jsObjectOf()
 
-            val opleiderToExamenlocaties: JsObject<ArrayList<String>> = jsObjectOf()
-            val examenlocatieToOpleiders: JsObject<ArrayList<String>> = jsObjectOf()
-
-            val opleiderToResultaten: JsObject<ArrayList<String>> = jsObjectOf()
-            val examenlocatieToResultaten: JsObject<ArrayList<String>> = jsObjectOf()
+            val opleiderToResultaten: JsObject<Array<String>> = jsObjectOf()
+            val examenlocatieToResultaten: JsObject<Array<String>> = jsObjectOf()
 
             val alleResultaten: JsObject<Resultaat> = jsObjectOf()
 
@@ -141,15 +141,15 @@ object Data {
 
                         alleResultaten[resultaat.id] = resultaat
 
-                        opleiderToExamenlocaties.getOrPut(opleider.code) { arrayListOf() }
-                            .add(examenlocatie.naam)
-                        examenlocatieToOpleiders.getOrPut(examenlocatie.naam) { arrayListOf() }
-                            .add(opleider.code)
+                        opleiderToExamenlocaties.getOrPut(opleider.code) { arrayOf() }
+                            .push(examenlocatie.naam)
+                        examenlocatieToOpleiders.getOrPut(examenlocatie.naam) { arrayOf() }
+                            .push(opleider.code)
 
-                        opleiderToResultaten.getOrPut(opleider.code) { arrayListOf() }
-                            .add(resultaat.id)
-                        examenlocatieToResultaten.getOrPut(examenlocatie.naam) { arrayListOf() }
-                            .add(resultaat.id)
+                        opleiderToResultaten.getOrPut(opleider.code) { arrayOf() }
+                            .push(resultaat.id)
+                        examenlocatieToResultaten.getOrPut(examenlocatie.naam) { arrayOf() }
+                            .push(resultaat.id)
 
                     } catch (e: Exception) {
                     }
@@ -184,10 +184,10 @@ object Data {
                 .let {
                     alleOpleiders = it[0] as JsObject<Opleider>
                     alleExamenlocaties = it[1] as JsObject<Examenlocatie>
-                    opleiderToExamenlocaties = it[2] as JsObject<ArrayList<String>>
-                    examenlocatieToOpleiders = it[3] as JsObject<ArrayList<String>>
-                    opleiderToResultaten = it[4] as JsObject<ArrayList<String>>
-                    examenlocatieToResultaten = it[5] as JsObject<ArrayList<String>>
+                    opleiderToExamenlocaties = it[2] as JsObject<Array<String>>
+                    examenlocatieToOpleiders = it[3] as JsObject<Array<String>>
+                    opleiderToResultaten = it[4] as JsObject<Array<String>>
+                    examenlocatieToResultaten = it[5] as JsObject<Array<String>>
                     alleResultaten = it[6] as JsObject<Resultaat>
                 }
             callback()

@@ -1,8 +1,10 @@
 import data.Data
 import data.Examenlocatie
-import kotlinext.js.asJsObject
 import kotlinext.js.jsObject
-import libs.*
+import libs.JsObject
+import libs.asJsObject
+import libs.get
+import libs.jsObjectOf
 import libs.kworker.JobDescriptor
 import libs.kworker.Jobs
 import libs.kworker.JobsMainSync
@@ -22,28 +24,41 @@ object DemoXorJob : JobDescriptor {
         val arg1 = args[1] as String
 
 
-        val map = jsObjectOf<Examenlocatie>()
-        map["dkfmslkdm"] = Examenlocatie(
-            naam = arg0,
-            straatnaam = arg0,
-            huisnummer = arg0,
-            huisnummerToevoeging = arg1,
-            postcode = arg1,
-            plaatsnaam = arg1,
-            gemeente = arg1
-        )
-        map["qwerty"] = Examenlocatie(
-            naam = arg0,
-            straatnaam = arg0,
-            huisnummer = arg0,
-            huisnummerToevoeging = arg1,
-            postcode = arg1,
-            plaatsnaam = arg1,
-            gemeente = arg1
-        )
+//        val map = jsObjectOf<Examenlocatie>()
+//        map["dkfmslkdm"] = Examenlocatie(
+//            naam = arg0,
+//            straatnaam = arg0,
+//            huisnummer = arg0,
+//            huisnummerToevoeging = arg1,
+//            postcode = arg1,
+//            plaatsnaam = arg1,
+//            gemeente = arg1
+//        )
+//        map["qwerty"] = Examenlocatie(
+//            naam = arg0,
+//            straatnaam = arg0,
+//            huisnummer = arg0,
+//            huisnummerToevoeging = arg1,
+//            postcode = arg1,
+//            plaatsnaam = arg1,
+//            gemeente = arg1
+//        )
 
         return arrayOf(
-            map
+            jsObjectOf(
+                "1" to arrayOf(
+                    Examenlocatie(
+                        naam = arg0,
+                        straatnaam = arg0,
+                        huisnummer = arg0,
+                        huisnummerToevoeging = arg1,
+                        postcode = arg1,
+                        plaatsnaam = arg1,
+                        gemeente = arg1
+                    )
+                )
+            ).apply { console.log("before:", this) }
+
         )
     }
 }
@@ -55,20 +70,19 @@ fun main() {
 
     // registering all workers + test
     JobsMainSync({
-        register(DemoXorJob)
+//        register(DemoXorJob)
         register(Data.BuildAllDataJob)
     }, {
-        val array: Array<Any?> = arrayOf("eerste", "tweede")
-
-        println(array.toList())
-
+//        val array: Array<Any?> = arrayOf("eerste", "tweede")
+//
+//        println(array.toList())
+//
 //        val res = Jobs().execute(
-//                DemoXorJob,
-//                array
-//            )[0] as JavaScriptObject<Examenlocatie>
+//            DemoXorJob,
+//            array
+//        )[0]!!.asJsObject<Array<Examenlocatie>>()
 //
-//
-//        console.log("examenlocatie: ", res)
+//        console.log("after:", res)
     })
 
 //
@@ -159,29 +173,29 @@ fun main() {
 
 fun Boolean.toInt() = if (this) 1 else 0
 
-external val self: ServiceWorkerGlobalScope
-fun runAsync(run: (evt: MessageEvent) -> Unit) {
-    var worker: Worker? = null
-    fun terminate() = worker!!.terminate()
-
-    worker = Worker(
-        URL.createObjectURL(
-            Blob(
-                arrayOf(
-                    {
-                        self.onmessage = {
-                            run(it)
-                            terminate()
-                        }
-                    }()
-                ),
-                jsObject { type = "text/javascript" }
-            )
-        )
-    ).apply {
-        postMessage(null)
-    }
-}
+//external val self: ServiceWorkerGlobalScope
+//fun runAsync(run: (evt: MessageEvent) -> Unit) {
+//    var worker: Worker? = null
+//    fun terminate() = worker!!.terminate()
+//
+//    worker = Worker(
+//        URL.createObjectURL(
+//            Blob(
+//                arrayOf(
+//                    {
+//                        self.onmessage = {
+//                            run(it)
+//                            terminate()
+//                        }
+//                    }()
+//                ),
+//                jsObject { type = "text/javascript" }
+//            )
+//        )
+//    ).apply {
+//        postMessage(null)
+//    }
+//}
 
 
 

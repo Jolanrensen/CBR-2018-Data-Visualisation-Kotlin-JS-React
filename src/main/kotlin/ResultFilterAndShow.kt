@@ -110,8 +110,8 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                         sequenceOf()
                     else (Data.opleiderToResultaten
                         .asSequence()
-                        .filter { it.key in selectedOpleiderKeys }
-                        .map { it.value.map { Data.alleResultaten[it] ?: error("") } }
+                        .filter { it.first in selectedOpleiderKeys }
+                        .map { it.second.map { Data.alleResultaten[it] ?: error("") } }
                         .flatten()
                         .asIterable()
 
@@ -119,8 +119,8 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
 
                             Data.examenlocatieToResultaten
                                 .asSequence()
-                                .filter { it.key in selectedExamenlocatieKeys }
-                                .map { it.value.map { Data.alleResultaten[it] ?: error("") } }
+                                .filter { it.first in selectedExamenlocatieKeys }
+                                .map { it.second.map { Data.alleResultaten[it] ?: error("") } }
                                 .flatten()
                                 .asIterable()
                             ).asSequence()
