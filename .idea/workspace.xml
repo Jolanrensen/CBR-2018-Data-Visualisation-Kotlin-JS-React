@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="774f62ac-417e-42ca-a84a-c37de57262e9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -129,10 +127,22 @@
       <workItem from="1579633659833" duration="14264000" />
       <workItem from="1579694915787" duration="778000" />
     </task>
+    <task id="LOCAL-00001" summary="moving some stuff around">
+      <created>1579885652926</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1579885652926</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="moving some stuff around" />
+    <option name="LAST_COMMIT_MESSAGE" value="moving some stuff around" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1739" y="484" width="954" height="677" key="#Project_Structure" timestamp="1579881413662">
@@ -147,10 +157,14 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1670" y="541" width="480" height="554" key="#com.intellij.ide.util.MemberChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1579638675868" />
-    <state x="1393" y="406" width="1477" height="829" key="CommitChangelistDialog2" timestamp="1579648821470">
+    <state x="1343" y="25" width="1096" height="1591" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1579887205976">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1393" y="406" width="1477" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1579648821470" />
+    <state x="1343" y="25" width="1096" height="1591" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1579887205976" />
+    <state x="1393" y="406" width="1477" height="829" key="CommitChangelistDialog2" timestamp="1579885652836">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="1393" y="406" width="1477" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1579885652836" />
     <state x="1927" y="580" key="FileChooserDialogImpl" timestamp="1579561908694">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
@@ -175,10 +189,10 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1408" y="457" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1579621040575" />
-    <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1579648823777">
+    <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1579885654955">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1579648823777" />
+    <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1579885654955" />
     <state x="1733" y="464" width="501" height="712" key="refactoring.ChangeSignatureDialog" timestamp="1579881697647">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>

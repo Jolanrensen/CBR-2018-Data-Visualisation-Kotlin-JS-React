@@ -1,3 +1,5 @@
+import ExamenlocatieOrOpleider.EXAMENLOCATIE
+import ExamenlocatieOrOpleider.OPLEIDER
 import com.ccfraser.muirwik.components.mCircularProgress
 import data.*
 import data2viz.GeoPathNode
@@ -9,7 +11,6 @@ import io.data2viz.geo.projection.conicEqualAreaProjection
 import io.data2viz.math.Angle
 import io.data2viz.math.deg
 import io.data2viz.math.pct
-import io.data2viz.viz.KMouseMove
 import io.data2viz.viz.KPointerClick
 import io.data2viz.viz.Viz
 import kotlinx.css.Display
@@ -24,19 +25,21 @@ import styled.css
 import styled.styledDiv
 import kotlin.random.Random
 
-interface NederlandMapProps : RProps {
+interface NederlandVizMapProps : RProps {
     var selectedGemeente: StateAsProp<NederlandVizMap.Gemeente?>
     var dataLoaded: Boolean
+    var examenlocatieOrOpleider: ExamenlocatieOrOpleider
 }
 
-interface NederlandMapState : RState {
+interface NederlandVizMapState : RState {
     var gemeentes: List<NederlandVizMap.Gemeente>
 }
 
-class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, NederlandMapState>(prps) {
+class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapProps, NederlandVizMapState>(prps) {
 
     // maybe change this to setter only
-    var selectedGemeenteState by propDelegateOf(NederlandMapProps::selectedGemeente)
+    var selectedGemeenteState by propDelegateOf(NederlandVizMapProps::selectedGemeente)
+    val examenlocatieOrOpleider by readOnlyPropDelegateOf(NederlandVizMapProps::examenlocatieOrOpleider)
 
     var selectedGemeente: Gemeente? = selectedGemeenteState
         set(value) {
@@ -44,19 +47,18 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
             selectedGemeenteState = value
         }
 
-    val dataLoaded by readOnlyPropDelegateOf(NederlandMapProps::dataLoaded)
+    val dataLoaded by readOnlyPropDelegateOf(NederlandVizMapProps::dataLoaded)
 
-    override fun NederlandMapState.init(props: NederlandMapProps) {
+    override fun NederlandVizMapState.init(props: NederlandVizMapProps) {
         gemeentes = listOf()
     }
 
-    var gemeentes by stateDelegateOf(NederlandMapState::gemeentes)
+    var gemeentes by stateDelegateOf(NederlandVizMapState::gemeentes)
 
-
-    override fun shouldComponentUpdate(nextProps: NederlandMapProps, nextState: NederlandMapState) =
+    override fun shouldComponentUpdate(nextProps: NederlandVizMapProps, nextState: NederlandVizMapState) =
         props.dataLoaded != nextProps.dataLoaded
                 || state.gemeentes != nextState.gemeentes
-    //|| props.selectedGemeente != nextProps.selectedGemeente
+                || props.examenlocatieOrOpleider != nextProps.examenlocatieOrOpleider
 
     private val nederland = Data.geoJson!! // geometry type is polygon/multipolygon for each
 
@@ -66,7 +68,8 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
         val examenlocaties: Collection<Examenlocatie> = setOf(),
         val geoPathNode: GeoPathNode,
         val hiddenGeoPathNode: GeoPathNode,
-        val slagingspercentage: Double
+        val slagingspercentageOpleiders: Double,
+        val slagingspercentageExamenlocaties: Double
     ) {
         val name get() = feature.properties.statnaam
     }
@@ -90,6 +93,16 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
                         it.value.gemeente.toLowerCase() == feature.properties.statnaam.toLowerCase()
                     }
                     .apply { opleiderCodes += map { it.key } }
+                    .map { it.value }
+                    .toSet()
+
+                val examenlocatieCodes = hashSetOf<String>()
+                val examenlocaties = Data.alleExamenlocaties
+                    .asSequence()
+                    .filter {
+                        it.value.gemeente.toLowerCase() == feature.properties.statnaam.toLowerCase()
+                    }
+                    .apply { examenlocatieCodes += map { it.key } }
                     .map { it.value }
                     .toSet()
 
@@ -121,18 +134,35 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
                     strokeWidth = null
                 }
 
-                val ourResults = Data.opleiderToResultaten
+                val ourOpleiderResults = Data.opleiderToResultaten
                     .asSequence()
                     .filter { it.key in opleiderCodes }
                     .map { it.value }
                     .flatten()
-                val totaalVoldoende = ourResults
+                val totaalVoldoendeOpleiders = ourOpleiderResults
                     .sumBy {
                         it.examenResultaatAantallen
                             .filter { it.examenResultaat == ExamenResultaat.VOLDOENDE }
                             .sumBy { it.aantal }
                     }
-                val totaal = ourResults
+                val totaalOpleiders = ourOpleiderResults
+                    .sumBy {
+                        it.examenResultaatAantallen
+                            .sumBy { it.aantal }
+                    }
+
+                val ourExamenlocatieResults = Data.examenlocatieToResultaten
+                    .asSequence()
+                    .filter { it.key in examenlocatieCodes }
+                    .map { it.value }
+                    .flatten()
+                val totaalVoldoendeExamenlocaties = ourExamenlocatieResults
+                    .sumBy {
+                        it.examenResultaatAantallen
+                            .filter { it.examenResultaat == ExamenResultaat.VOLDOENDE }
+                            .sumBy { it.aantal }
+                    }
+                val totaalExamenlocaties = ourExamenlocatieResults
                     .sumBy {
                         it.examenResultaatAantallen
                             .sumBy { it.aantal }
@@ -141,12 +171,14 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
                 val gemeente = Gemeente(
                     feature = feature,
                     opleiders = opleiders,
+                    examenlocaties = examenlocaties,
                     geoPathNode = geoPathNode,
                     hiddenGeoPathNode = hiddenGeoPathNode,
-                    slagingspercentage = totaalVoldoende.toDouble() / totaal.toDouble()
+                    slagingspercentageOpleiders = totaalVoldoendeOpleiders.toDouble() / totaalOpleiders.toDouble(),
+                    slagingspercentageExamenlocaties = totaalVoldoendeExamenlocaties.toDouble() / totaalExamenlocaties.toDouble()
                 )
 
-                geoPathNode.fill = getGemeenteColor(false, gemeente)
+//                geoPathNode.fill = getGemeenteColor(false, gemeente)
                 idColorToGemeente[idColor!!.rgb] = gemeente
 
 //            println("${index.toDouble() / nederland.features.size.toDouble() * 100}%")
@@ -201,7 +233,8 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
                 this@NederlandVizMap.gemeentes.forEach {
                     it.geoPathNode.fill = getGemeenteColor(
                         selectedGemeente == it,
-                        it
+                        it,
+                        examenlocatieOrOpleider
                     )
                     it.geoPathNode.redrawPath()
                     add(it.geoPathNode)
@@ -237,20 +270,34 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
     }
 }
 
-fun getGemeenteColor(selected: Boolean, gemeente: NederlandVizMap.Gemeente): HslColor =
+fun getGemeenteColor(
+    selected: Boolean,
+    gemeente: NederlandVizMap.Gemeente,
+    examenlocatieOrOpleider: ExamenlocatieOrOpleider
+): HslColor =
 //        val maxNoOpleiders = 470 // den haag
-    if (gemeente.opleiders.isEmpty()) {
+    if (
+        when (examenlocatieOrOpleider) {
+            OPLEIDER -> gemeente.opleiders.isEmpty()
+            EXAMENLOCATIE -> gemeente.examenlocaties.isEmpty()
+        }
+    ) {
         Colors.Web.black.toHsl()
     } else {
         val greenRedAngleDiff = Colors.Web.green.toHsl().h.rad - Colors.Web.red.toHsl().h.rad
 
         Colors.hsl(
-            hue = Angle(gemeente.slagingspercentage * greenRedAngleDiff),
+            hue = Angle(
+                when (examenlocatieOrOpleider) {
+                    OPLEIDER -> gemeente.slagingspercentageOpleiders
+                    EXAMENLOCATIE -> gemeente.slagingspercentageExamenlocaties
+                } * greenRedAngleDiff
+            ),
             saturation = 100.pct,
             lightness = if (selected) 20.pct else 50.pct
         )
     }
 
-fun RBuilder.nederlandMap(handler: RElementBuilder<NederlandMapProps>.() -> Unit) = child(NederlandVizMap::class) {
+fun RBuilder.nederlandMap(handler: RElementBuilder<NederlandVizMapProps>.() -> Unit) = child(NederlandVizMap::class) {
     handler()
 }

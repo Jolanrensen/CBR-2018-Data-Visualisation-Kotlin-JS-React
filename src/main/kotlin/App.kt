@@ -1,3 +1,5 @@
+import ExamenlocatieOrOpleider.EXAMENLOCATIE
+import ExamenlocatieOrOpleider.OPLEIDER
 import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.MButtonSize
 import com.ccfraser.muirwik.components.button.mButton
@@ -24,6 +26,11 @@ interface AppState : RState {
     var circleColor: io.data2viz.color.Color
 
     var selectedGemeente: NederlandVizMap.Gemeente?
+    var examenlocatieOrOpleider: ExamenlocatieOrOpleider
+}
+
+enum class ExamenlocatieOrOpleider {
+    EXAMENLOCATIE, OPLEIDER
 }
 
 class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
@@ -34,10 +41,12 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
         circleColor = Colors.rgb(255, 0, 0)
 
         selectedGemeente = null
+        examenlocatieOrOpleider = OPLEIDER
     }
 
     private var selectedGemeente by stateDelegateOf(AppState::selectedGemeente)
     private var dataLoaded by stateDelegateOf(AppState::dataLoaded)
+    private var examenlocatieOrOpleider by stateDelegateOf(AppState::examenlocatieOrOpleider)
 
     private fun loadData() {
         if (Data.hasStartedLoading) return
@@ -184,17 +193,26 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                             mGridItem(xs = MGridSize.cells12) {
                                 hoveringCard {
                                     mCardHeader(
-                                        title = "Slagingspercentage rijscholen per gemeente",
+                                        title = "Slagingspercentage ${when (examenlocatieOrOpleider) {
+                                            OPLEIDER -> "rijscholen"
+                                            EXAMENLOCATIE -> "examenlocaties"
+                                        }} per gemeente",
                                         subHeader = selectedGemeente?.let { it.name } ?: "",
                                         avatar = mAvatar(addAsChild = false) {
                                             css {
                                                 color = Color.black
                                                 backgroundColor = selectedGemeente?.let {
-                                                    getGemeenteColor(false, it).toRgb().let { rgb(it.r, it.g, it.b) }
+                                                    getGemeenteColor(false, it, examenlocatieOrOpleider).toRgb()
+                                                        .let { rgb(it.r, it.g, it.b) }
                                                 } ?: rgb(189, 189, 189)
                                             }
-                                            +(selectedGemeente?.let { "${(it.slagingspercentage * 100.0).toInt()}%" }
-                                                ?: "--%")
+                                            +(selectedGemeente?.let {
+                                                "${(when (examenlocatieOrOpleider) {
+                                                    OPLEIDER -> it.slagingspercentageOpleiders
+                                                    EXAMENLOCATIE -> it.slagingspercentageExamenlocaties
+                                                } * 100.0).toInt()
+                                                }%"
+                                            } ?: "--%")
                                         }
                                     )
 
@@ -202,12 +220,25 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                         nederlandMap {
                                             attrs {
                                                 dataLoaded = this@App.dataLoaded
+                                                examenlocatieOrOpleider = this@App.examenlocatieOrOpleider
                                                 selectedGemeente = stateAsProp(AppState::selectedGemeente)
                                             }
                                         }
                                     }
                                     mCardActions {
-                                        mButton("Share", MColor.primary, size = MButtonSize.small)
+                                        mButton(
+                                            caption = when (examenlocatieOrOpleider) {
+                                                OPLEIDER -> "examenlocaties"
+                                                EXAMENLOCATIE -> "rijscholen"
+                                            },
+                                            color = MColor.primary,
+                                            size = MButtonSize.small,
+                                            onClick = {
+                                                examenlocatieOrOpleider = when (examenlocatieOrOpleider) {
+                                                    OPLEIDER -> EXAMENLOCATIE
+                                                    EXAMENLOCATIE -> OPLEIDER
+                                                }
+                                            })
                                     }
                                 }
                             }
