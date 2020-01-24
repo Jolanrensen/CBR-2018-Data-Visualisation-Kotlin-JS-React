@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="774f62ac-417e-42ca-a84a-c37de57262e9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +47,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="jsObjects" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="KonanWorkspace" KOTLIN_NATIVE_HOME="$USER_HOME$/.konan/kotlin-native-linux-1.3.70-eap-14002">
@@ -127,10 +135,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1739" y="484" key="#Project_Structure" timestamp="1579562924893">
+    <state x="1739" y="484" width="954" height="677" key="#Project_Structure" timestamp="1579881413662">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1739" y="484" key="#Project_Structure/0.25.2880.1595@0.25.2880.1595" timestamp="1579562924893" />
+    <state x="1739" y="484" width="954" height="677" key="#Project_Structure/0.25.2880.1595@0.25.2880.1595" timestamp="1579881413662" />
     <state x="1618" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579632538380">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
@@ -147,22 +155,22 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1927" y="580" key="FileChooserDialogImpl/0.25.2880.1595@0.25.2880.1595" timestamp="1579561908694" />
-    <state width="1309" height="457" key="GridCell.Tab.0.bottom" timestamp="1579695126742">
+    <state width="1919" height="457" key="GridCell.Tab.0.bottom" timestamp="1579884480110">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1309" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1579695126742" />
-    <state width="1309" height="457" key="GridCell.Tab.0.center" timestamp="1579695126742">
+    <state width="1919" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1579884480110" />
+    <state width="1919" height="457" key="GridCell.Tab.0.center" timestamp="1579884480109">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1309" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1579695126742" />
-    <state width="1309" height="457" key="GridCell.Tab.0.left" timestamp="1579695126741">
+    <state width="1919" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1579884480109" />
+    <state width="1919" height="457" key="GridCell.Tab.0.left" timestamp="1579884480109">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1309" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1579695126741" />
-    <state width="1309" height="457" key="GridCell.Tab.0.right" timestamp="1579695126742">
+    <state width="1919" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1579884480109" />
+    <state width="1919" height="457" key="GridCell.Tab.0.right" timestamp="1579884480110">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1309" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1579695126742" />
+    <state width="1919" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1579884480110" />
     <state x="1408" y="457" key="SettingsEditor" timestamp="1579621040575">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
@@ -171,5 +179,13 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1579648823777" />
+    <state x="1733" y="464" width="501" height="712" key="refactoring.ChangeSignatureDialog" timestamp="1579881697647">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="1733" y="464" width="501" height="712" key="refactoring.ChangeSignatureDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1579881697647" />
+    <state x="1713" y="650" width="540" height="340" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1579881163250">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="1713" y="650" width="540" height="340" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1579881163250" />
   </component>
 </project>

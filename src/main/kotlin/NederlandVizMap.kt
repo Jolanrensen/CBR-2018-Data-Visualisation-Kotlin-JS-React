@@ -10,14 +10,15 @@ import io.data2viz.math.Angle
 import io.data2viz.math.deg
 import io.data2viz.math.pct
 import io.data2viz.viz.KMouseMove
+import io.data2viz.viz.KPointerClick
 import io.data2viz.viz.Viz
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.css.*
+import kotlinx.css.Display
+import kotlinx.css.JustifyContent
+import kotlinx.css.display
+import kotlinx.css.justifyContent
 import org.khronos.webgl.get
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
-import org.w3c.dom.Worker
 import react.*
 import styled.css
 import styled.styledDiv
@@ -72,28 +73,12 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
 
     private val idColorToGemeente = hashMapOf<Int, Gemeente>()
 
-    private fun getGemeenteColor(selected: Boolean, gemeente: Gemeente): HslColor {
-//        val maxNoOpleiders = 470 // den haag
-        return if (gemeente.opleiders.isEmpty()) {
-            Colors.Web.black.toHsl()
-        } else {
-            val greenRedAngleDiff = Colors.Web.green.toHsl().h.rad - Colors.Web.red.toHsl().h.rad
-
-            Colors.hsl(
-                hue = Angle(gemeente.slagingspercentage * greenRedAngleDiff),
-                saturation = 100.pct,
-                lightness = if (selected) 20.pct else 50.pct
-            )
-        }
-    }
-
-
-
     private var alreadyCalculatingGemeentes = false
     private fun calculateGemeentes() {
         if (gemeentes.isNotEmpty() || alreadyCalculatingGemeentes) return
-        runAsync {
-            if (gemeentes.isNotEmpty() || alreadyCalculatingGemeentes) return@runAsync
+
+        runOnWorker {
+            if (gemeentes.isNotEmpty() || alreadyCalculatingGemeentes) return@runOnWorker
             alreadyCalculatingGemeentes = true
             println("calculating 'gemeentes'")
 
@@ -232,7 +217,7 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
 //            }
 
             // 2nd canvas trick http://bl.ocks.org/Jverma/70f7975a72358e6d69cdd4bf6a0569e7
-            on(KMouseMove) {
+            on(KPointerClick) {
                 val pos = it.pos
                 val context = hiddenCanvas!!.getContext("2d") as CanvasRenderingContext2D
                 val col = context
@@ -251,6 +236,20 @@ class NederlandVizMap(prps: NederlandMapProps) : RComponent<NederlandMapProps, N
         }
     }
 }
+
+fun getGemeenteColor(selected: Boolean, gemeente: NederlandVizMap.Gemeente): HslColor =
+//        val maxNoOpleiders = 470 // den haag
+    if (gemeente.opleiders.isEmpty()) {
+        Colors.Web.black.toHsl()
+    } else {
+        val greenRedAngleDiff = Colors.Web.green.toHsl().h.rad - Colors.Web.red.toHsl().h.rad
+
+        Colors.hsl(
+            hue = Angle(gemeente.slagingspercentage * greenRedAngleDiff),
+            saturation = 100.pct,
+            lightness = if (selected) 20.pct else 50.pct
+        )
+    }
 
 fun RBuilder.nederlandMap(handler: RElementBuilder<NederlandMapProps>.() -> Unit) = child(NederlandVizMap::class) {
     handler()

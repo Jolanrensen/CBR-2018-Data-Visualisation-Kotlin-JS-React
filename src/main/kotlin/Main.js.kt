@@ -63,7 +63,7 @@ fun main() {
 fun Boolean.toInt() = if (this) 1 else 0
 
 external val self: ServiceWorkerGlobalScope
-fun runAsync(run: (evt: MessageEvent) -> Unit) {
+fun runOnWorker(run: (evt: MessageEvent) -> Unit) {
     var worker: Worker? = null
     fun terminate() = worker!!.terminate()
 

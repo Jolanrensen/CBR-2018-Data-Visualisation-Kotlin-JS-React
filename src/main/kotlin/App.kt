@@ -1,6 +1,7 @@
 import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.MButtonSize
 import com.ccfraser.muirwik.components.button.mButton
+import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
 import data.Data
@@ -40,9 +41,9 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
     private fun loadData() {
         if (Data.hasStartedLoading) return
-        runAsync {
-            Data.buildAllData()
 
+        runOnWorker {
+            Data.buildAllData()
             println("data loaded!")
             dataLoaded = true
         }
@@ -175,19 +176,50 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                         //     }
                         // }
 
-                        div {
-                            attrs {
-                                onClickFunction = {
-                                    println("Card clicked!")
+
+                        mGridContainer(
+                            spacing = MGridSpacing.spacing3,
+                            alignContent = MGridAlignContent.center
+                        ) {
+                            mGridItem(xs = MGridSize.cells12) {
+                                hoveringCard {
+                                    mCardHeader(
+                                        title = "Slagingspercentage rijscholen per gemeente",
+                                        subHeader = selectedGemeente?.let { it.name } ?: "",
+                                        avatar = mAvatar(addAsChild = false) {
+                                            css {
+                                                color = Color.black
+                                                backgroundColor = selectedGemeente?.let {
+                                                    getGemeenteColor(false, it).toRgb().let { rgb(it.r, it.g, it.b) }
+                                                } ?: rgb(189, 189, 189)
+                                            }
+                                            +(selectedGemeente?.let { "${(it.slagingspercentage * 100.0).toInt()}%" }
+                                                ?: "--%")
+                                        }
+                                    )
+
+                                    mCardContent {
+                                        nederlandMap {
+                                            attrs {
+                                                dataLoaded = this@App.dataLoaded
+                                                selectedGemeente = stateAsProp(AppState::selectedGemeente)
+                                            }
+                                        }
+                                    }
+                                    mCardActions {
+                                        mButton("Share", MColor.primary, size = MButtonSize.small)
+                                    }
                                 }
                             }
+                        }
+
+                        div {
                             hoveringCard {
                                 css {
                                     margin(5.mm)
                                 }
                                 mCardHeader(
-                                    title = "Test",
-                                    subHeader = "OtherTest",
+                                    title = "Resultaten Vergelijken",
                                     avatar = mAvatar(addAsChild = false) {
                                         +"R"
                                     }
@@ -195,7 +227,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
                                 mCardContent {
                                     mTypography {
-                                        +"This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like."
+                                        +"Hieronder kun je de twee sets resultaten met elkaar vergelijken."
                                     }
                                     attrs {
 
@@ -211,38 +243,6 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                             }
                         }
 
-                        mGridContainer(
-                            spacing = MGridSpacing.spacing3,
-                            alignContent = MGridAlignContent.center
-                        ) {
-                            mGridItem(xs = MGridSize.cells12) {
-                                hoveringCard {
-                                    mCardContent {
-                                        +(selectedGemeente?.let { "${it.name}, Slagingspercentage eerste keer: ${(it.slagingspercentage * 100.0).toInt()}%" }
-                                            ?: "-")
-                                        nederlandMap {
-                                            attrs {
-                                                dataLoaded = this@App.dataLoaded
-
-                                                // this combi works
-                                                // sele = state.selectedGemeentenaam
-                                                // setSele = { setState { selectedGemeentenaam = it } }
-
-                                                // does not work at all
-                                                // sele = stateDelegateOf(state::selectedGemeentenaam)
-
-                                                // this works
-                                                // sele = StateDelegate(state.selectedGemeentenaam) {
-                                                //     setState { selectedGemeentenaam = it }
-                                                // }
-
-                                                selectedGemeente = stateAsProp(AppState::selectedGemeente)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
 
                         // video {
                         //     attrs {
@@ -272,7 +272,7 @@ fun RBuilder.spacer() {
         styledDiv {
             css(themeStyles.toolbar)
         }
-        mDivider {  }
+        mDivider { }
     }
 }
 
