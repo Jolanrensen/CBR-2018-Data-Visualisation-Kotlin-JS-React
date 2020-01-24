@@ -4,6 +4,7 @@ import data.Product
 import filterableLists.categorieProductList
 import filterableLists.examenlocatiesList
 import filterableLists.opleidersList
+import libs.RPureComponent
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -20,7 +21,7 @@ interface ResultFilterAndShowState : RState {
 }
 
 class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
-    RComponent<ResultFilterAndShowProps, ResultFilterAndShowState>(prps) {
+    RPureComponent<ResultFilterAndShowProps, ResultFilterAndShowState>(prps) {
 
     override fun ResultFilterAndShowState.init(props: ResultFilterAndShowProps) {
         selectedOpleiderKeys = setOf()

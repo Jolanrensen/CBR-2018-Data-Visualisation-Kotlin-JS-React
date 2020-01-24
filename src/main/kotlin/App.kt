@@ -118,28 +118,28 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 //                            }
 //                        }
 
-                        styledP {
-                            css {
-                                color = Color.blue
-                            }
-                            +"Hello from React!"
-                            attrs {
-                                onClickFunction = {
-                                    alert("Clickedie clackedie")
-                                }
-                            }
-                        }
-
-                        mButton("Change color",
-                            color = MColor.primary,
-                            size = MButtonSize.medium,
-                            onClick = {
-                                setState {
-                                    circleColor = if (state.circleColor == Colors.rgb(255, 0, 0))
-                                        Colors.rgb(0, 255, 0)
-                                    else Colors.rgb(255, 0, 0)
-                                }
-                            })
+//                        styledP {
+//                            css {
+//                                color = Color.blue
+//                            }
+//                            +"Hello from React!"
+//                            attrs {
+//                                onClickFunction = {
+//                                    alert("Clickedie clackedie")
+//                                }
+//                            }
+//                        }
+//
+//                        mButton("Change color",
+//                            color = MColor.primary,
+//                            size = MButtonSize.medium,
+//                            onClick = {
+//                                setState {
+//                                    circleColor = if (state.circleColor == Colors.rgb(255, 0, 0))
+//                                        Colors.rgb(0, 255, 0)
+//                                    else Colors.rgb(255, 0, 0)
+//                                }
+//                            })
 
                         // vizComponentCard(
                         //     width = 800.0,
@@ -192,6 +192,9 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                         ) {
                             mGridItem(xs = MGridSize.cells12) {
                                 hoveringCard {
+                                    css {
+                                        margin(5.mm)
+                                    }
                                     mCardHeader(
                                         title = "Slagingspercentage ${when (examenlocatieOrOpleider) {
                                             OPLEIDER -> "rijscholen"
@@ -268,9 +271,14 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                         }
 
                         (0..1).forEach { _ ->
-                            resultFilterAndShow {
-                                dataLoaded = this@App.dataLoaded
-                                // TODO
+                            hoveringCard {
+                                css {
+                                    margin(5.mm)
+                                    padding(5.mm)
+                                }
+                                resultFilterAndShow {
+                                    dataLoaded = this@App.dataLoaded
+                                }
                             }
                         }
 

@@ -11,11 +11,13 @@ import data.*
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 import kotlinx.css.*
+import libs.RPureComponent
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
 import styled.css
+import styled.styledDiv
 
 interface ResultCardProps : RProps {
     var currentResults: Sequence<Resultaat>
@@ -27,7 +29,7 @@ interface ResultCardState : RState {
     var examenResultaatVersie: ExamenResultaatVersie
 }
 
-class ResultCard(prps: ResultCardProps) : RComponent<ResultCardProps, ResultCardState>(prps) {
+class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, ResultCardState>(prps) {
 
     val currentResults by readOnlyPropDelegateOf(ResultCardProps::currentResults)
     val selectionFinished by readOnlyPropDelegateOf(ResultCardProps::selectionFinished)
@@ -40,7 +42,7 @@ class ResultCard(prps: ResultCardProps) : RComponent<ResultCardProps, ResultCard
     var examenResultaatVersie by stateDelegateOf(ResultCardState::examenResultaatVersie)
 
     override fun RBuilder.render() {
-        hoveringCard {
+        styledDiv {
             css {
                 width = 100.pct
                 marginTop = 3.spacingUnits

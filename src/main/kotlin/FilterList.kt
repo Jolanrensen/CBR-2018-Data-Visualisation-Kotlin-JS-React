@@ -83,27 +83,31 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
                         caption = "Filter ${props.itemsName}",
                         margin = MLabelMargin.dense
                     )
+                    var currentFilter = ""
                     mFilledInput(
                         id = "filled-adornment-filter",
                         type = InputType.text,
                         onChange = {
                             it.persist()
-                            filter = it.targetInputValue
+                            currentFilter = it.targetInputValue
                         }
                     ) {
                         attrs {
                             margin = MInputMargin.dense
-                            // onKeyPress = {
-                            //     when (it.key) {
-                            //         "Enter" -> {
-                            //             it.preventDefault()
-                            //         }
-                            //     }
-                            // }
+                             onKeyPress = {
+                                 when (it.key) {
+                                     "Enter" -> {
+                                         it.preventDefault()
+                                         filter = currentFilter
+                                     }
+                                 }
+                             }
                             endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
                                 mIconButton(
                                     iconName = "search",
-                                    // onClick = { /*state.reload()*/ },
+                                     onClick = {
+                                         filter = currentFilter
+                                     },
                                     edge = MIconEdge.end
                                 )
                             }
