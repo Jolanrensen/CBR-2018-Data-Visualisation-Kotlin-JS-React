@@ -23,11 +23,11 @@ import kotlinx.css.width
 import libs.reactList.ReactListRef
 import libs.reactList.ref
 import libs.reactList.styledReactList
+import org.w3c.dom.events.Event
 import propDelegateOf
 import react.RBuilder
 import react.ReactElement
 import react.buildElement
-import readOnlyPropDelegateOf
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
@@ -52,11 +52,11 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
 
     private var isExamenlocatieSelected by propDelegateOf(ExamenlocatiesListProps::selectedItemKeys)
     private val isOpleiderSelected by propDelegateOf(ExamenlocatiesListProps::selectedOtherItemKeys)
-    private val alleExamenlocatiesData by readOnlyPropDelegateOf(ExamenlocatiesListProps::itemsData)
-    private val filter by readOnlyPropDelegateOf(ExamenlocatiesListProps::filter)
-    private val onSelectionChanged by readOnlyPropDelegateOf(ExamenlocatiesListProps::onSelectionChanged)
+    private val alleExamenlocatiesData by propDelegateOf(ExamenlocatiesListProps::itemsData)
+    private val filter by propDelegateOf(ExamenlocatiesListProps::filter)
+    private val onSelectionChanged by propDelegateOf(ExamenlocatiesListProps::onSelectionChanged)
 
-    override fun ExamenlocatiesListState.init(props: ExamenlocatiesListProps) {}
+//    override fun ExamenlocatiesListState.init(props: ExamenlocatiesListProps) = Unit
 
     private var list: ReactListRef? = null
 
@@ -77,7 +77,7 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                 val postcode = examenlocatie.postcode.contains(it, true)
                 val straatnaam = examenlocatie.straatnaam.contains(it, true)
                 score[examNaam] = (score[examNaam] ?: 0) +
-                    naam.toInt() * 3 + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
+                        naam.toInt() * 3 + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
             }
         }
 
@@ -104,32 +104,38 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
         return result
     }
 
-    private fun toggleSelected(examenlocatie: String, newState: Boolean? = null) {
-        if (newState ?: examenlocatie !in isExamenlocatieSelected) {
-            isExamenlocatieSelected += examenlocatie
-        } else {
-            isExamenlocatieSelected -= examenlocatie
-        }
+    private val toggleSelected = { examenlocatie: String, newState: Boolean? ->
+        { _: Event ->
+            if (newState ?: examenlocatie !in isExamenlocatieSelected) {
+                isExamenlocatieSelected += examenlocatie
+            } else {
+                isExamenlocatieSelected -= examenlocatie
+            }
 
-        onSelectionChanged()
+            onSelectionChanged()
+        }
     }
 
-    private fun renderRow(filteredItems: List<Examenlocatie>, index: Int, key: String) = buildElement {
-        val examenlocatie = filteredItems[index]
-        mListItem(
-            button = true,
-            selected = examenlocatie.naam in isExamenlocatieSelected,
-            key = key,
-            divider = false,
-            onClick = { toggleSelected(examenlocatie.naam) }
-        ) {
-            mListItemAvatar {
-                mAvatar {
-                    +examenlocatie.naam.first().toString()
+    private val renderRow = { filteredItems: List<Examenlocatie> ->
+        { index: Int, key: String ->
+            buildElement {
+                val examenlocatie = filteredItems[index]
+                mListItem(
+                    button = true,
+                    selected = examenlocatie.naam in isExamenlocatieSelected,
+                    key = key,
+                    divider = false,
+                    onClick = toggleSelected(examenlocatie.naam, null)
+                ) {
+                    mListItemAvatar {
+                        mAvatar {
+                            +examenlocatie.naam.first().toString()
+                        }
+                    }
+                    mListItemText(examenlocatie.naam)
+                    mCheckbox(checked = examenlocatie.naam in isExamenlocatieSelected)
                 }
             }
-            mListItemText(examenlocatie.naam)
-            mCheckbox(checked = examenlocatie.naam in isExamenlocatieSelected)
         }
     }
 
@@ -153,9 +159,7 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                     css(themeStyles.list)
                     attrs {
                         length = filteredItems.size
-                        itemRenderer = { index, key ->
-                            renderRow(filteredItems, index, key)
-                        }
+                        itemRenderer = renderRow(filteredItems)
                         type = "variable"
                         ref {
                             list = it

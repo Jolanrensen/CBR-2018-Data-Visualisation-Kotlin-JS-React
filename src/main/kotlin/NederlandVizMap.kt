@@ -1,5 +1,8 @@
 import ExamenlocatieOrOpleider.EXAMENLOCATIE
 import ExamenlocatieOrOpleider.OPLEIDER
+import Loading.*
+import com.ccfraser.muirwik.components.MColor
+import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.mCircularProgress
 import data.*
 import data2viz.GeoPathNode
@@ -8,11 +11,16 @@ import io.data2viz.color.Color
 import io.data2viz.color.Colors
 import io.data2viz.color.HslColor
 import io.data2viz.geo.projection.conicEqualAreaProjection
+import io.data2viz.geom.Point
 import io.data2viz.math.Angle
 import io.data2viz.math.deg
 import io.data2viz.math.pct
+import io.data2viz.viz.KMouseMove
 import io.data2viz.viz.KPointerClick
 import io.data2viz.viz.Viz
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.css.Display
 import kotlinx.css.JustifyContent
 import kotlinx.css.display
@@ -29,17 +37,21 @@ interface NederlandVizMapProps : RProps {
     var selectedGemeente: StateAsProp<NederlandVizMap.Gemeente?>
     var dataLoaded: Boolean
     var examenlocatieOrOpleider: ExamenlocatieOrOpleider
+
+    var setOpleiderFilters: ApplyFilter
+    var setExamenlocatieFilters: ApplyFilter
 }
 
 interface NederlandVizMapState : RState {
     var gemeentes: List<NederlandVizMap.Gemeente>
+    var loadingState: Loading
 }
 
 class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapProps, NederlandVizMapState>(prps) {
 
     // maybe change this to setter only
     var selectedGemeenteState by propDelegateOf(NederlandVizMapProps::selectedGemeente)
-    val examenlocatieOrOpleider by readOnlyPropDelegateOf(NederlandVizMapProps::examenlocatieOrOpleider)
+    val examenlocatieOrOpleider by propDelegateOf(NederlandVizMapProps::examenlocatieOrOpleider)
 
     var selectedGemeente: Gemeente? = selectedGemeenteState
         set(value) {
@@ -47,18 +59,23 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
             selectedGemeenteState = value
         }
 
-    val dataLoaded by readOnlyPropDelegateOf(NederlandVizMapProps::dataLoaded)
+    val dataLoaded by propDelegateOf(NederlandVizMapProps::dataLoaded)
+    val setOpleiderFilters by propDelegateOf(NederlandVizMapProps::setOpleiderFilters)
+    val setExamenlocatieFilters by propDelegateOf(NederlandVizMapProps::setExamenlocatieFilters)
 
     override fun NederlandVizMapState.init(props: NederlandVizMapProps) {
         gemeentes = listOf()
+        loadingState = NOT_LOADED
     }
 
     var gemeentes by stateDelegateOf(NederlandVizMapState::gemeentes)
+    var loadingState by stateDelegateOf(NederlandVizMapState::loadingState)
 
     override fun shouldComponentUpdate(nextProps: NederlandVizMapProps, nextState: NederlandVizMapState) =
         props.dataLoaded != nextProps.dataLoaded
-                || state.gemeentes != nextState.gemeentes
                 || props.examenlocatieOrOpleider != nextProps.examenlocatieOrOpleider
+                || state.gemeentes != nextState.gemeentes
+                || state.loadingState != nextState.loadingState
 
     private val nederland = Data.geoJson!! // geometry type is polygon/multipolygon for each
 
@@ -76,13 +93,12 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
 
     private val idColorToGemeente = hashMapOf<Int, Gemeente>()
 
-    private var alreadyCalculatingGemeentes = false
     private fun calculateGemeentes() {
-        if (gemeentes.isNotEmpty() || alreadyCalculatingGemeentes) return
+        if (gemeentes.isNotEmpty() || loadingState == LOADED) return
 
-        runOnWorker {
-            if (gemeentes.isNotEmpty() || alreadyCalculatingGemeentes) return@runOnWorker
-            alreadyCalculatingGemeentes = true
+        GlobalScope.launch {
+//            if (gemeentes.isNotEmpty() || loadingState != NOT_LOADED) return@launch
+            delay(500)
             println("calculating 'gemeentes'")
 
             gemeentes = nederland.features.mapIndexed { index, feature ->
@@ -168,7 +184,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                             .sumBy { it.aantal }
                     }
 
-                val gemeente = Gemeente(
+                Gemeente(
                     feature = feature,
                     opleiders = opleiders,
                     examenlocaties = examenlocaties,
@@ -176,14 +192,9 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     hiddenGeoPathNode = hiddenGeoPathNode,
                     slagingspercentageOpleiders = totaalVoldoendeOpleiders.toDouble() / totaalOpleiders.toDouble(),
                     slagingspercentageExamenlocaties = totaalVoldoendeExamenlocaties.toDouble() / totaalExamenlocaties.toDouble()
-                )
-
-//                geoPathNode.fill = getGemeenteColor(false, gemeente)
-                idColorToGemeente[idColor!!.rgb] = gemeente
-
-//            println("${index.toDouble() / nederland.features.size.toDouble() * 100}%")
-                gemeente
+                ).apply { idColorToGemeente[idColor!!.rgb] = this }
             }
+            loadingState = LOADED
         }
     }
 
@@ -198,72 +209,87 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                 mCircularProgress()
             }
         }
-
         if (!dataLoaded) return showLoading()
-        if (gemeentes.isEmpty()) return {
-            showLoading()
-            calculateGemeentes()
-        }()
-
-
-        var hiddenViz: Viz?
-        var hiddenCanvas: HTMLCanvasElement? = null
-        vizComponent(
-            width = 600.0,
-            height = 850.0,
-            runOnHiddenViz = { it ->
-                hiddenCanvas = it
-                hiddenViz = this
-                this@NederlandVizMap.gemeentes.forEach {
-                    it.hiddenGeoPathNode.redrawPath()
-                    hiddenViz!!.add(it.hiddenGeoPathNode)
+        when (loadingState) {
+            NOT_LOADED -> styledDiv {
+                css {
+                    display = Display.flex
+                    justifyContent = JustifyContent.center
                 }
+                mButton(caption = "LAAD KAART", color = MColor.primary, onClick = {
+                    if (loadingState == NOT_LOADED) {
+                        loadingState = LOADING
+                        calculateGemeentes()
+                    }
+                })
             }
-        ) {
+            LOADING -> showLoading()
+            LOADED -> {
+                var hiddenViz: Viz?
+                var hiddenCanvas: HTMLCanvasElement? = null
 
-            println(
-                "rendering card!, gemeentes size: ${this@NederlandVizMap.gemeentes
-                    .size}, idColorToGemeente size: ${idColorToGemeente.size}"
-            )
-            // js https://github.com/data2viz/data2viz/blob/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-js/src/main/kotlin/EarthJs.kt
-            // common https://github.com/data2viz/data2viz/tree/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-common/src/main/kotlin
+                fun getGemeenteAt(pos: Point): Gemeente? {
+                    val context = hiddenCanvas!!.getContext("2d") as CanvasRenderingContext2D
+                    val col = context
+                        .getImageData(pos.x, pos.y, 1.0, 1.0)
+                        .data
+                    val color = Colors.rgb(col[0].toInt(), col[1].toInt(), col[2].toInt()).rgb
 
-            fun drawGemeentes() {
-                clear()
-                this@NederlandVizMap.gemeentes.forEach {
-                    it.geoPathNode.fill = getGemeenteColor(
-                        selectedGemeente == it,
-                        it,
-                        examenlocatieOrOpleider
+                    return idColorToGemeente[color]
+                }
+
+                vizComponent(
+                    width = 600.0,
+                    height = 850.0,
+                    runOnHiddenViz = { it ->
+                        hiddenCanvas = it
+                        hiddenViz = this
+                        this@NederlandVizMap.gemeentes.forEach {
+                            it.hiddenGeoPathNode.redrawPath()
+                            hiddenViz!!.add(it.hiddenGeoPathNode)
+                        }
+                    }
+                ) {
+
+                    println(
+                        "rendering card!, gemeentes size: ${this@NederlandVizMap.gemeentes
+                            .size}, idColorToGemeente size: ${idColorToGemeente.size}"
                     )
-                    it.geoPathNode.redrawPath()
-                    add(it.geoPathNode)
-                }
-            }
-            drawGemeentes()
+                    // js https://github.com/data2viz/data2viz/blob/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-js/src/main/kotlin/EarthJs.kt
+                    // common https://github.com/data2viz/data2viz/tree/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-common/src/main/kotlin
 
-//            circle {
-//                fill = Colors.rgb(255, 0, 0)
-//                radius = 10.0
-//                x = 300.0
-//                y = 425.0
-//            }
-
-            // 2nd canvas trick http://bl.ocks.org/Jverma/70f7975a72358e6d69cdd4bf6a0569e7
-            on(KPointerClick) {
-                val pos = it.pos
-                val context = hiddenCanvas!!.getContext("2d") as CanvasRenderingContext2D
-                val col = context
-                    .getImageData(pos.x, pos.y, 1.0, 1.0)
-                    .data
-                val color = Colors.rgb(col[0].toInt(), col[1].toInt(), col[2].toInt()).rgb
-
-                val new = idColorToGemeente[color]
-
-                if (selectedGemeente != new) {
-                    selectedGemeente = new
+                    fun drawGemeentes() {
+                        clear()
+                        this@NederlandVizMap.gemeentes.forEach {
+                            it.geoPathNode.fill = getGemeenteColor(
+                                selectedGemeente == it,
+                                it,
+                                examenlocatieOrOpleider
+                            )
+                            it.geoPathNode.redrawPath()
+                            add(it.geoPathNode)
+                        }
+                    }
                     drawGemeentes()
-                    render()
+
+                    // 2nd canvas trick http://bl.ocks.org/Jverma/70f7975a72358e6d69cdd4bf6a0569e7
+                    on(KMouseMove) {
+                        val new = getGemeenteAt(it.pos)
+
+                        if (selectedGemeente != new) {
+                            selectedGemeente = new
+                            drawGemeentes()
+                            render()
+                        }
+                    }
+                    on(KPointerClick) {
+                        getGemeenteAt(it.pos)?.let {
+                            when (examenlocatieOrOpleider) {
+                                EXAMENLOCATIE -> setExamenlocatieFilters(it.name)
+                                OPLEIDER -> setOpleiderFilters(it.name)
+                            }
+                        }
+                    }
                 }
             }
         }

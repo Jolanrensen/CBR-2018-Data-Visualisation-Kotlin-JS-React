@@ -23,11 +23,11 @@ import kotlinx.css.width
 import libs.reactList.ReactListRef
 import libs.reactList.ref
 import libs.reactList.styledReactList
+import org.w3c.dom.events.Event
 import propDelegateOf
 import react.RBuilder
 import react.ReactElement
 import react.buildElement
-import readOnlyPropDelegateOf
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
@@ -52,11 +52,11 @@ class OpleidersList(prps: OpleidersListProps) :
 
     private var isOpleiderSelected by propDelegateOf(OpleidersListProps::selectedItemKeys)
     private var isExamenlocatieSelected by propDelegateOf(OpleidersListProps::selectedOtherItemKeys)
-    private val alleOpleidersData by readOnlyPropDelegateOf(OpleidersListProps::itemsData)
-    private val filter by readOnlyPropDelegateOf(OpleidersListProps::filter)
-    private val onSelectionChanged by readOnlyPropDelegateOf(OpleidersListProps::onSelectionChanged)
+    private val alleOpleidersData by propDelegateOf(OpleidersListProps::itemsData)
+    private val filter by propDelegateOf(OpleidersListProps::filter)
+    private val onSelectionChanged by propDelegateOf(OpleidersListProps::onSelectionChanged)
 
-    override fun OpleidersListState.init(props: OpleidersListProps) {}
+//    override fun OpleidersListState.init(props: OpleidersListProps) = Unit
 
     private var list: ReactListRef? = null
 
@@ -77,7 +77,7 @@ class OpleidersList(prps: OpleidersListProps) :
                 val postcode = opleider.postcode.contains(it, true)
                 val straatnaam = opleider.straatnaam.contains(it, true)
                 score[oplCode] = (score[oplCode] ?: 0) +
-                    naam.toInt() * 3 + code.toInt() + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
+                        naam.toInt() * 3 + code.toInt() + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
             }
         }
 
@@ -105,32 +105,39 @@ class OpleidersList(prps: OpleidersListProps) :
         return result
     }
 
-    private fun toggleSelected(opleider: String?, newState: Boolean? = null) {
-        opleider ?: return
-        if (newState ?: opleider !in isOpleiderSelected)
-            isOpleiderSelected += opleider
-        else
-            isOpleiderSelected -= opleider
+    private val toggleSelected = { opleider: String?, newState: Boolean? ->
+        { _: Event ->
+            if (opleider != null) {
+                if (newState ?: opleider !in isOpleiderSelected)
+                    isOpleiderSelected += opleider
+                else
+                    isOpleiderSelected -= opleider
 
-        onSelectionChanged()
+                onSelectionChanged()
+            }
+        }
     }
 
-    private fun renderRow(filteredItems: List<Opleider>, index: Int, key: String) = buildElement {
-        val opleider = filteredItems[index]
-        mListItem(
-            button = true,
-            selected = opleider.code in isOpleiderSelected,
-            key = key,
-            divider = false,
-            onClick = { toggleSelected(opleider.code) }
-        ) {
-            mListItemAvatar {
-                mAvatar {
-                    +opleider.naam.first().toString()
+    private val renderRow = { filteredItems: List<Opleider> ->
+        { index: Int, key: String ->
+            buildElement {
+                val opleider = filteredItems[index]
+                mListItem(
+                    button = true,
+                    selected = opleider.code in isOpleiderSelected,
+                    key = key,
+                    divider = false,
+                    onClick = toggleSelected(opleider.code, null)
+                ) {
+                    mListItemAvatar {
+                        mAvatar {
+                            +opleider.naam.first().toString()
+                        }
+                    }
+                    mListItemText("${opleider.naam}, ${opleider.plaatsnaam} (${opleider.code})")
+                    mCheckbox(checked = opleider.code in isOpleiderSelected)
                 }
             }
-            mListItemText("${opleider.naam}, ${opleider.plaatsnaam} (${opleider.code})")
-            mCheckbox(checked = opleider.code in isOpleiderSelected)
         }
     }
 
@@ -154,9 +161,7 @@ class OpleidersList(prps: OpleidersListProps) :
                     css(themeStyles.list)
                     attrs {
                         length = filteredItems.size
-                        itemRenderer = { index, key ->
-                            renderRow(filteredItems, index, key)
-                        }
+                        itemRenderer = renderRow(filteredItems)
                         type = "variable"
                         ref {
                             list = it

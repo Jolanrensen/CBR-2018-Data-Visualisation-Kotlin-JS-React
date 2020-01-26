@@ -12,6 +12,7 @@ import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 import kotlinx.css.*
 import libs.RPureComponent
+import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -31,15 +32,22 @@ interface ResultCardState : RState {
 
 class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, ResultCardState>(prps) {
 
-    val currentResults by readOnlyPropDelegateOf(ResultCardProps::currentResults)
-    val selectionFinished by readOnlyPropDelegateOf(ResultCardProps::selectionFinished)
-    val selectedProducts by readOnlyPropDelegateOf(ResultCardProps::selectedProducts)
+    val currentResults by propDelegateOf(ResultCardProps::currentResults)
+    val selectionFinished by propDelegateOf(ResultCardProps::selectionFinished)
+    val selectedProducts by propDelegateOf(ResultCardProps::selectedProducts)
 
     override fun ResultCardState.init(props: ResultCardProps) {
         examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS
     }
 
     var examenResultaatVersie by stateDelegateOf(ResultCardState::examenResultaatVersie)
+
+    private val toggleExamenresultaatVersie: (Event?, Boolean?) -> Unit = { _, _ ->
+        examenResultaatVersie = when (examenResultaatVersie) {
+            EERSTE_EXAMEN_OF_TOETS -> HEREXAMEN_OF_TOETS
+            HEREXAMEN_OF_TOETS -> EERSTE_EXAMEN_OF_TOETS
+        }
+    }
 
     override fun RBuilder.render() {
         styledDiv {
@@ -55,12 +63,8 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                             mSwitchWithLabel(
                                 label = examenResultaatVersie.title,
                                 checked = examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS,
-                                onChange = { _, _ ->
-                                    examenResultaatVersie = when (examenResultaatVersie) {
-                                        EERSTE_EXAMEN_OF_TOETS -> HEREXAMEN_OF_TOETS
-                                        HEREXAMEN_OF_TOETS -> EERSTE_EXAMEN_OF_TOETS
-                                    }
-                                })
+                                onChange = toggleExamenresultaatVersie
+                            )
                         }
                         ExamenResultaat.values().forEach {
                             mTableCell(align = MTableCellAlign.right) { +it.title }

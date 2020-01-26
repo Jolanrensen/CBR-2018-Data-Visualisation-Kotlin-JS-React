@@ -3,6 +3,7 @@ import com.ccfraser.muirwik.components.card.MCardProps
 import com.ccfraser.muirwik.components.card.mCard
 import kotlinx.html.js.onMouseOutFunction
 import kotlinx.html.js.onMouseOverFunction
+import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RComponent
 import react.RState
@@ -23,18 +24,23 @@ class HoveringCard(prps: HoveringCardProps) : RComponent<HoveringCardProps, Hove
     override fun HoveringCardState.init(prps: HoveringCardProps) {
         raised = false
     }
+    var raised by stateDelegateOf(HoveringCardState::raised)
+
+    private val onMouseOver: (Event?) -> Unit = {
+        raised = true
+    }
+
+    private val onMouseOut: (Event?) -> Unit = {
+        raised = false
+    }
 
     override fun RBuilder.render() {
         div {
             attrs {
-                onMouseOverFunction = {
-                    setState { raised = true }
-                }
-                onMouseOutFunction = {
-                    setState { raised = false }
-                }
+                onMouseOverFunction = onMouseOver
+                onMouseOutFunction = onMouseOut
             }
-            mCard(raised = state.raised, handler = props.runOnCard)
+            mCard(raised = raised, handler = props.runOnCard)
         }
     }
 }

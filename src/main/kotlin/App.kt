@@ -8,14 +8,19 @@ import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
 import data.Data
 import io.data2viz.color.Colors
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.css.*
-import kotlinx.html.js.onClickFunction
-import react.*
+import org.w3c.dom.events.Event
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import react.dom.div
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
-import styled.styledP
 
 interface AppProps : RProps
 
@@ -51,10 +56,39 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
     private fun loadData() {
         if (Data.hasStartedLoading) return
 
-        runOnWorker {
+        GlobalScope.launch {
+            if (dataLoaded) return@launch
+            delay(1000)
             Data.buildAllData()
             println("data loaded!")
             dataLoaded = true
+        }
+    }
+
+    private var opleiderApplyFilterFunctions = hashSetOf<ApplyFilter>()
+    private var examenlocatieApplyFilterFunctions = hashSetOf<ApplyFilter>()
+
+
+    private val setApplyOpleidersFilterFunction: (ApplyFilter) -> Unit = {
+        opleiderApplyFilterFunctions.add(it)
+    }
+
+    private val setApplyExamenlocatieFilterFunction: (ApplyFilter) -> Unit = {
+        examenlocatieApplyFilterFunctions.add(it)
+    }
+
+    private val setExamenlocatieFilters: (filter: String) -> Unit = { filter ->
+        examenlocatieApplyFilterFunctions.forEach { it(filter) }
+    }
+
+    private val setOpleiderFilters: (filter: String) -> Unit = { filter ->
+        opleiderApplyFilterFunctions.forEach { it(filter) }
+    }
+
+    private val toggleExamenlocatieOrOpleider: (Event?) -> Unit = {
+        examenlocatieOrOpleider = when (examenlocatieOrOpleider) {
+            OPLEIDER -> EXAMENLOCATIE
+            EXAMENLOCATIE -> OPLEIDER
         }
     }
 
@@ -225,6 +259,9 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                 dataLoaded = this@App.dataLoaded
                                                 examenlocatieOrOpleider = this@App.examenlocatieOrOpleider
                                                 selectedGemeente = stateAsProp(AppState::selectedGemeente)
+
+                                                setExamenlocatieFilters = this@App.setExamenlocatieFilters
+                                                setOpleiderFilters = this@App.setOpleiderFilters
                                             }
                                         }
                                     }
@@ -236,12 +273,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                             },
                                             color = MColor.primary,
                                             size = MButtonSize.small,
-                                            onClick = {
-                                                examenlocatieOrOpleider = when (examenlocatieOrOpleider) {
-                                                    OPLEIDER -> EXAMENLOCATIE
-                                                    EXAMENLOCATIE -> OPLEIDER
-                                                }
-                                            })
+                                            onClick = toggleExamenlocatieOrOpleider
+                                        )
                                     }
                                 }
                             }
@@ -270,6 +303,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                             }
                         }
 
+                        opleiderApplyFilterFunctions = hashSetOf()
+                        examenlocatieApplyFilterFunctions = hashSetOf()
                         (0..1).forEach { _ ->
                             hoveringCard {
                                 css {
@@ -278,6 +313,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                 }
                                 resultFilterAndShow {
                                     dataLoaded = this@App.dataLoaded
+                                    setApplyOpleidersFilterFunction = this@App.setApplyOpleidersFilterFunction
+                                    setApplyExamenlocatieFilterFunction = this@App.setApplyExamenlocatieFilterFunction
                                 }
                             }
                         }

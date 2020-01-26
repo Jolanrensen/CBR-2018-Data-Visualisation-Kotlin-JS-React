@@ -15,6 +15,7 @@ import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemText
 import kotlinx.css.*
 import kotlinx.html.InputType
+import org.w3c.dom.events.Event
 import react.*
 import styled.css
 import styled.styledDiv
@@ -25,13 +26,13 @@ interface FilterListProps<Key : Any, Type : Any?> : RProps {
     var itemsName: String
     var selectedItemKeys: StateAsProp<Set<Key>>
     var selectedOtherItemKeys: StateAsProp<Set<Key>>
-    var onSelectionChanged: () -> Unit
     var alwaysAllowSelectAll: Boolean
-
     var dataLoaded: Boolean
-
     var itemsData: Map<Key, Type>
+    var setApplyFilterFunction: (ApplyFilter) -> Unit
 }
+
+typealias ApplyFilter = (String) -> Unit
 
 interface FilterListState : RState {
     var filter: String
@@ -42,10 +43,15 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
 
     private var selectedItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedItemKeys)
     private var selectedOtherItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedOtherItemKeys)
-    private val dataLoaded by readOnlyPropDelegateOf(FilterListProps<Key, Type>::dataLoaded)
+    private val dataLoaded by propDelegateOf(FilterListProps<Key, Type>::dataLoaded)
 
     override fun FilterListState.init(props: FilterListProps<Key, Type>) {
         filter = ""
+
+        props.setApplyFilterFunction {
+            this@FilterList.filter = it
+            println("filter set to $it")
+        }
     }
 
     private var filter by stateDelegateOf(FilterListState::filter)
@@ -56,15 +62,13 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
     private fun typeToKey(type: Type) = filterableList?.typeToKey(type)
     private fun keyToType(key: Key) = filterableList?.keyToType(key)
 
-    private fun toggleSelectAllVisible() {
+    private val toggleSelectAllVisible: (Event?) -> Unit = {
         val filteredItems = getFilteredItems()
         if (!filteredItems.all { typeToKey(it) in selectedItemKeys }) {
             selectedItemKeys += filteredItems.map { typeToKey(it)!! }
         } else {
             selectedItemKeys -= filteredItems.map { typeToKey(it)!! }
         }
-
-        props.onSelectionChanged()
     }
 
     override fun RBuilder.render() {
@@ -122,7 +126,7 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
                         button = true,
                         divider = true,
                         dense = true,
-                        onClick = { toggleSelectAllVisible() }
+                        onClick = toggleSelectAllVisible
                     ) {
                         mListItemText(
                             "(De)selecteer alle${
@@ -158,7 +162,6 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
 
                         filter = this@FilterList.filter
 
-                        onSelectionChanged = props.onSelectionChanged
                         itemsData = props.itemsData
 
                     }

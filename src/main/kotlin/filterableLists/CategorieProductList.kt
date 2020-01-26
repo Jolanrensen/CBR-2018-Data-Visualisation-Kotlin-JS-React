@@ -34,10 +34,10 @@ import kotlinx.css.maxHeight
 import kotlinx.css.overflow
 import kotlinx.css.padding
 import kotlinx.css.px
+import org.w3c.dom.events.Event
 import propDelegateOf
 import react.RBuilder
 import react.ReactElement
-import readOnlyPropDelegateOf
 import stateDelegateOf
 import styled.css
 import styled.styledDiv
@@ -60,8 +60,8 @@ class CategorieProductList(prps: CategorieProductListProps) :
     FilterableList<Product, Product, CategorieProductListProps, CategorieProductListState>(prps) {
 
     private var isProductSelected by propDelegateOf(CategorieProductListProps::selectedItemKeys)
-    private val filter by readOnlyPropDelegateOf(CategorieProductListProps::filter)
-    private val onSelectionChanged by readOnlyPropDelegateOf(CategorieProductListProps::onSelectionChanged)
+    private val filter by propDelegateOf(CategorieProductListProps::filter)
+    private val onSelectionChanged by propDelegateOf(CategorieProductListProps::onSelectionChanged)
 
     private var expandedCategories by stateDelegateOf(CategorieProductListState::expandedCategories)
 
@@ -81,7 +81,7 @@ class CategorieProductList(prps: CategorieProductListProps) :
                 val categoriename = product.categorie.name.contains(it, true)
 
                 score[product] = (score[product] ?: 0) +
-                    naam.toInt() * 3 + name.toInt() * 3 + categorienaam.toInt() + categoriename.toInt()
+                        naam.toInt() * 3 + name.toInt() * 3 + categorienaam.toInt() + categoriename.toInt()
             }
         }
 
@@ -109,30 +109,35 @@ class CategorieProductList(prps: CategorieProductListProps) :
     override fun keyToType(key: Product) = key
     override fun typeToKey(type: Product) = type
 
-
-    private fun toggleExpandedCategorie(categorie: Categorie, newState: Boolean? = null) {
-        if (newState ?: categorie !in expandedCategories)
-            expandedCategories += categorie
-        else
-            expandedCategories -= categorie
+    private val toggleExpandedCategorie = { categorie: Categorie, newState: Boolean? ->
+        { _: Event ->
+            if (newState ?: categorie !in expandedCategories)
+                expandedCategories += categorie
+            else
+                expandedCategories -= categorie
+        }
     }
 
-    private fun toggleSelectedCategorie(categorie: Categorie, newState: Boolean? = null) {
-        if (newState ?: !categorie.producten.all { it in isProductSelected })
-            isProductSelected += categorie.producten
-        else
-            isProductSelected -= categorie.producten
+    private val toggleSelectedCategorie = { categorie: Categorie, newState: Boolean? ->
+        { _: Event ->
+            if (newState ?: !categorie.producten.all { it in isProductSelected })
+                isProductSelected += categorie.producten
+            else
+                isProductSelected -= categorie.producten
 
-        onSelectionChanged()
+            onSelectionChanged()
+        }
     }
 
-    private fun toggleSelectedProduct(product: Product, newState: Boolean? = null) {
-        if (newState ?: product !in isProductSelected)
-            isProductSelected += product
-        else
-            isProductSelected -= product
+    private val toggleSelectedProduct = { product: Product, newState: Boolean? ->
+        { _: Event ->
+            if (newState ?: product !in isProductSelected)
+                isProductSelected += product
+            else
+                isProductSelected -= product
 
-        onSelectionChanged()
+            onSelectionChanged()
+        }
     }
 
     override fun RBuilder.render() {
@@ -179,7 +184,7 @@ class CategorieProductList(prps: CategorieProductListProps) :
                                     css {
                                         padding(0.spacingUnits)
                                     }
-                                    mListItem(onClick = { toggleSelectedCategorie(categorie) }) {
+                                    mListItem(onClick = toggleSelectedCategorie(categorie, null)) {
                                         css {
                                             padding(0.spacingUnits)
                                             margin(0.spacingUnits)
@@ -202,7 +207,7 @@ class CategorieProductList(prps: CategorieProductListProps) :
                                     css {
                                         padding(0.spacingUnits)
                                     }
-                                    mListItem(onClick = { toggleExpandedCategorie(categorie) }) {
+                                    mListItem(onClick = toggleExpandedCategorie(categorie, null)) {
                                         css {
                                             padding(0.spacingUnits)
                                         }
@@ -226,7 +231,7 @@ class CategorieProductList(prps: CategorieProductListProps) :
                                         selected = product in isProductSelected,
                                         key = product.toString(),
                                         divider = false,
-                                        onClick = { toggleSelectedProduct(product) }
+                                        onClick = toggleSelectedProduct(product, null)
                                     ) {
 
                                         mListItemText(product.omschrijving) {

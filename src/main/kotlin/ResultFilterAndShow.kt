@@ -4,7 +4,6 @@ import data.Product
 import filterableLists.categorieProductList
 import filterableLists.examenlocatiesList
 import filterableLists.opleidersList
-import libs.RPureComponent
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -12,6 +11,8 @@ import react.RState
 
 interface ResultFilterAndShowProps : RProps {
     var dataLoaded: Boolean
+    var setApplyOpleidersFilterFunction: (ApplyFilter) -> Unit
+    var setApplyExamenlocatieFilterFunction: (ApplyFilter) -> Unit
 }
 
 interface ResultFilterAndShowState : RState {
@@ -21,7 +22,7 @@ interface ResultFilterAndShowState : RState {
 }
 
 class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
-    RPureComponent<ResultFilterAndShowProps, ResultFilterAndShowState>(prps) {
+    RComponent<ResultFilterAndShowProps, ResultFilterAndShowState>(prps) {
 
     override fun ResultFilterAndShowState.init(props: ResultFilterAndShowProps) {
         selectedOpleiderKeys = setOf()
@@ -29,16 +30,53 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
         selectedProducts = setOf()
     }
 
+    override fun shouldComponentUpdate(
+        nextProps: ResultFilterAndShowProps,
+        nextState: ResultFilterAndShowState
+    ) = when {
+        props.dataLoaded != nextProps.dataLoaded -> {
+            println("dataLoaded changed")
+            true
+        }
+        props.setApplyExamenlocatieFilterFunction != nextProps.setApplyExamenlocatieFilterFunction -> {
+            println("setApplyExamenlocatieFilterFunction changed")
+            true
+        }
+        props.setApplyOpleidersFilterFunction != nextProps.setApplyOpleidersFilterFunction -> {
+            println("setApplyOpleidersFilterFunction changed")
+            true
+        }
+        state.selectedOpleiderKeys != nextState.selectedOpleiderKeys -> {
+            println("selectedOpleiderKeys changed")
+            true
+        }
+        state.selectedExamenlocatieKeys != nextState.selectedExamenlocatieKeys -> {
+            println("selectedExamenlocatieKeys changed")
+            true
+        }
+        state.selectedProducts != nextState.selectedProducts -> {
+            println("selectedProducts changed")
+            true
+        }
+        else -> false
+    }
+
+
+//        return super.shouldComponentUpdate(nextProps, nextState)
+
     private var selectedOpleiderKeys by stateDelegateOf(ResultFilterAndShowState::selectedOpleiderKeys)
     private var selectedExamenlocatieKeys by stateDelegateOf(ResultFilterAndShowState::selectedExamenlocatieKeys)
     private var selectedProducts by stateDelegateOf(ResultFilterAndShowState::selectedProducts)
 
-    private val dataLoaded by readOnlyPropDelegateOf(ResultFilterAndShowProps::dataLoaded)
+    private val dataLoaded by propDelegateOf(ResultFilterAndShowProps::dataLoaded)
 
-    private fun selectionFinished() =
+    private val emptyApplyFilterFunction: (ApplyFilter) -> Unit = {}
+
+    private val selectionFinished = {
         selectedOpleiderKeys.isNotEmpty() &&
                 selectedExamenlocatieKeys.isNotEmpty() &&
                 selectedProducts.isNotEmpty()
+    }
 
     override fun RBuilder.render() {
         mGridContainer(
@@ -57,7 +95,7 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     itemsData = if (this@ResultFilterAndShow.dataLoaded) Data.alleOpleiders else mapOf()
                     selectedItemKeys = stateAsProp(ResultFilterAndShowState::selectedOpleiderKeys)
                     selectedOtherItemKeys = stateAsProp(ResultFilterAndShowState::selectedExamenlocatieKeys)
-                    onSelectionChanged = {}
+                    setApplyFilterFunction = props.setApplyOpleidersFilterFunction
                 }
             }
 
@@ -72,7 +110,7 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     itemsData = if (this@ResultFilterAndShow.dataLoaded) Data.alleExamenlocaties else mapOf()
                     selectedItemKeys = stateAsProp(ResultFilterAndShowState::selectedExamenlocatieKeys)
                     selectedOtherItemKeys = stateAsProp(ResultFilterAndShowState::selectedOpleiderKeys)
-                    onSelectionChanged = {}
+                    setApplyFilterFunction = props.setApplyExamenlocatieFilterFunction
                 }
             }
 
@@ -87,7 +125,7 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     alwaysAllowSelectAll = true
                     selectedItemKeys = stateAsProp(ResultFilterAndShowState::selectedProducts)
                     selectedOtherItemKeys = stateAsProp(setOf()) // not used
-                    onSelectionChanged = {}
+                    setApplyFilterFunction = emptyApplyFilterFunction // not used
                 }
             }
 
@@ -97,12 +135,6 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                 lg = MGridSize.cells12,
                 xl = MGridSize.cells5
             ) {
-
-//                css {
-//                    display = Display.flex
-//                    justifyContent = JustifyContent.center
-//                    alignItems = Align.center
-//                }
                 val currentResults =
                     if (!selectionFinished())
                         sequenceOf()
@@ -126,14 +158,12 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
 
                 resultCard {
                     this.currentResults = currentResults
-                    selectionFinished = ::selectionFinished
+                    selectionFinished = this@ResultFilterAndShow.selectionFinished
                     selectedProducts = this@ResultFilterAndShow.selectedProducts
                 }
             }
-
         }
     }
-
 }
 
 fun RBuilder.resultFilterAndShow(handler: ResultFilterAndShowProps.() -> Unit) =
