@@ -18,6 +18,7 @@ import react.RComponent
 import react.RProps
 import react.RState
 import react.dom.div
+import react.dom.p
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
@@ -65,27 +66,41 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
         }
     }
 
-    private var opleiderApplyFilterFunctions = hashSetOf<ApplyFilter>()
-    private var examenlocatieApplyFilterFunctions = hashSetOf<ApplyFilter>()
+    private var opleiderApplyFilterFunctions = arrayListOf<ApplyFilter>()
+    private var examenlocatieApplyFilterFunctions = arrayListOf<ApplyFilter>()
 
 
-    private val setApplyOpleidersFilterFunction: (ApplyFilter) -> Unit = {
+    private val setApplyOpleidersFilterFunction = { it: ApplyFilter ->
         opleiderApplyFilterFunctions.add(it)
+        Unit
     }
 
-    private val setApplyExamenlocatieFilterFunction: (ApplyFilter) -> Unit = {
+    private val setApplyExamenlocatieFilterFunction = { it: ApplyFilter ->
         examenlocatieApplyFilterFunctions.add(it)
+        Unit
     }
 
-    private val setExamenlocatieFilters: (filter: String) -> Unit = { filter ->
-        examenlocatieApplyFilterFunctions.forEach { it(filter) }
+    private val setExamenlocatieFilters = { filter: String ->
+        for (it in examenlocatieApplyFilterFunctions) {
+            try {
+                it.invoke(filter)
+            } catch (e: dynamic) {
+                console.error(e)
+            }
+        }
     }
 
-    private val setOpleiderFilters: (filter: String) -> Unit = { filter ->
-        opleiderApplyFilterFunctions.forEach { it(filter) }
+    private val setOpleiderFilters = { filter: String ->
+        for (it in opleiderApplyFilterFunctions) {
+            try {
+                it.invoke(filter)
+            } catch (e: dynamic) {
+                console.error(e)
+            }
+        }
     }
 
-    private val toggleExamenlocatieOrOpleider: (Event?) -> Unit = {
+    private val toggleExamenlocatieOrOpleider = { it: Event? ->
         examenlocatieOrOpleider = when (examenlocatieOrOpleider) {
             OPLEIDER -> EXAMENLOCATIE
             EXAMENLOCATIE -> OPLEIDER
@@ -265,6 +280,11 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                             }
                                         }
                                     }
+                                    mCardContent {
+                                        p { +"Houd je cursor boven een gemeente om het slagingspercentage te zien." }
+                                        p { +"Klik op een gemeente om daarop te zoeken in de opleiders/examenlocaties hieronder." }
+                                    }
+
                                     mCardActions {
                                         mButton(
                                             caption = when (examenlocatieOrOpleider) {
@@ -303,8 +323,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                             }
                         }
 
-                        opleiderApplyFilterFunctions = hashSetOf()
-                        examenlocatieApplyFilterFunctions = hashSetOf()
+//                        opleiderApplyFilterFunctions = arrayListOf()
+//                        examenlocatieApplyFilterFunctions = arrayListOf()
                         (0..1).forEach { _ ->
                             hoveringCard {
                                 css {

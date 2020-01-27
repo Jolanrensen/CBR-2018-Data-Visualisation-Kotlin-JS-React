@@ -2,19 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="774f62ac-417e-42ca-a84a-c37de57262e9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/jsObject/JsObject.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Delegate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Delegate.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/HoveringCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/HoveringCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/TextField.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/libs/com/ccfraser/muirwik/components/TextField.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +134,8 @@
       <workItem from="1579694915787" duration="778000" />
       <workItem from="1579959096426" duration="12758000" />
       <workItem from="1580042937291" duration="2891000" />
-      <workItem from="1580070145860" duration="1766000" />
+      <workItem from="1580070145860" duration="5829000" />
+      <workItem from="1580130274717" duration="18077000" />
     </task>
     <task id="LOCAL-00001" summary="moving some stuff around">
       <created>1579885652926</created>
@@ -161,7 +158,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579889268602</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="super speed!">
+      <created>1580072145540</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1580072145540</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,7 +175,8 @@
     <MESSAGE value="moving some stuff around" />
     <MESSAGE value="kaart heeft nu ook examenlocaties" />
     <MESSAGE value="speeds" />
-    <option name="LAST_COMMIT_MESSAGE" value="speeds" />
+    <MESSAGE value="super speed!" />
+    <option name="LAST_COMMIT_MESSAGE" value="super speed!" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1739" y="484" width="954" height="677" key="#Project_Structure" timestamp="1579881413662">
@@ -182,50 +187,50 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1618" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1579632538380" />
-    <state x="1670" y="541" width="480" height="554" key="#com.intellij.ide.util.MemberChooser" timestamp="1579638675868">
+    <state x="1670" y="541" width="480" height="554" key="#com.intellij.ide.util.MemberChooser" timestamp="1580136211946">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1670" y="541" width="480" height="554" key="#com.intellij.ide.util.MemberChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1579638675868" />
+    <state x="1670" y="541" width="480" height="554" key="#com.intellij.ide.util.MemberChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1580136211946" />
     <state x="1343" y="25" width="1096" height="1591" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1579887205976">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1343" y="25" width="1096" height="1591" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1579887205976" />
-    <state x="1393" y="406" width="1477" height="829" key="CommitChangelistDialog2" timestamp="1579889268517">
+    <state x="1393" y="406" width="1477" height="829" key="CommitChangelistDialog2" timestamp="1580072145210">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1393" y="406" width="1477" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1579889268517" />
+    <state x="1393" y="406" width="1477" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1580072145210" />
     <state x="1927" y="580" key="FileChooserDialogImpl" timestamp="1579561908694">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1927" y="580" key="FileChooserDialogImpl/0.25.2880.1595@0.25.2880.1595" timestamp="1579561908694" />
-    <state width="1935" height="456" key="GridCell.Tab.0.bottom" timestamp="1580071721863">
+    <state width="1845" height="456" key="GridCell.Tab.0.bottom" timestamp="1580152980262">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1935" height="456" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1580071721863" />
+    <state width="1845" height="456" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1580152980262" />
     <state width="1872" height="279" key="GridCell.Tab.0.bottom/0.25.4800.1787@0.25.4800.1787" timestamp="1579972387629" />
-    <state width="1935" height="456" key="GridCell.Tab.0.center" timestamp="1580071721863">
+    <state width="1845" height="456" key="GridCell.Tab.0.center" timestamp="1580152980261">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1935" height="456" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1580071721863" />
+    <state width="1845" height="456" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1580152980261" />
     <state width="1872" height="279" key="GridCell.Tab.0.center/0.25.4800.1787@0.25.4800.1787" timestamp="1579972387629" />
-    <state width="1935" height="456" key="GridCell.Tab.0.left" timestamp="1580071721862">
+    <state width="1845" height="456" key="GridCell.Tab.0.left" timestamp="1580152980261">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1935" height="456" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1580071721862" />
+    <state width="1845" height="456" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1580152980261" />
     <state width="1872" height="279" key="GridCell.Tab.0.left/0.25.4800.1787@0.25.4800.1787" timestamp="1579972387628" />
-    <state width="1935" height="456" key="GridCell.Tab.0.right" timestamp="1580071721863">
+    <state width="1845" height="456" key="GridCell.Tab.0.right" timestamp="1580152980262">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1935" height="456" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1580071721863" />
+    <state width="1845" height="456" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1580152980262" />
     <state width="1872" height="279" key="GridCell.Tab.0.right/0.25.4800.1787@0.25.4800.1787" timestamp="1579972387629" />
     <state x="1408" y="457" key="SettingsEditor" timestamp="1579621040575">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1408" y="457" key="SettingsEditor/0.25.2880.1595@0.25.2880.1595" timestamp="1579621040575" />
-    <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1579889270237">
+    <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1580072147891">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1579889270237" />
+    <state x="1755" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1580072147891" />
     <state x="3440" y="132" width="799" height="840" key="find.popup" timestamp="1579971684153">
       <screen x="0" y="25" width="4800" height="1787" />
     </state>
@@ -234,6 +239,10 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1733" y="464" width="501" height="712" key="refactoring.ChangeSignatureDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1579881697647" />
+    <state x="1595" y="392" width="675" height="678" key="search.everywhere.popup" timestamp="1580134832611">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="1595" y="392" width="675" height="678" key="search.everywhere.popup/0.25.2880.1595@0.25.2880.1595" timestamp="1580134832611" />
     <state x="1713" y="650" width="540" height="340" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1579881163250">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>

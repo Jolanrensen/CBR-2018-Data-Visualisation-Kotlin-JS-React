@@ -4,6 +4,7 @@ import data.Product
 import filterableLists.categorieProductList
 import filterableLists.examenlocatiesList
 import filterableLists.opleidersList
+import libs.RPureComponent
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -22,7 +23,9 @@ interface ResultFilterAndShowState : RState {
 }
 
 class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
-    RComponent<ResultFilterAndShowProps, ResultFilterAndShowState>(prps) {
+    RPureComponent<ResultFilterAndShowProps, ResultFilterAndShowState>(prps) {
+
+    private val dataLoaded by propDelegateOf(ResultFilterAndShowProps::dataLoaded)
 
     override fun ResultFilterAndShowState.init(props: ResultFilterAndShowProps) {
         selectedOpleiderKeys = setOf()
@@ -30,45 +33,10 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
         selectedProducts = setOf()
     }
 
-    override fun shouldComponentUpdate(
-        nextProps: ResultFilterAndShowProps,
-        nextState: ResultFilterAndShowState
-    ) = when {
-        props.dataLoaded != nextProps.dataLoaded -> {
-            println("dataLoaded changed")
-            true
-        }
-        props.setApplyExamenlocatieFilterFunction != nextProps.setApplyExamenlocatieFilterFunction -> {
-            println("setApplyExamenlocatieFilterFunction changed")
-            true
-        }
-        props.setApplyOpleidersFilterFunction != nextProps.setApplyOpleidersFilterFunction -> {
-            println("setApplyOpleidersFilterFunction changed")
-            true
-        }
-        state.selectedOpleiderKeys != nextState.selectedOpleiderKeys -> {
-            println("selectedOpleiderKeys changed")
-            true
-        }
-        state.selectedExamenlocatieKeys != nextState.selectedExamenlocatieKeys -> {
-            println("selectedExamenlocatieKeys changed")
-            true
-        }
-        state.selectedProducts != nextState.selectedProducts -> {
-            println("selectedProducts changed")
-            true
-        }
-        else -> false
-    }
-
-
-//        return super.shouldComponentUpdate(nextProps, nextState)
-
     private var selectedOpleiderKeys by stateDelegateOf(ResultFilterAndShowState::selectedOpleiderKeys)
     private var selectedExamenlocatieKeys by stateDelegateOf(ResultFilterAndShowState::selectedExamenlocatieKeys)
     private var selectedProducts by stateDelegateOf(ResultFilterAndShowState::selectedProducts)
 
-    private val dataLoaded by propDelegateOf(ResultFilterAndShowProps::dataLoaded)
 
     private val emptyApplyFilterFunction: (ApplyFilter) -> Unit = {}
 
@@ -122,6 +90,7 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
             ) {
                 filterList(categorieProductList, "categorieën/producten") {
                     dataLoaded = true
+                    itemsData = mapOf(*Product.values().map { it to it }.toTypedArray()) // not used
                     alwaysAllowSelectAll = true
                     selectedItemKeys = stateAsProp(ResultFilterAndShowState::selectedProducts)
                     selectedOtherItemKeys = stateAsProp(setOf()) // not used

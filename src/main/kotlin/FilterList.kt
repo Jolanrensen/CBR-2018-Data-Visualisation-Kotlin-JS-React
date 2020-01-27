@@ -1,21 +1,20 @@
 import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.MIconEdge
 import com.ccfraser.muirwik.components.button.mIconButton
-import com.ccfraser.muirwik.components.form.MFormControlMargin
 import com.ccfraser.muirwik.components.form.MFormControlVariant
-import com.ccfraser.muirwik.components.form.MLabelMargin
-import com.ccfraser.muirwik.components.form.mFormControl
 import com.ccfraser.muirwik.components.input.MInputAdornmentPosition
-import com.ccfraser.muirwik.components.input.MInputMargin
-import com.ccfraser.muirwik.components.input.mFilledInput
+import com.ccfraser.muirwik.components.input.MInputProps
 import com.ccfraser.muirwik.components.input.mInputAdornment
-import com.ccfraser.muirwik.components.input.mInputLabel
-import com.ccfraser.muirwik.components.input.margin
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemText
-import kotlinx.css.*
-import kotlinx.html.InputType
+import kotlinext.js.jsObject
+import kotlinx.css.Display
+import kotlinx.css.JustifyContent
+import kotlinx.css.display
+import kotlinx.css.justifyContent
+import libs.RPureComponent
 import org.w3c.dom.events.Event
+import org.w3c.dom.events.KeyboardEvent
 import react.*
 import styled.css
 import styled.styledDiv
@@ -36,34 +35,74 @@ typealias ApplyFilter = (String) -> Unit
 
 interface FilterListState : RState {
     var filter: String
+    var filterFieldValue: String
 }
 
 class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
-    RComponent<FilterListProps<Key, Type>, FilterListState>(prps) {
+    RPureComponent<FilterListProps<Key, Type>, FilterListState>(prps) {
 
     private var selectedItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedItemKeys)
-    private var selectedOtherItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedOtherItemKeys)
+    private val selectedOtherItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedOtherItemKeys)
     private val dataLoaded by propDelegateOf(FilterListProps<Key, Type>::dataLoaded)
+    private val itemsData by propDelegateOf(FilterListProps<Key, Type>::itemsData)
 
     override fun FilterListState.init(props: FilterListProps<Key, Type>) {
         filter = ""
-
-        props.setApplyFilterFunction {
-            this@FilterList.filter = it
-            println("filter set to $it")
-        }
+        filterFieldValue = ""
     }
 
-    private var filter by stateDelegateOf(FilterListState::filter)
+    override fun componentDidMount() {
+        props.setApplyFilterFunction(applyFilter)
+    }
+
+    private val applyFilter: ApplyFilter = {
+        filter = it
+        inputField?.value = it
+        filterFieldValue = it
+
+        println("filter set to $it")
+    }
+
+    private var filter
+        get() = state.filter
+        set(value) {
+            setState {
+                filter = value
+            }
+            val filteredItems = getFilteredItems(value, itemsData, selectedItemKeys, selectedOtherItemKeys)
+
+            // deselect all previously selected items that are no longer in filteredItems
+            selectedItemKeys.filter {
+                keyToType(it) !in filteredItems
+            }.let {
+                selectedItemKeys -= it
+            }
+        }
+
+    private var filterFieldValue by stateDelegateOf(FilterListState::filterFieldValue)
 
     private var filterableList: FilterableList<Key, Type, *, *>? = null
-    private fun getFilteredItems() = filterableList?.getFilteredItems() ?: listOf()
 
-    private fun typeToKey(type: Type) = filterableList?.typeToKey(type)
-    private fun keyToType(key: Key) = filterableList?.keyToType(key)
+    private fun getFilteredItems(
+        filter: String,
+        itemsData: Map<Key, Type>,
+        selectedItemKeys: Set<Key>,
+        selectedOtherItemKeys: Set<Key>
+    ) = if (filter.isEmpty() && selectedOtherItemKeys.isEmpty())
+        itemsData.values
+    else
+        filterableList?.getFilteredItems(
+            filter,
+            itemsData,
+            selectedItemKeys,
+            selectedOtherItemKeys
+        ) ?: listOf()
+
+    private fun typeToKey(type: Type) = filterableList?.typeToKey(type, itemsData)
+    private fun keyToType(key: Key) = filterableList?.keyToType(key, itemsData)
 
     private val toggleSelectAllVisible: (Event?) -> Unit = {
-        val filteredItems = getFilteredItems()
+        val filteredItems = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys)
         if (!filteredItems.all { typeToKey(it) in selectedItemKeys }) {
             selectedItemKeys += filteredItems.map { typeToKey(it)!! }
         } else {
@@ -71,50 +110,51 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
         }
     }
 
+    private var inputField: MInputProps? = null
+    private val setInputRef: (ref: MInputProps) -> Unit = { inputField = it }
+
+    private val onTextFieldChange: (Event) -> Unit = {
+        it.persist()
+        filterFieldValue = it.targetInputValue
+    }
+
+    private val onEnterKeyPress: (KeyboardEvent) -> Unit = {
+        when (it.key) {
+            "Enter" -> {
+                it.preventDefault()
+                filter = filterFieldValue
+            }
+        }
+    }
+
+    private val onSearchButtonClick: (Event) -> Unit = {
+        filter = filterFieldValue
+    }
+
     override fun RBuilder.render() {
         mGridContainer {
             mGridItem(xs = MGridSize.cells12) {
-                mFormControl(
+                mTextField(
+                    value = null,
+                    label = "Filter ${props.itemsName}",
                     variant = MFormControlVariant.filled,
                     fullWidth = true,
-                    margin = MFormControlMargin.normal
+                    onChange = onTextFieldChange
                 ) {
-                    css {
-                        padding(LinearDimension.contentBox)
-                    }
-                    mInputLabel(
-                        htmlFor = "filled-adornment-filter",
-                        caption = "Filter ${props.itemsName}",
-                        margin = MLabelMargin.dense
-                    )
-                    var currentFilter = ""
-                    mFilledInput(
-                        id = "filled-adornment-filter",
-                        type = InputType.text,
-                        onChange = {
-                            it.persist()
-                            currentFilter = it.targetInputValue
-                        }
-                    ) {
-                        attrs {
-                            margin = MInputMargin.dense
-                             onKeyPress = {
-                                 when (it.key) {
-                                     "Enter" -> {
-                                         it.preventDefault()
-                                         filter = currentFilter
-                                     }
-                                 }
-                             }
+                    attrs {
+                        inputRef = setInputRef
+                        onKeyPress = onEnterKeyPress
+                        inputProps = jsObject {
                             endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
                                 mIconButton(
                                     iconName = "search",
-                                     onClick = {
-                                         filter = currentFilter
-                                     },
+                                    onClick = onSearchButtonClick,
                                     edge = MIconEdge.end
                                 )
                             }
+                        }
+                        inputLabelProps = jsObject {
+                            shrink = filterFieldValue.isNotEmpty()
                         }
                     }
                 }
@@ -133,7 +173,8 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
                             if (props.alwaysAllowSelectAll && selectedOtherItemKeys.isEmpty() && filter.isBlank())
                                 " " else " gefilterde "}${props.itemsName}"
                         )
-                        val filteredItems = getFilteredItems()
+                        val filteredItems = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys)
+
                         mCheckbox(
                             checked = filteredItems
                                 .asSequence()
@@ -151,7 +192,7 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
             }
 
             mGridItem(xs = MGridSize.cells12) {
-                if (dataLoaded)
+                if (dataLoaded) {
                     props.filterableListCreationFunction(this) {
                         selectedItemKeys = props.selectedItemKeys
                         selectedOtherItemKeys = props.selectedOtherItemKeys
@@ -160,17 +201,23 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
                             filterableList = it
                         }
 
-                        filter = this@FilterList.filter
-
-                        itemsData = props.itemsData
-
+                        filteredItems = this@FilterList.run {
+                            getFilteredItems(
+                                filter,
+                                itemsData,
+                                selectedItemKeys,
+                                selectedOtherItemKeys
+                            ).toList()
+                        }
                     }
-                else styledDiv {
-                    css {
-                        display = Display.flex
-                        justifyContent = JustifyContent.center
+                } else {
+                    styledDiv {
+                        css {
+                            display = Display.flex
+                            justifyContent = JustifyContent.center
+                        }
+                        mCircularProgress()
                     }
-                    mCircularProgress()
                 }
             }
         }

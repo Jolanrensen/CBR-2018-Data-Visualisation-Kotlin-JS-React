@@ -47,30 +47,27 @@ interface ExamenlocatiesListState : FilterableListState
 class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
     FilterableList<String, Examenlocatie, ExamenlocatiesListProps, ExamenlocatiesListState>(prps) {
 
-    override fun keyToType(key: String) = alleExamenlocatiesData[key] ?: error("Examenlocatie $key does not exist")
-    override fun typeToKey(type: Examenlocatie) = type.naam
-
     private var isExamenlocatieSelected by propDelegateOf(ExamenlocatiesListProps::selectedItemKeys)
     private val isOpleiderSelected by propDelegateOf(ExamenlocatiesListProps::selectedOtherItemKeys)
-    private val alleExamenlocatiesData by propDelegateOf(ExamenlocatiesListProps::itemsData)
-    private val filter by propDelegateOf(ExamenlocatiesListProps::filter)
-    private val onSelectionChanged by propDelegateOf(ExamenlocatiesListProps::onSelectionChanged)
-
-//    override fun ExamenlocatiesListState.init(props: ExamenlocatiesListProps) = Unit
+    private val filteredItems by propDelegateOf(ExamenlocatiesListProps::filteredItems)
 
     private var list: ReactListRef? = null
 
-    override fun getFilteredItems(): List<Examenlocatie> {
+    override fun keyToType(key: String, itemsData: Map<String, Examenlocatie>) =
+        itemsData[key] ?: error("Examenlocatie $key does not exist")
+
+    override fun typeToKey(type: Examenlocatie, itemsData: Map<String, Examenlocatie>) = type.naam
+    override fun getFilteredItems(filter: String, itemsData: Map<String, Examenlocatie>, selectedItemKeys: Set<String>, selectedOtherItemKeys: Set<String>): List<Examenlocatie> {
         // println("refreshExamenlocations")
         val filterTerms = filter.split(" ", ", ", ",")
         val score = hashMapOf<String, Int>()
-        (if (isOpleiderSelected.isNotEmpty())
-            isOpleiderSelected.asSequence()
+        (if (selectedOtherItemKeys.isNotEmpty())
+            selectedOtherItemKeys.asSequence()
                 .map { Data.opleiderToExamenlocaties[it]!! }
                 .flatten()
-                .map { it to (alleExamenlocatiesData[it] ?: error("Examenlocatie $it does not exist")) }
+                .map { it to (itemsData[it] ?: error("Examenlocatie $it does not exist")) }
                 .toMap()
-        else alleExamenlocatiesData).forEach { (examNaam, examenlocatie) ->
+        else itemsData).forEach { (examNaam, examenlocatie) ->
             filterTerms.forEach {
                 val naam = examNaam.contains(it, true)
                 val plaatsnaam = examenlocatie.plaatsnaam.contains(it, true)
@@ -81,24 +78,12 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
             }
         }
 
-        val filteredExamenlocatieCodes: List<String>
         val result = score.asSequence()
             .filter { it.value != 0 }
             .sortedByDescending { it.value }
-            .sortedByDescending { it.key in isExamenlocatieSelected }
-            .apply { filteredExamenlocatieCodes = map { it.key }.toList() }
-            .map { alleExamenlocatiesData[it.key] ?: error("Examenlocatie $it does not exist") }
+            .sortedByDescending { it.key in selectedItemKeys }
+            .map { itemsData[it.key] ?: error("Examenlocatie $it does not exist") }
             .toList()
-
-        // deselect all previously selected examenlocaties that are no longer in filteredExamenlocaties
-        isExamenlocatieSelected.filter { naam ->
-            naam !in filteredExamenlocatieCodes
-        }.apply {
-            forEach { key ->
-                isExamenlocatieSelected -= key
-            }
-            if (size > 0) onSelectionChanged()
-        }
 
         list?.scrollTo(0)
         return result
@@ -111,8 +96,6 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
             } else {
                 isExamenlocatieSelected -= examenlocatie
             }
-
-            onSelectionChanged()
         }
     }
 
@@ -140,7 +123,6 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
     }
 
     override fun RBuilder.render() {
-        val filteredItems = getFilteredItems()
         themeContext.Consumer { theme ->
             val themeStyles = object : StyleSheet("ComponentStyles", isStatic = true) {
                 val list by css {

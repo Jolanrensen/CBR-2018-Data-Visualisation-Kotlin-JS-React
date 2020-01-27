@@ -47,29 +47,26 @@ interface OpleidersListState : FilterableListState
 class OpleidersList(prps: OpleidersListProps) :
     FilterableList<String, Opleider, OpleidersListProps, OpleidersListState>(prps) {
 
-    override fun keyToType(key: String) = alleOpleidersData[key] ?: error("opleider $key does not exist")
-    override fun typeToKey(type: Opleider) = type.code
-
     private var isOpleiderSelected by propDelegateOf(OpleidersListProps::selectedItemKeys)
     private var isExamenlocatieSelected by propDelegateOf(OpleidersListProps::selectedOtherItemKeys)
-    private val alleOpleidersData by propDelegateOf(OpleidersListProps::itemsData)
-    private val filter by propDelegateOf(OpleidersListProps::filter)
-    private val onSelectionChanged by propDelegateOf(OpleidersListProps::onSelectionChanged)
-
-//    override fun OpleidersListState.init(props: OpleidersListProps) = Unit
+    private val filteredItems by propDelegateOf(OpleidersListProps::filteredItems)
 
     private var list: ReactListRef? = null
 
-    override fun getFilteredItems(): List<Opleider> {
+    override fun keyToType(key: String, itemsData: Map<String, Opleider>) =
+        itemsData[key] ?: error("opleider $key does not exist")
+
+    override fun typeToKey(type: Opleider, itemsData: Map<String, Opleider>) = type.code
+    override fun getFilteredItems(filter: String, itemsData: Map<String, Opleider>, selectedItemKeys: Set<String>, selectedOtherItemKeys: Set<String>): List<Opleider> {
         val filterTerms = filter.split(" ", ", ", ",")
         val score = hashMapOf<String, Int>()
-        (if (isExamenlocatieSelected.isNotEmpty())
-            isExamenlocatieSelected.asSequence()
+        (if (selectedOtherItemKeys.isNotEmpty())
+            selectedOtherItemKeys.asSequence()
                 .map { Data.examenlocatieToOpleiders[it]!! }
                 .flatten()
-                .map { it to (alleOpleidersData[it] ?: error("opleider $it does not exist")) }
+                .map { it to (itemsData[it] ?: error("opleider $it does not exist")) }
                 .toMap()
-        else alleOpleidersData).forEach { (oplCode, opleider) ->
+        else itemsData).forEach { (oplCode, opleider) ->
             filterTerms.forEach {
                 val naam = opleider.naam.contains(it, true)
                 val code = oplCode.contains(it, true)
@@ -81,24 +78,12 @@ class OpleidersList(prps: OpleidersListProps) :
             }
         }
 
-        val filteredOpleiderCodes: List<String>
         val result = score.asSequence()
             .filter { it.value != 0 }
             .sortedByDescending { it.value }
-            .sortedByDescending { it.key in isOpleiderSelected }
-            .apply { filteredOpleiderCodes = map { it.key }.toList() }
-            .map { alleOpleidersData[it.key] ?: error("opleider $it does not exist") }
+            .sortedByDescending { it.key in selectedItemKeys }
+            .map { itemsData[it.key] ?: error("opleider $it does not exist") }
             .toList()
-
-        // deselect all previously selected opleiders that are no longer in filteredOpleiders
-        isOpleiderSelected.filter { code ->
-            code !in filteredOpleiderCodes
-        }.apply {
-            forEach { key ->
-                isOpleiderSelected -= key
-            }
-            if (size > 0) onSelectionChanged()
-        }
 
         list?.scrollTo(0)
 
@@ -112,8 +97,6 @@ class OpleidersList(prps: OpleidersListProps) :
                     isOpleiderSelected += opleider
                 else
                     isOpleiderSelected -= opleider
-
-                onSelectionChanged()
             }
         }
     }
@@ -142,7 +125,6 @@ class OpleidersList(prps: OpleidersListProps) :
     }
 
     override fun RBuilder.render() {
-        val filteredItems = getFilteredItems()
         themeContext.Consumer { theme ->
             val themeStyles = object : StyleSheet("ComponentStyles", isStatic = true) {
                 val list by css {

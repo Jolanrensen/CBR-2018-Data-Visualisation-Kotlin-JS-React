@@ -1,16 +1,12 @@
 package com.ccfraser.muirwik.components
 
-import com.ccfraser.muirwik.components.form.MFormControlMargin
-import com.ccfraser.muirwik.components.form.MFormControlProps
-import com.ccfraser.muirwik.components.form.MFormControlVariant
-import com.ccfraser.muirwik.components.form.margin
-import com.ccfraser.muirwik.components.form.variant
+import com.ccfraser.muirwik.components.form.*
+import com.ccfraser.muirwik.components.input.MInputLabelProps
+import com.ccfraser.muirwik.components.input.MInputProps
 import kotlinx.html.InputType
+import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
+import react.*
 import styled.StyledHandler
 
 @JsModule("@material-ui/core/TextField")
@@ -25,15 +21,18 @@ interface MTextFieldProps : MFormControlProps {
     var defaultValue: String
 
     @JsName("FormHelperTextProps")
-    var formHelperTextProps: RProps
+    var formHelperTextProps: MFormHelperTextProps
 
     var helperText: String
 
     @JsName("InputLabelProps")
-    var inputLabelProps: RProps
+    var inputLabelProps: MInputLabelProps
 
     @JsName("InputProps")
-    var inputProps: RProps
+    var inputProps: MInputProps
+
+
+    var inputRef: (ref: MInputProps) -> Unit
 
     //    var inputRef	func		Use that property to pass a ref callback to the native input component.
 
@@ -51,7 +50,7 @@ interface MTextFieldProps : MFormControlProps {
     var select: Boolean
 
     @JsName("SelectProps")
-    var selectProps: dynamic
+    var selectProps: MSelectProps
 
     var type: String
     var value: String

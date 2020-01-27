@@ -60,8 +60,7 @@ class CategorieProductList(prps: CategorieProductListProps) :
     FilterableList<Product, Product, CategorieProductListProps, CategorieProductListState>(prps) {
 
     private var isProductSelected by propDelegateOf(CategorieProductListProps::selectedItemKeys)
-    private val filter by propDelegateOf(CategorieProductListProps::filter)
-    private val onSelectionChanged by propDelegateOf(CategorieProductListProps::onSelectionChanged)
+    private val filteredItems by propDelegateOf(CategorieProductListProps::filteredItems)
 
     private var expandedCategories by stateDelegateOf(CategorieProductListState::expandedCategories)
 
@@ -69,11 +68,12 @@ class CategorieProductList(prps: CategorieProductListProps) :
         expandedCategories = hashSetOf()
     }
 
-    override fun getFilteredItems(): List<Product> {
+    override fun keyToType(key: Product, itemsData: Map<Product, Product>) = key
+    override fun typeToKey(type: Product, itemsData: Map<Product, Product>) = type
+    override fun getFilteredItems(filter: String, itemsData: Map<Product, Product>, selectedItemKeys: Set<Product>, selectedOtherItemKeys: Set<Product>): List<Product> {
         val filterTerms = filter.split(" ", ", ", ",")
         val score = hashMapOf<Product, Int>()
-        Product.values().forEach { product ->
-            // Todo maybe replace with itemsDataDelegate
+        itemsData.forEach { (product, _) ->
             filterTerms.forEach {
                 val naam = product.omschrijving.contains(it, true)
                 val name = product.name.contains(it, true)
@@ -85,29 +85,15 @@ class CategorieProductList(prps: CategorieProductListProps) :
             }
         }
 
-        val filteredProducts: List<Product>
-        val result = score.asSequence()
+        return score.asSequence()
             .filter { it.value != 0 }
             .sortedByDescending { it.value }
-            .sortedByDescending { it.key in isProductSelected }
-            .apply { filteredProducts = map { it.key }.toList() }
+            .sortedByDescending { it.key in selectedItemKeys }
             .map { it.key }
             .toList()
-
-        // deselect all previously selected opleiders that are no longer in filteredOpleiders
-        isProductSelected.filter { product ->
-            product !in filteredProducts
-        }.apply {
-            forEach { key ->
-                isProductSelected -= key
-            }
-            if (size > 0) onSelectionChanged()
-        }
-        return result
     }
 
-    override fun keyToType(key: Product) = key
-    override fun typeToKey(type: Product) = type
+
 
     private val toggleExpandedCategorie = { categorie: Categorie, newState: Boolean? ->
         { _: Event ->
@@ -124,8 +110,6 @@ class CategorieProductList(prps: CategorieProductListProps) :
                 isProductSelected += categorie.producten
             else
                 isProductSelected -= categorie.producten
-
-            onSelectionChanged()
         }
     }
 
@@ -135,13 +119,10 @@ class CategorieProductList(prps: CategorieProductListProps) :
                 isProductSelected += product
             else
                 isProductSelected -= product
-
-            onSelectionChanged()
         }
     }
 
     override fun RBuilder.render() {
-        val filteredItems = getFilteredItems()
         themeContext.Consumer { theme ->
             styledDiv {
                 css {
