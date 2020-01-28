@@ -131,6 +131,70 @@ object Data {
                 } catch (e: Exception) {
                 }
             }
+
+            opleiderToResultaten.forEach { (opleiderCode, resultaten) ->
+                alleOpleiders[opleiderCode]?.apply {
+                    slagingsPercentageEersteKeer = (
+                            resultaten.sumByDouble {
+                                it.examenResultaatAantallen
+                                    .asSequence()
+                                    .voldoende
+                                    .eersteExamen
+                                    .sumByDouble { it.aantal.toDouble() }
+                            } / resultaten.sumByDouble {
+                                it.examenResultaatAantallen
+                                    .asSequence()
+                                    .eersteExamen
+                                    .sumByDouble { it.aantal.toDouble() }
+                            }).let { if (it.isNaN()) 0.0 else it }
+
+                    slagingsPercentageHerkansing = (
+                            resultaten.sumByDouble {
+                                it.examenResultaatAantallen
+                                    .asSequence()
+                                    .voldoende
+                                    .herExamen
+                                    .sumByDouble { it.aantal.toDouble() }
+                            } / resultaten.sumByDouble {
+                                it.examenResultaatAantallen
+                                    .asSequence()
+                                    .herExamen
+                                    .sumByDouble { it.aantal.toDouble() }
+                            }).let { if (it.isNaN()) 0.0 else it }
+                }
+            }
+
+            examenlocatieToResultaten.forEach { (examenlocatieCode, resultaten) ->
+                alleExamenlocaties[examenlocatieCode]?.apply {
+                    slagingsPercentageEersteKeer = (
+                            resultaten.sumByDouble {
+                                it.examenResultaatAantallen
+                                    .asSequence()
+                                    .voldoende
+                                    .eersteExamen
+                                    .sumByDouble { it.aantal.toDouble() }
+                            } / resultaten.sumByDouble {
+                                it.examenResultaatAantallen
+                                    .asSequence()
+                                    .eersteExamen
+                                    .sumByDouble { it.aantal.toDouble() }
+                            }).let { if (it.isNaN()) 0.0 else it }
+
+                    slagingsPercentageHerkansing = (
+                            resultaten.sumByDouble {
+                                it.examenResultaatAantallen
+                                    .asSequence()
+                                    .voldoende
+                                    .herExamen
+                                    .sumByDouble { it.aantal.toDouble() }
+                            } / resultaten.sumByDouble {
+                                it.examenResultaatAantallen
+                                    .asSequence()
+                                    .herExamen
+                                    .sumByDouble { it.aantal.toDouble() }
+                            }).let { if (it.isNaN()) 0.0 else it }
+                }
+            }
         }
     }
 

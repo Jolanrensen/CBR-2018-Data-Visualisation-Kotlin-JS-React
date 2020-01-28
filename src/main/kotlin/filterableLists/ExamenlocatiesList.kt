@@ -14,7 +14,6 @@ import com.ccfraser.muirwik.components.table.mTableCell
 import com.ccfraser.muirwik.components.table.mTableRow
 import data.Data
 import data.Examenlocatie
-import data.Opleider
 import kotlinx.css.Color
 import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
@@ -58,7 +57,18 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
 
     private var isExamenlocatieSelected by propDelegateOf(ExamenlocatiesListProps::selectedItemKeys)
     private val isOpleiderSelected by propDelegateOf(ExamenlocatiesListProps::selectedOtherItemKeys)
-    private val filteredItems by propDelegateOf(ExamenlocatiesListProps::filteredItems)
+
+    private val filter by propDelegateOf(ExamenlocatiesListProps::filter)
+    private val itemsData by propDelegateOf(ExamenlocatiesListProps::itemsData)
+
+    private val filteredItems
+        get() = props.filteredItems
+            ?: getFilteredItems(
+                filter,
+                itemsData,
+                isExamenlocatieSelected,
+                isOpleiderSelected
+            ) // for if ref is not yet set in FilterList
 
     override fun ExamenlocatiesListState.init(props: ExamenlocatiesListProps) {
         popoverOpen = false
@@ -68,12 +78,19 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
 
     private var list: ReactListRef? = null
 
+    override fun sortType(type: Examenlocatie) =
+        (type.slagingsPercentageEersteKeer + type.slagingsPercentageHerkansing) / 2.0
+
     override fun keyToType(key: String, itemsData: Map<String, Examenlocatie>) =
         itemsData[key] ?: error("Examenlocatie $key does not exist")
 
     override fun typeToKey(type: Examenlocatie, itemsData: Map<String, Examenlocatie>) = type.naam
-    override fun getFilteredItems(filter: String, itemsData: Map<String, Examenlocatie>, selectedItemKeys: Set<String>, selectedOtherItemKeys: Set<String>): List<Examenlocatie> {
-        // println("refreshExamenlocations")
+    override fun getFilteredItems(
+        filter: String,
+        itemsData: Map<String, Examenlocatie>,
+        selectedItemKeys: Set<String>,
+        selectedOtherItemKeys: Set<String>
+    ): List<Examenlocatie> {
         val filterTerms = filter.split(" ", ", ", ",")
         val score = hashMapOf<String, Int>()
         (if (selectedOtherItemKeys.isNotEmpty())
@@ -91,10 +108,14 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                 score[examNaam] = (score[examNaam] ?: 0) +
                         naam.toInt() * 3 + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
             }
+            if (filterTerms.isEmpty()) score[examNaam] = 1
         }
 
         val result = score.asSequence()
             .filter { it.value != 0 }
+            .sortedByDescending {
+                itemsData[it.key]?.let { sortType(it) } ?: error("opleider $it does not exist")
+            }
             .sortedByDescending { it.value }
             .sortedByDescending { it.key in selectedItemKeys }
             .map { itemsData[it.key] ?: error("Examenlocatie $it does not exist") }
@@ -232,6 +253,9 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                 }
                 mTypography {
                     +"  ⬑   Klik op een avatar voor meer info!"
+                }
+                mTypography {
+                    +"Resultaten worden o.a. gesorteerd op gemiddeld totaal slagingspercentage"
                 }
             }
             Unit

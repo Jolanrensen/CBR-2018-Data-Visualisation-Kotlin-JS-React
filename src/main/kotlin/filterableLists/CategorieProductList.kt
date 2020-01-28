@@ -61,7 +61,18 @@ class CategorieProductList(prps: CategorieProductListProps) :
     FilterableList<Product, Product, CategorieProductListProps, CategorieProductListState>(prps) {
 
     private var isProductSelected by propDelegateOf(CategorieProductListProps::selectedItemKeys)
-    private val filteredItems by propDelegateOf(CategorieProductListProps::filteredItems)
+
+    private val filter by propDelegateOf(CategorieProductListProps::filter)
+    private val itemsData by propDelegateOf(CategorieProductListProps::itemsData)
+
+    private val filteredItems
+        get() = props.filteredItems
+            ?: getFilteredItems(
+                filter,
+                itemsData,
+                isProductSelected,
+                setOf()
+            ) // for if ref is not yet set in FilterList
 
     private var expandedCategories by stateDelegateOf(CategorieProductListState::expandedCategories)
 
@@ -69,12 +80,20 @@ class CategorieProductList(prps: CategorieProductListProps) :
         expandedCategories = hashSetOf()
         popoverOpen = false
     }
+
     private var popoverOpen by stateDelegateOf(CategorieProductListState::popoverOpen)
 
+    // TODO
+    override fun sortType(type: Product) = Product.values().indexOf(type).toDouble()
 
     override fun keyToType(key: Product, itemsData: Map<Product, Product>) = key
     override fun typeToKey(type: Product, itemsData: Map<Product, Product>) = type
-    override fun getFilteredItems(filter: String, itemsData: Map<Product, Product>, selectedItemKeys: Set<Product>, selectedOtherItemKeys: Set<Product>): List<Product> {
+    override fun getFilteredItems(
+        filter: String,
+        itemsData: Map<Product, Product>,
+        selectedItemKeys: Set<Product>,
+        selectedOtherItemKeys: Set<Product>
+    ): List<Product> {
         val filterTerms = filter.split(" ", ", ", ",")
         val score = hashMapOf<Product, Int>()
         itemsData.forEach { (product, _) ->
@@ -87,6 +106,7 @@ class CategorieProductList(prps: CategorieProductListProps) :
                 score[product] = (score[product] ?: 0) +
                         naam.toInt() * 3 + name.toInt() * 3 + categorienaam.toInt() + categoriename.toInt()
             }
+            if (filterTerms.isEmpty()) score[product] = 1
         }
 
         return score.asSequence()
@@ -96,7 +116,6 @@ class CategorieProductList(prps: CategorieProductListProps) :
             .map { it.key }
             .toList()
     }
-
 
 
     private val toggleExpandedCategorie = { categorie: Categorie, newState: Boolean? ->
@@ -143,7 +162,9 @@ class CategorieProductList(prps: CategorieProductListProps) :
                         backgroundColor = Color(theme.palette.background.paper)
                     }
 
-                    val categories = filteredItems.asSequence().map { it.categorie }
+                    val categories = filteredItems
+                        .asSequence()
+                        .map { it.categorie }
                         .toHashSet()
                         .toList()
                         .sortedBy { it.name }

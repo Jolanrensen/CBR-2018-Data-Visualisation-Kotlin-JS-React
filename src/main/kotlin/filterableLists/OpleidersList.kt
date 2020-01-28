@@ -60,7 +60,18 @@ class OpleidersList(prps: OpleidersListProps) :
 
     private var isOpleiderSelected by propDelegateOf(OpleidersListProps::selectedItemKeys)
     private var isExamenlocatieSelected by propDelegateOf(OpleidersListProps::selectedOtherItemKeys)
-    private val filteredItems by propDelegateOf(OpleidersListProps::filteredItems)
+
+    private val filter by propDelegateOf(OpleidersListProps::filter)
+    private val itemsData by propDelegateOf(OpleidersListProps::itemsData)
+
+    private val filteredItems
+        get() = props.filteredItems
+            ?: getFilteredItems(
+                filter,
+                itemsData,
+                isOpleiderSelected,
+                isExamenlocatieSelected
+            ) // for if ref is not yet set in FilterList
 
     override fun OpleidersListState.init(props: OpleidersListProps) {
         popoverOpen = false
@@ -69,6 +80,9 @@ class OpleidersList(prps: OpleidersListProps) :
     private var popoverOpen by stateDelegateOf(OpleidersListState::popoverOpen)
 
     private var list: ReactListRef? = null
+
+    override fun sortType(type: Opleider) =
+        (type.slagingsPercentageEersteKeer + type.slagingsPercentageHerkansing) / 2.0
 
     override fun keyToType(key: String, itemsData: Map<String, Opleider>) =
         itemsData[key] ?: error("opleider $key does not exist")
@@ -98,10 +112,14 @@ class OpleidersList(prps: OpleidersListProps) :
                 score[oplCode] = (score[oplCode] ?: 0) +
                         naam.toInt() * 3 + code.toInt() + plaatsnaam.toInt() * 2 + postcode.toInt() + straatnaam.toInt()
             }
+            if (filterTerms.isEmpty()) score[oplCode] = 1
         }
 
         val result = score.asSequence()
             .filter { it.value != 0 }
+            .sortedByDescending {
+                itemsData[it.key]?.let { sortType(it) } ?: error("opleider $it does not exist")
+            }
             .sortedByDescending { it.value }
             .sortedByDescending { it.key in selectedItemKeys }
             .map { itemsData[it.key] ?: error("opleider $it does not exist") }
@@ -243,6 +261,9 @@ class OpleidersList(prps: OpleidersListProps) :
 
                 mTypography {
                     +"  ⬑   Klik op een avatar voor meer info!"
+                }
+                mTypography {
+                    +"Resultaten worden o.a. gesorteerd op gemiddeld totaal slagingspercentage"
                 }
             }
             Unit

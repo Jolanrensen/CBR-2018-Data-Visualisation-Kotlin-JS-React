@@ -1,7 +1,7 @@
 package data
 
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.*
+import kotlinx.serialization.internal.StringDescriptor
 import kotlin.js.Date
 
 @Serializer(forClass = DateSerializer::class)
@@ -9,11 +9,15 @@ object DateSerializer : KSerializer<Date> {
     override val descriptor: SerialDescriptor =
         StringDescriptor.withName("DateSerializer")
 
-    override fun serialize(output: Encoder, obj: Date) {
-        output.encodeString(obj.toDateString())
+    override fun serialize(encoder: Encoder, obj: Date) {
+        encoder.encodeString(
+            if (obj.getFullYear() == 10000) "-"
+            else "${obj.getDate()}-${obj.getMonth()}-${obj.getFullYear()}"
+        )
     }
 
-    override fun deserialize(input: Decoder): Date {
-        return Date(input.decodeString())
+    /** Can't decode serialized Date! Serializer only used for pretty printing Date */
+    override fun deserialize(decoder: Decoder): Date {
+        return Date(decoder.decodeString())
     }
 }

@@ -69,7 +69,7 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
             setState {
                 filter = value
             }
-            val filteredItems = getFilteredItems(value, itemsData, selectedItemKeys, selectedOtherItemKeys)
+            val filteredItems = getFilteredItems(value, itemsData, selectedItemKeys, selectedOtherItemKeys)!!
 
             // deselect all previously selected items that are no longer in filteredItems
             selectedItemKeys.filter {
@@ -88,21 +88,23 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
         itemsData: Map<Key, Type>,
         selectedItemKeys: Set<Key>,
         selectedOtherItemKeys: Set<Key>
-    ) = if (filter.isEmpty() && selectedOtherItemKeys.isEmpty())
-        itemsData.values
-    else
+    ) =
+//        if (filter.isEmpty() && selectedOtherItemKeys.isEmpty())
+//        itemsData.values.sortedByDescending { sortType(it) }
+//    else
         filterableList?.getFilteredItems(
             filter,
             itemsData,
             selectedItemKeys,
             selectedOtherItemKeys
-        ) ?: listOf()
+        )
 
+    private fun sortType(type: Type) = filterableList?.sortType(type)
     private fun typeToKey(type: Type) = filterableList?.typeToKey(type, itemsData)
     private fun keyToType(key: Key) = filterableList?.keyToType(key, itemsData)
 
     private val toggleSelectAllVisible: (Event?) -> Unit = {
-        val filteredItems = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys)
+        val filteredItems = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys)!!
         if (!filteredItems.all { typeToKey(it) in selectedItemKeys }) {
             selectedItemKeys += filteredItems.map { typeToKey(it)!! }
         } else {
@@ -176,11 +178,11 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
                         val filteredItems = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys)
 
                         mCheckbox(
-                            checked = filteredItems
+                            checked = (filteredItems ?: listOf())
                                 .asSequence()
                                 .map { typeToKey(it) }
                                 .any { it in selectedItemKeys },
-                            indeterminate = filteredItems
+                            indeterminate = (filteredItems ?: listOf())
                                 .asSequence()
                                 .map { typeToKey(it) }
                                 .run {
@@ -207,8 +209,11 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
                                 itemsData,
                                 selectedItemKeys,
                                 selectedOtherItemKeys
-                            ).toList()
+                            )?.toList()
                         }
+
+                        filter = this@FilterList.filter
+                        itemsData = this@FilterList.itemsData
                     }
                 } else {
                     styledDiv {

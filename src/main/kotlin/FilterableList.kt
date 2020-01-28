@@ -8,13 +8,16 @@ import react.ReactElement
 
 interface FilterableListProps<Key : Any, Type : Any?> : RProps {
     // List of filtered items
-    var filteredItems: List<Type>
+    var filteredItems: List<Type>?
 
     // Set of keys representing all selected items in this list, don't forget to call onSelectionChanged
     var selectedItemKeys: StateAsProp<Set<Key>>
 
     // Set of keys representing all selected items in other relevant list
     var selectedOtherItemKeys: StateAsProp<Set<Key>>
+
+    var filter: String
+    var itemsData: Map<Key, Type>
 }
 
 interface FilterableListState : RState {
@@ -24,6 +27,8 @@ interface FilterableListState : RState {
 abstract class FilterableList<Key : Any, Type : Any?, Props : FilterableListProps<Key, Type>, State : FilterableListState>(
     prps: Props
 ) : RPureComponent<Props, State>(prps) {
+    abstract fun sortType(type: Type): Double
+
     abstract fun getFilteredItems(
         filter: String,
         itemsData: Map<Key, Type>,
