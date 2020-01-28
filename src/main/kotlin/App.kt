@@ -17,8 +17,6 @@ import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
-import react.dom.div
-import react.dom.p
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
@@ -151,98 +149,18 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                             backgroundColor = Color(theme.palette.background.default)
                         }
                         spacer()
-
-//                        styledDiv {
-//                            css {
-//                                padding(vertical = 16.px)
-//                                backgroundColor = Color.green
-//                            }
-//
-//                            +state.welcomeText
-//
-//                            attrs.onClickFunction = {
-//                                setState {
-//                                    welcomeText = "Something else"
-//                                }
-//                            }
-//                        }
-
-//                        styledP {
-//                            css {
-//                                color = Color.blue
-//                            }
-//                            +"Hello from React!"
-//                            attrs {
-//                                onClickFunction = {
-//                                    alert("Clickedie clackedie")
-//                                }
-//                            }
-//                        }
-//
-//                        mButton("Change color",
-//                            color = MColor.primary,
-//                            size = MButtonSize.medium,
-//                            onClick = {
-//                                setState {
-//                                    circleColor = if (state.circleColor == Colors.rgb(255, 0, 0))
-//                                        Colors.rgb(0, 255, 0)
-//                                    else Colors.rgb(255, 0, 0)
-//                                }
-//                            })
-
-                        // vizComponentCard(
-                        //     width = 800.0,
-                        //     height = 250.0,
-                        //     runOnCard = {
-                        //         mCardHeader(
-                        //             title = "Mooie grafiek",
-                        //             subHeader = "Nou kweenie hoor",
-                        //             avatar = mAvatar(addAsChild = false) {
-                        //                 +"gg"
-                        //             }
-                        //         )
-                        //     }
-                        // ) {
-                        //     println("reloading bolletjes")
-                        //     (0 until 360 step 30).forEach {
-                        //         val angle = it.deg
-                        //         val position = point(250 + angle.cos * 100, 125 + angle.sin * 100)
-                        //         val color = state.circleColor
-                        //
-                        //         circle {
-                        //             // draw a circle with "pure-color"
-                        //             fill = color
-                        //             radius = 25.0
-                        //             x = position.x
-                        //             y = position.y
-                        //         }
-                        //         circle {
-                        //             // draw a circle with the desaturated color
-                        //             fill = color.desaturate(10.0)
-                        //             radius = 25.0
-                        //             x = position.x + 270
-                        //             y = position.y
-                        //         }
-                        //         text {
-                        //             // indicate the perceived lightness of the color
-                        //             x = position.x
-                        //             y = position.y
-                        //             textColor = if (color.luminance() > 50.percent) Colors.Web.black else Colors.Web.white
-                        //             textContent = "${(color.luminance().value * 100).toInt()}%"
-                        //             textAlign = textAlign(TextHAlign.MIDDLE, TextVAlign.MIDDLE)
-                        //         }
-                        //     }
-                        // }
-
-
                         mGridContainer(
-                            spacing = MGridSpacing.spacing3,
-                            alignContent = MGridAlignContent.center
+                            spacing = MGridSpacing.spacing2,
+                            alignContent = MGridAlignContent.center,
+                            alignItems = MGridAlignItems.flexEnd
                         ) {
-                            mGridItem(xs = MGridSize.cells12) {
+                            css {
+                                padding(5.mm)
+                            }
+                            mGridItem(xs = MGridSize.cells12, lg = MGridSize.cells6) {
                                 hoveringCard {
                                     css {
-                                        margin(5.mm)
+                                        margin(1.mm)
                                     }
                                     mCardHeader(
                                         title = "Slagingspercentage ${when (examenlocatieOrOpleider) {
@@ -298,55 +216,50 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                     }
                                 }
                             }
-                        }
 
-                        div {
-                            hoveringCard {
-                                css {
-                                    margin(5.mm)
-                                }
-                                mCardHeader(
-                                    title = "Resultaten Vergelijken",
-                                    avatar = mAvatar(addAsChild = false) {
-                                        +"R"
+                            mGridItem(xs = MGridSize.cells12, lg = MGridSize.cells6) {
+                                hoveringCard {
+                                    css {
+                                        margin(1.mm)
                                     }
-                                )
+                                    mCardHeader(
+                                        title = "Resultaten Vergelijken",
+                                        avatar = mAvatar(addAsChild = false) {
+                                            +"R"
+                                        }
+                                    )
 
-                                mCardContent {
-                                    mTypography {
-                                        +"Hieronder kun je sets resultaten met elkaar vergelijken. Dit werkt het best op de desktop aangezien dan de tabellen onder elkaar terecht komen. Het selecteren van opleiders filtert automatisch de beschikbare examenlocaties en vice versa. Geselecteerde items die verdwijnen dankzij een filteropdracht worden automatisch gedeselecteerd."
-                                    }
-                                    mTypography {
-                                        +"Druk op Enter of op het vergrootglas om een filter toe te passen (Dit ivm performance)."
+                                    mCardContent {
+                                        mTypography {
+                                            +"Hieronder kun je sets resultaten met elkaar vergelijken. Dit werkt het best op de desktop aangezien dan de tabellen onder elkaar terecht komen. Het selecteren van opleiders filtert automatisch de beschikbare examenlocaties en vice versa. Geselecteerde items die verdwijnen dankzij een filteropdracht worden automatisch gedeselecteerd."
+                                        }
+                                        mTypography {
+                                            +"Druk op Enter of op het vergrootglas om een filter toe te passen (Dit ivm performance)."
+                                        }
                                     }
                                 }
                             }
-                        }
 
 //                        opleiderApplyFilterFunctions = arrayListOf()
 //                        examenlocatieApplyFilterFunctions = arrayListOf()
-                        (0..1).forEach { _ ->
-                            hoveringCard {
-                                css {
-                                    margin(5.mm)
-                                    padding(5.mm)
-                                }
-                                resultFilterAndShow {
-                                    dataLoaded = this@App.dataLoaded
-                                    setApplyOpleidersFilterFunction = this@App.setApplyOpleidersFilterFunction
-                                    setApplyExamenlocatieFilterFunction = this@App.setApplyExamenlocatieFilterFunction
+                            mGridItem(xs = MGridSize.cells12) {
+                                (0..1).forEach { _ ->
+                                    hoveringCard {
+                                        css {
+                                            margin(1.mm)
+                                            marginBottom = 5.mm
+                                            padding(5.mm)
+                                        }
+                                        resultFilterAndShow {
+                                            dataLoaded = this@App.dataLoaded
+                                            setApplyOpleidersFilterFunction = this@App.setApplyOpleidersFilterFunction
+                                            setApplyExamenlocatieFilterFunction =
+                                                this@App.setApplyExamenlocatieFilterFunction
+                                        }
+                                    }
                                 }
                             }
                         }
-
-
-                        // video {
-                        //     attrs {
-                        //         src = "https://thumbs.gfycat.com/ThankfulWeakChick-mobile.mp4"
-                        //         autoPlay = true
-                        //         loop = true
-                        //     }
-                        // }
                     }
                 }
             }
