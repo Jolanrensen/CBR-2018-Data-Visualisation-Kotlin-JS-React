@@ -121,7 +121,7 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
         val result = score.asSequence()
             .filter { it.value != 0 }
             .sortedByDescending {
-                itemsData[it.key]?.let { sortType(it) } ?: error("opleider $it does not exist")
+                itemsData[it.key]?.let { sortType(it) } ?: error("examenlocatie $it does not exist")
             }
             .sortedByDescending { it.value }
             .sortedByDescending { it.key in selectedItemKeys }

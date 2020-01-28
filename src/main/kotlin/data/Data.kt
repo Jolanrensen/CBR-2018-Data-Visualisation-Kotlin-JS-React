@@ -46,7 +46,7 @@ object Data {
             return field
         }
 
-    private val csv: List<List<String>>?
+    val csv: List<List<String>>?
         get() {
             val xmlhttp = XMLHttpRequest()
             // data from overheid cbr, gemeentes toegevoegd met https://www.cbs.nl/nl-nl/maatwerk/2018/36/buurt-wijk-en-gemeente-2018-voor-postcode-huisnummer

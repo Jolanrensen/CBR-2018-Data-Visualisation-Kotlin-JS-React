@@ -1,3 +1,6 @@
+import data.Categorie
+import data.Data
+import data.Product
 import kotlinext.js.jsObject
 import org.w3c.dom.MessageEvent
 import org.w3c.dom.Worker
@@ -6,19 +9,11 @@ import org.w3c.files.Blob
 import org.w3c.workers.ServiceWorkerGlobalScope
 import react.dom.render
 import kotlin.browser.document
-import kotlin.reflect.KFunction0
 
 external fun alert(message: Any?)
 
-val test: () -> Unit = {}
-
 fun main() {
-    val a = test
-    val b = test
-    println("a == b: ${a == b}")
-
     println("Hello Kotlin/JS")
-// window.onload = {
     val root = document.getElementById("root")
     render(root) {
         app()

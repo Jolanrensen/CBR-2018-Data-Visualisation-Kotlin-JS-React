@@ -3,25 +3,13 @@ package filterableLists
 import FilterableList
 import FilterableListProps
 import FilterableListState
-import com.ccfraser.muirwik.components.MGridAlignItems
-import com.ccfraser.muirwik.components.MGridDirection
-import com.ccfraser.muirwik.components.MGridJustify
-import com.ccfraser.muirwik.components.MGridSize
-import com.ccfraser.muirwik.components.alignItems
+import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.mIconButton
 import com.ccfraser.muirwik.components.dialog.ModalOnCloseReason
-import com.ccfraser.muirwik.components.direction
-import com.ccfraser.muirwik.components.justify
 import com.ccfraser.muirwik.components.list.mList
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemAvatar
 import com.ccfraser.muirwik.components.list.mListItemText
-import com.ccfraser.muirwik.components.mAvatar
-import com.ccfraser.muirwik.components.mCheckbox
-import com.ccfraser.muirwik.components.mGridContainer
-import com.ccfraser.muirwik.components.mGridItem
-import com.ccfraser.muirwik.components.spacingUnits
-import com.ccfraser.muirwik.components.themeContext
 import com.ccfraser.muirwik.components.transitions.mCollapse
 import data.Categorie
 import data.Product
@@ -81,10 +69,7 @@ class CategorieProductList(prps: CategorieProductListProps) :
         popoverOpen = false
     }
 
-    private var popoverOpen by stateDelegateOf(CategorieProductListState::popoverOpen)
-
-    // TODO
-    override fun sortType(type: Product) = Product.values().indexOf(type).toDouble()
+    override fun sortType(type: Product) = type.categorie.frequency.toDouble()
 
     override fun keyToType(key: Product, itemsData: Map<Product, Product>) = key
     override fun typeToKey(type: Product, itemsData: Map<Product, Product>) = type
@@ -111,6 +96,9 @@ class CategorieProductList(prps: CategorieProductListProps) :
 
         return score.asSequence()
             .filter { it.value != 0 }
+            .sortedByDescending {
+                itemsData[it.key]?.let { sortType(it) } ?: error("product $it does not exist")
+            }
             .sortedByDescending { it.value }
             .sortedByDescending { it.key in selectedItemKeys }
             .map { it.key }
@@ -145,10 +133,6 @@ class CategorieProductList(prps: CategorieProductListProps) :
         }
     }
 
-    val onPopoverClose: (Event, ModalOnCloseReason) -> Unit = { _, _ ->
-        popoverOpen = false
-    }
-
     override fun RBuilder.render() {
         themeContext.Consumer { theme ->
             styledDiv {
@@ -165,9 +149,8 @@ class CategorieProductList(prps: CategorieProductListProps) :
                     val categories = filteredItems
                         .asSequence()
                         .map { it.categorie }
-                        .toHashSet()
-                        .toList()
-                        .sortedBy { it.name }
+                        .distinct()
+
                     for (categorie in categories) {
                         mListItem(
                             dense = true,
@@ -256,6 +239,18 @@ class CategorieProductList(prps: CategorieProductListProps) :
                             }
                         }
                     }
+                }
+            }
+            styledDiv {
+                css {
+                    padding(
+                        left = 5.spacingUnits,
+                        right = 5.spacingUnits,
+                        top = 2.spacingUnits
+                    )
+                }
+                mTypography {
+                    +"Resultaten worden o.a. gesorteerd op meest voorkomend product"
                 }
             }
             Unit
