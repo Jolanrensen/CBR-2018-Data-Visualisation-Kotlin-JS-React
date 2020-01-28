@@ -5,7 +5,6 @@ import FilterableListProps
 import FilterableListState
 import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.mIconButton
-import com.ccfraser.muirwik.components.dialog.ModalOnCloseReason
 import com.ccfraser.muirwik.components.list.mList
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemAvatar
@@ -14,20 +13,17 @@ import com.ccfraser.muirwik.components.transitions.mCollapse
 import data.Categorie
 import data.Product
 import data.producten
-import kotlinx.css.Color
-import kotlinx.css.Overflow
-import kotlinx.css.backgroundColor
-import kotlinx.css.margin
-import kotlinx.css.marginLeft
-import kotlinx.css.maxHeight
-import kotlinx.css.overflow
-import kotlinx.css.padding
-import kotlinx.css.px
+import kotlinx.css.*
+import libs.reactList.ReactListRef
+import libs.reactList.styledReactList
 import org.w3c.dom.events.Event
 import propDelegateOf
 import react.RBuilder
 import react.ReactElement
+import react.buildElement
+import react.dom.div
 import stateDelegateOf
+import styled.StyleSheet
 import styled.css
 import styled.styledDiv
 import toInt
@@ -69,6 +65,8 @@ class CategorieProductList(prps: CategorieProductListProps) :
         popoverOpen = false
     }
 
+    private var list: ReactListRef? = null
+
     override fun sortType(type: Product) = type.categorie.frequency.toDouble()
 
     override fun keyToType(key: Product, itemsData: Map<Product, Product>) = key
@@ -93,6 +91,8 @@ class CategorieProductList(prps: CategorieProductListProps) :
             }
             if (filterTerms.isEmpty()) score[product] = 1
         }
+
+        list?.scrollTo(0)
 
         return score.asSequence()
             .filter { it.value != 0 }
@@ -133,110 +133,128 @@ class CategorieProductList(prps: CategorieProductListProps) :
         }
     }
 
+    private val renderCategorieRow = { categories: List<Categorie>, filteredItems: List<Product> ->
+        { index: Int, key: String ->
+            buildElement {
+                val categorie = categories[index]
+                div {
+                    mListItem(
+                        dense = false,
+                        button = true,
+                        selected = categorie.producten.any { it in isProductSelected },
+                        key = key,
+                        divider = false
+                    ) {
+                        css {
+                            padding(0.spacingUnits)
+                            margin(0.spacingUnits)
+                        }
+                        mGridContainer {
+                            css {
+                                padding(0.spacingUnits)
+                                margin(0.spacingUnits)
+                            }
+                            attrs {
+                                direction = MGridDirection.row
+                                justify = MGridJustify.spaceBetween
+                                alignItems = MGridAlignItems.center
+                            }
+                            mGridItem(xs = MGridSize.cells11) {
+                                css {
+                                    padding(0.spacingUnits)
+                                }
+                                mListItem(onClick = toggleSelectedCategorie(categorie, null)) {
+                                    css {
+                                        padding(0.spacingUnits)
+                                        paddingLeft = 2.spacingUnits
+                                        margin(0.spacingUnits)
+                                    }
+                                    mListItemAvatar {
+                                        mAvatar {
+                                            +categorie.name
+                                        }
+                                    }
+                                    mListItemText(categorie.omschrijving)
+                                    mCheckbox(
+                                        checked = categorie.producten.any { it in isProductSelected },
+                                        indeterminate = !categorie.producten
+                                            .all { it in isProductSelected } && categorie.producten
+                                            .any { it in isProductSelected }
+                                    )
+                                }
+                            }
+                            mGridItem(xs = MGridSize.cells1) {
+                                css {
+                                    padding(0.spacingUnits)
+                                }
+                                mListItem(onClick = toggleExpandedCategorie(categorie, null)) {
+                                    css {
+                                        padding(0.spacingUnits)
+                                    }
+                                    mIconButton(if (categorie in expandedCategories) "expand_less" else "expand_more")
+                                }
+                            }
+                        }
+                    }
+                    if (categorie in expandedCategories) mCollapse(true) {
+                        mList(disablePadding = true) {
+                            for (product in filteredItems
+                                .asSequence()
+                                .filter { it.categorie == categorie }
+                                .sortedBy { it.name }
+                            ) {
+                                mListItem(
+                                    button = true,
+                                    selected = product in isProductSelected,
+                                    key = product.toString(),
+                                    divider = false,
+                                    onClick = toggleSelectedProduct(product, null)
+                                ) {
+
+                                    mListItemText(product.omschrijving) {
+                                        css {
+                                            marginLeft = 8.spacingUnits
+                                        }
+
+                                    }
+                                    mCheckbox(checked = product in isProductSelected)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     override fun RBuilder.render() {
         themeContext.Consumer { theme ->
+            val themeStyles = object : StyleSheet("ComponentStyles", isStatic = true) {
+                val list by css {
+                    width = 320.px
+                    backgroundColor = Color(theme.palette.background.paper)
+                }
+            }
+
             styledDiv {
                 css {
                     padding(1.spacingUnits)
                     overflow = Overflow.auto
                     maxHeight = 400.px
                 }
-                mList {
-                    css {
-                        backgroundColor = Color(theme.palette.background.paper)
-                    }
-
-                    val categories = filteredItems
-                        .asSequence()
-                        .map { it.categorie }
-                        .distinct()
-
-                    for (categorie in categories) {
-                        mListItem(
-                            dense = true,
-                            button = true,
-                            selected = categorie.producten.any { it in isProductSelected },
-                            key = categorie.toString(),
-                            divider = false
-                        ) {
-                            css {
-                                padding(0.spacingUnits)
-                                margin(0.spacingUnits)
-                            }
-                            mGridContainer {
-                                css {
-                                    padding(0.spacingUnits)
-                                    margin(0.spacingUnits)
-                                }
-                                attrs {
-                                    direction = MGridDirection.row
-                                    justify = MGridJustify.spaceBetween
-                                    alignItems = MGridAlignItems.center
-                                }
-                                mGridItem(xs = MGridSize.cells10) {
-                                    css {
-                                        padding(0.spacingUnits)
-                                    }
-                                    mListItem(onClick = toggleSelectedCategorie(categorie, null)) {
-                                        css {
-                                            padding(0.spacingUnits)
-                                            margin(0.spacingUnits)
-                                        }
-                                        mListItemAvatar {
-                                            mAvatar {
-                                                +categorie.name
-                                            }
-                                        }
-                                        mListItemText(categorie.omschrijving)
-                                        mCheckbox(
-                                            checked = categorie.producten.any { it in isProductSelected },
-                                            indeterminate = !categorie.producten
-                                                .all { it in isProductSelected } && categorie.producten
-                                                .any { it in isProductSelected }
-                                        )
-                                    }
-                                }
-                                mGridItem(xs = MGridSize.cells2) {
-                                    css {
-                                        padding(0.spacingUnits)
-                                    }
-                                    mListItem(onClick = toggleExpandedCategorie(categorie, null)) {
-                                        css {
-                                            padding(0.spacingUnits)
-                                        }
-                                        mIconButton(if (categorie in expandedCategories) "expand_less" else "expand_more")
-                                    }
-                                }
-                            }
-                        }
-                        mCollapse(categorie in expandedCategories) {
-                            mList(disablePadding = true) {
-                                css {
-                                    backgroundColor = Color(theme.palette.background.paper)
-                                }
-                                for (product in filteredItems
-                                    .asSequence()
-                                    .filter { it.categorie == categorie }
-                                    .sortedBy { it.name }
-                                ) {
-                                    mListItem(
-                                        button = true,
-                                        selected = product in isProductSelected,
-                                        key = product.toString(),
-                                        divider = false,
-                                        onClick = toggleSelectedProduct(product, null)
-                                    ) {
-
-                                        mListItemText(product.omschrijving) {
-                                            css {
-                                                marginLeft = 8.spacingUnits
-                                            }
-
-                                        }
-                                        mCheckbox(checked = product in isProductSelected)
-                                    }
-                                }
-                            }
+                val categories = filteredItems
+                    .asSequence()
+                    .map { it.categorie }
+                    .distinct()
+                    .toList()
+                styledReactList {
+                    css(themeStyles.list)
+                    attrs {
+                        length = categories.size
+                        itemRenderer = renderCategorieRow(categories, filteredItems)
+                        type = "variable"
+                        ref {
+                            list = it
                         }
                     }
                 }
