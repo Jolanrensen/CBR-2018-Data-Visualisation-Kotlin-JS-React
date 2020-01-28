@@ -314,10 +314,10 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
                                 mCardContent {
                                     mTypography {
-                                        +"Hieronder kun je de twee sets resultaten met elkaar vergelijken."
+                                        +"Hieronder kun je sets resultaten met elkaar vergelijken. Dit werkt het best op de desktop aangezien dan de tabellen onder elkaar terecht komen. Het selecteren van opleiders filtert automatisch de beschikbare examenlocaties en vice versa. Geselecteerde items die verdwijnen dankzij een filteropdracht worden automatisch gedeselecteerd."
                                     }
-                                    attrs {
-
+                                    mTypography {
+                                        +"Druk op Enter of op het vergrootglas om een filter toe te passen (Dit ivm performance)."
                                     }
                                 }
                             }

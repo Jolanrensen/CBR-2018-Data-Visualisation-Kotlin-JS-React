@@ -4,13 +4,13 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.StringDescriptor
 
 @Serializer(forClass = Double::class)
-object PercentageSerializer : KSerializer<Double> {
+object PercentageSerializer : KSerializer<Double?> {
     override val descriptor: SerialDescriptor =
         StringDescriptor.withName("PercentageSerializer")
 
-    override fun serialize(encoder: Encoder, obj: Double) {
+    override fun serialize(encoder: Encoder, obj: Double?) {
         encoder.encodeString(
-           "${(obj * 100).toInt()}%"
+           obj?.let { "${(it * 100).toInt()}%" } ?: "-"
         )
     }
 

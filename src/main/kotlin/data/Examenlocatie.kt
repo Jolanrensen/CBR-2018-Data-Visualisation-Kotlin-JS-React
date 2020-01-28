@@ -18,9 +18,9 @@ data class Examenlocatie(
 
     @Serializable(with = PercentageSerializer::class)
     @SerialName("slagingspercentage eerste keer")
-    var slagingsPercentageEersteKeer: Double = 0.0,
+    var slagingsPercentageEersteKeer: Double? = null,
 
     @Serializable(with = PercentageSerializer::class)
     @SerialName("slagingspercentage herkansing")
-    var slagingsPercentageHerkansing: Double = 0.0
+    var slagingsPercentageHerkansing: Double? = null
 )

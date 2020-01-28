@@ -132,67 +132,76 @@ object Data {
                 }
             }
 
+//            alleOpleiders.forEach { (opleiderCode, opeider) ->
+//                val resultaten = opleiderToResultaten[opleiderCode]!!
+//
+//            }
+
             opleiderToResultaten.forEach { (opleiderCode, resultaten) ->
                 alleOpleiders[opleiderCode]?.apply {
                     slagingsPercentageEersteKeer = (
-                            resultaten.sumByDouble {
+                            resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
                                     .voldoende
                                     .eersteExamen
-                                    .sumByDouble { it.aantal.toDouble() }
-                            } / resultaten.sumByDouble {
+                                    .sumBy { it.aantal }
+                            }.toDouble() / resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
                                     .eersteExamen
-                                    .sumByDouble { it.aantal.toDouble() }
-                            }).let { if (it.isNaN()) 0.0 else it }
+                                    .sumBy { it.aantal }
+                            }.toDouble()
+                            ).let { if (it.isNaN()) null else it }
 
                     slagingsPercentageHerkansing = (
-                            resultaten.sumByDouble {
+                            resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
                                     .voldoende
                                     .herExamen
-                                    .sumByDouble { it.aantal.toDouble() }
-                            } / resultaten.sumByDouble {
+                                    .sumBy { it.aantal }
+                            }.toDouble() / resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
                                     .herExamen
-                                    .sumByDouble { it.aantal.toDouble() }
-                            }).let { if (it.isNaN()) 0.0 else it }
+                                    .sumBy { it.aantal }
+                            }.toDouble()
+                            ).let { if (it.isNaN()) null else it }
                 }
             }
 
             examenlocatieToResultaten.forEach { (examenlocatieCode, resultaten) ->
                 alleExamenlocaties[examenlocatieCode]?.apply {
                     slagingsPercentageEersteKeer = (
-                            resultaten.sumByDouble {
+                            resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
                                     .voldoende
                                     .eersteExamen
-                                    .sumByDouble { it.aantal.toDouble() }
-                            } / resultaten.sumByDouble {
+                                    .sumBy { it.aantal }
+                            }.toDouble() / resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
                                     .eersteExamen
-                                    .sumByDouble { it.aantal.toDouble() }
-                            }).let { if (it.isNaN()) 0.0 else it }
+                                    .sumBy { it.aantal }
+                            }.toDouble()
+                            ).let { if (it.isNaN()) null else it }
 
                     slagingsPercentageHerkansing = (
-                            resultaten.sumByDouble {
+                            resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
                                     .voldoende
                                     .herExamen
-                                    .sumByDouble { it.aantal.toDouble() }
-                            } / resultaten.sumByDouble {
+                                    .sumBy { it.aantal }
+                            }.toDouble() / resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
                                     .herExamen
-                                    .sumByDouble { it.aantal.toDouble() }
-                            }).let { if (it.isNaN()) 0.0 else it }
+                                    .sumBy { it.aantal }
+                            }.toDouble()
+                            ).let { if (it.isNaN()) null else it }
                 }
             }
         }

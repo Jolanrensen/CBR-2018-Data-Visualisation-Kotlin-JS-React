@@ -2,15 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c006b3b8-3c46-4887-897f-1b0035b6e618" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/PercentageSerializer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/DateSerializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/DateSerializer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/PercentageSerializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/PercentageSerializer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
     </list>
@@ -92,7 +92,8 @@
       <option name="presentableId" value="Default" />
       <updated>1580163270212</updated>
       <workItem from="1580163271972" duration="2973000" />
-      <workItem from="1580215356163" duration="13495000" />
+      <workItem from="1580215356163" duration="17633000" />
+      <workItem from="1580236896273" duration="4168000" />
     </task>
     <task id="LOCAL-00001" summary="finished popovers for opleiders/examenlocaties">
       <created>1580218467397</created>
@@ -108,7 +109,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580221482823</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="better sorting :)">
+      <created>1580228886644</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1580228886644</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -117,7 +125,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="finished popovers for opleiders/examenlocaties" />
     <MESSAGE value="legenda" />
-    <option name="LAST_COMMIT_MESSAGE" value="legenda" />
+    <MESSAGE value="better sorting :)" />
+    <option name="LAST_COMMIT_MESSAGE" value="better sorting :)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1638" y="484" key="#Project_Structure" timestamp="1580163350154">
@@ -128,29 +137,29 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1516" y="480" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1580164689290" />
-    <state x="1308" y="406" width="1491" height="829" key="CommitChangelistDialog2" timestamp="1580221482758">
+    <state x="1308" y="406" width="1491" height="829" key="CommitChangelistDialog2" timestamp="1580228886565">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1308" y="406" width="1491" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1580221482758" />
-    <state width="1855" height="457" key="GridCell.Tab.0.bottom" timestamp="1580228065938">
+    <state x="1308" y="406" width="1491" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1580228886565" />
+    <state width="1917" height="457" key="GridCell.Tab.0.bottom" timestamp="1580237956910">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1855" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1580228065938" />
-    <state width="1855" height="457" key="GridCell.Tab.0.center" timestamp="1580228065938">
+    <state width="1917" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1580237956910" />
+    <state width="1917" height="457" key="GridCell.Tab.0.center" timestamp="1580237956909">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1855" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1580228065938" />
-    <state width="1855" height="457" key="GridCell.Tab.0.left" timestamp="1580228065937">
+    <state width="1917" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1580237956909" />
+    <state width="1917" height="457" key="GridCell.Tab.0.left" timestamp="1580237956909">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1855" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1580228065937" />
-    <state width="1855" height="457" key="GridCell.Tab.0.right" timestamp="1580228065938">
+    <state width="1917" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1580237956909" />
+    <state width="1917" height="457" key="GridCell.Tab.0.right" timestamp="1580237956910">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1855" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1580228065938" />
-    <state x="1653" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1580221485273">
+    <state width="1917" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1580237956910" />
+    <state x="1653" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2" timestamp="1580228890778">
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1653" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1580221485273" />
+    <state x="1653" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1580228890778" />
   </component>
 </project>

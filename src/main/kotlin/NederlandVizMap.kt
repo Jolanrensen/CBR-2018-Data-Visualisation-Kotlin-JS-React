@@ -9,7 +9,6 @@ import data2viz.GeoPathNode
 import data2viz.vizComponent
 import io.data2viz.color.Color
 import io.data2viz.color.Colors
-import io.data2viz.color.Gradient
 import io.data2viz.color.HslColor
 import io.data2viz.geo.projection.conicEqualAreaProjection
 import io.data2viz.geom.Point
@@ -104,23 +103,23 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
             println("calculating 'gemeentes'")
 
             gemeentes = nederland.features.mapIndexed { index, feature ->
-                val opleiderCodes = hashSetOf<String>()
+//                val opleiderCodes = hashSetOf<String>()
                 val opleiders = Data.alleOpleiders
                     .asSequence()
                     .filter {
                         it.value.gemeente.toLowerCase() == feature.properties.statnaam.toLowerCase()
                     }
-                    .apply { opleiderCodes += map { it.key } }
+//                    .apply { opleiderCodes += map { it.key } }
                     .map { it.value }
                     .toSet()
 
-                val examenlocatieCodes = hashSetOf<String>()
+//                val examenlocatieCodes = hashSetOf<String>()
                 val examenlocaties = Data.alleExamenlocaties
                     .asSequence()
                     .filter {
                         it.value.gemeente.toLowerCase() == feature.properties.statnaam.toLowerCase()
                     }
-                    .apply { examenlocatieCodes += map { it.key } }
+//                    .apply { examenlocatieCodes += map { it.key } }
                     .map { it.value }
                     .toSet()
 
@@ -152,38 +151,60 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     strokeWidth = null
                 }
 
-                val ourOpleiderResults = Data.opleiderToResultaten
-                    .asSequence()
-                    .filter { it.key in opleiderCodes }
-                    .map { it.value }
-                    .flatten()
-                val totaalVoldoendeOpleiders = ourOpleiderResults
-                    .sumBy {
-                        it.examenResultaatAantallen
-                            .filter { it.examenResultaat == ExamenResultaat.VOLDOENDE }
-                            .sumBy { it.aantal }
-                    }
-                val totaalOpleiders = ourOpleiderResults
-                    .sumBy {
-                        it.examenResultaatAantallen
-                            .sumBy { it.aantal }
+//                val ourOpleiderResults = Data.opleiderToResultaten
+//                    .asSequence()
+//                    .filter { it.key in opleiderCodes }
+//                    .map { it.value }
+//                    .flatten()
+//                val totaalVoldoendeOpleiders = ourOpleiderResults
+//                    .sumBy {
+//                        it.examenResultaatAantallen
+//                            .filter { it.examenResultaat == ExamenResultaat.VOLDOENDE }
+//                            .sumBy { it.aantal }
+//                    }
+//                val totaalOpleiders = ourOpleiderResults
+//                    .sumBy {
+//                        it.examenResultaatAantallen
+//                            .sumBy { it.aantal }
+//                    }
+//
+//                val ourExamenlocatieResults = Data.examenlocatieToResultaten
+//                    .asSequence()
+//                    .filter { it.key in examenlocatieCodes }
+//                    .map { it.value }
+//                    .flatten()
+//                val totaalVoldoendeExamenlocaties = ourExamenlocatieResults
+//                    .sumBy {
+//                        it.examenResultaatAantallen
+//                            .filter { it.examenResultaat == ExamenResultaat.VOLDOENDE }
+//                            .sumBy { it.aantal }
+//                    }
+//                val totaalExamenlocaties = ourExamenlocatieResults
+//                    .sumBy {
+//                        it.examenResultaatAantallen
+//                            .sumBy { it.aantal }
+//                    }
+
+                val slagingspercentageOpleiders =
+                    opleiders.filter { it.slagingsPercentageEersteKeer != null }.let {
+                        val opleidersResultSize = it.sumBy {
+                            Data.opleiderToResultaten[it.code]!!.size
+                        }.toDouble()
+
+                        it.sumByDouble {
+                            it.slagingsPercentageEersteKeer!! * Data.opleiderToResultaten[it.code]!!.size.toDouble()
+                        } / opleidersResultSize
                     }
 
-                val ourExamenlocatieResults = Data.examenlocatieToResultaten
-                    .asSequence()
-                    .filter { it.key in examenlocatieCodes }
-                    .map { it.value }
-                    .flatten()
-                val totaalVoldoendeExamenlocaties = ourExamenlocatieResults
-                    .sumBy {
-                        it.examenResultaatAantallen
-                            .filter { it.examenResultaat == ExamenResultaat.VOLDOENDE }
-                            .sumBy { it.aantal }
-                    }
-                val totaalExamenlocaties = ourExamenlocatieResults
-                    .sumBy {
-                        it.examenResultaatAantallen
-                            .sumBy { it.aantal }
+                val slagingspercentageExamenlocaties =
+                    examenlocaties.filter { it.slagingsPercentageEersteKeer != null }.let {
+                        val examenlocatiesResultSize = it.sumBy {
+                            Data.examenlocatieToResultaten[it.naam]!!.size
+                        }.toDouble()
+
+                        it.sumByDouble {
+                            it.slagingsPercentageEersteKeer!! * Data.examenlocatieToResultaten[it.naam]!!.size.toDouble()
+                        } / examenlocatiesResultSize
                     }
 
                 Gemeente(
@@ -192,8 +213,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     examenlocaties = examenlocaties,
                     geoPathNode = geoPathNode,
                     hiddenGeoPathNode = hiddenGeoPathNode,
-                    slagingspercentageOpleiders = totaalVoldoendeOpleiders.toDouble() / totaalOpleiders.toDouble(),
-                    slagingspercentageExamenlocaties = totaalVoldoendeExamenlocaties.toDouble() / totaalExamenlocaties.toDouble()
+                    slagingspercentageOpleiders = slagingspercentageOpleiders, //totaalVoldoendeOpleiders.toDouble() / totaalOpleiders.toDouble(),
+                    slagingspercentageExamenlocaties = slagingspercentageExamenlocaties //totaalVoldoendeExamenlocaties . toDouble () / totaalExamenlocaties.toDouble()
                 ).apply { idColorToGemeente[idColor!!.rgb] = this }
             }
             loadingState = LOADED
@@ -311,8 +332,14 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     on(KPointerClick) {
                         getGemeenteAt(it.pos)?.let {
                             when (examenlocatieOrOpleider) {
-                                EXAMENLOCATIE -> setExamenlocatieFilters(it.name)
-                                OPLEIDER -> setOpleiderFilters(it.name)
+                                EXAMENLOCATIE -> {
+                                    setExamenlocatieFilters(it.name)
+                                    setOpleiderFilters("")
+                                }
+                                OPLEIDER -> {
+                                    setOpleiderFilters(it.name)
+                                    setExamenlocatieFilters("")
+                                }
                             }
                         }
                     }
@@ -322,7 +349,6 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     }
 }
 
-
 fun getGemeenteColor(
     selected: Boolean,
     gemeente: NederlandVizMap.Gemeente,
@@ -331,8 +357,8 @@ fun getGemeenteColor(
 //        val maxNoOpleiders = 470 // den haag
     if (
         when (examenlocatieOrOpleider) {
-            OPLEIDER -> gemeente.opleiders.isEmpty()
-            EXAMENLOCATIE -> gemeente.examenlocaties.isEmpty()
+            OPLEIDER -> gemeente.opleiders.isEmpty() //|| gemeente.slagingspercentageOpleiders < .1
+            EXAMENLOCATIE -> gemeente.examenlocaties.isEmpty() //|| gemeente.slagingspercentageExamenlocaties < .1
         }
     ) {
         Colors.Web.black.toHsl()

@@ -78,8 +78,15 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
 
     private var list: ReactListRef? = null
 
-    override fun sortType(type: Examenlocatie) =
-        (type.slagingsPercentageEersteKeer + type.slagingsPercentageHerkansing) / 2.0
+    override fun sortType(type: Examenlocatie) = type.run {
+        when {
+            slagingsPercentageEersteKeer == null && slagingsPercentageHerkansing == null -> 0.0
+            slagingsPercentageEersteKeer == null -> slagingsPercentageHerkansing!!
+            slagingsPercentageHerkansing == null -> slagingsPercentageEersteKeer!!
+            else -> (type.slagingsPercentageEersteKeer!! + type.slagingsPercentageHerkansing!!) / 2.0
+        }
+    }
+
 
     override fun keyToType(key: String, itemsData: Map<String, Examenlocatie>) =
         itemsData[key] ?: error("Examenlocatie $key does not exist")
@@ -236,7 +243,7 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                             ).jsonObject.content.forEach { (key, element) ->
                                 mTableRow(key = key) {
                                     mTableCell { +key }
-                                    mTableCell { +element.primitive.content }
+                                    mTableCell { +(element.primitive.contentOrNull ?: "-") }
                                 }
                             }
                         }

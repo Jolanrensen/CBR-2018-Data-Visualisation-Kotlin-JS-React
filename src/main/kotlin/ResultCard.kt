@@ -1,4 +1,3 @@
-import com.ccfraser.muirwik.components.mSwitch
 import com.ccfraser.muirwik.components.mSwitchWithLabel
 import com.ccfraser.muirwik.components.spacingUnits
 import com.ccfraser.muirwik.components.table.MTableCellAlign
@@ -8,13 +7,14 @@ import com.ccfraser.muirwik.components.table.mTableCell
 import com.ccfraser.muirwik.components.table.mTableHead
 import com.ccfraser.muirwik.components.table.mTableRow
 import data.*
+import data.ExamenResultaat.ONVOLDOENDE
+import data.ExamenResultaat.VOLDOENDE
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 import kotlinx.css.*
 import libs.RPureComponent
 import org.w3c.dom.events.Event
 import react.RBuilder
-import react.RComponent
 import react.RProps
 import react.RState
 import styled.css
@@ -76,7 +76,10 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                     for (categorie in ExamenResultaatCategorie.values()) {
                         mTableRow(key = categorie.title) {
                             mTableCell { +categorie.title }
-                            val examenResultaten = hashMapOf<ExamenResultaat, Int>()
+                            val examenResultaten = hashMapOf(
+                                ONVOLDOENDE to hashSetOf<Int>(),
+                                VOLDOENDE to hashSetOf()
+                            )
                             for (resultaat in ExamenResultaat.values()) {
                                 mTableCell(align = MTableCellAlign.right) {
                                     +if (selectionFinished()) {
@@ -92,22 +95,28 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                                                                 && it.examenResultaat == resultaat
                                                     }.sumBy { it.aantal }
                                             }
-                                            .apply { examenResultaten[resultaat] = this }
+                                            .apply { examenResultaten[resultaat]!!.add(this) }
                                             .toString()
                                     } else "-"
                                 }
                             }
                             mTableCell(align = MTableCellAlign.right) {
                                 +if (selectionFinished())
-                                    "${(examenResultaten[ExamenResultaat.VOLDOENDE]!!.toDouble() / examenResultaten.values
-                                        .sum() * 100.0).toInt()}%"
+                                    (examenResultaten[VOLDOENDE]!!.sum().toDouble() /
+                                            examenResultaten.values.flatten().sum().toDouble()).let {
+                                        if (it.isNaN()) "-"
+                                        else "${(it * 100.0).toInt()}%"
+                                    }
                                 else "-"
                             }
                         }
                     }
                     mTableRow {
                         mTableCell { +"Totaal" }
-                        val examenResultaten = hashMapOf<ExamenResultaat, Int>()
+                        val examenResultaten = hashMapOf(
+                            ONVOLDOENDE to hashSetOf<Int>(),
+                            VOLDOENDE to hashSetOf()
+                        )
                         for (resultaat in ExamenResultaat.values()) {
                             mTableCell(align = MTableCellAlign.right) {
                                 +if (selectionFinished()) {
@@ -122,15 +131,18 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                                                             && it.examenResultaat == resultaat
                                                 }.sumBy { it.aantal }
                                         }
-                                        .apply { examenResultaten[resultaat] = this }
+                                        .apply { examenResultaten[resultaat]!!.add(this) }
                                         .toString()
                                 } else "-"
                             }
                         }
                         mTableCell(align = MTableCellAlign.right) {
                             +if (selectionFinished())
-                                "${(examenResultaten[ExamenResultaat.VOLDOENDE]!!.toDouble() / examenResultaten.values
-                                    .sum() * 100.0).toInt()}%"
+                                (examenResultaten[VOLDOENDE]!!.sum().toDouble() /
+                                        examenResultaten.values.flatten().sum().toDouble()).let {
+                                    if (it.isNaN()) "-"
+                                    else "${(it * 100.0).toInt()}%"
+                                }
                             else "-"
                         }
                     }

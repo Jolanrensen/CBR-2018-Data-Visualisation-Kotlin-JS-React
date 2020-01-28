@@ -59,6 +59,7 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
         filter = it
         inputField?.value = it
         filterFieldValue = it
+        selectedItemKeys = setOf()
 
         println("filter set to $it")
     }
