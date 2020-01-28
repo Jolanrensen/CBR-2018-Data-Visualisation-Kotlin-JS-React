@@ -215,6 +215,7 @@ class OpleidersList(prps: OpleidersListProps) :
                         transformOriginVertical = top
                         transformOriginHorizontal = left
                     }
+
                     mTable {
                         mTableBody {
                             if (popoverOpleider == null) return@mTableBody

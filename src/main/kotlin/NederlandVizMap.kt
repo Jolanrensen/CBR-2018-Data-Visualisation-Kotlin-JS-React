@@ -9,9 +9,11 @@ import data2viz.GeoPathNode
 import data2viz.vizComponent
 import io.data2viz.color.Color
 import io.data2viz.color.Colors
+import io.data2viz.color.Gradient
 import io.data2viz.color.HslColor
 import io.data2viz.geo.projection.conicEqualAreaProjection
 import io.data2viz.geom.Point
+import io.data2viz.geom.size
 import io.data2viz.math.Angle
 import io.data2viz.math.deg
 import io.data2viz.math.pct
@@ -251,6 +253,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     }
                 ) {
 
+                    val greenRedAngleDiff = Colors.Web.green.toHsl().h.rad - Colors.Web.red.toHsl().h.rad
+
                     println(
                         "rendering card!, gemeentes size: ${this@NederlandVizMap.gemeentes
                             .size}, idColorToGemeente size: ${idColorToGemeente.size}"
@@ -260,6 +264,28 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
 
                     fun drawGemeentes() {
                         clear()
+
+                        for (i in 101 downTo 0) {
+                            rect {
+                                size = size(10.0, 1.0)
+                                x = 0.0
+                                y = i.toDouble()
+                                strokeWidth = 0.0
+                                fill = Colors.hsl(
+                                    hue = Angle((1.0 - i.toDouble() / 100.0) * greenRedAngleDiff),
+                                    saturation = 100.pct,
+                                    lightness = 50.pct
+                                )
+                            }
+                            if (i % 20 == 0) {
+                                text {
+                                    x = 15.0
+                                    y = 100.0 - i
+                                    textContent = "$i%"
+                                }
+                            }
+                        }
+
                         this@NederlandVizMap.gemeentes.forEach {
                             it.geoPathNode.fill = getGemeenteColor(
                                 selectedGemeente == it,
@@ -295,6 +321,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
         }
     }
 }
+
 
 fun getGemeenteColor(
     selected: Boolean,
