@@ -3,6 +3,7 @@ import ExamenlocatieOrOpleider.OPLEIDER
 import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.MButtonSize
 import com.ccfraser.muirwik.components.button.mButton
+import com.ccfraser.muirwik.components.button.mFab
 import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
@@ -31,6 +32,8 @@ interface AppState : RState {
 
     var selectedGemeente: NederlandVizMap.Gemeente?
     var examenlocatieOrOpleider: ExamenlocatieOrOpleider
+
+    var numberOfResultaatFilterCards: Int
 }
 
 enum class ExamenlocatieOrOpleider {
@@ -46,11 +49,13 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
         selectedGemeente = null
         examenlocatieOrOpleider = OPLEIDER
+        numberOfResultaatFilterCards = 1
     }
 
     private var selectedGemeente by stateDelegateOf(AppState::selectedGemeente)
     private var dataLoaded by stateDelegateOf(AppState::dataLoaded)
     private var examenlocatieOrOpleider by stateDelegateOf(AppState::examenlocatieOrOpleider)
+    private var numberOfResultaatFilterCards by stateDelegateOf(AppState::numberOfResultaatFilterCards)
 
     private fun loadData() {
         if (Data.hasStartedLoading) return
@@ -105,6 +110,11 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
         }
     }
 
+    private val onFabClick = { _: Event? ->
+        numberOfResultaatFilterCards++
+        Unit
+    }
+
     override fun RBuilder.render() {
         mCssBaseline()
 
@@ -152,7 +162,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                         mGridContainer(
                             spacing = MGridSpacing.spacing2,
                             alignContent = MGridAlignContent.center,
-                            alignItems = MGridAlignItems.flexEnd
+                            alignItems = MGridAlignItems.flexEnd,
+                            justify = MGridJustify.flexEnd
                         ) {
                             css {
                                 padding(5.mm)
@@ -224,9 +235,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                     }
                                     mCardHeader(
                                         title = "Resultaten Vergelijken",
-                                        avatar = mAvatar(addAsChild = false) {
-                                            +"R"
-                                        }
+                                        avatar = mAvatar(addAsChild = false) { +"R" }
                                     )
 
                                     mCardContent {
@@ -243,7 +252,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 //                        opleiderApplyFilterFunctions = arrayListOf()
 //                        examenlocatieApplyFilterFunctions = arrayListOf()
                             mGridItem(xs = MGridSize.cells12) {
-                                (0..1).forEach { _ ->
+                                (0 until numberOfResultaatFilterCards).forEach {
                                     hoveringCard {
                                         css {
                                             margin(1.mm)
@@ -252,7 +261,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                         }
                                         resultFilterAndShow {
                                             dataLoaded = this@App.dataLoaded
-                                            setApplyOpleidersFilterFunction = this@App.setApplyOpleidersFilterFunction
+                                            setApplyOpleidersFilterFunction =
+                                                this@App.setApplyOpleidersFilterFunction
                                             setApplyExamenlocatieFilterFunction =
                                                 this@App.setApplyExamenlocatieFilterFunction
                                         }
@@ -260,6 +270,22 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                 }
                             }
                         }
+                        styledDiv {
+                            css {
+                                float = Float.right
+                            }
+                            mFab(
+                                iconName = "add",
+                                size = MButtonSize.large,
+                                color = MColor.secondary,
+                                onClick = onFabClick
+                            ) {
+                                css {
+                                    margin(1.spacingUnits)
+                                }
+                            }
+                        }
+
                     }
                 }
             }
