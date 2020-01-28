@@ -1,5 +1,8 @@
 package data
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Examenlocatie(
     val naam: String,
     val straatnaam: String,

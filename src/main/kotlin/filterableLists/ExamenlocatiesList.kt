@@ -3,15 +3,18 @@ package filterableLists
 import FilterableList
 import FilterableListProps
 import FilterableListState
+import com.ccfraser.muirwik.components.*
+import com.ccfraser.muirwik.components.dialog.ModalOnCloseReason
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemAvatar
 import com.ccfraser.muirwik.components.list.mListItemText
-import com.ccfraser.muirwik.components.mAvatar
-import com.ccfraser.muirwik.components.mCheckbox
-import com.ccfraser.muirwik.components.spacingUnits
-import com.ccfraser.muirwik.components.themeContext
+import com.ccfraser.muirwik.components.table.mTable
+import com.ccfraser.muirwik.components.table.mTableBody
+import com.ccfraser.muirwik.components.table.mTableCell
+import com.ccfraser.muirwik.components.table.mTableRow
 import data.Data
 import data.Examenlocatie
+import data.Opleider
 import kotlinx.css.Color
 import kotlinx.css.Overflow
 import kotlinx.css.backgroundColor
@@ -20,21 +23,27 @@ import kotlinx.css.overflow
 import kotlinx.css.padding
 import kotlinx.css.px
 import kotlinx.css.width
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import libs.reactList.ReactListRef
 import libs.reactList.ref
 import libs.reactList.styledReactList
+import org.w3c.dom.Node
 import org.w3c.dom.events.Event
 import propDelegateOf
 import react.RBuilder
 import react.ReactElement
 import react.buildElement
+import react.dom.findDOMNode
+import react.ref
+import stateDelegateOf
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
 import toInt
 
 interface ExamenlocatiesListProps : FilterableListProps<String, Examenlocatie>
-// Available in props:
+// Availhttps://en.wikipedia.org/wiki/Material_conditionalable in props:
 // var filter: String
 // var setReloadRef: (ReloadItems) -> Unit
 // var selectedItemKeys: HashSet<String>
@@ -50,6 +59,12 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
     private var isExamenlocatieSelected by propDelegateOf(ExamenlocatiesListProps::selectedItemKeys)
     private val isOpleiderSelected by propDelegateOf(ExamenlocatiesListProps::selectedOtherItemKeys)
     private val filteredItems by propDelegateOf(ExamenlocatiesListProps::filteredItems)
+
+    override fun ExamenlocatiesListState.init(props: ExamenlocatiesListProps) {
+        popoverOpen = false
+    }
+
+    private var popoverOpen by stateDelegateOf(ExamenlocatiesListState::popoverOpen)
 
     private var list: ReactListRef? = null
 
@@ -107,20 +122,50 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                     button = true,
                     selected = examenlocatie.naam in isExamenlocatieSelected,
                     key = key,
-                    divider = false,
-                    onClick = toggleSelected(examenlocatie.naam, null)
+                    divider = false
                 ) {
                     mListItemAvatar {
                         mAvatar {
+                            attrs {
+                                onClick = openPopOver(examenlocatie, this)
+                            }
                             +examenlocatie.naam.first().toString()
                         }
                     }
-                    mListItemText(examenlocatie.naam)
-                    mCheckbox(checked = examenlocatie.naam in isExamenlocatieSelected)
+                    mListItemText(examenlocatie.naam) {
+                        attrs {
+                            onClick = toggleSelected(examenlocatie.naam, null)
+                        }
+                    }
+                    mCheckbox(checked = examenlocatie.naam in isExamenlocatieSelected) {
+                        attrs {
+                            onClick = toggleSelected(examenlocatie.naam, null)
+                        }
+                    }
                 }
             }
         }
     }
+
+    val openPopOver = { examenlocatie: Examenlocatie, mAvatarProps: MAvatarProps ->
+        var avatarRef: Node? = null
+        mAvatarProps.ref<dynamic> {
+            avatarRef = findDOMNode(it)
+        }
+        ({ e: Event ->
+            e.preventDefault()
+            popoverExamenlocatie = examenlocatie
+            popoverAvatar = avatarRef
+            popoverOpen = true
+        })
+    }
+
+    val onPopoverClose: (Event, ModalOnCloseReason) -> Unit = { _, _ ->
+        popoverOpen = false
+    }
+
+    private var popoverExamenlocatie: Examenlocatie? = null
+    private var popoverAvatar: Node? = null
 
     override fun RBuilder.render() {
         themeContext.Consumer { theme ->
@@ -147,6 +192,46 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                             list = it
                         }
                     }
+                }
+
+                mPopover(
+                    open = popoverOpen,
+                    onClose = onPopoverClose,
+                    anchorOriginVertical = MPopoverVerticalPosition.top,
+                    anchorOriginHorizontal = MPopoverHorizontalPosition.right
+                ) {
+                    attrs {
+                        anchorEl = popoverAvatar
+
+                        transformOriginVertical = MPopoverVerticalPosition.top
+                        transformOriginHorizontal = MPopoverHorizontalPosition.left
+                    }
+                    mTable {
+                        mTableBody {
+                            if (popoverExamenlocatie == null) return@mTableBody
+                            Json(JsonConfiguration.Stable).toJson(
+                                Examenlocatie.serializer(),
+                                popoverExamenlocatie!!
+                            ).jsonObject.content.forEach { (key, element) ->
+                                mTableRow(key = key) {
+                                    mTableCell { +key }
+                                    mTableCell { +element.primitive.content }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            styledDiv {
+                css {
+                    padding(
+                        left = 5.spacingUnits,
+                        right = 5.spacingUnits,
+                        top = 2.spacingUnits
+                    )
+                }
+                mTypography {
+                    +"  ⬑   Klik op een avatar voor meer info!"
                 }
             }
             Unit

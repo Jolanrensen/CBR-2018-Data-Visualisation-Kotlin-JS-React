@@ -1,12 +1,14 @@
 package data
 
-import io.data2viz.time.Date
+import kotlinx.serialization.Serializable
+import kotlin.js.Date
 
+@Serializable
 data class Opleider(
     val code: String,
     val naam: String,
-    val startdatum: Date,
-    val einddatum: Date,
+    @Serializable(with = DateSerializer::class) val startdatum: Date,
+    @Serializable(with = DateSerializer::class) val einddatum: Date,
     val straatnaam: String,
     val huisnummer: String,
     val huisnummerToevoeging: String = "",

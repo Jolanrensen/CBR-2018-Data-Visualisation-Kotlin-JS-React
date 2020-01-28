@@ -9,6 +9,7 @@ import com.ccfraser.muirwik.components.MGridJustify
 import com.ccfraser.muirwik.components.MGridSize
 import com.ccfraser.muirwik.components.alignItems
 import com.ccfraser.muirwik.components.button.mIconButton
+import com.ccfraser.muirwik.components.dialog.ModalOnCloseReason
 import com.ccfraser.muirwik.components.direction
 import com.ccfraser.muirwik.components.justify
 import com.ccfraser.muirwik.components.list.mList
@@ -66,7 +67,10 @@ class CategorieProductList(prps: CategorieProductListProps) :
 
     override fun CategorieProductListState.init(props: CategorieProductListProps) {
         expandedCategories = hashSetOf()
+        popoverOpen = false
     }
+    private var popoverOpen by stateDelegateOf(CategorieProductListState::popoverOpen)
+
 
     override fun keyToType(key: Product, itemsData: Map<Product, Product>) = key
     override fun typeToKey(type: Product, itemsData: Map<Product, Product>) = type
@@ -120,6 +124,10 @@ class CategorieProductList(prps: CategorieProductListProps) :
             else
                 isProductSelected -= product
         }
+    }
+
+    val onPopoverClose: (Event, ModalOnCloseReason) -> Unit = { _, _ ->
+        popoverOpen = false
     }
 
     override fun RBuilder.render() {

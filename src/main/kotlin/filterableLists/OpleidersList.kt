@@ -3,13 +3,18 @@ package filterableLists
 import FilterableList
 import FilterableListProps
 import FilterableListState
+import com.ccfraser.muirwik.components.*
+import com.ccfraser.muirwik.components.MPopoverHorizontalPosition.left
+import com.ccfraser.muirwik.components.MPopoverHorizontalPosition.right
+import com.ccfraser.muirwik.components.MPopoverVerticalPosition.top
+import com.ccfraser.muirwik.components.dialog.ModalOnCloseReason
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemAvatar
 import com.ccfraser.muirwik.components.list.mListItemText
-import com.ccfraser.muirwik.components.mAvatar
-import com.ccfraser.muirwik.components.mCheckbox
-import com.ccfraser.muirwik.components.spacingUnits
-import com.ccfraser.muirwik.components.themeContext
+import com.ccfraser.muirwik.components.table.mTable
+import com.ccfraser.muirwik.components.table.mTableBody
+import com.ccfraser.muirwik.components.table.mTableCell
+import com.ccfraser.muirwik.components.table.mTableRow
 import data.Data
 import data.Opleider
 import kotlinx.css.Color
@@ -20,14 +25,20 @@ import kotlinx.css.overflow
 import kotlinx.css.padding
 import kotlinx.css.px
 import kotlinx.css.width
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import libs.reactList.ReactListRef
 import libs.reactList.ref
 import libs.reactList.styledReactList
+import org.w3c.dom.Node
 import org.w3c.dom.events.Event
 import propDelegateOf
 import react.RBuilder
 import react.ReactElement
 import react.buildElement
+import react.dom.findDOMNode
+import react.ref
+import stateDelegateOf
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
@@ -51,13 +62,24 @@ class OpleidersList(prps: OpleidersListProps) :
     private var isExamenlocatieSelected by propDelegateOf(OpleidersListProps::selectedOtherItemKeys)
     private val filteredItems by propDelegateOf(OpleidersListProps::filteredItems)
 
+    override fun OpleidersListState.init(props: OpleidersListProps) {
+        popoverOpen = false
+    }
+
+    private var popoverOpen by stateDelegateOf(OpleidersListState::popoverOpen)
+
     private var list: ReactListRef? = null
 
     override fun keyToType(key: String, itemsData: Map<String, Opleider>) =
         itemsData[key] ?: error("opleider $key does not exist")
 
     override fun typeToKey(type: Opleider, itemsData: Map<String, Opleider>) = type.code
-    override fun getFilteredItems(filter: String, itemsData: Map<String, Opleider>, selectedItemKeys: Set<String>, selectedOtherItemKeys: Set<String>): List<Opleider> {
+    override fun getFilteredItems(
+        filter: String,
+        itemsData: Map<String, Opleider>,
+        selectedItemKeys: Set<String>,
+        selectedOtherItemKeys: Set<String>
+    ): List<Opleider> {
         val filterTerms = filter.split(" ", ", ", ",")
         val score = hashMapOf<String, Int>()
         (if (selectedOtherItemKeys.isNotEmpty())
@@ -109,20 +131,50 @@ class OpleidersList(prps: OpleidersListProps) :
                     button = true,
                     selected = opleider.code in isOpleiderSelected,
                     key = key,
-                    divider = false,
-                    onClick = toggleSelected(opleider.code, null)
+                    divider = false
                 ) {
                     mListItemAvatar {
                         mAvatar {
+                            attrs {
+                                onClick = openPopOver(opleider, this)
+                            }
                             +opleider.naam.first().toString()
                         }
                     }
-                    mListItemText("${opleider.naam}, ${opleider.plaatsnaam} (${opleider.code})")
-                    mCheckbox(checked = opleider.code in isOpleiderSelected)
+                    mListItemText("${opleider.naam}, ${opleider.plaatsnaam} (${opleider.code})") {
+                        attrs {
+                            onClick = toggleSelected(opleider.code, null)
+                        }
+                    }
+                    mCheckbox(checked = opleider.code in isOpleiderSelected) {
+                        attrs {
+                            onClick = toggleSelected(opleider.code, null)
+                        }
+                    }
                 }
             }
         }
     }
+
+    val openPopOver = { opleider: Opleider, mAvatarProps: MAvatarProps ->
+        var avatarRef: Node? = null
+        mAvatarProps.ref<dynamic> {
+            avatarRef = findDOMNode(it)
+        }
+        ({ e: Event ->
+            e.preventDefault()
+            popoverOpleider = opleider
+            popoverAvatar = avatarRef
+            popoverOpen = true
+        })
+    }
+
+    val onPopoverClose: (Event, ModalOnCloseReason) -> Unit = { _, _ ->
+        popoverOpen = false
+    }
+
+    private var popoverOpleider: Opleider? = null
+    private var popoverAvatar: Node? = null
 
     override fun RBuilder.render() {
         themeContext.Consumer { theme ->
@@ -149,6 +201,47 @@ class OpleidersList(prps: OpleidersListProps) :
                             list = it
                         }
                     }
+                }
+
+                mPopover(
+                    open = popoverOpen,
+                    onClose = onPopoverClose,
+                    anchorOriginVertical = top,
+                    anchorOriginHorizontal = right
+                ) {
+                    attrs {
+                        anchorEl = popoverAvatar
+
+                        transformOriginVertical = top
+                        transformOriginHorizontal = left
+                    }
+                    mTable {
+                        mTableBody {
+                            if (popoverOpleider == null) return@mTableBody
+                            Json(JsonConfiguration.Stable).toJson(
+                                Opleider.serializer(),
+                                popoverOpleider!!
+                            ).jsonObject.content.forEach { (key, element) ->
+                                mTableRow(key = key) {
+                                    mTableCell { +key }
+                                    mTableCell { +element.primitive.content }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            styledDiv {
+                css {
+                    padding(
+                        left = 5.spacingUnits,
+                        right = 5.spacingUnits,
+                        top = 2.spacingUnits
+                    )
+                }
+
+                mTypography {
+                    +"  ⬑   Klik op een avatar voor meer info!"
                 }
             }
             Unit

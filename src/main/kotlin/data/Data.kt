@@ -5,8 +5,8 @@ import data.ExamenResultaat.VOLDOENDE
 import data.ExamenResultaatCategorie.*
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
-import io.data2viz.time.Date
 import org.w3c.xhr.XMLHttpRequest
+import kotlin.js.Date
 
 object Data {
 

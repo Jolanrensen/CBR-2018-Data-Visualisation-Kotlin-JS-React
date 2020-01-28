@@ -1,4 +1,6 @@
+import com.ccfraser.muirwik.components.dialog.ModalOnCloseReason
 import libs.RPureComponent
+import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RProps
 import react.RState
@@ -15,15 +17,23 @@ interface FilterableListProps<Key : Any, Type : Any?> : RProps {
     var selectedOtherItemKeys: StateAsProp<Set<Key>>
 }
 
-interface FilterableListState : RState
+interface FilterableListState : RState {
+    var popoverOpen: Boolean
+}
 
 abstract class FilterableList<Key : Any, Type : Any?, Props : FilterableListProps<Key, Type>, State : FilterableListState>(
     prps: Props
 ) : RPureComponent<Props, State>(prps) {
-    abstract fun getFilteredItems(filter: String, itemsData: Map<Key, Type>, selectedItemKeys: Set<Key>, selectedOtherItemKeys: Set<Key>): List<Type>
+    abstract fun getFilteredItems(
+        filter: String,
+        itemsData: Map<Key, Type>,
+        selectedItemKeys: Set<Key>,
+        selectedOtherItemKeys: Set<Key>
+    ): List<Type>
+
     abstract fun keyToType(key: Key, itemsData: Map<Key, Type>): Type
     abstract fun typeToKey(type: Type, itemsData: Map<Key, Type>): Key
-}
 
+}
 typealias CreateFilterableList<Key, Type> = RBuilder.(handler: FilterableListProps<Key, Type>.() -> Unit) -> ReactElement
 

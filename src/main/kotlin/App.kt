@@ -281,8 +281,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                         }
                                     }
                                     mCardContent {
-                                        p { +"Houd je cursor boven een gemeente om het slagingspercentage te zien." }
-                                        p { +"Klik op een gemeente om daarop te zoeken in de opleiders/examenlocaties hieronder." }
+                                        mTypography { +"Houd je cursor boven een gemeente om het slagingspercentage te zien." }
+                                        mTypography { +"Klik op een gemeente om daarop te zoeken in de opleiders/examenlocaties hieronder." }
                                     }
 
                                     mCardActions {
