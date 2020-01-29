@@ -73,7 +73,6 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
         }
     }
 
-
     override fun keyToType(key: String, itemsData: Map<String, Examenlocatie>) =
         itemsData[key] ?: error("Examenlocatie $key does not exist")
 

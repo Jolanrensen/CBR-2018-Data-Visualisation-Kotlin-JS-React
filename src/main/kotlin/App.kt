@@ -1,5 +1,6 @@
 import ExamenlocatieOrOpleider.EXAMENLOCATIE
 import ExamenlocatieOrOpleider.OPLEIDER
+import SlagingspercentageSoort.*
 import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.MButtonSize
 import com.ccfraser.muirwik.components.button.mButton
@@ -8,6 +9,8 @@ import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
 import data.Data
+import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
+import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 import io.data2viz.color.Colors
 import kotlinext.js.jsObject
 import kotlinx.coroutines.GlobalScope
@@ -35,12 +38,20 @@ interface AppState : RState {
 
     var selectedGemeente: NederlandVizMap.Gemeente?
     var examenlocatieOrOpleider: ExamenlocatieOrOpleider
+    var slagingspercentageSoort: SlagingspercentageSoort
 
     var numberOfResultaatFilterCards: Int
 }
 
-enum class ExamenlocatieOrOpleider {
-    EXAMENLOCATIE, OPLEIDER
+enum class ExamenlocatieOrOpleider(val naamMeervoud: String) {
+    EXAMENLOCATIE("examenlocaties"),
+    OPLEIDER("opleiders")
+}
+
+enum class SlagingspercentageSoort(val naam: String) {
+    EERSTE_KEER(EERSTE_EXAMEN_OF_TOETS.title),
+    HERKANSING(HEREXAMEN_OF_TOETS.title),
+    GECOMBINEERD("Gecombineerd")
 }
 
 class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
@@ -52,12 +63,14 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
         selectedGemeente = null
         examenlocatieOrOpleider = OPLEIDER
+        slagingspercentageSoort = EERSTE_KEER
         numberOfResultaatFilterCards = 2
     }
 
     private var selectedGemeente by stateDelegateOf(AppState::selectedGemeente)
     private var dataLoaded by stateDelegateOf(AppState::dataLoaded)
     private var examenlocatieOrOpleider by stateDelegateOf(AppState::examenlocatieOrOpleider)
+    private var slagingspercentageSoort by stateDelegateOf(AppState::slagingspercentageSoort)
     private var numberOfResultaatFilterCards by stateDelegateOf(AppState::numberOfResultaatFilterCards)
 
     private fun loadData() {
@@ -105,10 +118,18 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
         }
     }
 
-    private val toggleExamenlocatieOrOpleider = { it: Event? ->
+    private val toggleExamenlocatieOrOpleider = { _: Event? ->
         examenlocatieOrOpleider = when (examenlocatieOrOpleider) {
             OPLEIDER -> EXAMENLOCATIE
             EXAMENLOCATIE -> OPLEIDER
+        }
+    }
+
+    private val toggleSlagingspercentageSoort = { _: Event? ->
+        slagingspercentageSoort = when (slagingspercentageSoort) {
+            EERSTE_KEER -> HERKANSING
+            HERKANSING -> GECOMBINEERD
+            GECOMBINEERD -> EERSTE_KEER
         }
     }
 
@@ -222,23 +243,34 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                         margin(1.mm)
                                     }
                                     mCardHeader(
-                                        title = "Slagingspercentage eerste keer voor ${when (examenlocatieOrOpleider) {
-                                            OPLEIDER -> "rijscholen"
-                                            EXAMENLOCATIE -> "examenlocaties"
-                                        }} per gemeente",
+                                        title = "Slagingspercentage (${slagingspercentageSoort.naam}) voor ${examenlocatieOrOpleider.naamMeervoud} per gemeente",
                                         subHeader = selectedGemeente?.name ?: "-",
                                         avatar = mAvatar(addAsChild = false) {
                                             css {
                                                 color = Color.black
                                                 backgroundColor = selectedGemeente?.let {
-                                                    getGemeenteColor(false, it, examenlocatieOrOpleider).toRgb()
+                                                    getGemeenteColor(
+                                                        false,
+                                                        it,
+                                                        examenlocatieOrOpleider,
+                                                        slagingspercentageSoort
+                                                    )
+                                                        .toRgb()
                                                         .let { rgb(it.r, it.g, it.b) }
                                                 } ?: rgb(189, 189, 189)
                                             }
                                             +(selectedGemeente?.let {
                                                 "${(when (examenlocatieOrOpleider) {
-                                                    OPLEIDER -> it.slagingspercentageOpleiders
-                                                    EXAMENLOCATIE -> it.slagingspercentageExamenlocaties
+                                                    OPLEIDER -> when (slagingspercentageSoort) {
+                                                        EERSTE_KEER -> it.slagingspercentageEersteKeerOpleiders
+                                                        HERKANSING -> it.slagingspercentageHerexamenOpleiders
+                                                        GECOMBINEERD -> it.slagingspercentageGecombineerdOpleiders
+                                                    }
+                                                    EXAMENLOCATIE -> when (slagingspercentageSoort) {
+                                                        EERSTE_KEER -> it.slagingspercentageEersteKeerExamenlocaties
+                                                        HERKANSING -> it.slagingspercentageHerexamenExamenlocaties
+                                                        GECOMBINEERD -> it.slagingspercentageGecombineerdExamenlocaties
+                                                    }
                                                 } * 100.0).toInt()
                                                 }%"
                                             } ?: "--%")
@@ -261,6 +293,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                             attrs {
                                                 dataLoaded = this@App.dataLoaded
                                                 examenlocatieOrOpleider = this@App.examenlocatieOrOpleider
+                                                slagingspercentageSoort = this@App.slagingspercentageSoort
                                                 selectedGemeente = stateAsProp(AppState::selectedGemeente)
 
                                                 setExamenlocatieFilters = this@App.setExamenlocatieFilters
@@ -284,12 +317,22 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                     mCardActions {
                                         mButton(
                                             caption = when (examenlocatieOrOpleider) {
-                                                OPLEIDER -> "examenlocaties"
-                                                EXAMENLOCATIE -> "rijscholen"
+                                                EXAMENLOCATIE -> OPLEIDER.naamMeervoud
+                                                OPLEIDER -> EXAMENLOCATIE.naamMeervoud
                                             },
                                             color = MColor.primary,
                                             size = MButtonSize.small,
                                             onClick = toggleExamenlocatieOrOpleider
+                                        )
+                                        mButton(
+                                            caption = when (slagingspercentageSoort) {
+                                                EERSTE_KEER -> HERKANSING.naam
+                                                HERKANSING -> GECOMBINEERD.naam
+                                                GECOMBINEERD -> EERSTE_KEER.naam
+                                            },
+                                            color = MColor.primary,
+                                            size = MButtonSize.small,
+                                            onClick = toggleSlagingspercentageSoort
                                         )
                                     }
                                 }
