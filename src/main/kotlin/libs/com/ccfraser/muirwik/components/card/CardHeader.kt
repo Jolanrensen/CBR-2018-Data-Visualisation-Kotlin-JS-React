@@ -1,7 +1,9 @@
 package com.ccfraser.muirwik.components.card
 
+import com.ccfraser.muirwik.components.MTypographyProps
 import com.ccfraser.muirwik.components.createStyled
 import com.ccfraser.muirwik.components.setStyledPropsAndRunHandler
+import com.ccfraser.muirwik.components.styles.TypographyOptions
 import org.w3c.dom.Node
 import react.RBuilder
 import react.RComponent
@@ -23,9 +25,9 @@ interface MCardHeaderProps : StyledProps {
     var component: String
     var disableTypography: Boolean
     var subheader: Node
-    var subheaderTypographyProps: RProps
+    var subheaderTypographyProps: MTypographyProps
     var title: Node
-    var titleTypographyProps: RProps
+    var titleTypographyProps: MTypographyProps
 }
 
 /**

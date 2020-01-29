@@ -186,24 +186,24 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
 //                    }
 
                 val slagingspercentageOpleiders =
-                    opleiders.filter { it.slagingsPercentageEersteKeer != null }.let {
+                    opleiders.filter { it.slagingspercentageEersteKeer != null }.let {
                         val opleidersResultSize = it.sumBy {
                             Data.opleiderToResultaten[it.code]!!.size
                         }.toDouble()
 
                         it.sumByDouble {
-                            it.slagingsPercentageEersteKeer!! * Data.opleiderToResultaten[it.code]!!.size.toDouble()
+                            it.slagingspercentageEersteKeer!! * Data.opleiderToResultaten[it.code]!!.size.toDouble()
                         } / opleidersResultSize
                     }
 
                 val slagingspercentageExamenlocaties =
-                    examenlocaties.filter { it.slagingsPercentageEersteKeer != null }.let {
+                    examenlocaties.filter { it.slagingspercentageEersteKeer != null }.let {
                         val examenlocatiesResultSize = it.sumBy {
                             Data.examenlocatieToResultaten[it.naam]!!.size
                         }.toDouble()
 
                         it.sumByDouble {
-                            it.slagingsPercentageEersteKeer!! * Data.examenlocatieToResultaten[it.naam]!!.size.toDouble()
+                            it.slagingspercentageEersteKeer!! * Data.examenlocatieToResultaten[it.naam]!!.size.toDouble()
                         } / examenlocatiesResultSize
                     }
 
@@ -267,9 +267,9 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     runOnHiddenViz = { it ->
                         hiddenCanvas = it
                         hiddenViz = this
-                        this@NederlandVizMap.gemeentes.forEach {
-                            it.hiddenGeoPathNode.redrawPath()
-                            hiddenViz!!.add(it.hiddenGeoPathNode)
+                        this@NederlandVizMap.gemeentes.forEachApply {
+                            hiddenGeoPathNode.redrawPath()
+                            hiddenViz!!.add(hiddenGeoPathNode)
                         }
                     }
                 ) {

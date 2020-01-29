@@ -14,14 +14,7 @@ import com.ccfraser.muirwik.components.table.mTableCell
 import com.ccfraser.muirwik.components.table.mTableRow
 import data.Data
 import data.Examenlocatie
-import kotlinx.css.Color
-import kotlinx.css.Overflow
-import kotlinx.css.backgroundColor
-import kotlinx.css.maxHeight
-import kotlinx.css.overflow
-import kotlinx.css.padding
-import kotlinx.css.px
-import kotlinx.css.width
+import kotlinx.css.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import libs.reactList.ReactListRef
@@ -80,10 +73,10 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
 
     override fun sortType(type: Examenlocatie) = type.run {
         when {
-            slagingsPercentageEersteKeer == null && slagingsPercentageHerkansing == null -> 0.0
-            slagingsPercentageEersteKeer == null -> slagingsPercentageHerkansing!!
-            slagingsPercentageHerkansing == null -> slagingsPercentageEersteKeer!!
-            else -> (type.slagingsPercentageEersteKeer!! + type.slagingsPercentageHerkansing!!) / 2.0
+            slagingspercentageEersteKeer == null && slagingspercentageHerkansing == null -> 0.0
+            slagingspercentageEersteKeer == null -> slagingspercentageHerkansing!!
+            slagingspercentageHerkansing == null -> slagingspercentageEersteKeer!!
+            else -> (type.slagingspercentageEersteKeer!! + type.slagingspercentageHerkansing!!) / 2.0
         }
     }
 
@@ -208,7 +201,7 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                 css {
                     padding(1.spacingUnits)
                     overflow = Overflow.auto
-                    maxHeight = 400.px
+                    height = 400.px
                 }
                 styledReactList {
                     css(themeStyles.list)
@@ -221,35 +214,36 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                         }
                     }
                 }
+            }
 
-                mPopover(
-                    open = popoverOpen,
-                    onClose = onPopoverClose,
-                    anchorOriginVertical = MPopoverVerticalPosition.top,
-                    anchorOriginHorizontal = MPopoverHorizontalPosition.right
-                ) {
-                    attrs {
-                        anchorEl = popoverAvatar
+            mPopover(
+                open = popoverOpen,
+                onClose = onPopoverClose,
+                anchorOriginVertical = MPopoverVerticalPosition.top,
+                anchorOriginHorizontal = MPopoverHorizontalPosition.right
+            ) {
+                attrs {
+                    anchorEl = popoverAvatar
 
-                        transformOriginVertical = MPopoverVerticalPosition.top
-                        transformOriginHorizontal = MPopoverHorizontalPosition.left
-                    }
-                    mTable {
-                        mTableBody {
-                            if (popoverExamenlocatie == null) return@mTableBody
-                            Json(JsonConfiguration.Stable).toJson(
-                                Examenlocatie.serializer(),
-                                popoverExamenlocatie!!
-                            ).jsonObject.content.forEach { (key, element) ->
-                                mTableRow(key = key) {
-                                    mTableCell { +key }
-                                    mTableCell { +(element.primitive.contentOrNull ?: "-") }
-                                }
+                    transformOriginVertical = MPopoverVerticalPosition.top
+                    transformOriginHorizontal = MPopoverHorizontalPosition.left
+                }
+                mTable {
+                    mTableBody {
+                        if (popoverExamenlocatie == null) return@mTableBody
+                        Json(JsonConfiguration.Stable).toJson(
+                            Examenlocatie.serializer(),
+                            popoverExamenlocatie!!
+                        ).jsonObject.content.forEach { (key, element) ->
+                            mTableRow(key = key) {
+                                mTableCell { +key }
+                                mTableCell { +(element.primitive.contentOrNull ?: "-") }
                             }
                         }
                     }
                 }
             }
+
             styledDiv {
                 css {
                     padding(

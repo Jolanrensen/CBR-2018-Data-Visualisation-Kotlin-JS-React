@@ -9,6 +9,7 @@ import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
 import data.Data
 import io.data2viz.color.Colors
+import kotlinext.js.jsObject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -18,6 +19,8 @@ import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
+import react.dom.a
+import react.dom.br
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
@@ -49,7 +52,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
         selectedGemeente = null
         examenlocatieOrOpleider = OPLEIDER
-        numberOfResultaatFilterCards = 1
+        numberOfResultaatFilterCards = 2
     }
 
     private var selectedGemeente by stateDelegateOf(AppState::selectedGemeente)
@@ -71,7 +74,6 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
     private var opleiderApplyFilterFunctions = arrayListOf<ApplyFilter>()
     private var examenlocatieApplyFilterFunctions = arrayListOf<ApplyFilter>()
-
 
     private val setApplyOpleidersFilterFunction = { it: ApplyFilter ->
         opleiderApplyFilterFunctions.add(it)
@@ -144,7 +146,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 //                        mHidden(mdUp = true, implementation = MHiddenImplementation.css) {
 //                            mIconButton("menu", color = MColor.inherit, onClick = { setState { responsiveDrawerOpen = true }})
 //                        }
-                            mToolbarTitle("CBR 2017 - 2018 ")
+                            mToolbarTitle("CBR Opleiderresultaten juli 2017 t/m juni 2018  -  2IMV20 Visualization  -  2020")
+
 //                        mIconButton("lightbulb_outline", onClick = {
 //                            themeColor = if (themeColor == "light") "dark" else "light"
 //                            props.onThemeTypeChange(themeColor)
@@ -168,6 +171,59 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                             css {
                                 padding(5.mm)
                             }
+                            mGridItem(xs = MGridSize.cells12) {
+                                hoveringCard {
+                                    css {
+                                        margin(1.mm)
+                                    }
+                                    mCardHeader(
+                                        title = "Over deze website",
+                                        avatar = mAvatar(addAsChild = false) { +"O" }
+                                    ) {
+                                        attrs.titleTypographyProps = jsObject {
+                                            variant = MTypographyVariant.h5
+                                            component = "h2"
+                                        }
+                                    }
+                                    mCardContent {
+                                        mTypography {
+                                            +"Deze website is gemaakt voor het TU/e vak 2IMV20 Visualization door Jolan Rensen en Daan Waalboer."
+                                            br {}
+                                            +"De data van deze website is verkregen van "
+                                            a("https://data.overheid.nl/dataset/cbr-opleiderresultaten") { +"overheid.nl" }
+                                            +" en verrijkt met gemeentedata verkregen van "
+                                            a("https://www.cbs.nl/nl-nl/maatwerk/2018/36/buurt-wijk-en-gemeente-2018-voor-postcode-huisnummer") { +"cbs.nl" }
+                                            +"."
+                                            br {}
+                                            +"De kaart van Nederland komt van de gemeentedata van 2018 van "
+                                            a("https://cartomap.github.io/nl/") { +"Cartomap" }
+                                            +"."
+                                            br {}
+                                            br {}
+                                            +"Deze website is gemaakt met "
+                                            a("https://kotlinlang.org/docs/reference/js-overview.html") { +"Kotlin voor JavaScript" }
+                                            +" en "
+                                            a("https://reactjs.org/") { +"React" }
+                                            +" m.b.v. de officiële "
+                                            a("https://github.com/JetBrains/kotlin-wrappers/tree/master/kotlin-react") { +"Kotlin React wrapper library" }
+                                            +"."
+                                            br {}
+                                            +"Voor de UI is gekozen voor "
+                                            a("https://material-ui.com/") { +"Material-UI" }
+                                            +" m.b.v de Kotlin wrapper "
+                                            a("https://github.com/cfnz/muirwik") { +"Muirwik" }
+                                            +"."
+                                            br {}
+                                            +"De kaart en legenda zijn gemaakt met de Kotlin Multiplatform library "
+                                            a("https://github.com/data2viz/data2viz") { +"Data2viz" }
+                                            +", die gebaseerd is op "
+                                            a("https://github.com/d3/d3") { +"D3.js" }
+                                            +"."
+                                        }
+                                    }
+                                }
+                            }
+
                             mGridItem(xs = MGridSize.cells12, lg = MGridSize.cells6) {
                                 hoveringCard {
                                     css {
@@ -178,7 +234,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                             OPLEIDER -> "rijscholen"
                                             EXAMENLOCATIE -> "examenlocaties"
                                         }} per gemeente",
-                                        subHeader = selectedGemeente?.let { it.name } ?: "",
+                                        subHeader = selectedGemeente?.name ?: "-",
                                         avatar = mAvatar(addAsChild = false) {
                                             css {
                                                 color = Color.black
@@ -195,7 +251,18 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                 }%"
                                             } ?: "--%")
                                         }
-                                    )
+                                    ) {
+                                        attrs {
+                                            titleTypographyProps = jsObject {
+                                                variant = MTypographyVariant.h5
+                                                component = "h2"
+                                            }
+                                            subheaderTypographyProps = jsObject {
+                                                variant = MTypographyVariant.h6
+                                                component = "h5"
+                                            }
+                                        }
+                                    }
 
                                     mCardContent {
                                         nederlandMap {
@@ -210,8 +277,16 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                         }
                                     }
                                     mCardContent {
-                                        mTypography { +"Houd je cursor boven een gemeente om het slagingspercentage te zien." }
-                                        mTypography { +"Klik op een gemeente om daarop te zoeken in de opleiders/examenlocaties hieronder." }
+                                        mTypography {
+                                            css {
+                                                display = Display.flex
+                                                justifyContent = JustifyContent.center
+                                                alignItems = Align.center
+                                            }
+                                            +"Houd je cursor boven een gemeente om het slagingspercentage te zien."
+                                            br {}
+                                            +"Klik op een gemeente om daarop te zoeken in de opleiders/examenlocaties hieronder."
+                                        }
                                     }
 
                                     mCardActions {
@@ -236,13 +311,17 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                     mCardHeader(
                                         title = "Resultaten Vergelijken",
                                         avatar = mAvatar(addAsChild = false) { +"R" }
-                                    )
+                                    ) {
+                                        attrs.titleTypographyProps = jsObject {
+                                            variant = MTypographyVariant.h5
+                                            component = "h2"
+                                        }
+                                    }
 
                                     mCardContent {
                                         mTypography {
                                             +"Hieronder kun je sets resultaten met elkaar vergelijken. Dit werkt het best op de desktop aangezien dan de tabellen onder elkaar terecht komen. Het selecteren van opleiders filtert automatisch de beschikbare examenlocaties en vice versa. Geselecteerde items die verdwijnen dankzij een filteropdracht worden automatisch gedeselecteerd."
-                                        }
-                                        mTypography {
+                                            br {}
                                             +"Druk op Enter of op het vergrootglas om een filter toe te passen (Dit ivm performance)."
                                         }
                                     }
@@ -252,7 +331,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 //                        opleiderApplyFilterFunctions = arrayListOf()
 //                        examenlocatieApplyFilterFunctions = arrayListOf()
                             mGridItem(xs = MGridSize.cells12) {
-                                (0 until numberOfResultaatFilterCards).forEach {
+                                (0 until numberOfResultaatFilterCards).forEachApply {
                                     hoveringCard {
                                         css {
                                             margin(1.mm)

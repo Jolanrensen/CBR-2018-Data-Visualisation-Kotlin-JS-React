@@ -49,7 +49,8 @@ object Data {
     val csv: List<List<String>>?
         get() {
             val xmlhttp = XMLHttpRequest()
-            // data from overheid cbr, gemeentes toegevoegd met https://www.cbs.nl/nl-nl/maatwerk/2018/36/buurt-wijk-en-gemeente-2018-voor-postcode-huisnummer
+            // data from overheid cbr, https://data.overheid.nl/dataset/cbr-opleiderresultaten
+            // gemeentes toegevoegd met https://www.cbs.nl/nl-nl/maatwerk/2018/36/buurt-wijk-en-gemeente-2018-voor-postcode-huisnummer
             xmlhttp.open("GET", "opleiderresultaten-met-gemeentes.csv", false)
 
             xmlhttp.send()
@@ -139,7 +140,7 @@ object Data {
 
             opleiderToResultaten.forEach { (opleiderCode, resultaten) ->
                 alleOpleiders[opleiderCode]?.apply {
-                    slagingsPercentageEersteKeer = (
+                    slagingspercentageEersteKeer = (
                             resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
@@ -154,7 +155,7 @@ object Data {
                             }.toDouble()
                             ).let { if (it.isNaN()) null else it }
 
-                    slagingsPercentageHerkansing = (
+                    slagingspercentageHerkansing = (
                             resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
@@ -173,7 +174,7 @@ object Data {
 
             examenlocatieToResultaten.forEach { (examenlocatieCode, resultaten) ->
                 alleExamenlocaties[examenlocatieCode]?.apply {
-                    slagingsPercentageEersteKeer = (
+                    slagingspercentageEersteKeer = (
                             resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
@@ -188,7 +189,7 @@ object Data {
                             }.toDouble()
                             ).let { if (it.isNaN()) null else it }
 
-                    slagingsPercentageHerkansing = (
+                    slagingspercentageHerkansing = (
                             resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()

@@ -240,7 +240,7 @@ class CategorieProductList(prps: CategorieProductListProps) :
                 css {
                     padding(1.spacingUnits)
                     overflow = Overflow.auto
-                    maxHeight = 400.px
+                    height = 400.px
                 }
                 val categories = filteredItems
                     .asSequence()
