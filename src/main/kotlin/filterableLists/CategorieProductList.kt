@@ -22,6 +22,7 @@ import react.RBuilder
 import react.ReactElement
 import react.buildElement
 import react.dom.div
+import react.dom.key
 import stateDelegateOf
 import styled.StyleSheet
 import styled.css
@@ -131,6 +132,7 @@ class CategorieProductList(prps: CategorieProductListProps) :
             buildElement {
                 val categorie = categories[index]
                 div {
+                    attrs.key = key
                     mListItem(
                         dense = false,
                         button = true,

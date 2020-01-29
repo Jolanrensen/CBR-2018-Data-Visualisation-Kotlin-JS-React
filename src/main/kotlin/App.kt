@@ -308,7 +308,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                 justifyContent = JustifyContent.center
                                                 alignItems = Align.center
                                             }
-                                            +"Houd je cursor boven een gemeente om het slagingspercentage te zien."
+                                            +"Houd je cursor boven een gemeente (of raak het aan) om het slagingspercentage te zien."
                                             br {}
                                             +"Klik op een gemeente om daarop te zoeken in de opleiders/examenlocaties hieronder."
                                         }

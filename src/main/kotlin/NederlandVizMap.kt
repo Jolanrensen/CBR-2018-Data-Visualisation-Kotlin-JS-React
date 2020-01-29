@@ -17,9 +17,7 @@ import io.data2viz.geom.size
 import io.data2viz.math.Angle
 import io.data2viz.math.deg
 import io.data2viz.math.pct
-import io.data2viz.viz.KMouseMove
-import io.data2viz.viz.KPointerClick
-import io.data2viz.viz.Viz
+import io.data2viz.viz.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -436,8 +434,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     drawGemeentes()
 
                     // 2nd canvas trick http://bl.ocks.org/Jverma/70f7975a72358e6d69cdd4bf6a0569e7
-                    on(KMouseMove) {
-                        val new = getGemeenteAt(it.pos)
+                    fun onHovering(it: Point) {
+                        val new = getGemeenteAt(it)
 
                         if (selectedGemeente != new) {
                             selectedGemeente = new
@@ -445,6 +443,13 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                             render()
                         }
                     }
+                    on(KMouseMove) {
+                       onHovering(it.pos)
+                    }
+                    on(KTouchStart) {
+                        onHovering(it.pos)
+                    }
+
                     on(KPointerClick) {
                         getGemeenteAt(it.pos)?.let {
                             when (examenlocatieOrOpleider) {
