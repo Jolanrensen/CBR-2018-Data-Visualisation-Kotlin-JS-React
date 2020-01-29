@@ -230,7 +230,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                         margin(1.mm)
                                     }
                                     mCardHeader(
-                                        title = "Slagingspercentage ${when (examenlocatieOrOpleider) {
+                                        title = "Slagingspercentage eerste keer voor ${when (examenlocatieOrOpleider) {
                                             OPLEIDER -> "rijscholen"
                                             EXAMENLOCATIE -> "examenlocaties"
                                         }} per gemeente",
