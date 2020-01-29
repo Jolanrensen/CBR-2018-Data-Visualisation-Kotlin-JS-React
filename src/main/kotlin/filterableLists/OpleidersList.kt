@@ -38,13 +38,6 @@ import styled.styledDiv
 import toInt
 
 interface OpleidersListProps : FilterableListProps<String, Opleider>
-// Available in props:
-// var filter: String
-// var setReloadRef: (ReloadItems) -> Unit
-// var selectedItemKeys: HashSet<String>
-// var onSelectionChanged: () -> Unit
-// var selectedOtherItemKeys: HashSet<String>
-// var filteredItemsDelegate: ReadWriteProperty<Any?, List<Opleider>>
 
 interface OpleidersListState : FilterableListState
 
@@ -207,6 +200,8 @@ class OpleidersList(prps: OpleidersListProps) :
                     padding(1.spacingUnits)
                     overflow = Overflow.auto
                     height = 400.px
+                    minHeight = 400.px
+                    maxHeight = 400.px
                 }
                 styledReactList {
                     css(themeStyles.list)

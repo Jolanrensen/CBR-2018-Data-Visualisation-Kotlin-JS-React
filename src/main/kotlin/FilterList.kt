@@ -89,11 +89,7 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
         itemsData: Map<Key, Type>,
         selectedItemKeys: Set<Key>,
         selectedOtherItemKeys: Set<Key>
-    ) =
-//        if (filter.isEmpty() && selectedOtherItemKeys.isEmpty())
-//        itemsData.values.sortedByDescending { sortType(it) }
-//    else
-        filterableList?.getFilteredItems(
+    ) = filterableList?.getFilteredItems(
             filter,
             itemsData,
             selectedItemKeys,

@@ -133,11 +133,6 @@ object Data {
                 }
             }
 
-//            alleOpleiders.forEach { (opleiderCode, opeider) ->
-//                val resultaten = opleiderToResultaten[opleiderCode]!!
-//
-//            }
-
             opleiderToResultaten.forEach { (opleiderCode, resultaten) ->
                 alleOpleiders[opleiderCode]?.apply {
                     slagingspercentageEersteKeer = (
@@ -207,28 +202,6 @@ object Data {
             }
         }
     }
-
-
-//    fun getResults(
-//        opleiders: Collection<Opleider> = alleOpleiders.values,
-//        examenlocaties: Collection<Examenlocatie> = alleExamenlocaties.values
-//    ) = getResults(opleiders.map { it.code }, examenlocaties.map { it.naam })
-//
-//    fun getResults(
-//        opleiders: Collection<String> = listOf(),
-//        examenlocaties: Collection<String> = listOf()
-//    ) = //        println("Getting results for $opleiders $examenlocaties")
-//        if (opleiders.isEmpty() || examenlocaties.isEmpty()) {
-//            sequenceOf()
-//        } else {
-//            csv?.let {
-//                val data = it.drop(1).filter { it[0] in opleiders && it[13] in examenlocaties }
-//                sequence {
-//                    for ((i, line) in data.withIndex())
-//                        yield(getResult(i, line))
-//                }
-//            } ?: throw IllegalArgumentException("Couldn't read data")
-//        }
 
     private fun getResult(id: Int, line: List<String>) = Resultaat(
         id = id,
@@ -312,76 +285,6 @@ object Data {
             )
         )
     )
-
-    // builds dataset for opleiders and examenlocaties
-//    fun getOpleidersAndExamenlocaties(): Pair<Map<String, Opleider>, Map<String, Examenlocatie>> {
-//        if (alleOpleiders.isNotEmpty() && alleExamenlocaties.isNotEmpty())
-//            return alleOpleiders to alleExamenlocaties
-//        csv?.let {
-//            val data = it.drop(1)
-//            for (line in data) {
-//                try {
-//                    val opleider = alleOpleiders.getOrPut(line[0]) {
-//                        Opleider(
-//                            code = line[0],
-//                            naam = line[1],
-//                            startdatum = line[2].split('-').let {
-//                                Date(
-//                                    day = it[0].toInt(),
-//                                    month = it[1].toInt(),
-//                                    year = it[2].toInt(),
-//                                    hour = 0,
-//                                    minute = 0,
-//                                    second = 0,
-//                                    millisecond = 0
-//                                )
-//                            },
-//                            einddatum = line[3].split('-').let {
-//                                Date(
-//                                    day = it[0].toInt(),
-//                                    month = it[1].toInt(),
-//                                    year = it[2].toInt(),
-//                                    hour = 0,
-//                                    minute = 0,
-//                                    second = 0,
-//                                    millisecond = 0
-//                                )
-//                            },
-//                            straatnaam = line[4],
-//                            huisnummer = line[5],
-//                            huisnummerToevoeging = line[6],
-//                            postcode = line[7],
-//                            plaatsnaam = line[8],
-//                            gemeente = line[37]
-//                        )
-//                    }
-//
-//                    val examenlocatie = alleExamenlocaties.getOrPut(line[13]) {
-//                        Examenlocatie(
-//                            naam = line[13],
-//                            straatnaam = line[14],
-//                            huisnummer = line[15],
-//                            huisnummerToevoeging = line[16],
-//                            postcode = line[17],
-//                            plaatsnaam = line[18],
-//                            gemeente = line[38]
-//                        )
-//                    }
-//
-//
-//                    opleiderToExamenlocaties.apply {
-//                        get(opleider.code)?.add(examenlocatie.naam) ?: set(opleider.code, hashSetOf(examenlocatie.naam))
-//                    }
-//                    examenlocatieToOpleiders.apply {
-//                        get(examenlocatie.naam)?.add(opleider.code) ?: set(examenlocatie.naam, hashSetOf(opleider.code))
-//                    }
-//                } catch (e: Exception) {
-//                    // console.error(line, e)
-//                }
-//            }
-//        } ?: throw IllegalArgumentException("Couldn't read data")
-//        return alleOpleiders to alleExamenlocaties
-//    }
 }
 
 

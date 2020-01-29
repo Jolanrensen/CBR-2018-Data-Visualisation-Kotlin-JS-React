@@ -29,13 +29,6 @@ import styled.styledDiv
 import toInt
 
 interface CategorieProductListProps : FilterableListProps<Product, Product>
-// Available in props
-// var filter: String
-// var setReloadRef: (ReloadItems) -> Unit
-// var selectedItemKeys: HashSet<Product>
-// var onSelectionChanged: () -> Unit
-// var selectedOtherItemKeys: HashSet<Product>
-// var filteredItemsDelegate: ReadWriteProperty<Any?, List<Product>>
 
 interface CategorieProductListState : FilterableListState {
     var expandedCategories: Set<Categorie>
@@ -241,6 +234,8 @@ class CategorieProductList(prps: CategorieProductListProps) :
                     padding(1.spacingUnits)
                     overflow = Overflow.auto
                     height = 400.px
+                    minHeight = 400.px
+                    maxHeight = 400.px
                 }
                 val categories = filteredItems
                     .asSequence()

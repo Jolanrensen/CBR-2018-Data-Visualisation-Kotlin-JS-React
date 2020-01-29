@@ -108,11 +108,6 @@ class ReadWritePropDelegate<T>(
         else (other as? ReadWritePropDelegate<*>)?.get?.invoke() == get()
 }
 
-// not sure what this was for again... todo remove
-//fun <Props : RProps, State : RState, VarType : Any?> Component<Props, State>.propDelegateOf(propItem: KMutableProperty1<Props, StateDelegate<VarType>>) =
-//    PropDelegate({ propItem.get(props).get() }
-//    ) { propItem.get(props).set(it) }
-
 fun <Props : RProps, State : RState, VarType : Any?> Component<Props, State>.propDelegateOf(propItem: KMutableProperty1<Props, StateAsProp<VarType>>) =
     ReadWritePropDelegate({ propItem.get(props).value }
     ) { propItem.get(props).set(it) }

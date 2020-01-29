@@ -143,15 +143,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                             zIndex = theme.zIndex.drawer + 1
                         }
                         mToolbar {
-//                        mHidden(mdUp = true, implementation = MHiddenImplementation.css) {
-//                            mIconButton("menu", color = MColor.inherit, onClick = { setState { responsiveDrawerOpen = true }})
-//                        }
                             mToolbarTitle("CBR Opleiderresultaten juli 2017 t/m juni 2018  -  2IMV20 Visualization  -  2020")
-
-//                        mIconButton("lightbulb_outline", onClick = {
-//                            themeColor = if (themeColor == "light") "dark" else "light"
-//                            props.onThemeTypeChange(themeColor)
-//                        })
                         }
                     }
 

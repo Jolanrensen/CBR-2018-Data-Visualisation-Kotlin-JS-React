@@ -1,12 +1,3 @@
-import data.Categorie
-import data.Data
-import data.Product
-import kotlinext.js.jsObject
-import org.w3c.dom.MessageEvent
-import org.w3c.dom.Worker
-import org.w3c.dom.url.URL
-import org.w3c.files.Blob
-import org.w3c.workers.ServiceWorkerGlobalScope
 import react.dom.render
 import kotlin.browser.document
 
@@ -43,29 +34,6 @@ inline fun <T> Iterable<T>.forEachIndexedApply(action: T.(index: Int) -> Unit) {
     for (item in this) action(item, index++)
 }
 
-//external val self: ServiceWorkerGlobalScope
-//fun runOnWorker(run: (evt: MessageEvent) -> Unit) {
-//    var worker: Worker? = null
-//    fun terminate() = worker!!.terminate()
-//
-//    worker = Worker(
-//        URL.createObjectURL(
-//            Blob(
-//                arrayOf(
-//                    {
-//                        self.onmessage = {
-//                            run(it)
-//                            terminate()
-//                        }
-//                    }()
-//                ),
-//                jsObject { type = "text/javascript" }
-//            )
-//        )
-//    ).apply {
-//        postMessage(null)
-//    }
-//}
 
 
 

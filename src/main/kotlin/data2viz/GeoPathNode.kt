@@ -1,6 +1,5 @@
 package data2viz
 
-import io.data2viz.geo.geojson.GeoPath
 import io.data2viz.geo.geojson.geoPath
 import io.data2viz.geo.projection.common.Projection
 import io.data2viz.geo.projection.identityProjection

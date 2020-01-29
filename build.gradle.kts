@@ -96,11 +96,6 @@ kotlin {
 
                 implementation(npm("styled-components"))
                 implementation(npm("jquery"))
-
-                implementation("com.soywiz:korma-js:0.20.0")
-
-//                implementation(npm("cluster"))
-//                implementation("com.soywiz:kworker-js:0.9.0")
             }
         }
     }

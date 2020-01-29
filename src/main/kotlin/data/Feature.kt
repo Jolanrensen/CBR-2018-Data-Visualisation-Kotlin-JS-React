@@ -12,7 +12,6 @@ import io.data2viz.geojson.Point
 import io.data2viz.geojson.Polygon
 import io.data2viz.geojson.js.Typed
 
-// @Suppress("UNCHECKED_CAST")
 fun <Properties : Any> String.toFeatureCollection(): FeatureCollection<Properties>? =
     JSON.parse<Typed>(this).asGeoJsonObject<Properties>().asDynamic()
 
@@ -30,7 +29,6 @@ data class Feature<Properties>(
 
 fun <Properties: Any> Feature<Properties>.toData2Viz() = io.data2viz.geojson.Feature(geometry, id)
 
-// @Suppress("UNCHECKED_CAST_TO_EXTERNAL_INTERFACE")
 fun <Properties : Any> Typed.asGeoJsonObject(): GeoJsonObject =
     when (type) {
         "Point" -> Point(asDynamic().coordinates)

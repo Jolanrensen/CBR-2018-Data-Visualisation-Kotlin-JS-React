@@ -35,13 +35,6 @@ import styled.styledDiv
 import toInt
 
 interface ExamenlocatiesListProps : FilterableListProps<String, Examenlocatie>
-// Availhttps://en.wikipedia.org/wiki/Material_conditionalable in props:
-// var filter: String
-// var setReloadRef: (ReloadItems) -> Unit
-// var selectedItemKeys: HashSet<String>
-// var onSelectionChanged: () -> Unit
-// var selectedOtherItemKeys: HashSet<String>
-// var filteredItemsDelegate: ReadWriteProperty<Any?, List<Examenlocatie>>
 
 interface ExamenlocatiesListState : FilterableListState
 
@@ -202,6 +195,8 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                     padding(1.spacingUnits)
                     overflow = Overflow.auto
                     height = 400.px
+                    minHeight = 400.px
+                    maxHeight = 400.px
                 }
                 styledReactList {
                     css(themeStyles.list)

@@ -1,6 +1,4 @@
-import com.ccfraser.muirwik.components.dialog.ModalOnCloseReason
 import libs.RPureComponent
-import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RProps
 import react.RState
