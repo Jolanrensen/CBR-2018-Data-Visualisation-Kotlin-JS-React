@@ -2,11 +2,10 @@ plugins {
     kotlin("js") version "1.3.70-eap-42"
     kotlin("kapt") version "1.3.70-eap-42"
     kotlin("plugin.serialization") version "1.3.70-eap-42"
-    id("com.diffplug.gradle.spotless") version "3.26.1"
 }
 
 apply {
-    //    plugin("kotlin-dce-js")
+    plugin("kotlin-dce-js")
 }
 
 group = "org.example"
@@ -22,18 +21,6 @@ repositories {
     maven(url = "https://jitpack.io")
     maven(url = "https://dl.bintray.com/korlibs/korlibs")
     maven(url = "https://dl.bintray.com/soywiz/soywiz")
-}
-
-// attempt at linter
-spotless {
-    kotlin {
-        ktlint()
-    }
-    kotlinGradle {
-        // same as kotlin, but for .gradle.kts files (defaults to '*.gradle.kts')
-        target("*.gradle.kts", "additionalScripts/*.gradle.kts")
-        ktlint()
-    }
 }
 
 kotlin {
@@ -68,12 +55,7 @@ kotlin {
                 implementation("org.jetbrains:kotlin-react:16.9.0-pre.89-kotlin-1.3.60")
                 implementation("org.jetbrains:kotlin-react-dom:16.9.0-pre.89-kotlin-1.3.60")
 
-                // implementation("io.data2viz:d2v-data2viz-common:0.8.0-RC5")
                 implementation("io.data2viz:d2v-data2viz-js:0.8.0-RC5")
-                // implementation("io.data2viz:d2v-geo-common:0.7.0-RC5")
-                // implementation("io.data2viz:d2v-data2viz-common:0.8.0-RC5")
-                // implementation("io.data2viz:d2v-shape-common:0.8.0-RC5")
-
 
                 implementation("org.jetbrains:kotlin-extensions:1.0.1-pre.89-kotlin-1.3.60")
                 implementation("org.jetbrains:kotlin-css:1.0.0-pre.89-kotlin-1.3.60")
