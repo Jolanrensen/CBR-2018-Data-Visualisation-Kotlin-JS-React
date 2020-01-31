@@ -1,12 +1,14 @@
 import com.ccfraser.muirwik.components.*
 import data.Data
 import data.Product
+import delegates.ReactPropAndStateDelegates.propDelegateOf
+import delegates.ReactPropAndStateDelegates.stateAsProp
+import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import filterableLists.categorieProductList
 import filterableLists.examenlocatiesList
 import filterableLists.opleidersList
 import libs.RPureComponent
 import react.RBuilder
-import react.RComponent
 import react.RProps
 import react.RState
 

@@ -1,6 +1,9 @@
 import ExamenlocatieOrOpleider.EXAMENLOCATIE
 import ExamenlocatieOrOpleider.OPLEIDER
 import Loading.*
+import delegates.ReactPropAndStateDelegates.StateAsProp
+import delegates.ReactPropAndStateDelegates.propDelegateOf
+import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import SlagingspercentageSoort.*
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.button.mButton

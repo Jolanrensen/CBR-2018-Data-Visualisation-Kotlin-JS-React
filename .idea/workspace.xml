@@ -2,13 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c006b3b8-3c46-4887-897f-1b0035b6e618" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/delegates/Example.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/distributions/2IMV20-Visualization-and-Interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/distributions/2IMV20-Visualization-and-Interaction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/distributions/2IMV20-Visualization-and-Interaction.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/build/distributions/2IMV20-Visualization-and-Interaction.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/distributions/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/distributions/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Delegate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/delegates/ReactPropAndStateDelegates.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/HoveringCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/HoveringCard.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="printScope" value="1" />
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/exportToHTML" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -87,6 +105,14 @@
     <property name="project.structure.proportion" value="0.21521997" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.spelling" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="delegates" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="delegates" />
+    </key>
   </component>
   <component name="RunManager" selected="Kotlin Gradle.2IMV20-Visualization-and-Interaction [browserRun]">
     <configuration name="2IMV20-Visualization-and-Interaction [browserRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -188,7 +214,10 @@
       <workItem from="1580215356163" duration="17633000" />
       <workItem from="1580236896273" duration="12042000" />
       <workItem from="1580301914606" duration="3816000" />
-      <workItem from="1580305743953" duration="16209000" />
+      <workItem from="1580305743953" duration="16916000" />
+      <workItem from="1580400391214" duration="6047000" />
+      <workItem from="1580463580429" duration="9611000" />
+      <workItem from="1580481967528" duration="272000" />
     </task>
     <task id="LOCAL-00001" summary="finished popovers for opleiders/examenlocaties">
       <created>1580218467397</created>
@@ -295,7 +324,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580328447335</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="added viewport for mobile">
+      <created>1580328816294</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1580328816294</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -315,7 +351,8 @@
     <MESSAGE value="meer kaartopties!" />
     <MESSAGE value="added distribution to git" />
     <MESSAGE value="added touch to map, bugfix" />
-    <option name="LAST_COMMIT_MESSAGE" value="added touch to map, bugfix" />
+    <MESSAGE value="added viewport for mobile" />
+    <option name="LAST_COMMIT_MESSAGE" value="added viewport for mobile" />
   </component>
   <component name="WindowStateProjectService">
     <state x="3443" y="251" width="954" height="677" key="#Project_Structure" timestamp="1580310508676">
@@ -331,48 +368,56 @@
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="3490" y="357" width="690" height="387" key="#com.intellij.fileTypes.FileTypeChooser/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580310974617" />
+    <state x="1195" y="541" width="480" height="558" key="#com.intellij.ide.util.MemberChooser" timestamp="1580400872205">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="1195" y="541" width="480" height="558" key="#com.intellij.ide.util.MemberChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1580400872205" />
     <state x="2880" y="25" width="1360" height="1055" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1580311985728">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="2880" y="25" width="1360" height="1055" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580311985728" />
-    <state x="3321" y="247" width="1469" height="829" key="CommitChangelistDialog2" timestamp="1580328446573">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state x="1049" y="455" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1580400590061">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state x="1308" y="406" width="1491" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1580248918817" />
-    <state x="3321" y="247" width="1469" height="829" key="CommitChangelistDialog2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580328446573" />
+    <state x="1049" y="455" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1580400590061" />
+    <state x="1308" y="406" width="1469" height="829" key="CommitChangelistDialog2" timestamp="1580482287455">
+      <screen x="0" y="25" width="2880" height="1595" />
+    </state>
+    <state x="1308" y="406" width="1491" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1580482287455" />
+    <state x="3321" y="247" width="1469" height="829" key="CommitChangelistDialog2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580328816073" />
     <state x="3606" y="310" key="FileChooserDialogImpl" timestamp="1580302683664">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="3606" y="310" key="FileChooserDialogImpl/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580302683664" />
-    <state width="1872" height="279" key="GridCell.Tab.0.bottom" timestamp="1580328773793">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state width="1382" height="456" key="GridCell.Tab.0.bottom" timestamp="1580478191429">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1917" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1580248949259" />
-    <state width="1872" height="279" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580328773793" />
-    <state width="1872" height="279" key="GridCell.Tab.0.center" timestamp="1580328773793">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state width="1382" height="456" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1580478191429" />
+    <state width="1872" height="279" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580335035337" />
+    <state width="1382" height="456" key="GridCell.Tab.0.center" timestamp="1580478191428">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1917" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1580248949258" />
-    <state width="1872" height="279" key="GridCell.Tab.0.center/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580328773793" />
-    <state width="1872" height="279" key="GridCell.Tab.0.left" timestamp="1580328773793">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state width="1382" height="456" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1580478191428" />
+    <state width="1872" height="279" key="GridCell.Tab.0.center/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580335035337" />
+    <state width="1382" height="456" key="GridCell.Tab.0.left" timestamp="1580478191428">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1917" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1580248949258" />
-    <state width="1872" height="279" key="GridCell.Tab.0.left/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580328773793" />
-    <state width="1872" height="279" key="GridCell.Tab.0.right" timestamp="1580328773793">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state width="1382" height="456" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1580478191428" />
+    <state width="1872" height="279" key="GridCell.Tab.0.left/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580335035337" />
+    <state width="1382" height="456" key="GridCell.Tab.0.right" timestamp="1580478191428">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
-    <state width="1917" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1580248949258" />
-    <state width="1872" height="279" key="GridCell.Tab.0.right/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580328773793" />
+    <state width="1382" height="456" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1580478191428" />
+    <state width="1872" height="279" key="GridCell.Tab.0.right/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580335035337" />
     <state x="3306" y="187" width="1067" height="798" key="SettingsEditor" timestamp="1580302687057">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="3306" y="187" width="1067" height="798" key="SettingsEditor/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580302687057" />
-    <state x="3982" y="361" width="557" height="347" key="Vcs.Push.Dialog.v2" timestamp="1580328448995">
+    <state x="3982" y="361" width="557" height="347" key="Vcs.Push.Dialog.v2" timestamp="1580328817626">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="1653" y="558" width="800" height="524" key="Vcs.Push.Dialog.v2/0.25.2880.1595@0.25.2880.1595" timestamp="1580248920967" />
-    <state x="3982" y="361" width="557" height="347" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580328448995" />
+    <state x="3982" y="361" width="557" height="347" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580328817626" />
     <state x="3571" y="472" width="538" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1580326791348">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
@@ -381,9 +426,10 @@
       <screen x="0" y="25" width="2880" height="1595" />
     </state>
     <state x="1561" y="389" key="run.anything.popup/0.25.2880.1595@0.25.2880.1595" timestamp="1580244531639" />
-    <state x="3501" y="257" width="675" height="678" key="search.everywhere.popup" timestamp="1580311442258">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state x="932" y="405" width="1013" height="1002" key="search.everywhere.popup" timestamp="1580465905123">
+      <screen x="0" y="25" width="2880" height="1595" />
     </state>
+    <state x="932" y="405" width="1013" height="1002" key="search.everywhere.popup/0.25.2880.1595@0.25.2880.1595" timestamp="1580465905123" />
     <state x="3501" y="257" width="675" height="678" key="search.everywhere.popup/2880.0.1920.1080/0.192.2880.1620@2880.0.1920.1080" timestamp="1580311442258" />
   </component>
 </project>

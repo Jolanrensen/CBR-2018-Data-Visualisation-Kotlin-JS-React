@@ -11,6 +11,8 @@ import com.ccfraser.muirwik.components.card.mCardHeader
 import data.Data
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
+import delegates.ReactPropAndStateDelegates.stateAsProp
+import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import io.data2viz.color.Colors
 import kotlinext.js.jsObject
 import kotlinx.coroutines.GlobalScope

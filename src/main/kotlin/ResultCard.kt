@@ -11,6 +11,8 @@ import data.ExamenResultaat.ONVOLDOENDE
 import data.ExamenResultaat.VOLDOENDE
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
+import delegates.ReactPropAndStateDelegates.propDelegateOf
+import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import kotlinx.css.*
 import libs.RPureComponent
 import org.w3c.dom.events.Event

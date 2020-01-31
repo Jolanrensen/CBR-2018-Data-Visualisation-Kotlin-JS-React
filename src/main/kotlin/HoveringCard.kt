@@ -1,6 +1,7 @@
 
 import com.ccfraser.muirwik.components.card.MCardProps
 import com.ccfraser.muirwik.components.card.mCard
+import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import kotlinx.html.js.onMouseOutFunction
 import kotlinx.html.js.onMouseOverFunction
 import org.w3c.dom.events.Event

@@ -14,6 +14,8 @@ import com.ccfraser.muirwik.components.table.mTableCell
 import com.ccfraser.muirwik.components.table.mTableRow
 import data.Data
 import data.Examenlocatie
+import delegates.ReactPropAndStateDelegates.propDelegateOf
+import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import kotlinx.css.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
@@ -22,13 +24,11 @@ import libs.reactList.ref
 import libs.reactList.styledReactList
 import org.w3c.dom.Node
 import org.w3c.dom.events.Event
-import propDelegateOf
 import react.RBuilder
 import react.ReactElement
 import react.buildElement
 import react.dom.findDOMNode
 import react.ref
-import stateDelegateOf
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
