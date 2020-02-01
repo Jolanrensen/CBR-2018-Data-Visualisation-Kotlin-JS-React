@@ -6,7 +6,6 @@ import io.data2viz.viz.bindRendererOn
 import io.data2viz.viz.viz
 import kotlinx.css.*
 import kotlinx.html.id
-import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
 import react.RBuilder
 import react.dom.findDOMNode

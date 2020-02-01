@@ -31,7 +31,6 @@ kotlin {
             compilations.all {
                 kotlinOptions {
                     metaInfo = true
-                    // outputFile = "${project.path}/js/${project.name}.js"
                     sourceMap = true
                     sourceMapEmbedSources = "always"
                     moduleKind = "commonjs"
@@ -40,7 +39,6 @@ kotlin {
             }
         }
     }
-
 
     sourceSets {
         main {
