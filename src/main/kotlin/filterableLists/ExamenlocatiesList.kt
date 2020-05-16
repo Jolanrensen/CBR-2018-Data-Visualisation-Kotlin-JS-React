@@ -127,8 +127,7 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
         }
     }
 
-    private val renderRow = { filteredItems: List<Examenlocatie> ->
-        { index: Int, key: String ->
+    private val renderRow = { index: Int, key: String ->
             buildElement {
                 val examenlocatie = filteredItems[index]
                 mListItem(
@@ -158,7 +157,7 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                 }
             }
         }
-    }
+
 
     val openPopOver = { examenlocatie: Examenlocatie, mAvatarProps: MAvatarProps ->
         var avatarRef: Node? = null
@@ -201,7 +200,7 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                     css(themeStyles.list)
                     attrs {
                         length = filteredItems.size
-                        itemRenderer = renderRow(filteredItems)
+                        itemRenderer = renderRow
                         type = "variable"
                         ref {
                             list = it

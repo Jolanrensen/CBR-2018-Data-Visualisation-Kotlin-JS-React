@@ -133,38 +133,37 @@ class OpleidersList(prps: OpleidersListProps) :
         }
     }
 
-    private val renderRow = { filteredItems: List<Opleider> ->
-        { index: Int, key: String ->
-            buildElement {
-                val opleider = filteredItems[index]
-                mListItem(
-                    button = true,
-                    selected = opleider.code in isOpleiderSelected,
-                    key = key,
-                    divider = false
-                ) {
-                    mListItemAvatar {
-                        mAvatar {
-                            attrs {
-                                onClick = openPopOver(opleider, this)
-                            }
-                            +opleider.naam.first().toString()
-                        }
-                    }
-                    mListItemText("${opleider.naam}, ${opleider.plaatsnaam} (${opleider.code})") {
+    private val renderRow = { index: Int, key: String ->
+        buildElement {
+            val opleider = filteredItems[index]
+            mListItem(
+                button = true,
+                selected = opleider.code in isOpleiderSelected,
+                key = key,
+                divider = false
+            ) {
+                mListItemAvatar {
+                    mAvatar {
                         attrs {
-                            onClick = toggleSelected(opleider.code, null)
+                            onClick = openPopOver(opleider, this)
                         }
+                        +opleider.naam.first().toString()
                     }
-                    mCheckbox(checked = opleider.code in isOpleiderSelected) {
-                        attrs {
-                            onClick = toggleSelected(opleider.code, null)
-                        }
+                }
+                mListItemText("${opleider.naam}, ${opleider.plaatsnaam} (${opleider.code})") {
+                    attrs {
+                        onClick = toggleSelected(opleider.code, null)
+                    }
+                }
+                mCheckbox(checked = opleider.code in isOpleiderSelected) {
+                    attrs {
+                        onClick = toggleSelected(opleider.code, null)
                     }
                 }
             }
         }
     }
+
 
     val openPopOver = { opleider: Opleider, mAvatarProps: MAvatarProps ->
         var avatarRef: Node? = null
@@ -207,7 +206,7 @@ class OpleidersList(prps: OpleidersListProps) :
                     css(themeStyles.list)
                     attrs {
                         length = filteredItems.size
-                        itemRenderer = renderRow(filteredItems)
+                        itemRenderer = renderRow
                         type = "variable"
                         ref {
                             list = it

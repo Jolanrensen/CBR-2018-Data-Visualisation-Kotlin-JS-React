@@ -1,7 +1,7 @@
 plugins {
-    kotlin("js") version "1.3.70-eap-42"
-    kotlin("kapt") version "1.3.70-eap-42"
-    kotlin("plugin.serialization") version "1.3.70-eap-42"
+    kotlin("js") version "1.3.72"
+    kotlin("kapt") version "1.3.72"
+    kotlin("plugin.serialization") version "1.3.72"
 }
 
 apply {

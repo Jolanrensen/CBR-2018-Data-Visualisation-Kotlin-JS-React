@@ -1,60 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0e8adc4-be11-4f9b-b241-b0a66ae5294f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/jolanrensen.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinScripting.xml" beforeDir="false" />
+    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinScripting.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.main~1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.test.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.test~1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/2IMV20_Visualization_and_Interaction_1_0_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/distributions/2IMV20-Visualization-and-Interaction.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/distributions/2IMV20-Visualization-and-Interaction.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/distributions/gemeente_2018.geojson" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/distributions/gemeentenaam2018.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/distributions/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/distributions/opleiderresultaten-01072017-tm-30062018.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/distributions/opleiderresultaten-met-gemeentes.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/distributions/opleiderresultaten.ods" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/distributions/postcodeToGemeente.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/HoveringCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/HoveringCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data2viz/VizComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data2viz/VizComponent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/DateSerializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/DateSerializer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/delegates/Example.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/delegates/Example.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="TypeScript JSX File" />
-        <option value="JavaScript File" />
-        <option value="Kotlin File" />
-      </list>
-    </option>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="2IMV20-Visualization-and-Interaction" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="afterHandIn" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KonanWorkspace" KOTLIN_NATIVE_HOME="$USER_HOME$/.konan/kotlin-native-linux-1.3.70-eap-14002">
+  <component name="KonanWorkspace" KOTLIN_NATIVE_HOME="$USER_HOME$/.konan/kotlin-native-linux-1.3.72">
     <executables />
   </component>
-  <component name="ProjectId" id="1XALNtNBG31A6xCIOr77FyHbxiB" />
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1XG98RXqnDpKF941Gscl8K2gDD7" />
+  <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/kotlin/libs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -64,21 +120,12 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.21521997" />
+    <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/kotlin/libs" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/kotlin/libs/comlink" />
-    </key>
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="RunManager">
-    <configuration name="2IMV20-Visualization-and-Interaction [browserRun]" type="KotlinGradleRunConfiguration" factoryName="Kotlin Gradle" nameIsGenerated="true">
+    <configuration name="2IMV20-Visualization-and-Interaction [browserRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -97,82 +144,74 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration default="true" type="KotlinGradleRunConfiguration" factoryName="Kotlin Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="-t" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="browserRun" />
-          </list>
-        </option>
-        <option name="vmOptions" value="" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.2IMV20-Visualization-and-Interaction [browserRun]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d0e8adc4-be11-4f9b-b241-b0a66ae5294f" name="Default Changelist" comment="" />
-      <created>1580483022051</created>
+      <changelist id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="" />
+      <created>1580661405139</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1580483022051</updated>
-      <workItem from="1580483023520" duration="839000" />
-      <workItem from="1580483920345" duration="29000" />
-      <workItem from="1580484788232" duration="7655000" />
-      <workItem from="1580556890343" duration="10635000" />
+      <updated>1580661405139</updated>
+      <workItem from="1580661410552" duration="418000" />
+      <workItem from="1580745789071" duration="1952000" />
+      <workItem from="1580762547865" duration="622000" />
+      <workItem from="1580763175396" duration="409000" />
+      <workItem from="1580810433719" duration="2484000" />
+      <workItem from="1580820516893" duration="638000" />
+      <workItem from="1580832196231" duration="353000" />
+      <workItem from="1589634074080" duration="9000" />
+      <workItem from="1589636320063" duration="2304000" />
+      <workItem from="1589639147300" duration="124000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1508" y="484" width="954" height="677" key="#Project_Structure" timestamp="1580561002759">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state width="2822" height="438" key="GridCell.Tab.0.bottom" timestamp="1589638879007">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="1508" y="484" width="954" height="677" key="#Project_Structure/0.25.2880.1595@0.25.2880.1595" timestamp="1580561002759" />
-    <state x="1428" y="480" width="1116" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1580490814652">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state width="2822" height="438" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1589638879007" />
+    <state width="2822" height="438" key="GridCell.Tab.0.center" timestamp="1589638879006">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="1428" y="480" width="1116" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2880.1595@0.25.2880.1595" timestamp="1580490814652" />
-    <state x="1623" y="627" width="684" height="387" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1580491219067">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state width="2822" height="438" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1589638879006" />
+    <state width="2822" height="438" key="GridCell.Tab.0.left" timestamp="1589638879006">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="1623" y="627" width="684" height="387" key="#com.intellij.fileTypes.FileTypeChooser/0.25.2880.1595@0.25.2880.1595" timestamp="1580491219067" />
-    <state x="1379" y="406" width="1491" height="829" key="CommitChangelistDialog2" timestamp="1580577370817">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state width="2822" height="438" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1589638879006" />
+    <state width="2822" height="438" key="GridCell.Tab.0.right" timestamp="1589638879006">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="1379" y="406" width="1491" height="829" key="CommitChangelistDialog2/0.25.2880.1595@0.25.2880.1595" timestamp="1580577370817" />
-    <state width="1392" height="457" key="GridCell.Tab.0.bottom" timestamp="1580577408748">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state width="2822" height="438" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1589638879006" />
+    <state x="804" y="374" width="1792" height="907" key="SettingsEditor" timestamp="1589636352721">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="1392" height="457" key="GridCell.Tab.0.bottom/0.25.2880.1595@0.25.2880.1595" timestamp="1580577408748" />
-    <state width="1392" height="457" key="GridCell.Tab.0.center" timestamp="1580577408747">
-      <screen x="0" y="25" width="2880" height="1595" />
+    <state x="804" y="374" width="1792" height="907" key="SettingsEditor/0.34.2880.1586@0.34.2880.1586" timestamp="1589636352721" />
+    <state x="1171" y="723" width="537" height="209" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589636540325">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="1392" height="457" key="GridCell.Tab.0.center/0.25.2880.1595@0.25.2880.1595" timestamp="1580577408747" />
-    <state width="1392" height="457" key="GridCell.Tab.0.left" timestamp="1580577408747">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state width="1392" height="457" key="GridCell.Tab.0.left/0.25.2880.1595@0.25.2880.1595" timestamp="1580577408747" />
-    <state width="1392" height="457" key="GridCell.Tab.0.right" timestamp="1580577408748">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state width="1392" height="457" key="GridCell.Tab.0.right/0.25.2880.1595@0.25.2880.1595" timestamp="1580577408748" />
-    <state x="1631" y="392" width="673" height="58" key="search.everywhere.popup" timestamp="1580491476697">
-      <screen x="0" y="25" width="2880" height="1595" />
-    </state>
-    <state x="1631" y="392" width="673" height="58" key="search.everywhere.popup/0.25.2880.1595@0.25.2880.1595" timestamp="1580491476697" />
+    <state x="1171" y="723" width="537" height="209" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.34.2880.1586@0.34.2880.1586" timestamp="1589636540325" />
   </component>
 </project>
