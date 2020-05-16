@@ -230,15 +230,13 @@ class OpleidersList(prps: OpleidersListProps) :
                 mTable {
                     mTableBody {
                         if (popoverOpleider == null) return@mTableBody
-                        Json(JsonConfiguration.Stable).toJson(
-                            Opleider.serializer(),
-                            popoverOpleider!!
-                        ).jsonObject.content.forEach { (key, element) ->
+                        popoverOpleider!!.content.forEach { (key, element) ->
                             mTableRow(key = key) {
                                 mTableCell { +key }
-                                mTableCell { +(element.primitive.contentOrNull ?: "-") }
+                                mTableCell { +element }
                             }
                         }
+
                     }
                 }
             }

@@ -2,9 +2,11 @@
 <module version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="false" externalProjectId="2IMV20-Visualization-and-Interaction" pureKotlinSourceFolders="$MODULE_DIR$/../../src/test/kotlin;/mnt/SSD/Projects/TUe/2IMV20-Visualization-and-Interaction2/src/main/kotlin">
+      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="false" externalProjectId="2IMV20-Visualization-and-Interaction" pureKotlinSourceFolders="$MODULE_DIR$/../../src/test/kotlin;/home/jolanrensen/Projects/TUe/2IMV20-Visualization-and-Interaction2/src/main/kotlin">
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
-        <compilerSettings />
+        <compilerSettings>
+          <option name="additionalArguments" value="-Xinline-classes" />
+        </compilerSettings>
         <compilerArguments>
           <option name="outputFile" value="$MODULE_DIR$/../../build/js/packages/2IMV20-Visualization-and-Interaction/kotlin/2IMV20-Visualization-and-Interaction.js" />
           <option name="noStdlib" value="true" />

@@ -6,7 +6,6 @@ import data.ExamenResultaatCategorie.*
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 import org.w3c.xhr.XMLHttpRequest
-import kotlin.js.Date
 
 object Data {
 
@@ -46,7 +45,7 @@ object Data {
             return field
         }
 
-    val csv: List<List<String>>?
+    val csv: Sequence<List<String>>?
         get() {
             val xmlhttp = XMLHttpRequest()
             // data from overheid cbr, https://data.overheid.nl/dataset/cbr-opleiderresultaten
@@ -58,6 +57,7 @@ object Data {
 
             return result
                 ?.split('\n')
+                ?.asSequence()
                 ?.map { it.split(';') }
         }
 
@@ -72,28 +72,8 @@ object Data {
                         Opleider(
                             code = line[0],
                             naam = line[1],
-                            startdatum = line[2].split('-').let {
-                                Date(
-                                    day = it[0].toInt(),
-                                    month = it[1].toInt(),
-                                    year = it[2].toInt(),
-                                    hour = 0,
-                                    minute = 0,
-                                    second = 0,
-                                    millisecond = 0
-                                )
-                            },
-                            einddatum = line[3].split('-').let {
-                                Date(
-                                    day = it[0].toInt(),
-                                    month = it[1].toInt(),
-                                    year = it[2].toInt(),
-                                    hour = 0,
-                                    minute = 0,
-                                    second = 0,
-                                    millisecond = 0
-                                )
-                            },
+                            startdatum = line[2],
+                            einddatum = line[3],
                             straatnaam = line[4],
                             huisnummer = line[5],
                             huisnummerToevoeging = line[6],
@@ -155,12 +135,12 @@ object Data {
                                 it.examenResultaatAantallen
                                     .asSequence()
                                     .voldoende
-                                    .herExamen
+                                    .herexamen
                                     .sumBy { it.aantal }
                             }.toDouble() / resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
-                                    .herExamen
+                                    .herexamen
                                     .sumBy { it.aantal }
                             }.toDouble()
                             ).let { if (it.isNaN()) null else it }
@@ -189,12 +169,12 @@ object Data {
                                 it.examenResultaatAantallen
                                     .asSequence()
                                     .voldoende
-                                    .herExamen
+                                    .herexamen
                                     .sumBy { it.aantal }
                             }.toDouble() / resultaten.sumBy {
                                 it.examenResultaatAantallen
                                     .asSequence()
-                                    .herExamen
+                                    .herexamen
                                     .sumBy { it.aantal }
                             }.toDouble()
                             ).let { if (it.isNaN()) null else it }

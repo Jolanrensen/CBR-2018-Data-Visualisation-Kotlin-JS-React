@@ -1,6 +1,12 @@
+package map
+
+import ApplyFilter
+import ExamenlocatieOrOpleider
 import ExamenlocatieOrOpleider.EXAMENLOCATIE
 import ExamenlocatieOrOpleider.OPLEIDER
+import Loading
 import Loading.*
+import SlagingspercentageSoort
 import delegates.ReactPropAndStateDelegates.StateAsProp
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
@@ -9,8 +15,11 @@ import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.mCircularProgress
 import data.*
+import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
+import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
 import data2viz.GeoPathNode
 import data2viz.vizComponent
+import forEachApply
 import io.data2viz.color.Color
 import io.data2viz.color.Colors
 import io.data2viz.color.HslColor
@@ -37,7 +46,7 @@ import styled.styledDiv
 import kotlin.random.Random
 
 interface NederlandVizMapProps : RProps {
-    var selectedGemeente: StateAsProp<NederlandVizMap.Gemeente?>
+    var selectedGemeente: StateAsProp<Gemeente?>
     var dataLoaded: Boolean
     var examenlocatieOrOpleider: ExamenlocatieOrOpleider
     var slagingspercentageSoort: SlagingspercentageSoort
@@ -47,7 +56,7 @@ interface NederlandVizMapProps : RProps {
 }
 
 interface NederlandVizMapState : RState {
-    var gemeentes: List<NederlandVizMap.Gemeente>
+    var gemeentes: List<Gemeente>
     var loadingState: Loading
 }
 
@@ -82,27 +91,10 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                 || state.gemeentes != nextState.gemeentes
                 || state.loadingState != nextState.loadingState
 
-    private val nederland = Data.geoJson!! // geometry type is polygon/multipolygon for each
+    private val nederland: FeatureCollection<Data.GemeentesProperties> =
+        Data.geoJson!! // geometry type is polygon/multipolygon for each
 
-    data class Gemeente(
-        val feature: Feature<Data.GemeentesProperties>,
-        val opleiders: Collection<Opleider> = setOf(),
-        val examenlocaties: Collection<Examenlocatie> = setOf(),
-        val geoPathNode: GeoPathNode,
-        val hiddenGeoPathNode: GeoPathNode,
-
-        val slagingspercentageEersteKeerOpleiders: Double,
-        val slagingspercentageHerexamenOpleiders: Double,
-        val slagingspercentageGecombineerdOpleiders: Double,
-
-        val slagingspercentageEersteKeerExamenlocaties: Double,
-        val slagingspercentageHerexamenExamenlocaties: Double,
-        val slagingspercentageGecombineerdExamenlocaties: Double
-    ) {
-        val name get() = feature.properties.statnaam
-    }
-
-    private val idColorToGemeente = hashMapOf<Int, Gemeente>()
+    private val idColorToGemeente: HashMap<Int, Gemeente> = hashMapOf()
 
     @Suppress("DuplicatedCode")
     private fun calculateGemeentes() {
@@ -112,22 +104,18 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
             delay(500)
             println("calculating 'gemeentes'")
 
-            gemeentes = nederland.features.mapIndexed { index, feature ->
+
+
+            gemeentes = nederland.features.map { feature ->
+                val featureStatnaam = feature.properties.statnaam.toLowerCase()
+
                 val opleiders = Data.alleOpleiders
-                    .asSequence()
-                    .filter {
-                        it.value.gemeente.toLowerCase() == feature.properties.statnaam.toLowerCase()
-                    }
-                    .map { it.value }
-                    .toSet()
+                    .values
+                    .filter { it.gemeente.toLowerCase() == featureStatnaam }
 
                 val examenlocaties = Data.alleExamenlocaties
-                    .asSequence()
-                    .filter {
-                        it.value.gemeente.toLowerCase() == feature.properties.statnaam.toLowerCase()
-                    }
-                    .map { it.value }
-                    .toSet()
+                    .values
+                    .filter { it.gemeente.toLowerCase() == featureStatnaam }
 
                 fun GeoPathNode.runOnNode() {
                     stroke = Colors.Web.black
@@ -168,167 +156,170 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                      */
                     slagingspercentageEersteKeerOpleiders = opleiders
                         .filter { it.slagingspercentageEersteKeer != null }
-                        .let {
-                            val opleiderCodes = it.map { it.code }
+                        .let { opleiders ->
+                            val opleiderCodes = opleiders.map { it.code }
+
                             val opleidersResultSize = Data.opleiderToResultaten
                                 .asSequence()
-                                .filter { it.key in opleiderCodes }
-                                .map { it.value }
-                                .flatten()
-                                .map { it.examenResultaatAantallen }
-                                .flatten()
-                                .eersteExamen
-                                .toList()
-                                .size
-                                .toDouble()
+                                .sumByDouble { (key, entry) ->
+                                    if (key !in opleiderCodes) {
+                                        0.0
+                                    } else {
+                                        entry.sumByDouble {
+                                            it.examenResultaatAantallen.count {
+                                                it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
+                                            }.toDouble()
+                                        }
+                                    }
+                                }
 
-                            it.sumByDouble {
+                            opleiders.sumByDouble {
                                 it.slagingspercentageEersteKeer!! *
                                         Data.opleiderToResultaten[it.code]!!
-                                            .asSequence()
-                                            .map { it.examenResultaatAantallen }
-                                            .flatten()
-                                            .eersteExamen
-                                            .toList()
-                                            .size
-                                            .toDouble()
+                                            .sumByDouble {
+                                                it.examenResultaatAantallen.count {
+                                                    it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
+                                                }.toDouble()
+                                            }
                             } / opleidersResultSize
                         },
                     slagingspercentageHerexamenOpleiders = opleiders
-                        .filter { it.slagingspercentageHerkansing != null }
-                        .let {
-                            val opleiderCodes = it.map { it.code }
+                        .filter { it.slagingspercentageEersteKeer != null }
+                        .let { opleiders ->
+                            val opleiderCodes = opleiders.map { it.code }
+
                             val opleidersResultSize = Data.opleiderToResultaten
                                 .asSequence()
-                                .filter { it.key in opleiderCodes }
-                                .map { it.value }
-                                .flatten()
-                                .map { it.examenResultaatAantallen }
-                                .flatten()
-                                .herExamen
-                                .toList()
-                                .size
-                                .toDouble()
+                                .sumByDouble { (key, entry) ->
+                                    if (key !in opleiderCodes) {
+                                        0.0
+                                    } else {
+                                        entry.sumByDouble {
+                                            it.examenResultaatAantallen.count {
+                                                it.examenResultaatVersie == HEREXAMEN_OF_TOETS
+                                            }.toDouble()
+                                        }
+                                    }
+                                }
 
-                            it.sumByDouble {
-                                it.slagingspercentageHerkansing!! *
+                            opleiders.sumByDouble {
+                                it.slagingspercentageEersteKeer!! *
                                         Data.opleiderToResultaten[it.code]!!
-                                            .asSequence()
-                                            .map { it.examenResultaatAantallen }
-                                            .flatten()
-                                            .herExamen
-                                            .toList()
-                                            .size
-                                            .toDouble()
+                                            .sumByDouble {
+                                                it.examenResultaatAantallen.count {
+                                                    it.examenResultaatVersie == HEREXAMEN_OF_TOETS
+                                                }.toDouble()
+                                            }
                             } / opleidersResultSize
                         },
                     slagingspercentageGecombineerdOpleiders = opleiders
-                        .filter { it.slagingspercentageEersteKeer != null && it.slagingspercentageHerkansing != null }
-                        .let {
-                            val opleiderCodes = it.map { it.code }
+                        .filter { it.slagingspercentageEersteKeer != null && it.slagingspercentageHerkansing != null  }
+                        .let { opleiders ->
+                            val opleiderCodes = opleiders.map { it.code }
+
                             val opleidersResultSize = Data.opleiderToResultaten
                                 .asSequence()
-                                .filter { it.key in opleiderCodes }
-                                .map { it.value }
-                                .flatten()
-                                .map { it.examenResultaatAantallen }
-                                .flatten()
-                                .toList()
-                                .size
-                                .toDouble()
+                                .sumByDouble { (key, entry) ->
+                                    if (key !in opleiderCodes) {
+                                        0.0
+                                    } else {
+                                        entry.sumByDouble {
+                                            it.examenResultaatAantallen.size.toDouble()
+                                        }
+                                    }
+                                }
 
-                            it.sumByDouble {
+                            opleiders.sumByDouble {
                                 (it.slagingspercentageEersteKeer!! + it.slagingspercentageHerkansing!!) / 2.0 *
                                         Data.opleiderToResultaten[it.code]!!
-                                            .asSequence()
-                                            .map { it.examenResultaatAantallen }
-                                            .flatten()
-                                            .toList()
-                                            .size
-                                            .toDouble()
+                                            .sumByDouble {
+                                                it.examenResultaatAantallen.size.toDouble()
+                                            }
                             } / opleidersResultSize
                         },
 
                     slagingspercentageEersteKeerExamenlocaties = examenlocaties
                         .filter { it.slagingspercentageEersteKeer != null }
-                        .let {
-                            val examenlocatieNamen = it.map { it.naam }
+                        .let { examenlocaties ->
+                            val examenlocatieNamen = examenlocaties.map { it.naam }
+
                             val examenlocatiesResultSize = Data.examenlocatieToResultaten
                                 .asSequence()
-                                .filter { it.key in examenlocatieNamen }
-                                .map { it.value }
-                                .flatten()
-                                .map { it.examenResultaatAantallen }
-                                .flatten()
-                                .eersteExamen
-                                .toList()
-                                .size
-                                .toDouble()
+                                .sumByDouble { (key, entry) ->
+                                    if (key !in examenlocatieNamen) {
+                                        0.0
+                                    } else {
+                                        entry.sumByDouble {
+                                            it.examenResultaatAantallen.count {
+                                                it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
+                                            }.toDouble()
+                                        }
+                                    }
+                                }
 
-                            it.sumByDouble {
+                            examenlocaties.sumByDouble {
                                 it.slagingspercentageEersteKeer!! *
                                         Data.examenlocatieToResultaten[it.naam]!!
-                                            .asSequence()
-                                            .map { it.examenResultaatAantallen }
-                                            .flatten()
-                                            .eersteExamen
-                                            .toList()
-                                            .size
-                                            .toDouble()
+                                            .sumByDouble {
+                                                it.examenResultaatAantallen.count {
+                                                    it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
+                                                }.toDouble()
+                                            }
                             } / examenlocatiesResultSize
                         },
                     slagingspercentageHerexamenExamenlocaties = examenlocaties
-                        .filter { it.slagingspercentageHerkansing != null }
-                        .let {
-                            val examenlocatieNamen = it.map { it.naam }
+                        .filter { it.slagingspercentageEersteKeer != null }
+                        .let { examenlocaties ->
+                            val examenlocatieNamen = examenlocaties.map { it.naam }
+
                             val examenlocatiesResultSize = Data.examenlocatieToResultaten
                                 .asSequence()
-                                .filter { it.key in examenlocatieNamen }
-                                .map { it.value }
-                                .flatten()
-                                .map { it.examenResultaatAantallen }
-                                .flatten()
-                                .herExamen
-                                .toList()
-                                .size
-                                .toDouble()
+                                .sumByDouble { (key, entry) ->
+                                    if (key !in examenlocatieNamen) {
+                                        0.0
+                                    } else {
+                                        entry.sumByDouble {
+                                            it.examenResultaatAantallen.count {
+                                                it.examenResultaatVersie == HEREXAMEN_OF_TOETS
+                                            }.toDouble()
+                                        }
+                                    }
+                                }
 
-                            it.sumByDouble {
-                                it.slagingspercentageHerkansing!! *
+                            examenlocaties.sumByDouble {
+                                it.slagingspercentageEersteKeer!! *
                                         Data.examenlocatieToResultaten[it.naam]!!
-                                            .asSequence()
-                                            .map { it.examenResultaatAantallen }
-                                            .flatten()
-                                            .herExamen
-                                            .toList()
-                                            .size
-                                            .toDouble()
+                                            .sumByDouble {
+                                                it.examenResultaatAantallen.count {
+                                                    it.examenResultaatVersie == HEREXAMEN_OF_TOETS
+                                                }.toDouble()
+                                            }
                             } / examenlocatiesResultSize
                         },
+
                     slagingspercentageGecombineerdExamenlocaties = examenlocaties
                         .filter { it.slagingspercentageEersteKeer != null && it.slagingspercentageHerkansing != null }
-                        .let {
-                            val examenlocatieNamen = it.map { it.naam }
+                        .let { examenlocaties ->
+                            val examenlocatieNamen = examenlocaties.map { it.naam }
+
                             val examenlocatiesResultSize = Data.examenlocatieToResultaten
                                 .asSequence()
-                                .filter { it.key in examenlocatieNamen }
-                                .map { it.value }
-                                .flatten()
-                                .map { it.examenResultaatAantallen }
-                                .flatten()
-                                .toList()
-                                .size
-                                .toDouble()
+                                .sumByDouble { (key, entry) ->
+                                    if (key !in examenlocatieNamen) {
+                                        0.0
+                                    } else {
+                                        entry.sumByDouble {
+                                            it.examenResultaatAantallen.count().toDouble()
+                                        }
+                                    }
+                                }
 
-                            it.sumByDouble {
+                            examenlocaties.sumByDouble {
                                 (it.slagingspercentageEersteKeer!! + it.slagingspercentageHerkansing!!) / 2.0 *
                                         Data.examenlocatieToResultaten[it.naam]!!
-                                            .asSequence()
-                                            .map { it.examenResultaatAantallen }
-                                            .flatten()
-                                            .toList()
-                                            .size
-                                            .toDouble()
+                                            .sumByDouble {
+                                                it.examenResultaatAantallen.count().toDouble()
+                                            }
                             } / examenlocatiesResultSize
                         }
                 ).apply { idColorToGemeente[idColor!!.rgb] = this }
@@ -337,19 +328,68 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
         }
     }
 
+    fun RBuilder.showLoading() {
+        styledDiv {
+            css {
+                display = Display.flex
+                justifyContent = JustifyContent.center
+            }
+            mCircularProgress()
+        }
+    }
 
-    override fun RBuilder.render() {
-        fun showLoading() {
-            styledDiv {
-                css {
-                    display = Display.flex
-                    justifyContent = JustifyContent.center
+    fun Viz.drawGemeentes() {
+        val greenRedAngleDiff = Colors.Web.green.toHsl().h.rad - Colors.Web.red.toHsl().h.rad
+
+        clear()
+
+        for (i in 101 downTo 0) {
+            rect {
+                size = size(10.0, 1.0)
+                x = 0.0
+                y = i.toDouble()
+                strokeWidth = 0.0
+                fill = Colors.hsl(
+                    hue = Angle((1.0 - i.toDouble() / 100.0) * greenRedAngleDiff),
+                    saturation = 100.pct,
+                    lightness = 50.pct
+                )
+            }
+            if (i % 20 == 0) {
+                text {
+                    x = 15.0
+                    y = 100.0 - i
+                    textContent = "$i%"
                 }
-                mCircularProgress()
             }
         }
+
+        gemeentes.forEach {
+            it.geoPathNode.fill = getGemeenteColor(
+                selected = selectedGemeente == it,
+                gemeente = it,
+                examenlocatieOrOpleider = examenlocatieOrOpleider,
+                slagingspercentageSoort = slagingsPercentageSoort
+            )
+            it.geoPathNode.redrawPath()
+            add(it.geoPathNode)
+        }
+    }
+
+    fun getGemeenteAt(pos: Point, hiddenCanvas: HTMLCanvasElement): Gemeente? {
+        val context = hiddenCanvas.getContext("2d") as CanvasRenderingContext2D
+        val col = context
+            .getImageData(pos.x, pos.y, 1.0, 1.0)
+            .data
+        val color = Colors.rgb(col[0].toInt(), col[1].toInt(), col[2].toInt()).rgb
+
+        return idColorToGemeente[color]
+    }
+
+    override fun RBuilder.render() {
         if (!dataLoaded) return showLoading()
         when (loadingState) {
+            LOADING -> showLoading()
             NOT_LOADED -> styledDiv {
                 css {
                     display = Display.flex
@@ -362,20 +402,9 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     }
                 })
             }
-            LOADING -> showLoading()
             LOADED -> {
                 var hiddenViz: Viz?
                 var hiddenCanvas: HTMLCanvasElement? = null
-
-                fun getGemeenteAt(pos: Point): Gemeente? {
-                    val context = hiddenCanvas!!.getContext("2d") as CanvasRenderingContext2D
-                    val col = context
-                        .getImageData(pos.x, pos.y, 1.0, 1.0)
-                        .data
-                    val color = Colors.rgb(col[0].toInt(), col[1].toInt(), col[2].toInt()).rgb
-
-                    return idColorToGemeente[color]
-                }
 
                 vizComponent(
                     width = 600.0,
@@ -383,62 +412,25 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     runOnHiddenViz = { it ->
                         hiddenCanvas = it
                         hiddenViz = this
-                        this@NederlandVizMap.gemeentes.forEachApply {
+                        gemeentes.forEachApply {
                             hiddenGeoPathNode.redrawPath()
                             hiddenViz!!.add(hiddenGeoPathNode)
                         }
                     }
                 ) {
-
-                    val greenRedAngleDiff = Colors.Web.green.toHsl().h.rad - Colors.Web.red.toHsl().h.rad
-
                     println(
-                        "rendering card!, gemeentes size: ${this@NederlandVizMap.gemeentes
+                        "rendering card!, gemeentes size: ${gemeentes
                             .size}, idColorToGemeente size: ${idColorToGemeente.size}"
                     )
                     // js https://github.com/data2viz/data2viz/blob/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-js/src/main/kotlin/EarthJs.kt
                     // common https://github.com/data2viz/data2viz/tree/72426841ba601aebfe351b12b38e4938571152cd/examples/ex-geo/ex-geo-common/src/main/kotlin
 
-                    fun drawGemeentes() {
-                        clear()
-
-                        for (i in 101 downTo 0) {
-                            rect {
-                                size = size(10.0, 1.0)
-                                x = 0.0
-                                y = i.toDouble()
-                                strokeWidth = 0.0
-                                fill = Colors.hsl(
-                                    hue = Angle((1.0 - i.toDouble() / 100.0) * greenRedAngleDiff),
-                                    saturation = 100.pct,
-                                    lightness = 50.pct
-                                )
-                            }
-                            if (i % 20 == 0) {
-                                text {
-                                    x = 15.0
-                                    y = 100.0 - i
-                                    textContent = "$i%"
-                                }
-                            }
-                        }
-
-                        this@NederlandVizMap.gemeentes.forEach {
-                            it.geoPathNode.fill = getGemeenteColor(
-                                selected = selectedGemeente == it,
-                                gemeente = it,
-                                examenlocatieOrOpleider = examenlocatieOrOpleider,
-                                slagingspercentageSoort = slagingsPercentageSoort
-                            )
-                            it.geoPathNode.redrawPath()
-                            add(it.geoPathNode)
-                        }
-                    }
                     drawGemeentes()
 
                     // 2nd canvas trick http://bl.ocks.org/Jverma/70f7975a72358e6d69cdd4bf6a0569e7
-                    fun onHovering(it: Point) {
-                        val new = getGemeenteAt(it)
+
+                    val onHovering: (KPointerEvent) -> Unit = {
+                        val new = getGemeenteAt(it.pos, hiddenCanvas!!)
 
                         if (selectedGemeente != new) {
                             selectedGemeente = new
@@ -446,22 +438,18 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                             render()
                         }
                     }
-                    on(KMouseMove) {
-                       onHovering(it.pos)
-                    }
-                    on(KTouchStart) {
-                        onHovering(it.pos)
-                    }
+                    on(KMouseMove, onHovering)
+                    on(KTouchStart, onHovering)
 
                     on(KPointerClick) {
-                        getGemeenteAt(it.pos)?.let {
+                        getGemeenteAt(it.pos, hiddenCanvas!!)?.let { clicked ->
                             when (examenlocatieOrOpleider) {
                                 EXAMENLOCATIE -> {
-                                    setExamenlocatieFilters(it.name)
+                                    setExamenlocatieFilters(clicked.name)
                                     setOpleiderFilters("")
                                 }
                                 OPLEIDER -> {
-                                    setOpleiderFilters(it.name)
+                                    setOpleiderFilters(clicked.name)
                                     setExamenlocatieFilters("")
                                 }
                             }
@@ -475,7 +463,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
 
 fun getGemeenteColor(
     selected: Boolean,
-    gemeente: NederlandVizMap.Gemeente,
+    gemeente: Gemeente,
     examenlocatieOrOpleider: ExamenlocatieOrOpleider,
     slagingspercentageSoort: SlagingspercentageSoort
 ): HslColor =
@@ -510,6 +498,8 @@ fun getGemeenteColor(
         )
     }
 
-fun RBuilder.nederlandMap(handler: RElementBuilder<NederlandVizMapProps>.() -> Unit) = child(NederlandVizMap::class) {
+fun RBuilder.nederlandMap(handler: RElementBuilder<NederlandVizMapProps>.() -> Unit) = child(
+    NederlandVizMap::class
+) {
     handler()
 }

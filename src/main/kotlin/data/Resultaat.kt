@@ -1,6 +1,6 @@
 package data
 
-data class Resultaat(
+class Resultaat(
     val id: Int,
     val opleider: Opleider,
     val product: Product,

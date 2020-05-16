@@ -8,8 +8,8 @@ enum class ExamenResultaatVersie(val title: String) {
     HEREXAMEN_OF_TOETS("Herexamen of -toets")
 }
 
-val Sequence<ExamenResultaatAantal>.eersteExamen
+inline val Sequence<ExamenResultaatAantal>.eersteExamen
     get() = filter { it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS }
 
-val Sequence<ExamenResultaatAantal>.herExamen
+inline val Sequence<ExamenResultaatAantal>.herexamen
     get() = filter { it.examenResultaatVersie == HEREXAMEN_OF_TOETS }

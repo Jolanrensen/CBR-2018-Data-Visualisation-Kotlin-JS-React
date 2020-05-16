@@ -59,5 +59,5 @@ enum class Categorie(val omschrijving: String, val frequency: Int) {
     VW("Veiligheidsadviseur wegvervoer (VW)", 78),
 }
 
-val Categorie.producten
+inline val Categorie.producten
     get() = Product.values().filter { it.categorie == this }

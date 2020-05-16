@@ -10,11 +10,11 @@ enum class ExamenResultaatCategorie(val title: String) {
     COMBI("Combi")
 }
 
-val Sequence<ExamenResultaatAantal>.handgeschakeld
+inline val Sequence<ExamenResultaatAantal>.handgeschakeld
     get() = filter { it.examenResultaatCategorie == HANDGESCHAKELD }
 
-val Sequence<ExamenResultaatAantal>.automaat
+inline val Sequence<ExamenResultaatAantal>.automaat
     get() = filter { it.examenResultaatCategorie == AUTOMAAT }
 
-val Sequence<ExamenResultaatAantal>.combi
+inline val Sequence<ExamenResultaatAantal>.combi
     get() = filter { it.examenResultaatCategorie == COMBI }

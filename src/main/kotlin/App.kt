@@ -19,6 +19,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.css.*
+import map.Gemeente
+import map.NederlandVizMap
+import map.getGemeenteColor
+import map.nederlandMap
 import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RComponent
@@ -38,7 +42,7 @@ interface AppState : RState {
     var welcomeText: String
     var circleColor: io.data2viz.color.Color
 
-    var selectedGemeente: NederlandVizMap.Gemeente?
+    var selectedGemeente: Gemeente?
     var examenlocatieOrOpleider: ExamenlocatieOrOpleider
     var slagingspercentageSoort: SlagingspercentageSoort
 

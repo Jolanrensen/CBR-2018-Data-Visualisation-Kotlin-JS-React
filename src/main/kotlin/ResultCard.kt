@@ -86,11 +86,9 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                                 mTableCell(align = MTableCellAlign.right) {
                                     +if (selectionFinished()) {
                                         currentResults
-                                            .asSequence()
                                             .filter { it.product in selectedProducts }
                                             .sumBy {
                                                 it.examenResultaatAantallen
-                                                    .asSequence()
                                                     .filter {
                                                         it.examenResultaatVersie == examenResultaatVersie
                                                                 && it.examenResultaatCategorie == categorie
@@ -123,11 +121,9 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                             mTableCell(align = MTableCellAlign.right) {
                                 +if (selectionFinished()) {
                                     currentResults
-                                        .asSequence()
                                         .filter { it.product in selectedProducts }
                                         .sumBy {
                                             it.examenResultaatAantallen
-                                                .asSequence()
                                                 .filter {
                                                     it.examenResultaatVersie == examenResultaatVersie
                                                             && it.examenResultaat == resultaat

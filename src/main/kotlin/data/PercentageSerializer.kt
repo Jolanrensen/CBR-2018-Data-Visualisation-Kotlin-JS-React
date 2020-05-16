@@ -10,10 +10,12 @@ object PercentageSerializer : KSerializer<Double?> {
 
     override fun serialize(encoder: Encoder, obj: Double?) {
         encoder.encodeString(
-           obj?.let { "${(it * 100).toInt()}%" } ?: "-"
+            obj?.let { "${(it * 100).toInt()}%" } ?: "-"
         )
     }
 
     /** Can't decode serialized Percentage! Serializer only used for pretty printing Double */
     override fun deserialize(decoder: Decoder) = 0.0
 }
+
+fun Double?.asPercentage() = if (this == null) "-" else "${(this * 100).toInt()}%"

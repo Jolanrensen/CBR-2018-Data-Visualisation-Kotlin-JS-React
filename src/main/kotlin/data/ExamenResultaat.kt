@@ -8,8 +8,8 @@ enum class ExamenResultaat(val title: String) {
     ONVOLDOENDE("Onvoldoende")
 }
 
-val Sequence<ExamenResultaatAantal>.voldoende
+inline val Sequence<ExamenResultaatAantal>.voldoende
     get() = filter { it.examenResultaat == VOLDOENDE }
 
-val Sequence<ExamenResultaatAantal>.onvoldoende
+inline val Sequence<ExamenResultaatAantal>.onvoldoende
     get() = filter { it.examenResultaat == ONVOLDOENDE }

@@ -128,35 +128,35 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
     }
 
     private val renderRow = { index: Int, key: String ->
-            buildElement {
-                val examenlocatie = filteredItems[index]
-                mListItem(
-                    button = true,
-                    selected = examenlocatie.naam in isExamenlocatieSelected,
-                    key = key,
-                    divider = false
-                ) {
-                    mListItemAvatar {
-                        mAvatar {
-                            attrs {
-                                onClick = openPopOver(examenlocatie, this)
-                            }
-                            +examenlocatie.naam.first().toString()
-                        }
-                    }
-                    mListItemText(examenlocatie.naam) {
+        buildElement {
+            val examenlocatie = filteredItems[index]
+            mListItem(
+                button = true,
+                selected = examenlocatie.naam in isExamenlocatieSelected,
+                key = key,
+                divider = false
+            ) {
+                mListItemAvatar {
+                    mAvatar {
                         attrs {
-                            onClick = toggleSelected(examenlocatie.naam, null)
+                            onClick = openPopOver(examenlocatie, this)
                         }
+                        +examenlocatie.naam.first().toString()
                     }
-                    mCheckbox(checked = examenlocatie.naam in isExamenlocatieSelected) {
-                        attrs {
-                            onClick = toggleSelected(examenlocatie.naam, null)
-                        }
+                }
+                mListItemText(examenlocatie.naam) {
+                    attrs {
+                        onClick = toggleSelected(examenlocatie.naam, null)
+                    }
+                }
+                mCheckbox(checked = examenlocatie.naam in isExamenlocatieSelected) {
+                    attrs {
+                        onClick = toggleSelected(examenlocatie.naam, null)
                     }
                 }
             }
         }
+    }
 
 
     val openPopOver = { examenlocatie: Examenlocatie, mAvatarProps: MAvatarProps ->
@@ -224,13 +224,11 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                 mTable {
                     mTableBody {
                         if (popoverExamenlocatie == null) return@mTableBody
-                        Json(JsonConfiguration.Stable).toJson(
-                            Examenlocatie.serializer(),
-                            popoverExamenlocatie!!
-                        ).jsonObject.content.forEach { (key, element) ->
+
+                        popoverExamenlocatie!!.content.forEach { (key, element) ->
                             mTableRow(key = key) {
                                 mTableCell { +key }
-                                mTableCell { +(element.primitive.contentOrNull ?: "-") }
+                                mTableCell { +element }
                             }
                         }
                     }

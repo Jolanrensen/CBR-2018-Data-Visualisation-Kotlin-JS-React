@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("js") version "1.3.72"
     kotlin("kapt") version "1.3.72"
@@ -35,6 +37,7 @@ kotlin {
                     sourceMapEmbedSources = "always"
                     moduleKind = "commonjs"
                     main = "call"
+                    freeCompilerArgs = listOf("-Xinline-classes")
                 }
             }
         }

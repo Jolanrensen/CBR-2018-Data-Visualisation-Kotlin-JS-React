@@ -2,7 +2,7 @@
 <module version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="true" externalProjectId="2IMV20-Visualization-and-Interaction" pureKotlinSourceFolders="$MODULE_DIR$/../../src/test/kotlin;/mnt/SSD/Projects/TUe/2IMV20-Visualization-and-Interaction2/src/main/kotlin">
+      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="true" externalProjectId="2IMV20-Visualization-and-Interaction" pureKotlinSourceFolders="$MODULE_DIR$/../../src/test/kotlin;/home/jolanrensen/Projects/TUe/2IMV20-Visualization-and-Interaction2/src/main/kotlin">
         <sourceSets>
           <sourceSet>2IMV20-Visualization-and-Interaction.main~1</sourceSet>
         </sourceSets>
@@ -11,7 +11,9 @@
           <externalSystemTestTask>nodeTest|2IMV20-Visualization-and-Interaction:test|Js</externalSystemTestTask>
           <externalSystemTestTask>browserTest|2IMV20-Visualization-and-Interaction:test|Js</externalSystemTestTask>
         </externalSystemTestTasks>
-        <compilerSettings />
+        <compilerSettings>
+          <option name="additionalArguments" value="-Xinline-classes" />
+        </compilerSettings>
         <compilerArguments>
           <option name="outputFile" value="$MODULE_DIR$/../../build/js/packages/2IMV20-Visualization-and-Interaction-test/kotlin/2IMV20-Visualization-and-Interaction-test.js" />
           <option name="noStdlib" value="true" />
