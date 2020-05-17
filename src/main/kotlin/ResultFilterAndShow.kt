@@ -127,11 +127,14 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                             ).asSequence()
 
 
+                // TODO replace with new barchart
                 resultCard {
                     this.currentResults = currentResults
                     selectionFinished = this@ResultFilterAndShow.selectionFinished
                     selectedProducts = this@ResultFilterAndShow.selectedProducts
                 }
+
+
             }
         }
     }

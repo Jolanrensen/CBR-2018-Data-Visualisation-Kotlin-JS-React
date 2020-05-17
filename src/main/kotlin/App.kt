@@ -46,7 +46,6 @@ interface AppState : RState {
     var examenlocatieOrOpleider: ExamenlocatieOrOpleider
     var slagingspercentageSoort: SlagingspercentageSoort
 
-    var numberOfResultaatFilterCards: Int
 }
 
 enum class ExamenlocatieOrOpleider(val naamMeervoud: String) {
@@ -70,14 +69,12 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
         selectedGemeente = null
         examenlocatieOrOpleider = OPLEIDER
         slagingspercentageSoort = EERSTE_KEER
-        numberOfResultaatFilterCards = 2
     }
 
     private var selectedGemeente by stateDelegateOf(AppState::selectedGemeente)
     private var dataLoaded by stateDelegateOf(AppState::dataLoaded)
     private var examenlocatieOrOpleider by stateDelegateOf(AppState::examenlocatieOrOpleider)
     private var slagingspercentageSoort by stateDelegateOf(AppState::slagingspercentageSoort)
-    private var numberOfResultaatFilterCards by stateDelegateOf(AppState::numberOfResultaatFilterCards)
 
     private fun loadData() {
         if (Data.hasStartedLoading) return
@@ -137,11 +134,6 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
             HERKANSING -> GECOMBINEERD
             GECOMBINEERD -> EERSTE_KEER
         }
-    }
-
-    private val onFabClick = { _: Event? ->
-        numberOfResultaatFilterCards++
-        Unit
     }
 
     override fun RBuilder.render() {
@@ -372,7 +364,6 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 //                        opleiderApplyFilterFunctions = arrayListOf()
 //                        examenlocatieApplyFilterFunctions = arrayListOf()
                             mGridItem(xs = MGridSize.cells12) {
-                                (0 until numberOfResultaatFilterCards).forEachApply {
                                     hoveringCard {
                                         css {
                                             margin(1.mm)
@@ -387,25 +378,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                 this@App.setApplyExamenlocatieFilterFunction
                                         }
                                     }
-                                }
                             }
                         }
-                        styledDiv {
-                            css {
-                                float = Float.right
-                            }
-                            mFab(
-                                iconName = "add",
-                                size = MButtonSize.large,
-                                color = MColor.secondary,
-                                onClick = onFabClick
-                            ) {
-                                css {
-                                    margin(1.spacingUnits)
-                                }
-                            }
-                        }
-
                     }
                 }
             }

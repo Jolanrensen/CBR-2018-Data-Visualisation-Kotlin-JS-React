@@ -9,10 +9,19 @@ import com.ccfraser.muirwik.components.table.mTableRow
 import data.*
 import data.ExamenResultaat.ONVOLDOENDE
 import data.ExamenResultaat.VOLDOENDE
+import data.ExamenResultaatCategorie.*
 import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
+import data2viz.vizComponent
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
+import io.data2viz.axis.Orient
+import io.data2viz.axis.axis
+import io.data2viz.color.Colors
+import io.data2viz.geom.size
+import io.data2viz.scale.Scales
+import io.data2viz.scale.StrictlyContinuous
+import io.data2viz.viz.Margins
 import kotlinx.css.*
 import libs.RPureComponent
 import org.w3c.dom.events.Event
@@ -21,6 +30,9 @@ import react.RProps
 import react.RState
 import styled.css
 import styled.styledDiv
+import styled.styledP
+import styled.styledTextArea
+import kotlin.math.max
 
 interface ResultCardProps : RProps {
     var currentResults: Sequence<Resultaat>
@@ -52,15 +64,247 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
     }
 
     override fun RBuilder.render() {
+        if (!selectionFinished()) return // TODO check what to show if selection is not finished
+
+//        currentResults.sumBy {
+//            if (it.product !in selectedProducts) {
+//                0
+//            } else {
+//                it.examenResultaatAantallen.sumBy {
+//                    if (
+//                        it.examenResultaatVersie == examenResultaatVersie
+//                        && it.examenResultaatCategorie == HANDGESCHAKELD
+//                        && it.examenResultaat == VOLDOENDE
+//                    ) {
+//                        it.aantal
+//                    } else {
+//                        0
+//                    }
+//                }
+//            }
+//        }
+
+        var aantalHandgeschakeldVoldoende = 0
+        var aantalHandgeschakeldOnvoldoende = 0
+        var aantalAutomaatVoldoende = 0
+        var aantalAutomaatOnvoldoende = 0
+        var aantalCombiVoldoende = 0
+        var aantalCombiOnvoldoende = 0
+
+        for (currentResult in currentResults) {
+//            println("current result = $currentResult")
+            if (currentResult.product !in selectedProducts)
+                continue
+
+            for (aantal in currentResult.examenResultaatAantallen) {
+                if (aantal.examenResultaatVersie != examenResultaatVersie)
+                    continue
+
+                aantal.apply {
+                    when (examenResultaatCategorie) {
+                        HANDGESCHAKELD ->
+                            when (examenResultaat) {
+                                VOLDOENDE -> aantalHandgeschakeldVoldoende += aantal.aantal
+                                ONVOLDOENDE -> aantalHandgeschakeldOnvoldoende += aantal.aantal
+                            }
+                        AUTOMAAT -> when (examenResultaat) {
+                            VOLDOENDE -> aantalAutomaatVoldoende += aantal.aantal
+                            ONVOLDOENDE -> aantalAutomaatOnvoldoende += aantal.aantal
+                        }
+                        COMBI -> when (examenResultaat) {
+                            VOLDOENDE -> aantalCombiVoldoende += aantal.aantal
+                            ONVOLDOENDE -> aantalCombiOnvoldoende += aantal.aantal
+                        }
+                    }
+                }
+            }
+        }
+
+        println("Results: $aantalHandgeschakeldVoldoende, $aantalAutomaatVoldoende, $aantalCombiVoldoende, $aantalHandgeschakeldOnvoldoende, $aantalAutomaatOnvoldoende, $aantalCombiOnvoldoende")
+
+        val maxHeight = max(
+            aantalHandgeschakeldVoldoende + aantalAutomaatVoldoende + aantalCombiVoldoende,
+            aantalHandgeschakeldOnvoldoende + aantalAutomaatOnvoldoende + aantalCombiOnvoldoende
+        )
+
+        val examenResultaatCategorieColors = mapOf(
+            HANDGESCHAKELD to Colors.Web.olivedrab,
+            AUTOMAAT to Colors.Web.yellowgreen,
+            COMBI to Colors.Web.darkgreen
+        )
+
         styledDiv {
             css {
                 width = 100.pct
                 marginTop = 3.spacingUnits
                 overflowX = Overflow.auto
             }
+
+
+            val margins = Margins(10.0, 10.0, 30.0, 70.0)
+
+            val chartWidth = 600.0 - margins.hMargins
+            val chartHeight = 300.0 - margins.vMargins
+
+            vizComponent(
+                width = 600.0,
+                height = 300.0
+            ) {
+                // width voldoende/onvoldoende
+                // height handgeschakeld+automaat+combi
+
+                val heightScale = Scales.Continuous.linear {
+                    domain = listOf(.0, maxHeight.toDouble() + 1.0)
+                    range = listOf(chartHeight, .0)
+                }
+
+                val widthScale = Scales.Discrete.band<ExamenResultaat> {
+                    domain = ExamenResultaat.values().toList()
+                    range = StrictlyContinuous(.0, chartWidth)
+                    padding = .1
+                }
+
+
+                group {
+                    transform {
+                        translate(margins.left, margins.top)
+                    }
+
+                    // voldoende
+
+                    var voldoendeHeight1 = 0.0
+                    rect {
+                        fill = examenResultaatCategorieColors[HANDGESCHAKELD]
+
+                        val top = heightScale(aantalHandgeschakeldVoldoende)
+                        println("top = $top")
+
+                        y = top
+                        x = widthScale(VOLDOENDE)
+
+                        voldoendeHeight1 = chartHeight - top
+
+                        size = size(
+                            widthScale.bandwidth,
+                            voldoendeHeight1
+                        )
+                    }
+
+                    var voldoendeHeight2 = 0.0
+                    rect {
+                        fill = examenResultaatCategorieColors[AUTOMAAT]
+
+                        val top = heightScale(aantalAutomaatVoldoende)
+                        println("top = $top")
+
+                        y = top - voldoendeHeight1
+                        x = widthScale(VOLDOENDE)
+
+                        voldoendeHeight2 = chartHeight - top
+
+                        size = size(
+                            widthScale.bandwidth,
+                            voldoendeHeight2
+                        )
+                    }
+
+                    rect {
+                        fill = examenResultaatCategorieColors[COMBI]
+
+                        val top = heightScale(aantalCombiVoldoende)
+                        println("top = $top")
+
+                        y = top - voldoendeHeight1 - voldoendeHeight2
+                        x = widthScale(VOLDOENDE)
+
+                        val voldoendeHeight3 = chartHeight - top
+
+                        size = size(
+                            widthScale.bandwidth,
+                            voldoendeHeight3
+                        )
+                    }
+
+                    // onvoldoende
+
+                    var onvoldoendeHeight1 = 0.0
+                    rect {
+                        fill = examenResultaatCategorieColors[HANDGESCHAKELD]
+
+                        val top = heightScale(aantalHandgeschakeldOnvoldoende)
+                        println("top = $top")
+
+                        y = top
+                        x = widthScale(ONVOLDOENDE)
+
+                        onvoldoendeHeight1 = chartHeight - top
+
+                        size = size(
+                            widthScale.bandwidth,
+                            onvoldoendeHeight1
+                        )
+                    }
+
+                    var onvoldoendeHeight2 = 0.0
+                    rect {
+                        fill = examenResultaatCategorieColors[AUTOMAAT]
+
+                        val top = heightScale(aantalAutomaatOnvoldoende)
+                        println("top = $top")
+
+                        y = top - onvoldoendeHeight1
+                        x = widthScale(ONVOLDOENDE)
+
+                        onvoldoendeHeight2 = chartHeight - top
+
+                        size = size(
+                            widthScale.bandwidth,
+                            onvoldoendeHeight2
+                        )
+                    }
+
+                    rect {
+                        fill = examenResultaatCategorieColors[COMBI]
+
+                        val top = heightScale(aantalCombiOnvoldoende)
+                        println("top = $top")
+
+                        y = top - onvoldoendeHeight1 - onvoldoendeHeight2
+                        x = widthScale(ONVOLDOENDE)
+
+                        val onvoldoendeHeight3 = chartHeight - top
+
+                        size = size(
+                            widthScale.bandwidth,
+                            onvoldoendeHeight3
+                        )
+                    }
+                }
+
+                // Place x-axis
+                group {
+                    transform {
+                        translate(margins.left, 300.0 - margins.bottom)
+                    }
+                    axis(Orient.BOTTOM, widthScale)
+                }
+
+                // Place y-axis
+                group {
+                    transform {
+                        translate(margins.left, margins.top)
+                    }
+                    axis(Orient.LEFT, heightScale)
+                }
+            }
+
+            // TODO make table use calculated values above
+            // TODO make bar chart clickable
+
             mTable {
                 mTableHead {
                     mTableRow {
+                        mTableCell {  }
                         mTableCell {
                             mSwitchWithLabel(
                                 label = examenResultaatVersie.title,
@@ -75,9 +319,18 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                     }
                 }
                 mTableBody {
-                    for (categorie in ExamenResultaatCategorie.values()) {
+                    for (categorie in listOf(COMBI, AUTOMAAT, HANDGESCHAKELD)) {
                         mTableRow(key = categorie.title) {
-                            mTableCell { +categorie.title }
+                            mTableCell {
+                                css {
+                                    val vizColor = examenResultaatCategorieColors[categorie] ?: error("")
+                                    color = Color("rgb(${vizColor.r},${vizColor.g},${vizColor.b})")
+                                }
+                                +"■"
+                            }
+                            mTableCell {
+                                +categorie.title
+                            }
                             val examenResultaten = hashMapOf(
                                 ONVOLDOENDE to hashSetOf<Int>(),
                                 VOLDOENDE to hashSetOf()
@@ -111,7 +364,10 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                             }
                         }
                     }
+
+
                     mTableRow {
+                        mTableCell {  }
                         mTableCell { +"Totaal" }
                         val examenResultaten = hashMapOf(
                             ONVOLDOENDE to hashSetOf<Int>(),

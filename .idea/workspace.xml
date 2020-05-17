@@ -19,29 +19,19 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="It's running again!">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/map/Gemeente.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.main~1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.main~1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.test.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.test~1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.test~1.iml" afterDir="false" />
+    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="some refactoring">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.main~1.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/2IMV20-Visualization-and-Interaction.test~1.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Categorie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Categorie.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaat.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatAantal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatAantal.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatCategorie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatCategorie.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatVersie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatVersie.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/PercentageSerializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/PercentageSerializer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Resultaat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Resultaat.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data2viz/VizComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data2viz/VizComponent.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,12 +107,13 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="sqlite" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="/mnt/SSD/Projects/TUe/2IMD15-Group5-Milestone2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/opleiderresultaten-met-gemeentes.csv" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -192,7 +183,8 @@
       <workItem from="1589664514050" duration="45000" />
       <workItem from="1589664825183" duration="88000" />
       <workItem from="1589665348580" duration="1000" />
-      <workItem from="1589665409710" duration="2693000" />
+      <workItem from="1589665409710" duration="2791000" />
+      <workItem from="1589720124151" duration="18409000" />
     </task>
     <task id="LOCAL-00001" summary="It's running again!">
       <created>1589639534400</created>
@@ -201,7 +193,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589639534400</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="some refactoring">
+      <created>1589668186446</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1589668186446</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -221,37 +220,50 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="It's running again!" />
-    <option name="LAST_COMMIT_MESSAGE" value="It's running again!" />
+    <MESSAGE value="some refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="some refactoring" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl" timestamp="1589639799187">
+    <state x="1481" y="482" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589722154163">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl/0.34.2880.1586@0.34.2880.1586" timestamp="1589639799187" />
-    <state width="1729" height="438" key="GridCell.Tab.0.bottom" timestamp="1589667767594">
+    <state x="1481" y="482" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.34.2880.1586@0.34.2880.1586" timestamp="1589722154163" />
+    <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl" timestamp="1589720455423">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="1729" height="438" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1589667767594" />
-    <state width="1729" height="438" key="GridCell.Tab.0.center" timestamp="1589667767594">
+    <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl/0.34.2880.1586@0.34.2880.1586" timestamp="1589720455423" />
+    <state width="1597" height="438" key="GridCell.Tab.0.bottom" timestamp="1589744163071">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="1729" height="438" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1589667767594" />
-    <state width="1729" height="438" key="GridCell.Tab.0.left" timestamp="1589667767593">
+    <state width="1597" height="438" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1589744163071" />
+    <state width="1597" height="438" key="GridCell.Tab.0.center" timestamp="1589744163070">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="1729" height="438" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1589667767593" />
-    <state width="1729" height="438" key="GridCell.Tab.0.right" timestamp="1589667767594">
+    <state width="1597" height="438" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1589744163070" />
+    <state width="1597" height="438" key="GridCell.Tab.0.left" timestamp="1589744163070">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="1729" height="438" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1589667767594" />
+    <state width="1597" height="438" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1589744163070" />
+    <state width="1597" height="438" key="GridCell.Tab.0.right" timestamp="1589744163071">
+      <screen x="0" y="34" width="2880" height="1586" />
+    </state>
+    <state width="1597" height="438" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1589744163071" />
     <state x="804" y="374" width="1792" height="907" key="SettingsEditor" timestamp="1589636352721">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="804" y="374" width="1792" height="907" key="SettingsEditor/0.34.2880.1586@0.34.2880.1586" timestamp="1589636352721" />
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1589639536319">
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1589668190199">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1589639536319" />
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1589668190199" />
+    <state x="822" y="283" width="1585" height="970" key="com.intellij.database.dbimport.ImportDialog" timestamp="1589720508224">
+      <screen x="0" y="34" width="2880" height="1586" />
+    </state>
+    <state x="822" y="283" width="1585" height="970" key="com.intellij.database.dbimport.ImportDialog/0.34.2880.1586@0.34.2880.1586" timestamp="1589720508224" />
+    <state x="10" y="34" width="2870" height="1586" key="com.intellij.database.run.actions.ShowCsvFormatsAction$ForExport" timestamp="1589720402350">
+      <screen x="0" y="34" width="2880" height="1586" />
+    </state>
+    <state x="10" y="34" width="2870" height="1586" key="com.intellij.database.run.actions.ShowCsvFormatsAction$ForExport/0.34.2880.1586@0.34.2880.1586" timestamp="1589720402350" />
     <state x="1171" y="723" width="537" height="209" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589636540325">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>

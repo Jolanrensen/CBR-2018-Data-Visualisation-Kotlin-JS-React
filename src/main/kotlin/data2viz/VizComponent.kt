@@ -51,7 +51,7 @@ fun RBuilder.vizComponent(
                 css {
                     this.width = width.px
                     this.height = height.px
-                    display = Display.none
+                    display = Display.none //TODO
                 }
                 attrs {
                     id = "hidden viz canvas"

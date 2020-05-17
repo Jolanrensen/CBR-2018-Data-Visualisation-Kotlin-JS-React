@@ -9,4 +9,7 @@ class Resultaat(
 ) {
     val categorie: Categorie
         get() = product.categorie
+
+    override fun toString() =
+        "Resultaat(id = $id, opleider = ${opleider.content}, product = $product, examenlocatie = ${examenlocatie.content}, examenResultaatAantallen = $examenResultaatAantallen, categorie = $categorie)"
 }

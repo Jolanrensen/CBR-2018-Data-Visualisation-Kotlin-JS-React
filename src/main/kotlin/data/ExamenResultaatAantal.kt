@@ -27,4 +27,7 @@ inline class ExamenResultaatAantal(val data: Array<Int>) {
 
     inline val aantal: Int
         get() = data[3]
+
+    override fun toString() =
+        "ExamenResultaatAantal(examenResultaatVersie = $examenResultaatVersie, examenResultaatCategorie = $examenResultaatCategorie, examenResultaat = $examenResultaat, aantal = $aantal)"
 }
