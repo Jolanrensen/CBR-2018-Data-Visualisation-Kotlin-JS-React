@@ -4,7 +4,6 @@ import SlagingspercentageSoort.*
 import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.MButtonSize
 import com.ccfraser.muirwik.components.button.mButton
-import com.ccfraser.muirwik.components.button.mFab
 import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
@@ -20,7 +19,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.css.*
 import map.Gemeente
-import map.NederlandVizMap
 import map.getGemeenteColor
 import map.nederlandMap
 import org.w3c.dom.events.Event
@@ -45,7 +43,6 @@ interface AppState : RState {
     var selectedGemeente: Gemeente?
     var examenlocatieOrOpleider: ExamenlocatieOrOpleider
     var slagingspercentageSoort: SlagingspercentageSoort
-
 }
 
 enum class ExamenlocatieOrOpleider(val naamMeervoud: String) {
@@ -120,6 +117,29 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
             }
         }
     }
+
+    private var selectAllOpleidersFunctions = arrayListOf<SelectAll>()
+
+    private var selectAllOpleiders: SelectAll = {
+        selectAllOpleidersFunctions.forEach { it() }
+    }
+
+    private val setSelectAllOpleidersFunction = { it: SelectAll ->
+        selectAllOpleidersFunctions.add(it)
+        Unit
+    }
+
+    private var selectAllExamenlocatiesFunctions = arrayListOf<SelectAll>()
+
+    private var selectAllExamenlocaties: SelectAll = {
+        selectAllExamenlocatiesFunctions.forEach { it() }
+    }
+
+    private val setSelectAllExamenlocatiesFunction = { it: SelectAll ->
+        selectAllExamenlocatiesFunctions.add(it)
+        Unit
+    }
+
 
     private val toggleExamenlocatieOrOpleider = { _: Event? ->
         examenlocatieOrOpleider = when (examenlocatieOrOpleider) {
@@ -296,6 +316,9 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
                                                 setExamenlocatieFilters = this@App.setExamenlocatieFilters
                                                 setOpleiderFilters = this@App.setOpleiderFilters
+
+                                                selectAllOpleiders = this@App.selectAllOpleiders
+                                                selectAllExamenlocaties = this@App.selectAllExamenlocaties
                                             }
                                         }
                                     }
@@ -374,8 +397,12 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                             dataLoaded = this@App.dataLoaded
                                             setApplyOpleidersFilterFunction =
                                                 this@App.setApplyOpleidersFilterFunction
+
                                             setApplyExamenlocatieFilterFunction =
                                                 this@App.setApplyExamenlocatieFilterFunction
+
+                                            setSelectAllOpleidersFunction = this@App.setSelectAllOpleidersFunction
+                                            setSelectAllExamenlocatiesFunction = this@App.setSelectAllExamenlocatiesFunction
                                         }
                                     }
                             }

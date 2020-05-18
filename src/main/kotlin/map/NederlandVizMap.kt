@@ -6,6 +6,7 @@ import ExamenlocatieOrOpleider.EXAMENLOCATIE
 import ExamenlocatieOrOpleider.OPLEIDER
 import Loading
 import Loading.*
+import SelectAll
 import SlagingspercentageSoort
 import delegates.ReactPropAndStateDelegates.StateAsProp
 import delegates.ReactPropAndStateDelegates.propDelegateOf
@@ -53,6 +54,9 @@ interface NederlandVizMapProps : RProps {
 
     var setOpleiderFilters: ApplyFilter
     var setExamenlocatieFilters: ApplyFilter
+
+    var selectAllOpleiders: SelectAll
+    var selectAllExamenlocaties: SelectAll
 }
 
 interface NederlandVizMapState : RState {
@@ -75,6 +79,9 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     val dataLoaded by propDelegateOf(NederlandVizMapProps::dataLoaded)
     val setOpleiderFilters by propDelegateOf(NederlandVizMapProps::setOpleiderFilters)
     val setExamenlocatieFilters by propDelegateOf(NederlandVizMapProps::setExamenlocatieFilters)
+    val selectAllOpleiders by propDelegateOf(NederlandVizMapProps::selectAllOpleiders)
+    val selectAllExamenlocaties by propDelegateOf(NederlandVizMapProps::selectAllExamenlocaties)
+
 
     override fun NederlandVizMapState.init(props: NederlandVizMapProps) {
         gemeentes = listOf()
@@ -104,11 +111,10 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
             delay(500)
             println("calculating 'gemeentes'")
 
-
-
             gemeentes = nederland.features.map { feature ->
                 val featureStatnaam = feature.properties.statnaam.toLowerCase()
 
+                // TODO move to
                 val opleiders = Data.alleOpleiders
                     .values
                     .filter { it.gemeente.toLowerCase() == featureStatnaam }
@@ -447,10 +453,14 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                 EXAMENLOCATIE -> {
                                     setExamenlocatieFilters(clicked.name)
                                     setOpleiderFilters("")
+                                    selectAllExamenlocaties()
+                                    selectAllOpleiders()
                                 }
                                 OPLEIDER -> {
                                     setOpleiderFilters(clicked.name)
                                     setExamenlocatieFilters("")
+                                    selectAllOpleiders()
+                                    selectAllExamenlocaties()
                                 }
                             }
                         }

@@ -16,6 +16,8 @@ interface ResultFilterAndShowProps : RProps {
     var dataLoaded: Boolean
     var setApplyOpleidersFilterFunction: (ApplyFilter) -> Unit
     var setApplyExamenlocatieFilterFunction: (ApplyFilter) -> Unit
+    var setSelectAllOpleidersFunction: (SelectAll) -> Unit
+    var setSelectAllExamenlocatiesFunction: (SelectAll) -> Unit
 }
 
 interface ResultFilterAndShowState : RState {
@@ -41,6 +43,7 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
 
 
     private val emptyApplyFilterFunction: (ApplyFilter) -> Unit = {}
+    private val emptySelectAllFunction: (SelectAll) -> Unit = {}
 
     private val selectionFinished = {
         selectedOpleiderKeys.isNotEmpty() &&
@@ -63,9 +66,11 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                 filterList(opleidersList, "opleiders") {
                     dataLoaded = this@ResultFilterAndShow.dataLoaded
                     itemsData = if (this@ResultFilterAndShow.dataLoaded) Data.alleOpleiders else mapOf()
+                    alwaysAllowSelectAll = true
                     selectedItemKeys = stateAsProp(ResultFilterAndShowState::selectedOpleiderKeys)
                     selectedOtherItemKeys = stateAsProp(ResultFilterAndShowState::selectedExamenlocatieKeys)
                     setApplyFilterFunction = props.setApplyOpleidersFilterFunction
+                    setSelectAllFunction = props.setSelectAllOpleidersFunction
                 }
             }
 
@@ -78,9 +83,11 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                 filterList(examenlocatiesList, "examenlocaties") {
                     dataLoaded = this@ResultFilterAndShow.dataLoaded
                     itemsData = if (this@ResultFilterAndShow.dataLoaded) Data.alleExamenlocaties else mapOf()
+                    alwaysAllowSelectAll = true
                     selectedItemKeys = stateAsProp(ResultFilterAndShowState::selectedExamenlocatieKeys)
                     selectedOtherItemKeys = stateAsProp(ResultFilterAndShowState::selectedOpleiderKeys)
                     setApplyFilterFunction = props.setApplyExamenlocatieFilterFunction
+                    setSelectAllFunction = props.setSelectAllExamenlocatiesFunction
                 }
             }
 
@@ -97,6 +104,7 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     selectedItemKeys = stateAsProp(ResultFilterAndShowState::selectedProducts)
                     selectedOtherItemKeys = stateAsProp(setOf()) // not used
                     setApplyFilterFunction = emptyApplyFilterFunction // not used
+                    setSelectAllFunction = emptySelectAllFunction // not used
                 }
             }
 

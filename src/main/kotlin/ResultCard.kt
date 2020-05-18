@@ -66,24 +66,6 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
     override fun RBuilder.render() {
         if (!selectionFinished()) return // TODO check what to show if selection is not finished
 
-//        currentResults.sumBy {
-//            if (it.product !in selectedProducts) {
-//                0
-//            } else {
-//                it.examenResultaatAantallen.sumBy {
-//                    if (
-//                        it.examenResultaatVersie == examenResultaatVersie
-//                        && it.examenResultaatCategorie == HANDGESCHAKELD
-//                        && it.examenResultaat == VOLDOENDE
-//                    ) {
-//                        it.aantal
-//                    } else {
-//                        0
-//                    }
-//                }
-//            }
-//        }
-
         var aantalHandgeschakeldVoldoende = 0
         var aantalHandgeschakeldOnvoldoende = 0
         var aantalAutomaatVoldoende = 0
@@ -92,7 +74,6 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
         var aantalCombiOnvoldoende = 0
 
         for (currentResult in currentResults) {
-//            println("current result = $currentResult")
             if (currentResult.product !in selectedProducts)
                 continue
 
@@ -298,13 +279,12 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                 }
             }
 
-            // TODO make table use calculated values above
             // TODO make bar chart clickable
 
             mTable {
                 mTableHead {
                     mTableRow {
-                        mTableCell {  }
+                        mTableCell { }
                         mTableCell {
                             mSwitchWithLabel(
                                 label = examenResultaatVersie.title,
@@ -331,73 +311,64 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                             mTableCell {
                                 +categorie.title
                             }
-                            val examenResultaten = hashMapOf(
-                                ONVOLDOENDE to hashSetOf<Int>(),
-                                VOLDOENDE to hashSetOf()
-                            )
                             for (resultaat in ExamenResultaat.values()) {
                                 mTableCell(align = MTableCellAlign.right) {
                                     +if (selectionFinished()) {
-                                        currentResults
-                                            .filter { it.product in selectedProducts }
-                                            .sumBy {
-                                                it.examenResultaatAantallen
-                                                    .filter {
-                                                        it.examenResultaatVersie == examenResultaatVersie
-                                                                && it.examenResultaatCategorie == categorie
-                                                                && it.examenResultaat == resultaat
-                                                    }.sumBy { it.aantal }
+                                        when (categorie) {
+                                            HANDGESCHAKELD ->
+                                                when (resultaat) {
+                                                    VOLDOENDE -> aantalHandgeschakeldVoldoende
+                                                    ONVOLDOENDE -> aantalHandgeschakeldOnvoldoende
+                                                }
+                                            AUTOMAAT -> when (resultaat) {
+                                                VOLDOENDE -> aantalAutomaatVoldoende
+                                                ONVOLDOENDE -> aantalAutomaatOnvoldoende
                                             }
-                                            .apply { examenResultaten[resultaat]!!.add(this) }
-                                            .toString()
+                                            COMBI -> when (resultaat) {
+                                                VOLDOENDE -> aantalCombiVoldoende
+                                                ONVOLDOENDE -> aantalCombiOnvoldoende
+                                            }
+                                        }.toString()
                                     } else "-"
                                 }
                             }
                             mTableCell(align = MTableCellAlign.right) {
                                 +if (selectionFinished())
-                                    (examenResultaten[VOLDOENDE]!!.sum().toDouble() /
-                                            examenResultaten.values.flatten().sum().toDouble()).let {
-                                        if (it.isNaN()) "-"
-                                        else "${(it * 100.0).toInt()}%"
-                                    }
-                                else "-"
+                                    when (categorie) {
+                                        HANDGESCHAKELD -> (
+                                                aantalHandgeschakeldVoldoende.toDouble() /
+                                                        (aantalHandgeschakeldVoldoende + aantalHandgeschakeldOnvoldoende).toDouble()
+                                                ).asPercentage()
+                                        AUTOMAAT -> (
+                                                aantalAutomaatVoldoende.toDouble() /
+                                                        (aantalAutomaatVoldoende + aantalAutomaatOnvoldoende).toDouble()
+                                                ).asPercentage()
+                                        COMBI -> (
+                                                aantalCombiVoldoende.toDouble() /
+                                                        (aantalCombiVoldoende + aantalCombiOnvoldoende).toDouble()
+                                                ).asPercentage()
+                                    } else "-"
                             }
                         }
                     }
 
-
                     mTableRow {
-                        mTableCell {  }
+                        mTableCell { }
                         mTableCell { +"Totaal" }
-                        val examenResultaten = hashMapOf(
-                            ONVOLDOENDE to hashSetOf<Int>(),
-                            VOLDOENDE to hashSetOf()
-                        )
                         for (resultaat in ExamenResultaat.values()) {
                             mTableCell(align = MTableCellAlign.right) {
-                                +if (selectionFinished()) {
-                                    currentResults
-                                        .filter { it.product in selectedProducts }
-                                        .sumBy {
-                                            it.examenResultaatAantallen
-                                                .filter {
-                                                    it.examenResultaatVersie == examenResultaatVersie
-                                                            && it.examenResultaat == resultaat
-                                                }.sumBy { it.aantal }
-                                        }
-                                        .apply { examenResultaten[resultaat]!!.add(this) }
-                                        .toString()
-                                } else "-"
+                                +if (selectionFinished())
+                                    when (resultaat) {
+                                        VOLDOENDE -> aantalHandgeschakeldVoldoende + aantalAutomaatVoldoende + aantalCombiVoldoende
+                                        ONVOLDOENDE -> aantalHandgeschakeldOnvoldoende + aantalAutomaatOnvoldoende + aantalCombiOnvoldoende
+                                    }.toString() else "-"
                             }
                         }
                         mTableCell(align = MTableCellAlign.right) {
-                            +if (selectionFinished())
-                                (examenResultaten[VOLDOENDE]!!.sum().toDouble() /
-                                        examenResultaten.values.flatten().sum().toDouble()).let {
-                                    if (it.isNaN()) "-"
-                                    else "${(it * 100.0).toInt()}%"
-                                }
-                            else "-"
+                            +if (selectionFinished()) (
+                                    (aantalHandgeschakeldVoldoende + aantalAutomaatVoldoende + aantalCombiVoldoende).toDouble() /
+                                            (aantalHandgeschakeldVoldoende + aantalAutomaatVoldoende + aantalCombiVoldoende + aantalHandgeschakeldOnvoldoende + aantalAutomaatOnvoldoende + aantalCombiOnvoldoende).toDouble()
+                                    ).asPercentage() else "-"
                         }
                     }
                 }

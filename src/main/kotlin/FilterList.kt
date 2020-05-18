@@ -33,9 +33,11 @@ interface FilterListProps<Key : Any, Type : Any?> : RProps {
     var dataLoaded: Boolean
     var itemsData: Map<Key, Type>
     var setApplyFilterFunction: (ApplyFilter) -> Unit
+    var setSelectAllFunction: (SelectAll) -> Unit
 }
 
 typealias ApplyFilter = (String) -> Unit
+typealias SelectAll = () -> Unit
 
 interface FilterListState : RState {
     var filter: String
@@ -57,6 +59,7 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
 
     override fun componentDidMount() {
         props.setApplyFilterFunction(applyFilter)
+        props.setSelectAllFunction(selectAll)
     }
 
     private val applyFilter: ApplyFilter = {
@@ -66,6 +69,13 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
         selectedItemKeys = setOf()
 
         println("filter set to $it")
+    }
+
+    private val selectAll: SelectAll = {
+        println("select all called!")
+        selectedItemKeys = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys)!!
+            .map { typeToKey(it)!! }
+            .toSet()
     }
 
     private var filter
