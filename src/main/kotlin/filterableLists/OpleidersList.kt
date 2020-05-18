@@ -15,10 +15,15 @@ import com.ccfraser.muirwik.components.table.mTable
 import com.ccfraser.muirwik.components.table.mTableBody
 import com.ccfraser.muirwik.components.table.mTableCell
 import com.ccfraser.muirwik.components.table.mTableRow
+import data.Categorie
 import data.Data
 import data.Opleider
+import data2viz.vizComponent
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
+import io.data2viz.shape.ArcParams
+import io.data2viz.shape.pie
+import io.data2viz.shape.tau
 import kotlinx.css.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
@@ -164,12 +169,12 @@ class OpleidersList(prps: OpleidersListProps) :
         }
     }
 
-
     val openPopOver = { opleider: Opleider, mAvatarProps: MAvatarProps ->
         var avatarRef: Node? = null
         mAvatarProps.ref<dynamic> {
             avatarRef = findDOMNode(it)
         }
+
         ({ e: Event ->
             e.preventDefault()
             popoverOpleider = opleider
@@ -239,6 +244,36 @@ class OpleidersList(prps: OpleidersListProps) :
 
                     }
                 }
+                if (popoverOpleider == null) return@mPopover
+                vizComponent(
+                    width = 300.0,
+                    height = 150.0
+                ) {
+                    val margin = 20.0
+                    val radius = 150.0 / 2.0 - margin
+
+                    val categorieCount = Categorie.values().map { it to 0 }.toMap().toMutableMap()
+                    for (it in Data.opleiderToResultaten[popoverOpleider!!.code]!!) {
+                        categorieCount[it.categorie] = categorieCount[it.categorie]!! +
+                                it.examenResultaatAantallen.sumBy { it.aantal }
+                    }
+                    val categorieList = categorieCount.toList().sortedByDescending { it.second }.toTypedArray()
+                    val totalCount = categorieList.sumBy { it.second }.toDouble()
+
+                    // TODO make Categorie or "other"
+                    // follow https://www.d3-graph-gallery.com/graph/pie_basic.html
+                    val arcParams = pie<Pair<Categorie, Int>> {
+                        value = { (it.second.toDouble() / totalCount) * tau }
+                    }.render(categorieList)
+
+
+
+
+
+
+                }
+
+
             }
 
             styledDiv {
