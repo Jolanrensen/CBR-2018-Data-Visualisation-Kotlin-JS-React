@@ -21,9 +21,12 @@ import data.Opleider
 import data2viz.vizComponent
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
-import io.data2viz.shape.ArcParams
-import io.data2viz.shape.pie
-import io.data2viz.shape.tau
+import io.data2viz.color.Colors.Web
+import io.data2viz.color.RgbColor
+import io.data2viz.geom.Arc
+import io.data2viz.scale.Scale
+import io.data2viz.scale.Scales
+import io.data2viz.shape.*
 import kotlinx.css.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
@@ -257,23 +260,70 @@ class OpleidersList(prps: OpleidersListProps) :
                         categorieCount[it.categorie] = categorieCount[it.categorie]!! +
                                 it.examenResultaatAantallen.sumBy { it.aantal }
                     }
-                    val categorieList = categorieCount.toList().sortedByDescending { it.second }.toTypedArray()
-                    val totalCount = categorieList.sumBy { it.second }.toDouble()
 
-                    // TODO make Categorie or "other"
+                    val totalCount = categorieCount.values.sum().toDouble()
+
+                    val topX = categorieCount
+                        .asSequence()
+                        .sortedByDescending { it.value }
+                        .take(6)
+
+                    val overig = "Overig" to categorieCount.asSequence().sumBy {
+                        if (it in topX) 0 else it.value
+                    }
+
+                    val categorieList = (
+                            topX.map { (key, value) ->
+                                key.name to value
+                            } + overig
+                            )
+                        .toList()
+                        .toTypedArray()
+
                     // follow https://www.d3-graph-gallery.com/graph/pie_basic.html
-                    val arcParams = pie<Pair<Categorie, Int>> {
+                    val arcParams = pie<Pair<String, Int>> {
                         value = { (it.second.toDouble() / totalCount) * tau }
                     }.render(categorieList)
 
 
+                    val colorOf: (Pair<String, Int>) -> RgbColor = { categorie: Pair<String, Int> ->
+                        listOf(
+                            Web.purple,
+                            Web.navy,
+                            Web.teal,
+                            Web.lime,
+                            Web.yellow,
+                            Web.red,
+                            Web.gray
+                        )[categorieList.indexOf(categorie)]
+                    }
 
+                    val arcBuilder: ArcBuilder<Pair<String, Int>> = arcBuilder {
+                        startAngle = { data ->
+                            arcParams.find { it.data == data }!!.startAngle
+                        }
+                        endAngle = { data ->
+                            arcParams.find { it.data == data }!!.endAngle
+                        }
+                        padAngle = { data ->
+                            arcParams.find { it.data == data }!!.padAngle ?: 0.0
+                        }
+                        outerRadius = { radius }
+                    }
 
-
-
+                    group {
+                        transform {
+                            translate(75.0, 75.0)
+                        }
+                        arcParams.forEach {
+                            arcBuilder.buildArcForDatum(it.data!!, path {
+                                fill = colorOf(it.data!!)
+                                stroke = Web.black
+                                strokeWidth = 2.0
+                            })
+                        }
+                    }
                 }
-
-
             }
 
             styledDiv {
