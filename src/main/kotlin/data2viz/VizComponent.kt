@@ -17,7 +17,7 @@ fun RBuilder.vizComponent(
     width: Double,
     height: Double,
     runOnHiddenViz: (Viz.(hiddenCanvas: HTMLCanvasElement) -> Unit)? = null,
-    runOnViz: Viz.() -> Unit
+    runOnViz: Viz.(canvas: HTMLCanvasElement) -> Unit
 ) {
     styledDiv {
         css {
@@ -27,8 +27,8 @@ fun RBuilder.vizComponent(
         }
         styledCanvas {
             css {
-                this.width = width.px
-                this.height = height.px
+//                this.width = width.px
+//                this.height = height.px
             }
             attrs {
                 id = "viz canvas"
@@ -38,7 +38,7 @@ fun RBuilder.vizComponent(
                     val canvas = findDOMNode(it) as HTMLCanvasElement
                     viz {
                         size = size(width, height)
-                        runOnViz()
+                        runOnViz(canvas)
                         bindRendererOn(canvas)
                     }
                 } catch (e: Exception) {
@@ -46,26 +46,25 @@ fun RBuilder.vizComponent(
             }
         }
 
-        if (runOnHiddenViz != null) {
-            styledCanvas {
-                css {
-                    this.width = width.px
-                    this.height = height.px
-                    display = Display.none //TODO
-                }
-                attrs {
-                    id = "hidden viz canvas"
-                }
-                ref {
-                    try {
-                        val canvas = findDOMNode(it) as HTMLCanvasElement
-                        viz {
-                            size = size(width, height)
-                            runOnHiddenViz(canvas)
-                            bindRendererOn(canvas)
-                        }
-                    } catch (e: Exception) {
+        if (runOnHiddenViz == null) return@styledDiv
+        styledCanvas {
+            css {
+//                this.width = width.px
+//                this.height = height.px
+                display = Display.none //TODO
+            }
+            attrs {
+                id = "hidden viz canvas"
+            }
+            ref {
+                try {
+                    val canvas = findDOMNode(it) as HTMLCanvasElement
+                    viz {
+                        size = size(width, height)
+                        runOnHiddenViz(canvas)
+                        bindRendererOn(canvas)
                     }
+                } catch (e: Exception) {
                 }
             }
         }

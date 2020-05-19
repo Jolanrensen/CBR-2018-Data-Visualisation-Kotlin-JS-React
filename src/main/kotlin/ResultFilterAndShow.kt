@@ -1,6 +1,8 @@
 import com.ccfraser.muirwik.components.*
+import data.Categorie
 import data.Data
 import data.Product
+import data.producten
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateAsProp
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
@@ -41,14 +43,25 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
     private var selectedExamenlocatieKeys by stateDelegateOf(ResultFilterAndShowState::selectedExamenlocatieKeys)
     private var selectedProducts by stateDelegateOf(ResultFilterAndShowState::selectedProducts)
 
-
-    private val emptyApplyFilterFunction: (ApplyFilter) -> Unit = {}
     private val emptySelectAllFunction: (SelectAll) -> Unit = {}
+    private val emptyOnCategorieClicked: (Categorie) -> Unit = {}
 
     private val selectionFinished = {
         selectedOpleiderKeys.isNotEmpty() &&
                 selectedExamenlocatieKeys.isNotEmpty() &&
                 selectedProducts.isNotEmpty()
+    }
+
+
+    private var applyCategorieFilter: ApplyFilter? = null
+    private val setApplyCategorieFilterFunction: (ApplyFilter) -> Unit = {
+        applyCategorieFilter = it
+    }
+
+    private val onCategorieClicked: (Categorie) -> Unit = { cat ->
+        applyCategorieFilter?.invoke("")
+        if (selectedProducts.any { it.categorie != cat } || cat.producten.any { it !in selectedProducts })
+            selectedProducts = cat.producten.toSet()
     }
 
     override fun RBuilder.render() {
@@ -71,6 +84,7 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     selectedOtherItemKeys = stateAsProp(ResultFilterAndShowState::selectedExamenlocatieKeys)
                     setApplyFilterFunction = props.setApplyOpleidersFilterFunction
                     setSelectAllFunction = props.setSelectAllOpleidersFunction
+                    onCategorieClicked = this@ResultFilterAndShow.onCategorieClicked
                 }
             }
 
@@ -88,6 +102,7 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     selectedOtherItemKeys = stateAsProp(ResultFilterAndShowState::selectedOpleiderKeys)
                     setApplyFilterFunction = props.setApplyExamenlocatieFilterFunction
                     setSelectAllFunction = props.setSelectAllExamenlocatiesFunction
+                    onCategorieClicked = this@ResultFilterAndShow.onCategorieClicked
                 }
             }
 
@@ -103,8 +118,10 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     alwaysAllowSelectAll = true
                     selectedItemKeys = stateAsProp(ResultFilterAndShowState::selectedProducts)
                     selectedOtherItemKeys = stateAsProp(setOf()) // not used
-                    setApplyFilterFunction = emptyApplyFilterFunction // not used
+
+                    setApplyFilterFunction = setApplyCategorieFilterFunction
                     setSelectAllFunction = emptySelectAllFunction // not used
+                    onCategorieClicked = emptyOnCategorieClicked // not used
                 }
             }
 

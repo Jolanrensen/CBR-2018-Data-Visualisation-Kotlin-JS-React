@@ -1,3 +1,4 @@
+import data.Categorie
 import delegates.ReactPropAndStateDelegates.StateAsProp
 import libs.RPureComponent
 import react.RBuilder
@@ -17,6 +18,8 @@ interface FilterableListProps<Key : Any, Type : Any?> : RProps {
 
     var filter: String
     var itemsData: Map<Key, Type>
+
+    var onCategorieClicked: (Categorie) -> Unit
 }
 
 interface FilterableListState : RState {

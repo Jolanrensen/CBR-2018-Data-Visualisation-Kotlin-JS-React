@@ -383,10 +383,18 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
         }
     }
 
+    val width = 600.0
+    val height = 850.0
+
     fun getGemeenteAt(pos: Point, hiddenCanvas: HTMLCanvasElement): Gemeente? {
         val context = hiddenCanvas.getContext("2d") as CanvasRenderingContext2D
         val col = context
-            .getImageData(pos.x, pos.y, 1.0, 1.0)
+            .getImageData(
+                sx = pos.x * hiddenCanvas.width.toDouble() / width,
+                sy = pos.y * hiddenCanvas.height.toDouble() / height,
+                sw = 1.0,
+                sh = 1.0
+            )
             .data
         val color = Colors.rgb(col[0].toInt(), col[1].toInt(), col[2].toInt()).rgb
 
@@ -414,8 +422,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                 var hiddenCanvas: HTMLCanvasElement? = null
 
                 vizComponent(
-                    width = 600.0,
-                    height = 850.0,
+                    width = width,
+                    height = height,
                     runOnHiddenViz = { it ->
                         hiddenCanvas = it
                         hiddenViz = this

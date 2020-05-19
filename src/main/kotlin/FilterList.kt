@@ -7,6 +7,7 @@ import com.ccfraser.muirwik.components.input.MInputProps
 import com.ccfraser.muirwik.components.input.mInputAdornment
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemText
+import data.Categorie
 import delegates.ReactPropAndStateDelegates
 import delegates.ReactPropAndStateDelegates.StateAsProp
 import delegates.ReactPropAndStateDelegates.propDelegateOf
@@ -34,6 +35,7 @@ interface FilterListProps<Key : Any, Type : Any?> : RProps {
     var itemsData: Map<Key, Type>
     var setApplyFilterFunction: (ApplyFilter) -> Unit
     var setSelectAllFunction: (SelectAll) -> Unit
+    var onCategorieClicked: (Categorie) -> Unit
 }
 
 typealias ApplyFilter = (String) -> Unit
@@ -63,24 +65,32 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
     }
 
     private val applyFilter: ApplyFilter = {
-        filter = it
-        inputField?.value = it
-        filterFieldValue = it
-        selectedItemKeys = setOf()
+        if (filter != it) {
+            filter = it
+            inputField?.value = it
+            filterFieldValue = it
+            selectedItemKeys = setOf()
 
-        println("filter set to $it")
+            println("filter set to $it")
+        } else {
+            println("filter was already set to $it")
+        }
     }
 
     private val selectAll: SelectAll = {
         println("select all called!")
-        selectedItemKeys = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys)!!
+        val new = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys)!!
             .map { typeToKey(it)!! }
             .toSet()
+
+        if (new.any { it !in selectedItemKeys } || selectedItemKeys.any { it !in new })
+            selectedItemKeys = new
     }
 
     private var filter
         get() = state.filter
         set(value) {
+            if (value == state.filter) return
             setState {
                 filter = value
             }
@@ -209,6 +219,7 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
                     props.filterableListCreationFunction(this) {
                         selectedItemKeys = props.selectedItemKeys
                         selectedOtherItemKeys = props.selectedOtherItemKeys
+                        onCategorieClicked = props.onCategorieClicked
 
                         ref<FilterableList<Key, Type, *, *>> {
                             filterableList = it

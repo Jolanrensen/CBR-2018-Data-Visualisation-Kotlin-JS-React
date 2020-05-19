@@ -48,6 +48,8 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
     private val filter by propDelegateOf(ExamenlocatiesListProps::filter)
     private val itemsData by propDelegateOf(ExamenlocatiesListProps::itemsData)
 
+    private val onCategorieClicked by propDelegateOf(ExamenlocatiesListProps::onCategorieClicked)
+
     private val filteredItems
         get() = props.filteredItems
             ?: getFilteredItems(
@@ -248,9 +250,7 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                 categoriePieChart {
                     attrs {
                         examenlocatie = popoverExamenlocatie
-
-                        // selectedCategorie todo
-                        // onCategorieClicked todo
+                        onCategorieClicked = this@ExamenlocatiesList.onCategorieClicked
                     }
                 }
             }

@@ -61,6 +61,8 @@ class OpleidersList(prps: OpleidersListProps) :
     private val filter by propDelegateOf(OpleidersListProps::filter)
     private val itemsData by propDelegateOf(OpleidersListProps::itemsData)
 
+    private val onCategorieClicked by propDelegateOf(OpleidersListProps::onCategorieClicked)
+
     private val filteredItems
         get() = props.filteredItems
             ?: getFilteredItems(
@@ -263,9 +265,7 @@ class OpleidersList(prps: OpleidersListProps) :
                 categoriePieChart {
                     attrs {
                         opleider = popoverOpleider
-
-                        // selectedCategorie todo
-                        // onCategorieClicked todo
+                        onCategorieClicked = this@OpleidersList.onCategorieClicked
                     }
                 }
             }
