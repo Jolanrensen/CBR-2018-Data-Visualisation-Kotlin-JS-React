@@ -32,6 +32,7 @@ import react.ref
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
+import styled.styledH4
 import toInt
 
 interface ExamenlocatiesListProps : FilterableListProps<String, Examenlocatie>
@@ -231,6 +232,25 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                                 mTableCell { +element }
                             }
                         }
+                    }
+                }
+
+                styledH4 {
+                    css {
+                        marginLeft = 10.px
+                        textAlign = TextAlign.center
+                    }
+                    +"Verdeling categoriën"
+                }
+
+                if (popoverExamenlocatie == null) return@mPopover
+
+                categoriePieChart {
+                    attrs {
+                        examenlocatie = popoverExamenlocatie
+
+                        // selectedCategorie todo
+                        // onCategorieClicked todo
                     }
                 }
             }

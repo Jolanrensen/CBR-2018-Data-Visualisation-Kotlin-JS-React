@@ -19,9 +19,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="started on pie chart">
+    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="pie chart opleiders working">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategoriePieChart.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +74,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Class" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -177,7 +181,7 @@
       <workItem from="1589720124151" duration="18659000" />
       <workItem from="1589800720346" duration="58000" />
       <workItem from="1589822571953" duration="10798000" />
-      <workItem from="1589886502984" duration="11368000" />
+      <workItem from="1589886502984" duration="13259000" />
     </task>
     <task id="LOCAL-00001" summary="It's running again!">
       <created>1589639534400</created>
@@ -214,7 +218,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589894980260</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="pie chart opleiders working">
+      <created>1589904511032</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1589904511032</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,17 +249,18 @@
     <MESSAGE value="working on bar chart" />
     <MESSAGE value="clicking on card filters and selects all, allow to select/deselect all always" />
     <MESSAGE value="started on pie chart" />
-    <option name="LAST_COMMIT_MESSAGE" value="started on pie chart" />
+    <MESSAGE value="pie chart opleiders working" />
+    <option name="LAST_COMMIT_MESSAGE" value="pie chart opleiders working" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1481" y="482" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589722154163">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="1481" y="482" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.34.2880.1586@0.34.2880.1586" timestamp="1589722154163" />
-    <state x="1718" y="478" width="537" height="699" key="#com.intellij.ide.util.MemberChooser" timestamp="1589887262967">
+    <state x="1718" y="478" width="537" height="701" key="#com.intellij.ide.util.MemberChooser" timestamp="1589905045687">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="1718" y="478" width="537" height="699" key="#com.intellij.ide.util.MemberChooser/0.34.2880.1586@0.34.2880.1586" timestamp="1589887262967" />
+    <state x="1718" y="478" width="537" height="701" key="#com.intellij.ide.util.MemberChooser/0.34.2880.1586@0.34.2880.1586" timestamp="1589905045687" />
     <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl" timestamp="1589720455423">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
@@ -273,10 +285,10 @@
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="804" y="374" width="1792" height="907" key="SettingsEditor/0.34.2880.1586@0.34.2880.1586" timestamp="1589636352721" />
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1589894982475">
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1589904512740">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1589894982475" />
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1589904512740" />
     <state x="822" y="283" width="1585" height="970" key="com.intellij.database.dbimport.ImportDialog" timestamp="1589720508224">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>

@@ -91,6 +91,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     var gemeentes by stateDelegateOf(NederlandVizMapState::gemeentes)
     var loadingState by stateDelegateOf(NederlandVizMapState::loadingState)
 
+    // don't update when [selectedGemeente] changed
     override fun shouldComponentUpdate(nextProps: NederlandVizMapProps, nextState: NederlandVizMapState) =
         props.dataLoaded != nextProps.dataLoaded
                 || props.examenlocatieOrOpleider != nextProps.examenlocatieOrOpleider
@@ -219,7 +220,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                             } / opleidersResultSize
                         },
                     slagingspercentageGecombineerdOpleiders = opleiders
-                        .filter { it.slagingspercentageEersteKeer != null && it.slagingspercentageHerkansing != null  }
+                        .filter { it.slagingspercentageEersteKeer != null && it.slagingspercentageHerkansing != null }
                         .let { opleiders ->
                             val opleiderCodes = opleiders.map { it.code }
 
@@ -508,8 +509,5 @@ fun getGemeenteColor(
         )
     }
 
-fun RBuilder.nederlandMap(handler: RElementBuilder<NederlandVizMapProps>.() -> Unit) = child(
-    NederlandVizMap::class
-) {
-    handler()
-}
+fun RBuilder.nederlandMap(handler: RElementBuilder<NederlandVizMapProps>.() -> Unit) =
+    child(NederlandVizMap::class, handler)

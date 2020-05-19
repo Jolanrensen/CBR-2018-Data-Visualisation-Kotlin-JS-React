@@ -260,114 +260,12 @@ class OpleidersList(prps: OpleidersListProps) :
 
                 if (popoverOpleider == null) return@mPopover
 
-                val width = 500.0
-                val height = 200.0
-                vizComponent(
-                    width = width,
-                    height = height
-                ) {
-                    val margin = 20.0
-                    val radius = height / 2.0 - margin
+                categoriePieChart {
+                    attrs {
+                        opleider = popoverOpleider
 
-                    val categorieCount = Categorie.values().map { it to 0 }.toMap().toMutableMap()
-                    for (it in Data.opleiderToResultaten[popoverOpleider!!.code]!!) {
-                        categorieCount[it.categorie] = categorieCount[it.categorie]!! +
-                                it.examenResultaatAantallen.sumBy { it.aantal }
-                    }
-
-                    val totalCount = categorieCount.values.sum().toDouble()
-
-                    val topX = categorieCount
-                        .asSequence()
-                        .sortedByDescending { it.value }
-                        .take(6)
-
-                    val overig = "Overig" to categorieCount.asSequence().sumBy {
-                        if (it in topX) 0 else it.value
-                    }
-
-                    val categorieList = (
-                            topX.map { (key, value) ->
-                                "${key.name}: ${key.omschrijving}"
-                                    .let { // trim if too long
-                                        if (it.length > 35) it.take(35) + "..."
-                                        else it
-                                    } to value
-                            } + overig
-                            )
-                        .toList()
-                        .toTypedArray()
-
-                    // follow https://www.d3-graph-gallery.com/graph/pie_basic.html
-                    val arcParams = pie<Pair<String, Int>> {
-                        value = { (it.second.toDouble() / totalCount) * tau }
-                    }.render(categorieList)
-
-
-                    val colorOf = { categorie: Pair<String, Int> ->
-                        listOf(
-                            Web.purple,
-                            Web.navy,
-                            Web.teal,
-                            Web.lime,
-                            Web.yellow,
-                            Web.red,
-                            Web.gray
-                        )[categorieList.indexOf(categorie)]
-                    }
-
-                    val arcBuilder: ArcBuilder<Pair<String, Int>> = arcBuilder {
-                        startAngle = { data ->
-                            arcParams.find { it.data == data }!!.startAngle
-                        }
-                        endAngle = { data ->
-                            arcParams.find { it.data == data }!!.endAngle
-                        }
-                        padAngle = { data ->
-                            arcParams.find { it.data == data }!!.padAngle ?: 0.0
-                        }
-                        outerRadius = { radius }
-                    }
-
-                    group {
-                        transform {
-                            translate(x = width / 6.0 + margin, y = height / 2.0)
-                        }
-                        arcParams.forEach {
-                            arcBuilder.buildArcForDatum(it.data!!, path {
-                                fill = colorOf(it.data!!)
-                                stroke = Web.black
-                                strokeWidth = 2.0
-                            })
-                        }
-                    }
-
-                    // legenda
-                    group {
-                        transform {
-                            translate(x = width / 3.0 + 2.0 * margin, y = margin)
-                        }
-
-                        categorieList.filter { it.second > 0 }
-                            .forEachIndexed { index, data ->
-                                group {
-                                    transform {
-                                        translate(y = index * 15.0)
-                                    }
-                                    rect {
-                                        size = size(10.0, 10.0)
-                                        fill = colorOf(data)
-                                    }
-                                    group {
-                                        transform {
-                                            translate(x = 15.0, y = 9.0)
-                                        }
-                                        text {
-                                            textContent = data.first
-                                        }
-                                    }
-                                }
-                            }
+                        // selectedCategorie todo
+                        // onCategorieClicked todo
                     }
                 }
             }
