@@ -24,6 +24,7 @@ import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import io.data2viz.color.Colors.Web
 import io.data2viz.color.RgbColor
 import io.data2viz.geom.Arc
+import io.data2viz.geom.size
 import io.data2viz.scale.Scale
 import io.data2viz.scale.Scales
 import io.data2viz.shape.*
@@ -39,10 +40,12 @@ import react.RBuilder
 import react.ReactElement
 import react.buildElement
 import react.dom.findDOMNode
+import react.dom.h1
 import react.ref
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
+import styled.styledH4
 import toInt
 
 interface OpleidersListProps : FilterableListProps<String, Opleider>
@@ -244,16 +247,27 @@ class OpleidersList(prps: OpleidersListProps) :
                                 mTableCell { +element }
                             }
                         }
-
                     }
                 }
+
+                styledH4 {
+                    css {
+                        marginLeft = 10.px
+                        textAlign = TextAlign.center
+                    }
+                    +"Verdeling categoriën"
+                }
+
                 if (popoverOpleider == null) return@mPopover
+
+                val width = 500.0
+                val height = 200.0
                 vizComponent(
-                    width = 300.0,
-                    height = 150.0
+                    width = width,
+                    height = height
                 ) {
                     val margin = 20.0
-                    val radius = 150.0 / 2.0 - margin
+                    val radius = height / 2.0 - margin
 
                     val categorieCount = Categorie.values().map { it to 0 }.toMap().toMutableMap()
                     for (it in Data.opleiderToResultaten[popoverOpleider!!.code]!!) {
@@ -274,7 +288,11 @@ class OpleidersList(prps: OpleidersListProps) :
 
                     val categorieList = (
                             topX.map { (key, value) ->
-                                key.name to value
+                                "${key.name}: ${key.omschrijving}"
+                                    .let { // trim if too long
+                                        if (it.length > 35) it.take(35) + "..."
+                                        else it
+                                    } to value
                             } + overig
                             )
                         .toList()
@@ -286,7 +304,7 @@ class OpleidersList(prps: OpleidersListProps) :
                     }.render(categorieList)
 
 
-                    val colorOf: (Pair<String, Int>) -> RgbColor = { categorie: Pair<String, Int> ->
+                    val colorOf = { categorie: Pair<String, Int> ->
                         listOf(
                             Web.purple,
                             Web.navy,
@@ -313,7 +331,7 @@ class OpleidersList(prps: OpleidersListProps) :
 
                     group {
                         transform {
-                            translate(75.0, 75.0)
+                            translate(x = width / 6.0 + margin, y = height / 2.0)
                         }
                         arcParams.forEach {
                             arcBuilder.buildArcForDatum(it.data!!, path {
@@ -322,6 +340,34 @@ class OpleidersList(prps: OpleidersListProps) :
                                 strokeWidth = 2.0
                             })
                         }
+                    }
+
+                    // legenda
+                    group {
+                        transform {
+                            translate(x = width / 3.0 + 2.0 * margin, y = margin)
+                        }
+
+                        categorieList.filter { it.second > 0 }
+                            .forEachIndexed { index, data ->
+                                group {
+                                    transform {
+                                        translate(y = index * 15.0)
+                                    }
+                                    rect {
+                                        size = size(10.0, 10.0)
+                                        fill = colorOf(data)
+                                    }
+                                    group {
+                                        transform {
+                                            translate(x = 15.0, y = 9.0)
+                                        }
+                                        text {
+                                            textContent = data.first
+                                        }
+                                    }
+                                }
+                            }
                     }
                 }
             }
