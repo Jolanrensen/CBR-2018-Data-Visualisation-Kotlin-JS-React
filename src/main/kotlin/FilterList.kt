@@ -35,11 +35,13 @@ interface FilterListProps<Key : Any, Type : Any?> : RProps {
     var itemsData: Map<Key, Type>
     var setApplyFilterFunction: (ApplyFilter) -> Unit
     var setSelectAllFunction: (SelectAll) -> Unit
+    var setDeselectAllFunction: (DeselectAll) -> Unit
     var onCategorieClicked: (Categorie) -> Unit
 }
 
 typealias ApplyFilter = (String) -> Unit
 typealias SelectAll = () -> Unit
+typealias DeselectAll = () -> Unit
 
 interface FilterListState : RState {
     var filter: String
@@ -62,6 +64,7 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
     override fun componentDidMount() {
         props.setApplyFilterFunction(applyFilter)
         props.setSelectAllFunction(selectAll)
+        props.setDeselectAllFunction(deselectAll)
     }
 
     private val applyFilter: ApplyFilter = {
@@ -85,6 +88,13 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
 
         if (new.any { it !in selectedItemKeys } || selectedItemKeys.any { it !in new })
             selectedItemKeys = new
+    }
+
+    private val deselectAll: DeselectAll = {
+        println("deselect all called!")
+        if (selectedItemKeys.isNotEmpty()) {
+            selectedItemKeys = setOf()
+        }
     }
 
     private var filter

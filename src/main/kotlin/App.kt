@@ -119,26 +119,20 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
     }
 
     private var selectAllOpleidersFunctions = arrayListOf<SelectAll>()
-
-    private var selectAllOpleiders: SelectAll = {
-        selectAllOpleidersFunctions.forEach { it() }
-    }
-
-    private val setSelectAllOpleidersFunction = { it: SelectAll ->
-        selectAllOpleidersFunctions.add(it)
-        Unit
-    }
+    private var selectAllOpleiders: SelectAll = { selectAllOpleidersFunctions.forEach { it() } }
+    private val setSelectAllOpleidersFunction = fun(it: SelectAll) { selectAllOpleidersFunctions.add(it) }
 
     private var selectAllExamenlocatiesFunctions = arrayListOf<SelectAll>()
+    private var selectAllExamenlocaties: SelectAll = { selectAllExamenlocatiesFunctions.forEach { it() } }
+    private val setSelectAllExamenlocatiesFunction = fun(it: SelectAll) { selectAllExamenlocatiesFunctions.add(it) }
 
-    private var selectAllExamenlocaties: SelectAll = {
-        selectAllExamenlocatiesFunctions.forEach { it() }
-    }
+    private var deselectAllOpleidersFunctions = arrayListOf<DeselectAll>()
+    private var deselectAllOpleiders: DeselectAll = { deselectAllOpleidersFunctions.forEach { it() } }
+    private val setDeselectAllOpleidersFunction = fun(it: DeselectAll) { deselectAllOpleidersFunctions.add(it) }
 
-    private val setSelectAllExamenlocatiesFunction = { it: SelectAll ->
-        selectAllExamenlocatiesFunctions.add(it)
-        Unit
-    }
+    private var deselectAllExamenlocatiesFunctions = arrayListOf<DeselectAll>()
+    private var deselectAllExamenlocaties: DeselectAll = { deselectAllExamenlocatiesFunctions.forEach { it() } }
+    private val setDeselectAllExamenlocatiesFunction = fun(it: DeselectAll) { deselectAllExamenlocatiesFunctions.add(it) }
 
 
     private val toggleExamenlocatieOrOpleider = { _: Event? ->
@@ -319,6 +313,9 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
                                                 selectAllOpleiders = this@App.selectAllOpleiders
                                                 selectAllExamenlocaties = this@App.selectAllExamenlocaties
+
+                                                deselectAllOpleiders = this@App.deselectAllOpleiders
+                                                deselectAllExamenlocaties = this@App.deselectAllExamenlocaties
                                             }
                                         }
                                     }
@@ -387,24 +384,26 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 //                        opleiderApplyFilterFunctions = arrayListOf()
 //                        examenlocatieApplyFilterFunctions = arrayListOf()
                             mGridItem(xs = MGridSize.cells12) {
-                                    hoveringCard {
-                                        css {
-                                            margin(1.mm)
-                                            marginBottom = 5.mm
-                                            padding(5.mm)
-                                        }
-                                        resultFilterAndShow {
-                                            dataLoaded = this@App.dataLoaded
-                                            setApplyOpleidersFilterFunction =
-                                                this@App.setApplyOpleidersFilterFunction
-
-                                            setApplyExamenlocatieFilterFunction =
-                                                this@App.setApplyExamenlocatieFilterFunction
-
-                                            setSelectAllOpleidersFunction = this@App.setSelectAllOpleidersFunction
-                                            setSelectAllExamenlocatiesFunction = this@App.setSelectAllExamenlocatiesFunction
-                                        }
+                                hoveringCard {
+                                    css {
+                                        margin(1.mm)
+                                        marginBottom = 5.mm
+                                        padding(5.mm)
                                     }
+                                    resultFilterAndShow {
+                                        dataLoaded = this@App.dataLoaded
+                                        setApplyOpleidersFilterFunction =
+                                            this@App.setApplyOpleidersFilterFunction
+
+                                        setApplyExamenlocatieFilterFunction =
+                                            this@App.setApplyExamenlocatieFilterFunction
+
+                                        setSelectAllOpleidersFunction = this@App.setSelectAllOpleidersFunction
+                                        setSelectAllExamenlocatiesFunction = this@App.setSelectAllExamenlocatiesFunction
+                                        setDeselectAllOpleidersFunction = this@App.setDeselectAllOpleidersFunction
+                                        setDeselectAllExamenlocatiesFunction = this@App.setDeselectAllExamenlocatiesFunction
+                                    }
+                                }
                             }
                         }
                     }

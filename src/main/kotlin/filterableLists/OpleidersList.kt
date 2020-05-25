@@ -177,22 +177,27 @@ class OpleidersList(prps: OpleidersListProps) :
         }
     }
 
-    val openPopOver = { opleider: Opleider, mAvatarProps: MAvatarProps ->
+    val openPopOver = fun(opleider: Opleider, mAvatarProps: MAvatarProps): (Event) -> Unit {
         var avatarRef: Node? = null
         mAvatarProps.ref<dynamic> {
             avatarRef = findDOMNode(it)
         }
 
-        ({ e: Event ->
-            e.preventDefault()
+        return {
+            it.preventDefault()
             popoverOpleider = opleider
             popoverAvatar = avatarRef
             popoverOpen = true
-        })
+        }
     }
 
     val onPopoverClose: (Event, ModalOnCloseReason) -> Unit = { _, _ ->
         popoverOpen = false
+    }
+
+    val onPieCategorieClicked: (Categorie) -> Unit = {
+        popoverOpen = false
+        onCategorieClicked(it)
     }
 
     private var popoverOpleider: Opleider? = null
@@ -265,7 +270,7 @@ class OpleidersList(prps: OpleidersListProps) :
                 categoriePieChart {
                     attrs {
                         opleider = popoverOpleider
-                        onCategorieClicked = this@OpleidersList.onCategorieClicked
+                        onCategorieClicked = onPieCategorieClicked
                     }
                 }
             }

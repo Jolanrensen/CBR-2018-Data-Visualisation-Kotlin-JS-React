@@ -1,6 +1,7 @@
 package map
 
 import ApplyFilter
+import DeselectAll
 import ExamenlocatieOrOpleider
 import ExamenlocatieOrOpleider.EXAMENLOCATIE
 import ExamenlocatieOrOpleider.OPLEIDER
@@ -57,6 +58,9 @@ interface NederlandVizMapProps : RProps {
 
     var selectAllOpleiders: SelectAll
     var selectAllExamenlocaties: SelectAll
+
+    var deselectAllOpleiders: DeselectAll
+    var deselectAllExamenlocaties: DeselectAll
 }
 
 interface NederlandVizMapState : RState {
@@ -79,8 +83,12 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     val dataLoaded by propDelegateOf(NederlandVizMapProps::dataLoaded)
     val setOpleiderFilters by propDelegateOf(NederlandVizMapProps::setOpleiderFilters)
     val setExamenlocatieFilters by propDelegateOf(NederlandVizMapProps::setExamenlocatieFilters)
+
     val selectAllOpleiders by propDelegateOf(NederlandVizMapProps::selectAllOpleiders)
     val selectAllExamenlocaties by propDelegateOf(NederlandVizMapProps::selectAllExamenlocaties)
+
+    val deselectAllOpleiders by propDelegateOf(NederlandVizMapProps::deselectAllOpleiders)
+    val deselectAllExamenlocaties by propDelegateOf(NederlandVizMapProps::deselectAllExamenlocaties)
 
 
     override fun NederlandVizMapState.init(props: NederlandVizMapProps) {
@@ -458,6 +466,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
 
                     on(KPointerClick) {
                         getGemeenteAt(it.pos, hiddenCanvas!!)?.let { clicked ->
+                            deselectAllOpleiders()
+                            deselectAllExamenlocaties()
                             when (examenlocatieOrOpleider) {
                                 EXAMENLOCATIE -> {
                                     setExamenlocatieFilters(clicked.name)

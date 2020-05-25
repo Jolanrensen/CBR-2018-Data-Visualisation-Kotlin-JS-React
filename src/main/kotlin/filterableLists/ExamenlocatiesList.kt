@@ -12,6 +12,7 @@ import com.ccfraser.muirwik.components.table.mTable
 import com.ccfraser.muirwik.components.table.mTableBody
 import com.ccfraser.muirwik.components.table.mTableCell
 import com.ccfraser.muirwik.components.table.mTableRow
+import data.Categorie
 import data.Data
 import data.Examenlocatie
 import delegates.ReactPropAndStateDelegates.propDelegateOf
@@ -162,21 +163,27 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
     }
 
 
-    val openPopOver = { examenlocatie: Examenlocatie, mAvatarProps: MAvatarProps ->
+    val openPopOver = fun(examenlocatie: Examenlocatie, mAvatarProps: MAvatarProps): (Event) -> Unit {
         var avatarRef: Node? = null
         mAvatarProps.ref<dynamic> {
             avatarRef = findDOMNode(it)
         }
-        ({ e: Event ->
-            e.preventDefault()
+
+        return {
+            it.preventDefault()
             popoverExamenlocatie = examenlocatie
             popoverAvatar = avatarRef
             popoverOpen = true
-        })
+        }
     }
 
     val onPopoverClose: (Event, ModalOnCloseReason) -> Unit = { _, _ ->
         popoverOpen = false
+    }
+
+    val onPieCategorieClicked: (Categorie) -> Unit = {
+        popoverOpen = false
+        onCategorieClicked(it)
     }
 
     private var popoverExamenlocatie: Examenlocatie? = null
@@ -250,7 +257,7 @@ class ExamenlocatiesList(prps: ExamenlocatiesListProps) :
                 categoriePieChart {
                     attrs {
                         examenlocatie = popoverExamenlocatie
-                        onCategorieClicked = this@ExamenlocatiesList.onCategorieClicked
+                        onCategorieClicked = onPieCategorieClicked
                     }
                 }
             }
