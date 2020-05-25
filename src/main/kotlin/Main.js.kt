@@ -1,3 +1,4 @@
+import data.Data
 import react.dom.render
 import kotlin.browser.document
 

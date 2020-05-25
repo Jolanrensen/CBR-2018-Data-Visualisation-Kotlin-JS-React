@@ -7,11 +7,11 @@ import com.ccfraser.muirwik.components.table.mTableCell
 import com.ccfraser.muirwik.components.table.mTableHead
 import com.ccfraser.muirwik.components.table.mTableRow
 import data.*
-import data.ExamenResultaat.ONVOLDOENDE
-import data.ExamenResultaat.VOLDOENDE
-import data.ExamenResultaatCategorie.*
-import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
-import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
+import data.Examenresultaat.ONVOLDOENDE
+import data.Examenresultaat.VOLDOENDE
+import data.ExamenresultaatCategorie.*
+import data.ExamenresultaatVersie.EERSTE_EXAMEN_OF_TOETS
+import data.ExamenresultaatVersie.HEREXAMEN_OF_TOETS
 import data2viz.vizComponent
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
@@ -30,18 +30,16 @@ import react.RProps
 import react.RState
 import styled.css
 import styled.styledDiv
-import styled.styledP
-import styled.styledTextArea
 import kotlin.math.max
 
 interface ResultCardProps : RProps {
-    var currentResults: Sequence<Resultaat>
+    var currentResults: Sequence<Int>
     var selectionFinished: () -> Boolean
     var selectedProducts: Set<Product>
 }
 
 interface ResultCardState : RState {
-    var examenResultaatVersie: ExamenResultaatVersie
+    var examenresultaatVersie: ExamenresultaatVersie
 }
 
 class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, ResultCardState>(prps) {
@@ -51,10 +49,10 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
     val selectedProducts by propDelegateOf(ResultCardProps::selectedProducts)
 
     override fun ResultCardState.init(props: ResultCardProps) {
-        examenResultaatVersie = EERSTE_EXAMEN_OF_TOETS
+        examenresultaatVersie = EERSTE_EXAMEN_OF_TOETS
     }
 
-    var examenResultaatVersie by stateDelegateOf(ResultCardState::examenResultaatVersie)
+    var examenResultaatVersie by stateDelegateOf(ResultCardState::examenresultaatVersie)
 
     private val toggleExamenresultaatVersie: (Event?, Boolean?) -> Unit = { _, _ ->
         examenResultaatVersie = when (examenResultaatVersie) {
@@ -73,26 +71,27 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
         var aantalCombiVoldoende = 0
         var aantalCombiOnvoldoende = 0
 
-        for (currentResult in currentResults) {
+        for (currentResultId in currentResults) {
+            val currentResult = Data.alleResultaten[currentResultId]!!
             if (currentResult.product !in selectedProducts)
                 continue
 
-            for (aantal in currentResult.examenResultaatAantallen) {
-                if (aantal.examenResultaatVersie != examenResultaatVersie)
+            for (aantal in currentResult.examenresultaatAantallen) {
+                if (aantal.examenresultaatVersie != examenResultaatVersie)
                     continue
 
                 aantal.apply {
-                    when (examenResultaatCategorie) {
+                    when (examenresultaatCategorie) {
                         HANDGESCHAKELD ->
-                            when (examenResultaat) {
+                            when (examenresultaat) {
                                 VOLDOENDE -> aantalHandgeschakeldVoldoende += aantal.aantal
                                 ONVOLDOENDE -> aantalHandgeschakeldOnvoldoende += aantal.aantal
                             }
-                        AUTOMAAT -> when (examenResultaat) {
+                        AUTOMAAT -> when (examenresultaat) {
                             VOLDOENDE -> aantalAutomaatVoldoende += aantal.aantal
                             ONVOLDOENDE -> aantalAutomaatOnvoldoende += aantal.aantal
                         }
-                        COMBI -> when (examenResultaat) {
+                        COMBI -> when (examenresultaat) {
                             VOLDOENDE -> aantalCombiVoldoende += aantal.aantal
                             ONVOLDOENDE -> aantalCombiOnvoldoende += aantal.aantal
                         }
@@ -139,8 +138,8 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                     range = listOf(chartHeight, .0)
                 }
 
-                val widthScale = Scales.Discrete.band<ExamenResultaat> {
-                    domain = ExamenResultaat.values().toList()
+                val widthScale = Scales.Discrete.band<Examenresultaat> {
+                    domain = Examenresultaat.values().toList()
                     range = StrictlyContinuous(.0, chartWidth)
                     padding = .1
                 }
@@ -292,7 +291,7 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                                 onChange = toggleExamenresultaatVersie
                             )
                         }
-                        ExamenResultaat.values().forEach {
+                        Examenresultaat.values().forEach {
                             mTableCell(align = MTableCellAlign.right) { +it.title }
                         }
                         mTableCell(align = MTableCellAlign.right) { +"Percentage Voldoende" }
@@ -311,7 +310,7 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                             mTableCell {
                                 +categorie.title
                             }
-                            for (resultaat in ExamenResultaat.values()) {
+                            for (resultaat in Examenresultaat.values()) {
                                 mTableCell(align = MTableCellAlign.right) {
                                     +if (selectionFinished()) {
                                         when (categorie) {
@@ -355,7 +354,7 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                     mTableRow {
                         mTableCell { }
                         mTableCell { +"Totaal" }
-                        for (resultaat in ExamenResultaat.values()) {
+                        for (resultaat in Examenresultaat.values()) {
                             mTableCell(align = MTableCellAlign.right) {
                                 +if (selectionFinished())
                                     when (resultaat) {

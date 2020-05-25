@@ -79,6 +79,8 @@ kotlin {
 
                 implementation(npm("styled-components"))
                 implementation(npm("jquery"))
+                implementation(npm("object-copy"))
+                implementation(npm("shebang-regex"))
             }
         }
     }

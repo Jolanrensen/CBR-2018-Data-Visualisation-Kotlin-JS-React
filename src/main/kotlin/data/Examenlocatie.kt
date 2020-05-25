@@ -1,9 +1,10 @@
 package data
 
+import kotlinx.css.Display
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-inline class Examenlocatie(val data: Array<String?>) {
+inline class Examenlocatie(val data: Array<String>) {
 
     constructor(
         naam: String,
@@ -24,45 +25,45 @@ inline class Examenlocatie(val data: Array<String?>) {
             postcode,
             plaatsnaam,
             gemeente,
-            slagingspercentageEersteKeer?.toString(),
-            slagingspercentageHerkansing?.toString()
+            slagingspercentageEersteKeer?.toString() ?: "null",
+            slagingspercentageHerkansing?.toString() ?: "null"
         )
     )
 
     inline val naam: String
-        get() = data[0]!!
+        get() = data[0]
 
     inline val straatnaam: String
-        get() = data[1]!!
+        get() = data[1]
 
     inline val huisnummer: String
-        get() = data[2]!!
+        get() = data[2]
 
     @SerialName("huisnummer toevoeging")
     inline val huisnummerToevoeging: String
-        get() = data[3]!!
+        get() = data[3]
 
     inline val postcode: String
-        get() = data[4]!!
+        get() = data[4]
 
     inline val plaatsnaam: String
-        get() = data[5]!!
+        get() = data[5]
 
     inline val gemeente: String
-        get() = data[6]!!
+        get() = data[6]
 
     @SerialName("slagingspercentage eerste keer")
     inline var slagingspercentageEersteKeer: Double?
-        get() = data[7]?.toDouble()
+        get() = if (data[7] == "null") null else data[7].toDouble()
         set(value) {
-            data[7] = value?.toString()
+            data[7] = value?.toString() ?: "null"
         }
 
     @SerialName("slagingspercentage herkansing")
     inline var slagingspercentageHerkansing: Double?
-        get() = data[8]?.toDouble()
+        get() = if (data[8] == "null") null else data[8].toDouble()
         set(value) {
-            data[8] = value?.toString()
+            data[8] = value?.toString() ?: "null"
         }
 
     inline val content: Map<String, String>

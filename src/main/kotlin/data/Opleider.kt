@@ -2,7 +2,7 @@ package data
 
 import kotlin.js.Date
 
-inline class Opleider(val data: Array<String?>) {
+inline class Opleider(val data: Array<String>) {
 
     constructor(
         code: String,
@@ -29,20 +29,20 @@ inline class Opleider(val data: Array<String?>) {
             postcode,
             plaatsnaam,
             gemeente,
-            slagingspercentageEersteKeer?.toString(),
-            slagingspercentageHerkansing?.toString()
+            slagingspercentageEersteKeer?.toString() ?: "null",
+            slagingspercentageHerkansing?.toString() ?: "null"
         )
     )
 
     inline val code: String
-        get() = data[0]!!
+        get() = data[0]
 
     inline val naam: String
-        get() = data[1]!!
+        get() = data[1]
 
 
     inline val startdatum: Date
-        get() = data[2]!!.split('-').let {
+        get() = data[2].split('-').let {
             Date(
                 day = it[0].toInt(),
                 month = it[1].toInt(),
@@ -55,7 +55,7 @@ inline class Opleider(val data: Array<String?>) {
         }
 
     inline val einddatum: Date
-        get() = data[3]!!.split('-').let {
+        get() = data[3].split('-').let {
             Date(
                 day = it[0].toInt(),
                 month = it[1].toInt(),
@@ -68,34 +68,34 @@ inline class Opleider(val data: Array<String?>) {
         }
 
     inline val straatnaam: String
-        get() = data[4]!!
+        get() = data[4]
 
     inline val huisnummer: String
-        get() = data[5]!!
+        get() = data[5]
 
     inline val huisnummerToevoeging: String
-        get() = data[6]!!
+        get() = data[6]
 
     inline val postcode: String
-        get() = data[7]!!
+        get() = data[7]
 
     inline val plaatsnaam: String
-        get() = data[8]!!
+        get() = data[8]
 
     inline val gemeente: String
-        get() = data[9]!!
+        get() = data[9]
 
 
     inline var slagingspercentageEersteKeer: Double?
-        get() = data[10]?.toDouble()
+        get() = if (data[10] == "null") null else data[10].toDouble()
         set(value) {
-            data[10] = value?.toString()
+            data[10] = value?.toString() ?: "null"
         }
 
     inline var slagingspercentageHerkansing: Double?
-        get() = data[11]?.toDouble()
+        get() = if (data[11] == "null") null else data[11].toDouble()
         set(value) {
-            data[11] = value?.toString()
+            data[11] = value?.toString() ?: "null"
         }
 
 

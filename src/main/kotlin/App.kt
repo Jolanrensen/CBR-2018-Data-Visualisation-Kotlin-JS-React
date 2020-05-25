@@ -8,8 +8,8 @@ import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
 import data.Data
-import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
-import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
+import data.ExamenresultaatVersie.EERSTE_EXAMEN_OF_TOETS
+import data.ExamenresultaatVersie.HEREXAMEN_OF_TOETS
 import delegates.ReactPropAndStateDelegates.stateAsProp
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import io.data2viz.color.Colors
@@ -81,6 +81,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
             delay(1000)
             Data.buildAllData()
             println("data loaded!")
+//            Data.saveAlleExamenlocaties()
             dataLoaded = true
         }
     }

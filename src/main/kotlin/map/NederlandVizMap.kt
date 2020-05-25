@@ -17,8 +17,8 @@ import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.mCircularProgress
 import data.*
-import data.ExamenResultaatVersie.EERSTE_EXAMEN_OF_TOETS
-import data.ExamenResultaatVersie.HEREXAMEN_OF_TOETS
+import data.ExamenresultaatVersie.EERSTE_EXAMEN_OF_TOETS
+import data.ExamenresultaatVersie.HEREXAMEN_OF_TOETS
 import data2viz.GeoPathNode
 import data2viz.vizComponent
 import forEachApply
@@ -64,7 +64,7 @@ interface NederlandVizMapProps : RProps {
 }
 
 interface NederlandVizMapState : RState {
-    var gemeentes: List<Gemeente>
+    var gemeentes: Map<String, Gemeente>
     var loadingState: Loading
 }
 
@@ -92,7 +92,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
 
 
     override fun NederlandVizMapState.init(props: NederlandVizMapProps) {
-        gemeentes = listOf()
+        gemeentes = emptyMap()
         loadingState = NOT_LOADED
     }
 
@@ -110,7 +110,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     private val nederland: FeatureCollection<Data.GemeentesProperties> =
         Data.geoJson!! // geometry type is polygon/multipolygon for each
 
-    private val idColorToGemeente: HashMap<Int, Gemeente> = hashMapOf()
+    // String is a key in [gemeentes]
+    private val idColorToGemeente = HashMap<Int, String>()
 
     @Suppress("DuplicatedCode")
     private fun calculateGemeentes() {
@@ -159,7 +160,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     strokeWidth = null
                 }
 
-                Gemeente(
+                featureStatnaam to Gemeente(
                     feature = feature,
                     opleiders = opleiders,
                     examenlocaties = examenlocaties,
@@ -181,8 +182,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                         0.0
                                     } else {
                                         entry.sumByDouble {
-                                            it.examenResultaatAantallen.count {
-                                                it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
+                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+                                                it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
                                             }.toDouble()
                                         }
                                     }
@@ -192,8 +193,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                 it.slagingspercentageEersteKeer!! *
                                         Data.opleiderToResultaten[it.code]!!
                                             .sumByDouble {
-                                                it.examenResultaatAantallen.count {
-                                                    it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
+                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+                                                    it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
                                                 }.toDouble()
                                             }
                             } / opleidersResultSize
@@ -210,8 +211,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                         0.0
                                     } else {
                                         entry.sumByDouble {
-                                            it.examenResultaatAantallen.count {
-                                                it.examenResultaatVersie == HEREXAMEN_OF_TOETS
+                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+                                                it.examenresultaatVersie == HEREXAMEN_OF_TOETS
                                             }.toDouble()
                                         }
                                     }
@@ -221,8 +222,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                 it.slagingspercentageEersteKeer!! *
                                         Data.opleiderToResultaten[it.code]!!
                                             .sumByDouble {
-                                                it.examenResultaatAantallen.count {
-                                                    it.examenResultaatVersie == HEREXAMEN_OF_TOETS
+                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+                                                    it.examenresultaatVersie == HEREXAMEN_OF_TOETS
                                                 }.toDouble()
                                             }
                             } / opleidersResultSize
@@ -239,7 +240,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                         0.0
                                     } else {
                                         entry.sumByDouble {
-                                            it.examenResultaatAantallen.size.toDouble()
+                                            Data.alleResultaten[it]!!.examenresultaatAantallen.size.toDouble()
                                         }
                                     }
                                 }
@@ -248,7 +249,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                 (it.slagingspercentageEersteKeer!! + it.slagingspercentageHerkansing!!) / 2.0 *
                                         Data.opleiderToResultaten[it.code]!!
                                             .sumByDouble {
-                                                it.examenResultaatAantallen.size.toDouble()
+                                                Data.alleResultaten[it]!!.examenresultaatAantallen.size.toDouble()
                                             }
                             } / opleidersResultSize
                         },
@@ -265,8 +266,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                         0.0
                                     } else {
                                         entry.sumByDouble {
-                                            it.examenResultaatAantallen.count {
-                                                it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
+                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+                                                it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
                                             }.toDouble()
                                         }
                                     }
@@ -276,8 +277,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                 it.slagingspercentageEersteKeer!! *
                                         Data.examenlocatieToResultaten[it.naam]!!
                                             .sumByDouble {
-                                                it.examenResultaatAantallen.count {
-                                                    it.examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS
+                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+                                                    it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
                                                 }.toDouble()
                                             }
                             } / examenlocatiesResultSize
@@ -294,8 +295,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                         0.0
                                     } else {
                                         entry.sumByDouble {
-                                            it.examenResultaatAantallen.count {
-                                                it.examenResultaatVersie == HEREXAMEN_OF_TOETS
+                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+                                                it.examenresultaatVersie == HEREXAMEN_OF_TOETS
                                             }.toDouble()
                                         }
                                     }
@@ -305,8 +306,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                 it.slagingspercentageEersteKeer!! *
                                         Data.examenlocatieToResultaten[it.naam]!!
                                             .sumByDouble {
-                                                it.examenResultaatAantallen.count {
-                                                    it.examenResultaatVersie == HEREXAMEN_OF_TOETS
+                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+                                                    it.examenresultaatVersie == HEREXAMEN_OF_TOETS
                                                 }.toDouble()
                                             }
                             } / examenlocatiesResultSize
@@ -324,7 +325,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                         0.0
                                     } else {
                                         entry.sumByDouble {
-                                            it.examenResultaatAantallen.count().toDouble()
+                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count().toDouble()
                                         }
                                     }
                                 }
@@ -333,12 +334,12 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                                 (it.slagingspercentageEersteKeer!! + it.slagingspercentageHerkansing!!) / 2.0 *
                                         Data.examenlocatieToResultaten[it.naam]!!
                                             .sumByDouble {
-                                                it.examenResultaatAantallen.count().toDouble()
+                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count().toDouble()
                                             }
                             } / examenlocatiesResultSize
                         }
-                ).apply { idColorToGemeente[idColor!!.rgb] = this }
-            }
+                ).apply { idColorToGemeente[idColor!!.rgb] = featureStatnaam }
+            }.toMap()
             loadingState = LOADED
         }
     }
@@ -379,7 +380,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
             }
         }
 
-        gemeentes.forEach {
+        gemeentes.values.forEach {
             it.geoPathNode.fill = getGemeenteColor(
                 selected = selectedGemeente == it,
                 gemeente = it,
@@ -406,7 +407,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
             .data
         val color = Colors.rgb(col[0].toInt(), col[1].toInt(), col[2].toInt()).rgb
 
-        return idColorToGemeente[color]
+        return gemeentes[idColorToGemeente[color]]
     }
 
     override fun RBuilder.render() {
@@ -435,7 +436,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     runOnHiddenViz = { it ->
                         hiddenCanvas = it
                         hiddenViz = this
-                        gemeentes.forEachApply {
+                        gemeentes.values.forEachApply {
                             hiddenGeoPathNode.redrawPath()
                             hiddenViz!!.add(hiddenGeoPathNode)
                         }

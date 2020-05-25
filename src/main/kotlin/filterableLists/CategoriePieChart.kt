@@ -1,13 +1,10 @@
 package filterableLists
 
-import com.ccfraser.muirwik.components.styles.FontStyle
 import data.Categorie
 import data.Data
 import data.Examenlocatie
 import data.Opleider
 import data2viz.vizComponent
-import delegates.ReactPropAndStateDelegates
-import delegates.ReactPropAndStateDelegates.StateAsProp
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import io.data2viz.color.Colors
@@ -20,10 +17,6 @@ import io.data2viz.shape.tau
 import io.data2viz.viz.*
 import io.data2viz.viz.FontWeight.BOLD
 import io.data2viz.viz.FontWeight.NORMAL
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import libs.RPureComponent
 import org.khronos.webgl.get
 import org.w3c.dom.CanvasRenderingContext2D
@@ -31,7 +24,6 @@ import react.RBuilder
 import react.RElementBuilder
 import react.RProps
 import react.RState
-import kotlin.js.Promise
 
 interface CategoriePieChartProps : RProps {
     var opleider: Opleider?
@@ -75,9 +67,10 @@ class CategoriePieChart(prps: CategoriePieChartProps) :
                 if (opleider != null) Data.opleiderToResultaten[opleider!!.code]!!
                 else Data.examenlocatieToResultaten[examenlocatie!!.naam]!!
 
-            for (resultaat in resultaten) {
+            for (resultaatId in resultaten) {
+                val resultaat = Data.alleResultaten[resultaatId]!!
                 categorieCount[resultaat.categorie] = categorieCount[resultaat.categorie]!! +
-                        resultaat.examenResultaatAantallen.sumBy { it.aantal }
+                        resultaat.examenresultaatAantallen.sumBy { it.aantal }
             }
 
             val totalCount = categorieCount.values.sum().toDouble()
