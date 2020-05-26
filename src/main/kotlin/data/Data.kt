@@ -1,23 +1,10 @@
 package data
 
-import data.Examenresultaat.ONVOLDOENDE
-import data.Examenresultaat.VOLDOENDE
-import data.ExamenresultaatCategorie.*
-import data.ExamenresultaatVersie.EERSTE_EXAMEN_OF_TOETS
-import data.ExamenresultaatVersie.HEREXAMEN_OF_TOETS
 import org.w3c.xhr.XMLHttpRequest
 
 object Data {
 
     var hasStartedLoading = false
-
-    val opleiderToExamenlocaties: HashMap<String, HashSet<String>> = hashMapOf()
-    val examenlocatieToOpleiders: HashMap<String, HashSet<String>> = hashMapOf()
-
-    val opleiderToResultaten: HashMap<String, HashSet<Int>> = hashMapOf()
-    val examenlocatieToResultaten: HashMap<String, HashSet<Int>> = hashMapOf()
-
-//    var alleResultaten: HashMap<Int, Resultaat> = hashMapOf()
 
     interface GemeentesProperties {
         val statcode: String
@@ -25,6 +12,38 @@ object Data {
         val statnaam: String
         val rubriek: String
         val FID: String
+    }
+
+    fun saveOpleiderToExamenlocaties() {
+        var allResults = ""
+        for ((key, values) in opleiderToExamenlocaties) {
+            allResults += "$key;${values.joinToString(";")}\n"
+        }
+        println(allResults)
+    }
+
+    fun saveExamenlocatieToOpleiders() {
+        var allResults = ""
+        for ((key, values) in examenlocatieToOpleiders) {
+            allResults += "$key;${values.joinToString(";")}\n"
+        }
+        println(allResults)
+    }
+
+    fun saveOpleiderToResultaten() {
+        var allResults = ""
+        for ((key, values) in opleiderToResultaten) {
+            allResults += "$key;${values.joinToString(";")}\n"
+        }
+        println(allResults)
+    }
+
+    fun saveExamenlocatieToResultaten() {
+        var allResults = ""
+        for ((key, values) in examenlocatieToResultaten) {
+            allResults += "$key;${values.joinToString(";")}\n"
+        }
+        println(allResults)
     }
 
     fun saveAlleExamenlocaties() {
@@ -55,6 +74,114 @@ object Data {
         }
         println(allResults)
     }
+
+    fun loadData() {
+        opleiderToExamenlocaties
+        examenlocatieToOpleiders
+        opleiderToResultaten
+        examenlocatieToResultaten
+        alleExamenlocaties
+        alleOpleiders
+        alleResultaten
+        geoJson
+    }
+
+    private var _opleiderToExamenlocaties: Map<String, Set<String>>? = null
+    val opleiderToExamenlocaties: Map<String, Set<String>>
+        get() {
+            if (_opleiderToExamenlocaties != null) return _opleiderToExamenlocaties!!
+            val xmlhttp = XMLHttpRequest()
+            xmlhttp.open("GET", "opleiderToExamenlocaties", false)
+            xmlhttp.send()
+
+            val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
+            _opleiderToExamenlocaties = result
+                ?.split("\n")
+                ?.map {
+                    it.split(";").let {
+                        it.first() to
+                                it.takeLast(it.size - 1)
+                                    .toSet()
+                    }
+                }
+                ?.toMap()
+
+            return _opleiderToExamenlocaties!!
+        }
+
+
+    private var _examenlocatieToOpleiders: Map<String, Set<String>>? = null
+    val examenlocatieToOpleiders: Map<String, Set<String>>
+        get() {
+            if (_examenlocatieToOpleiders != null) return _examenlocatieToOpleiders!!
+            val xmlhttp = XMLHttpRequest()
+            xmlhttp.open("GET", "examenlocatieToOpleiders", false)
+            xmlhttp.send()
+
+            val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
+            _examenlocatieToOpleiders = result
+                ?.split("\n")
+                ?.map {
+                    it.split(";").let {
+                        it.first() to
+                                it.takeLast(it.size - 1)
+                                    .toSet()
+                    }
+                }
+                ?.toMap()
+
+            return _examenlocatieToOpleiders!!
+        }
+
+
+    private var _opleiderToResultaten: Map<String, Set<Int>>? = null
+    val opleiderToResultaten: Map<String, Set<Int>>
+        get() {
+            if (_opleiderToResultaten != null) return _opleiderToResultaten!!
+            val xmlhttp = XMLHttpRequest()
+            xmlhttp.open("GET", "opleiderToResultaten", false)
+            xmlhttp.send()
+
+            val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
+            _opleiderToResultaten = result
+                ?.split("\n")
+                ?.map {
+                    it.split(";").let {
+                        it.first() to
+                                it.takeLast(it.size - 1)
+                                    .map { it.toInt() }
+                                    .toSet()
+                    }
+                }
+                ?.toMap()
+
+            return _opleiderToResultaten!!
+        }
+
+    private var _examenlocatieToResultaten: Map<String, Set<Int>>? = null
+    val examenlocatieToResultaten: Map<String, Set<Int>>
+        get() {
+            if (_examenlocatieToResultaten != null) return _examenlocatieToResultaten!!
+            val xmlhttp = XMLHttpRequest()
+            xmlhttp.open("GET", "examenlocatieToResultaten", false)
+            xmlhttp.send()
+
+            val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
+            _examenlocatieToResultaten = result
+                ?.split("\n")
+                ?.map {
+                    it.split(";").let {
+                        it.first() to
+                                it.takeLast(it.size - 1)
+                                    .map { it.toInt() }
+                                    .toSet()
+                    }
+                }
+                ?.toMap()
+
+
+            return _examenlocatieToResultaten!!
+        }
 
     private var _alleExamenlocaties: Map<String, Examenlocatie>? = null
     val alleExamenlocaties: Map<String, Examenlocatie>
@@ -104,6 +231,8 @@ object Data {
         }
 
     private var _alleResultaten: Map<Int, Resultaat>? = null
+
+    @OptIn(ExperimentalStdlibApi::class)
     val alleResultaten: Map<Int, Resultaat>
         get() {
             if (_alleResultaten != null) return _alleResultaten!!
@@ -113,26 +242,28 @@ object Data {
 
             val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
 
-            _alleResultaten = result
-                ?.split("\n")
-                ?.map {
-                    it.split(",").let {
-                        it[0].toInt() to Resultaat(
-                            id = it[0].toInt(),
-                            product = Product.valueOf(it[1]),
-                            examenresultaatAantallen = it[2].split(";")
-                                .map {
-                                    ExamenresultaatAantal(
-                                        data = it.split("|")
-                                            .map { it.toInt() }
-                                            .toTypedArray()
-                                    )
-                                }
-                                .toTypedArray()
-                        )
+            @Suppress("RemoveExplicitTypeArguments")
+            _alleResultaten = buildMap<Int, Resultaat> {
+                result
+                    ?.split("\n")
+                    ?.forEach {
+                        it.split(",").also {
+                            this[it[0].toInt()] = Resultaat(arrayOf(
+                                it[0],
+                                it[1],
+                                it[2].split(";")
+                                    .map {
+                                        ExamenresultaatAantal(
+                                            it.split("|")
+                                                .map { it.toInt() }
+                                                .toTypedArray()
+                                        )
+                                    }
+                                    .toTypedArray()
+                            ))
+                        }
                     }
-                }
-                ?.toMap()
+            }
 
             return _alleResultaten!!
         }
@@ -152,228 +283,6 @@ object Data {
             field = result?.toFeatureCollection()
             return field
         }
-
-    val csv: Sequence<List<String>>?
-        get() {
-            val xmlhttp = XMLHttpRequest()
-            // data from overheid cbr, https://data.overheid.nl/dataset/cbr-opleiderresultaten
-            // gemeentes toegevoegd met https://www.cbs.nl/nl-nl/maatwerk/2018/36/buurt-wijk-en-gemeente-2018-voor-postcode-huisnummer
-            xmlhttp.open("GET", "opleiderresultaten-met-gemeentes.csv", false)
-
-            xmlhttp.send()
-            val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
-
-            return result
-                ?.split('\n')
-                ?.asSequence()
-                ?.map { it.split(';') }
-        }
-
-    fun buildAllData() {
-        hasStartedLoading = true
-        csv?.let {
-            val data = it.drop(1)
-
-            for ((i, line) in data.withIndex()) {
-                try {
-                    val opleiderCode = line[0]
-//                    val opleider = alleOpleiders.getOrPut(line[0]) {
-//                        Opleider(
-//                            code = line[0],
-//                            naam = line[1],
-//                            startdatum = line[2],
-//                            einddatum = line[3],
-//                            straatnaam = line[4],
-//                            huisnummer = line[5],
-//                            huisnummerToevoeging = line[6],
-//                            postcode = line[7],
-//                            plaatsnaam = line[8],
-//                            gemeente = line[37]
-//                        )
-//                    }
-
-                    val examenlocatieNaam = line[13]
-//                        alleExamenlocaties.getOrPut(line[13]) {
-//                        Examenlocatie(
-//                            naam = line[13],
-//                            straatnaam = line[14],
-//                            huisnummer = line[15],
-//                            huisnummerToevoeging = line[16],
-//                            postcode = line[17],
-//                            plaatsnaam = line[18],
-//                            gemeente = line[38]
-//                        )
-//                    }
-
-//                    val resultaat = getResult(i, line)
-                    val resultaatId = i
-
-//                    alleResultaten[resultaatId] = resultaat
-
-                    opleiderToExamenlocaties.getOrPut(opleiderCode, { hashSetOf() })
-                        .add(examenlocatieNaam)
-                    examenlocatieToOpleiders.getOrPut(examenlocatieNaam, { hashSetOf() })
-                        .add(opleiderCode)
-
-                    opleiderToResultaten.getOrPut(opleiderCode, { hashSetOf() })
-                        .add(resultaatId)
-                    examenlocatieToResultaten.getOrPut(examenlocatieNaam, { hashSetOf() })
-                        .add(resultaatId)
-
-                } catch (e: Exception) {
-                }
-            }
-
-            opleiderToResultaten.forEach { (opleiderCode, resultaten) ->
-                alleOpleiders[opleiderCode]?.apply {
-                    slagingspercentageEersteKeer = (
-                            resultaten.sumBy {
-                                alleResultaten[it]!!.examenresultaatAantallen
-                                    .asSequence()
-                                    .voldoende
-                                    .eersteExamen
-                                    .sumBy { it.aantal }
-                            }.toDouble() / resultaten.sumBy {
-                                alleResultaten[it]!!.examenresultaatAantallen
-                                    .asSequence()
-                                    .eersteExamen
-                                    .sumBy { it.aantal }
-                            }.toDouble()
-                            ).let { if (it.isNaN()) null else it }
-
-                    slagingspercentageHerkansing = (
-                            resultaten.sumBy {
-                                alleResultaten[it]!!.examenresultaatAantallen
-                                    .asSequence()
-                                    .voldoende
-                                    .herexamen
-                                    .sumBy { it.aantal }
-                            }.toDouble() / resultaten.sumBy {
-                                alleResultaten[it]!!.examenresultaatAantallen
-                                    .asSequence()
-                                    .herexamen
-                                    .sumBy { it.aantal }
-                            }.toDouble()
-                            ).let { if (it.isNaN()) null else it }
-                }
-            }
-
-            examenlocatieToResultaten.forEach { (examenlocatieCode, resultaten) ->
-                alleExamenlocaties[examenlocatieCode]?.apply {
-                    slagingspercentageEersteKeer = (
-                            resultaten.sumBy {
-                                alleResultaten[it]!!.examenresultaatAantallen
-                                    .asSequence()
-                                    .voldoende
-                                    .eersteExamen
-                                    .sumBy { it.aantal }
-                            }.toDouble() / resultaten.sumBy {
-                                alleResultaten[it]!!.examenresultaatAantallen
-                                    .asSequence()
-                                    .eersteExamen
-                                    .sumBy { it.aantal }
-                            }.toDouble()
-                            ).let { if (it.isNaN()) null else it }
-
-                    slagingspercentageHerkansing = (
-                            resultaten.sumBy {
-                                alleResultaten[it]!!.examenresultaatAantallen
-                                    .asSequence()
-                                    .voldoende
-                                    .herexamen
-                                    .sumBy { it.aantal }
-                            }.toDouble() / resultaten.sumBy {
-                                alleResultaten[it]!!.examenresultaatAantallen
-                                    .asSequence()
-                                    .herexamen
-                                    .sumBy { it.aantal }
-                            }.toDouble()
-                            ).let { if (it.isNaN()) null else it }
-                }
-            }
-        }
-    }
-
-    private fun getResult(id: Int, line: List<String>) = Resultaat(
-        id = id,
-        product = Product.valueOf(
-            line[11].replace('-', '_')
-        ),
-        examenresultaatAantallen = arrayOf(
-            ExamenresultaatAantal(
-                examenresultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-                examenresultaatCategorie = AUTOMAAT,
-                examenresultaat = VOLDOENDE,
-                aantal = line[23].toInt()
-            ),
-            ExamenresultaatAantal(
-                examenresultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-                examenresultaatCategorie = AUTOMAAT,
-                examenresultaat = ONVOLDOENDE,
-                aantal = line[24].toInt()
-            ),
-            ExamenresultaatAantal(
-                examenresultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-                examenresultaatCategorie = COMBI,
-                examenresultaat = VOLDOENDE,
-                aantal = line[25].toInt()
-            ),
-            ExamenresultaatAantal(
-                examenresultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-                examenresultaatCategorie = COMBI,
-                examenresultaat = ONVOLDOENDE,
-                aantal = line[26].toInt()
-            ),
-            ExamenresultaatAantal(
-                examenresultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-                examenresultaatCategorie = HANDGESCHAKELD,
-                examenresultaat = VOLDOENDE,
-                aantal = line[27].toInt()
-            ),
-            ExamenresultaatAantal(
-                examenresultaatVersie = EERSTE_EXAMEN_OF_TOETS,
-                examenresultaatCategorie = HANDGESCHAKELD,
-                examenresultaat = ONVOLDOENDE,
-                aantal = line[28].toInt()
-            ),
-            ExamenresultaatAantal(
-                examenresultaatVersie = HEREXAMEN_OF_TOETS,
-                examenresultaatCategorie = AUTOMAAT,
-                examenresultaat = VOLDOENDE,
-                aantal = line[31].toInt()
-            ),
-            ExamenresultaatAantal(
-                examenresultaatVersie = HEREXAMEN_OF_TOETS,
-                examenresultaatCategorie = AUTOMAAT,
-                examenresultaat = ONVOLDOENDE,
-                aantal = line[32].toInt()
-            ),
-            ExamenresultaatAantal(
-                examenresultaatVersie = HEREXAMEN_OF_TOETS,
-                examenresultaatCategorie = COMBI,
-                examenresultaat = VOLDOENDE,
-                aantal = line[33].toInt()
-            ),
-            ExamenresultaatAantal(
-                examenresultaatVersie = HEREXAMEN_OF_TOETS,
-                examenresultaatCategorie = COMBI,
-                examenresultaat = ONVOLDOENDE,
-                aantal = line[34].toInt()
-            ),
-            ExamenresultaatAantal(
-                examenresultaatVersie = HEREXAMEN_OF_TOETS,
-                examenresultaatCategorie = HANDGESCHAKELD,
-                examenresultaat = VOLDOENDE,
-                aantal = line[35].toInt()
-            ),
-            ExamenresultaatAantal(
-                examenresultaatVersie = HEREXAMEN_OF_TOETS,
-                examenresultaatCategorie = HANDGESCHAKELD,
-                examenresultaat = ONVOLDOENDE,
-                aantal = line[36].toInt()
-            )
-        )
-    )
 }
 
 

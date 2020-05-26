@@ -35,13 +35,11 @@ import io.data2viz.viz.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.css.Display
-import kotlinx.css.JustifyContent
-import kotlinx.css.display
-import kotlinx.css.justifyContent
+import kotlinx.css.*
 import org.khronos.webgl.get
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
+import org.w3c.xhr.XMLHttpRequest
 import react.*
 import styled.css
 import styled.styledDiv
@@ -121,17 +119,30 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
             delay(500)
             println("calculating 'gemeentes'")
 
+            // First get extra gemeenteData
+            val xmlhttp = XMLHttpRequest()
+            xmlhttp.open("GET", "gemeenteData", false)
+            xmlhttp.send()
+
+            val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
+
+            val gemeenteData = result!!
+                .split("\n")
+                .map { it.split(";") }
+                .map { it.first() to it.takeLast(it.size - 1) }
+                .toMap()
+
+
             gemeentes = nederland.features.map { feature ->
                 val featureStatnaam = feature.properties.statnaam.toLowerCase()
 
-                // TODO move to
-                val opleiders = Data.alleOpleiders
-                    .values
-                    .filter { it.gemeente.toLowerCase() == featureStatnaam }
-
-                val examenlocaties = Data.alleExamenlocaties
-                    .values
-                    .filter { it.gemeente.toLowerCase() == featureStatnaam }
+//                val opleiders = Data.alleOpleiders
+//                    .values
+//                    .filter { it.gemeente.toLowerCase() == featureStatnaam }
+//
+//                val examenlocaties = Data.alleExamenlocaties
+//                    .values
+//                    .filter { it.gemeente.toLowerCase() == featureStatnaam }
 
                 fun GeoPathNode.runOnNode() {
                     stroke = Colors.Web.black
@@ -160,184 +171,192 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     strokeWidth = null
                 }
 
+                val currentGemeenteData = gemeenteData[featureStatnaam] ?: error("")
+
                 featureStatnaam to Gemeente(
                     feature = feature,
-                    opleiders = opleiders,
-                    examenlocaties = examenlocaties,
+                    opleiders = currentGemeenteData[0].split(","), //opleiders.map { it.code },
+                    examenlocaties = currentGemeenteData[1].split(","), //examenlocaties.map { it.naam },
                     geoPathNode = geoPathNode,
                     hiddenGeoPathNode = hiddenGeoPathNode,
 
                     /**
                      * Totaal percentage = sum[i in opleiders](i.slagingspecentage * aantal resultaten in i) / totaal aantal resultaten
                      */
-                    slagingspercentageEersteKeerOpleiders = opleiders
-                        .filter { it.slagingspercentageEersteKeer != null }
-                        .let { opleiders ->
-                            val opleiderCodes = opleiders.map { it.code }
+                    slagingspercentageEersteKeerOpleiders = currentGemeenteData[2].toDouble(),
+//                    opleiders
+//                        .filter { it.slagingspercentageEersteKeer != null }
+//                        .let { opleiders ->
+//                            val opleiderCodes = opleiders.map { it.code }
+//
+//                            val opleidersResultSize = Data.opleiderToResultaten
+//                                .asSequence()
+//                                .sumByDouble { (key, entry) ->
+//                                    if (key !in opleiderCodes) {
+//                                        0.0
+//                                    } else {
+//                                        entry.sumByDouble {
+//                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+//                                                it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
+//                                            }.toDouble()
+//                                        }
+//                                    }
+//                                }
+//
+//                            opleiders.sumByDouble {
+//                                it.slagingspercentageEersteKeer!! *
+//                                        Data.opleiderToResultaten[it.code]!!
+//                                            .sumByDouble {
+//                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+//                                                    it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
+//                                                }.toDouble()
+//                                            }
+//                            } / opleidersResultSize
+//                        },
+                    slagingspercentageHerexamenOpleiders = currentGemeenteData[3].toDouble(),
+//                    opleiders
+//                        .filter { it.slagingspercentageEersteKeer != null }
+//                        .let { opleiders ->
+//                            val opleiderCodes = opleiders.map { it.code }
+//
+//                            val opleidersResultSize = Data.opleiderToResultaten
+//                                .asSequence()
+//                                .sumByDouble { (key, entry) ->
+//                                    if (key !in opleiderCodes) {
+//                                        0.0
+//                                    } else {
+//                                        entry.sumByDouble {
+//                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+//                                                it.examenresultaatVersie == HEREXAMEN_OF_TOETS
+//                                            }.toDouble()
+//                                        }
+//                                    }
+//                                }
+//
+//                            opleiders.sumByDouble {
+//                                it.slagingspercentageEersteKeer!! *
+//                                        Data.opleiderToResultaten[it.code]!!
+//                                            .sumByDouble {
+//                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+//                                                    it.examenresultaatVersie == HEREXAMEN_OF_TOETS
+//                                                }.toDouble()
+//                                            }
+//                            } / opleidersResultSize
+//                        },
+                    slagingspercentageGecombineerdOpleiders = currentGemeenteData[4].toDouble(),
+//                    opleiders
+//                        .filter { it.slagingspercentageEersteKeer != null && it.slagingspercentageHerkansing != null }
+//                        .let { opleiders ->
+//                            val opleiderCodes = opleiders.map { it.code }
+//
+//                            val opleidersResultSize = Data.opleiderToResultaten
+//                                .asSequence()
+//                                .sumByDouble { (key, entry) ->
+//                                    if (key !in opleiderCodes) {
+//                                        0.0
+//                                    } else {
+//                                        entry.sumByDouble {
+//                                            Data.alleResultaten[it]!!.examenresultaatAantallen.size.toDouble()
+//                                        }
+//                                    }
+//                                }
+//
+//                            opleiders.sumByDouble {
+//                                (it.slagingspercentageEersteKeer!! + it.slagingspercentageHerkansing!!) / 2.0 *
+//                                        Data.opleiderToResultaten[it.code]!!
+//                                            .sumByDouble {
+//                                                Data.alleResultaten[it]!!.examenresultaatAantallen.size.toDouble()
+//                                            }
+//                            } / opleidersResultSize
+//                        },
 
-                            val opleidersResultSize = Data.opleiderToResultaten
-                                .asSequence()
-                                .sumByDouble { (key, entry) ->
-                                    if (key !in opleiderCodes) {
-                                        0.0
-                                    } else {
-                                        entry.sumByDouble {
-                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-                                                it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
-                                            }.toDouble()
-                                        }
-                                    }
-                                }
+                    slagingspercentageEersteKeerExamenlocaties = currentGemeenteData[5].toDouble(),
+//                    examenlocaties
+//                        .filter { it.slagingspercentageEersteKeer != null }
+//                        .let { examenlocaties ->
+//                            val examenlocatieNamen = examenlocaties.map { it.naam }
+//
+//                            val examenlocatiesResultSize = Data.examenlocatieToResultaten
+//                                .asSequence()
+//                                .sumByDouble { (key, entry) ->
+//                                    if (key !in examenlocatieNamen) {
+//                                        0.0
+//                                    } else {
+//                                        entry.sumByDouble {
+//                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+//                                                it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
+//                                            }.toDouble()
+//                                        }
+//                                    }
+//                                }
+//
+//                            examenlocaties.sumByDouble {
+//                                it.slagingspercentageEersteKeer!! *
+//                                        Data.examenlocatieToResultaten[it.naam]!!
+//                                            .sumByDouble {
+//                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+//                                                    it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
+//                                                }.toDouble()
+//                                            }
+//                            } / examenlocatiesResultSize
+//                        },
+                    slagingspercentageHerexamenExamenlocaties = currentGemeenteData[6].toDouble(),
+//                    examenlocaties
+//                        .filter { it.slagingspercentageEersteKeer != null }
+//                        .let { examenlocaties ->
+//                            val examenlocatieNamen = examenlocaties.map { it.naam }
+//
+//                            val examenlocatiesResultSize = Data.examenlocatieToResultaten
+//                                .asSequence()
+//                                .sumByDouble { (key, entry) ->
+//                                    if (key !in examenlocatieNamen) {
+//                                        0.0
+//                                    } else {
+//                                        entry.sumByDouble {
+//                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+//                                                it.examenresultaatVersie == HEREXAMEN_OF_TOETS
+//                                            }.toDouble()
+//                                        }
+//                                    }
+//                                }
+//
+//                            examenlocaties.sumByDouble {
+//                                it.slagingspercentageEersteKeer!! *
+//                                        Data.examenlocatieToResultaten[it.naam]!!
+//                                            .sumByDouble {
+//                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
+//                                                    it.examenresultaatVersie == HEREXAMEN_OF_TOETS
+//                                                }.toDouble()
+//                                            }
+//                            } / examenlocatiesResultSize
+//                        },
 
-                            opleiders.sumByDouble {
-                                it.slagingspercentageEersteKeer!! *
-                                        Data.opleiderToResultaten[it.code]!!
-                                            .sumByDouble {
-                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-                                                    it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
-                                                }.toDouble()
-                                            }
-                            } / opleidersResultSize
-                        },
-                    slagingspercentageHerexamenOpleiders = opleiders
-                        .filter { it.slagingspercentageEersteKeer != null }
-                        .let { opleiders ->
-                            val opleiderCodes = opleiders.map { it.code }
-
-                            val opleidersResultSize = Data.opleiderToResultaten
-                                .asSequence()
-                                .sumByDouble { (key, entry) ->
-                                    if (key !in opleiderCodes) {
-                                        0.0
-                                    } else {
-                                        entry.sumByDouble {
-                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-                                                it.examenresultaatVersie == HEREXAMEN_OF_TOETS
-                                            }.toDouble()
-                                        }
-                                    }
-                                }
-
-                            opleiders.sumByDouble {
-                                it.slagingspercentageEersteKeer!! *
-                                        Data.opleiderToResultaten[it.code]!!
-                                            .sumByDouble {
-                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-                                                    it.examenresultaatVersie == HEREXAMEN_OF_TOETS
-                                                }.toDouble()
-                                            }
-                            } / opleidersResultSize
-                        },
-                    slagingspercentageGecombineerdOpleiders = opleiders
-                        .filter { it.slagingspercentageEersteKeer != null && it.slagingspercentageHerkansing != null }
-                        .let { opleiders ->
-                            val opleiderCodes = opleiders.map { it.code }
-
-                            val opleidersResultSize = Data.opleiderToResultaten
-                                .asSequence()
-                                .sumByDouble { (key, entry) ->
-                                    if (key !in opleiderCodes) {
-                                        0.0
-                                    } else {
-                                        entry.sumByDouble {
-                                            Data.alleResultaten[it]!!.examenresultaatAantallen.size.toDouble()
-                                        }
-                                    }
-                                }
-
-                            opleiders.sumByDouble {
-                                (it.slagingspercentageEersteKeer!! + it.slagingspercentageHerkansing!!) / 2.0 *
-                                        Data.opleiderToResultaten[it.code]!!
-                                            .sumByDouble {
-                                                Data.alleResultaten[it]!!.examenresultaatAantallen.size.toDouble()
-                                            }
-                            } / opleidersResultSize
-                        },
-
-                    slagingspercentageEersteKeerExamenlocaties = examenlocaties
-                        .filter { it.slagingspercentageEersteKeer != null }
-                        .let { examenlocaties ->
-                            val examenlocatieNamen = examenlocaties.map { it.naam }
-
-                            val examenlocatiesResultSize = Data.examenlocatieToResultaten
-                                .asSequence()
-                                .sumByDouble { (key, entry) ->
-                                    if (key !in examenlocatieNamen) {
-                                        0.0
-                                    } else {
-                                        entry.sumByDouble {
-                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-                                                it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
-                                            }.toDouble()
-                                        }
-                                    }
-                                }
-
-                            examenlocaties.sumByDouble {
-                                it.slagingspercentageEersteKeer!! *
-                                        Data.examenlocatieToResultaten[it.naam]!!
-                                            .sumByDouble {
-                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-                                                    it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
-                                                }.toDouble()
-                                            }
-                            } / examenlocatiesResultSize
-                        },
-                    slagingspercentageHerexamenExamenlocaties = examenlocaties
-                        .filter { it.slagingspercentageEersteKeer != null }
-                        .let { examenlocaties ->
-                            val examenlocatieNamen = examenlocaties.map { it.naam }
-
-                            val examenlocatiesResultSize = Data.examenlocatieToResultaten
-                                .asSequence()
-                                .sumByDouble { (key, entry) ->
-                                    if (key !in examenlocatieNamen) {
-                                        0.0
-                                    } else {
-                                        entry.sumByDouble {
-                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-                                                it.examenresultaatVersie == HEREXAMEN_OF_TOETS
-                                            }.toDouble()
-                                        }
-                                    }
-                                }
-
-                            examenlocaties.sumByDouble {
-                                it.slagingspercentageEersteKeer!! *
-                                        Data.examenlocatieToResultaten[it.naam]!!
-                                            .sumByDouble {
-                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-                                                    it.examenresultaatVersie == HEREXAMEN_OF_TOETS
-                                                }.toDouble()
-                                            }
-                            } / examenlocatiesResultSize
-                        },
-
-                    slagingspercentageGecombineerdExamenlocaties = examenlocaties
-                        .filter { it.slagingspercentageEersteKeer != null && it.slagingspercentageHerkansing != null }
-                        .let { examenlocaties ->
-                            val examenlocatieNamen = examenlocaties.map { it.naam }
-
-                            val examenlocatiesResultSize = Data.examenlocatieToResultaten
-                                .asSequence()
-                                .sumByDouble { (key, entry) ->
-                                    if (key !in examenlocatieNamen) {
-                                        0.0
-                                    } else {
-                                        entry.sumByDouble {
-                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count().toDouble()
-                                        }
-                                    }
-                                }
-
-                            examenlocaties.sumByDouble {
-                                (it.slagingspercentageEersteKeer!! + it.slagingspercentageHerkansing!!) / 2.0 *
-                                        Data.examenlocatieToResultaten[it.naam]!!
-                                            .sumByDouble {
-                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count().toDouble()
-                                            }
-                            } / examenlocatiesResultSize
-                        }
+                    slagingspercentageGecombineerdExamenlocaties = currentGemeenteData[7].toDouble()
+//                    examenlocaties
+//                        .filter { it.slagingspercentageEersteKeer != null && it.slagingspercentageHerkansing != null }
+//                        .let { examenlocaties ->
+//                            val examenlocatieNamen = examenlocaties.map { it.naam }
+//
+//                            val examenlocatiesResultSize = Data.examenlocatieToResultaten
+//                                .asSequence()
+//                                .sumByDouble { (key, entry) ->
+//                                    if (key !in examenlocatieNamen) {
+//                                        0.0
+//                                    } else {
+//                                        entry.sumByDouble {
+//                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count().toDouble()
+//                                        }
+//                                    }
+//                                }
+//
+//                            examenlocaties.sumByDouble {
+//                                (it.slagingspercentageEersteKeer!! + it.slagingspercentageHerkansing!!) / 2.0 *
+//                                        Data.examenlocatieToResultaten[it.naam]!!
+//                                            .sumByDouble {
+//                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count().toDouble()
+//                                            }
+//                            } / examenlocatiesResultSize
+//                        }
                 ).apply { idColorToGemeente[idColor!!.rgb] = featureStatnaam }
             }.toMap()
             loadingState = LOADED
@@ -408,6 +427,15 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
         val color = Colors.rgb(col[0].toInt(), col[1].toInt(), col[2].toInt()).rgb
 
         return gemeentes[idColorToGemeente[color]]
+    }
+
+    fun saveGemeentes() {
+        var result = ""
+        for ((naam, gemeente) in gemeentes) {
+            result += "$naam;${gemeente.opleiders.joinToString(",")};${gemeente.examenlocaties.joinToString(",")};${gemeente.slagingspercentageEersteKeerOpleiders};${gemeente.slagingspercentageHerexamenOpleiders};${gemeente.slagingspercentageGecombineerdOpleiders};${gemeente.slagingspercentageEersteKeerExamenlocaties};${gemeente.slagingspercentageHerexamenExamenlocaties};${gemeente.slagingspercentageGecombineerdExamenlocaties}\n"
+        }
+
+        println(result)
     }
 
     override fun RBuilder.render() {

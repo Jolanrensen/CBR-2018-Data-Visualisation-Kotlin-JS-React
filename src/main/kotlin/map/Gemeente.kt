@@ -6,10 +6,10 @@ import data.Feature
 import data.Opleider
 import data2viz.GeoPathNode
 
-data class Gemeente(
+class Gemeente(
     val feature: Feature<Data.GemeentesProperties>,
-    val opleiders: Collection<Opleider> = setOf(),
-    val examenlocaties: Collection<Examenlocatie> = setOf(),
+    val opleiders: Collection<String> = setOf(),
+    val examenlocaties: Collection<String> = setOf(),
     val geoPathNode: GeoPathNode,
     val hiddenGeoPathNode: GeoPathNode,
 
@@ -22,8 +22,4 @@ data class Gemeente(
     val slagingspercentageGecombineerdExamenlocaties: Double
 ) {
     val name get() = feature.properties.statnaam
-
-    override fun equals(other: Any?): Boolean {
-        return super.equals(other)
-    }
 }

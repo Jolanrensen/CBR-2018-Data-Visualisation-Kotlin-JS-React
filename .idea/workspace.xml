@@ -19,28 +19,22 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="deselect all when clicking on map works, popover closes on click">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/jolanrensen.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenresultaatCategorie.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/alleExamenlocaties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/alleOpleiders" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/alleResultaten" afterDir="false" />
+    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="converted opleiders, examenlocaties and resultaten to separate files, now only the maps are left">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/examenlocatieToOpleiders" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/examenlocatieToResultaten" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/gemeenteData" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/opleiderToExamenlocaties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/opleiderToResultaten" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.js.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Examenresultaat.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatAantal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenresultaatAantal.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatCategorie.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenResultaatVersie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenresultaatVersie.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Opleider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Resultaat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Resultaat.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategoriePieChart.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategoriePieChart.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/Gemeente.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/Gemeente.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/gemeentenaam2018.csv" beforeDir="false" afterPath="$PROJECT_DIR$/oldResources/gemeentenaam2018.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/opleiderresultaten-01072017-tm-30062018.csv" beforeDir="false" afterPath="$PROJECT_DIR$/oldResources/opleiderresultaten-01072017-tm-30062018.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/opleiderresultaten-met-gemeentes.csv" beforeDir="false" afterPath="$PROJECT_DIR$/oldResources/opleiderresultaten-met-gemeentes.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/opleiderresultaten.ods" beforeDir="false" afterPath="$PROJECT_DIR$/oldResources/opleiderresultaten.ods" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/postcodeToGemeente.csv" beforeDir="false" afterPath="$PROJECT_DIR$/oldResources/postcodeToGemeente.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,10 +130,12 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/oldResources" />
       <recent name="$PROJECT_DIR$/src/main/kotlin/map" />
     </key>
   </component>
@@ -199,7 +195,8 @@
       <workItem from="1589822571953" duration="10798000" />
       <workItem from="1589886502984" duration="27954000" />
       <workItem from="1590231744302" duration="83000" />
-      <workItem from="1590428570811" duration="13025000" />
+      <workItem from="1590428570811" duration="13354000" />
+      <workItem from="1590515254638" duration="7543000" />
     </task>
     <task id="LOCAL-00001" summary="It's running again!">
       <created>1589639534400</created>
@@ -264,7 +261,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590431996073</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="converted opleiders, examenlocaties and resultaten to separate files, now only the maps are left">
+      <created>1590441801490</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1590441801490</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,17 +296,19 @@
     <MESSAGE value="categoriepiechart" />
     <MESSAGE value="clicking on pie chart works" />
     <MESSAGE value="deselect all when clicking on map works, popover closes on click" />
-    <option name="LAST_COMMIT_MESSAGE" value="deselect all when clicking on map works, popover closes on click" />
+    <MESSAGE value="converted opleiders, examenlocaties and resultaten to separate files, now only the maps are left" />
+    <option name="LAST_COMMIT_MESSAGE" value="converted opleiders, examenlocaties and resultaten to separate files, now only the maps are left" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1481" y="482" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589722154163">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="1481" y="482" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.34.2880.1586@0.34.2880.1586" timestamp="1589722154163" />
-    <state x="1500" y="610" width="772" height="436" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590441452984">
-      <screen x="0" y="34" width="2880" height="1586" />
+    <state x="3880" y="392" width="829" height="301" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590521906886">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="1500" y="610" width="772" height="436" key="#com.intellij.fileTypes.FileTypeChooser/0.34.2880.1586@0.34.2880.1586" timestamp="1590441452984" />
+    <state x="3880" y="392" width="829" height="301" key="#com.intellij.fileTypes.FileTypeChooser/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590521906886" />
     <state x="1718" y="478" width="537" height="701" key="#com.intellij.ide.util.MemberChooser" timestamp="1589905045687">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
@@ -315,30 +321,35 @@
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl/0.34.2880.1586@0.34.2880.1586" timestamp="1589720455423" />
-    <state width="1957" height="438" key="GridCell.Tab.0.bottom" timestamp="1590441623060">
-      <screen x="0" y="34" width="2880" height="1586" />
+    <state width="1862" height="259" key="GridCell.Tab.0.bottom" timestamp="1590521147322">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state width="1957" height="438" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590441623060" />
-    <state width="1957" height="438" key="GridCell.Tab.0.center" timestamp="1590441623059">
-      <screen x="0" y="34" width="2880" height="1586" />
+    <state width="1957" height="438" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590441953495" />
+    <state width="1862" height="259" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590521147322" />
+    <state width="1862" height="259" key="GridCell.Tab.0.center" timestamp="1590521147322">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state width="1957" height="438" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590441623059" />
-    <state width="1957" height="438" key="GridCell.Tab.0.left" timestamp="1590441623059">
-      <screen x="0" y="34" width="2880" height="1586" />
+    <state width="1957" height="438" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590441953494" />
+    <state width="1862" height="259" key="GridCell.Tab.0.center/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590521147322" />
+    <state width="1862" height="259" key="GridCell.Tab.0.left" timestamp="1590521147322">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state width="1957" height="438" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590441623059" />
-    <state width="1957" height="438" key="GridCell.Tab.0.right" timestamp="1590441623060">
-      <screen x="0" y="34" width="2880" height="1586" />
+    <state width="1957" height="438" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590441953494" />
+    <state width="1862" height="259" key="GridCell.Tab.0.left/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590521147322" />
+    <state width="1862" height="259" key="GridCell.Tab.0.right" timestamp="1590521147322">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
-    <state width="1957" height="438" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590441623060" />
-    <state x="804" y="374" width="1792" height="907" key="SettingsEditor" timestamp="1589636352721">
-      <screen x="0" y="34" width="2880" height="1586" />
+    <state width="1957" height="438" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590441953494" />
+    <state width="1862" height="259" key="GridCell.Tab.0.right/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590521147322" />
+    <state x="3416" y="173" width="1195" height="907" key="SettingsEditor" timestamp="1590515533020">
+      <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="804" y="374" width="1792" height="907" key="SettingsEditor/0.34.2880.1586@0.34.2880.1586" timestamp="1589636352721" />
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1590431997853">
+    <state x="3416" y="173" width="1195" height="907" key="SettingsEditor/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590515533020" />
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1590441803159">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1590431997853" />
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1590441803159" />
     <state x="822" y="283" width="1585" height="970" key="com.intellij.database.dbimport.ImportDialog" timestamp="1589720508224">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>

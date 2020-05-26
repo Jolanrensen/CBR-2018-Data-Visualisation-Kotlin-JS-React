@@ -78,10 +78,9 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
         GlobalScope.launch {
             if (dataLoaded) return@launch
-            delay(1000)
-            Data.buildAllData()
+            delay(500)
+            Data.loadData()
             println("data loaded!")
-//            Data.saveAlleExamenlocaties()
             dataLoaded = true
         }
     }
