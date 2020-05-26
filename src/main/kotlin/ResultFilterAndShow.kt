@@ -3,6 +3,8 @@ import data.Categorie
 import data.Data
 import data.Product
 import data.producten
+import delegates.ReactPropAndStateDelegates
+import delegates.ReactPropAndStateDelegates.StateAsProp
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateAsProp
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
@@ -11,6 +13,7 @@ import filterableLists.examenlocatiesList
 import filterableLists.opleidersList
 import libs.RPureComponent
 import react.RBuilder
+import react.RComponent
 import react.RProps
 import react.RState
 
@@ -24,28 +27,29 @@ interface ResultFilterAndShowProps : RProps {
 
     var setSelectAllExamenlocatiesFunction: (SelectAll) -> Unit
     var setDeselectAllExamenlocatiesFunction: (DeselectAll) -> Unit
+
+    var selectedOpleiderKeys: StateAsProp<Set<String>>
+    var selectedExamenlocatieKeys: StateAsProp<Set<String>>
+    var selectedProducts: StateAsProp<Set<Product>>
 }
 
-interface ResultFilterAndShowState : RState {
-    var selectedOpleiderKeys: Set<String>
-    var selectedExamenlocatieKeys: Set<String>
-    var selectedProducts: Set<Product>
-}
+interface ResultFilterAndShowState : RState
 
 class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
-    RPureComponent<ResultFilterAndShowProps, ResultFilterAndShowState>(prps) {
+/*RPure*/RComponent<ResultFilterAndShowProps, ResultFilterAndShowState>(prps) {
+
+    @Suppress("SimplifyBooleanWithConstants")
+    override fun shouldComponentUpdate(nextProps: ResultFilterAndShowProps, nextState: ResultFilterAndShowState) = false
+            || props.dataLoaded != nextProps.dataLoaded
+            || props.selectedOpleiderKeys != nextProps.selectedOpleiderKeys
+            || props.selectedExamenlocatieKeys != nextProps.selectedExamenlocatieKeys
+            || props.selectedProducts != nextProps.selectedProducts
 
     private val dataLoaded by propDelegateOf(ResultFilterAndShowProps::dataLoaded)
 
-    override fun ResultFilterAndShowState.init(props: ResultFilterAndShowProps) {
-        selectedOpleiderKeys = setOf()
-        selectedExamenlocatieKeys = setOf()
-        selectedProducts = setOf()
-    }
-
-    private var selectedOpleiderKeys by stateDelegateOf(ResultFilterAndShowState::selectedOpleiderKeys)
-    private var selectedExamenlocatieKeys by stateDelegateOf(ResultFilterAndShowState::selectedExamenlocatieKeys)
-    private var selectedProducts by stateDelegateOf(ResultFilterAndShowState::selectedProducts)
+    private var selectedOpleiderKeys by propDelegateOf(ResultFilterAndShowProps::selectedOpleiderKeys)
+    private var selectedExamenlocatieKeys by propDelegateOf(ResultFilterAndShowProps::selectedExamenlocatieKeys)
+    private var selectedProducts by propDelegateOf(ResultFilterAndShowProps::selectedProducts)
 
     private val emptySelectAllFunction: (SelectAll) -> Unit = {}
     private val emptyDeselectAllFunction: (DeselectAll) -> Unit = {}
@@ -85,8 +89,8 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     dataLoaded = this@ResultFilterAndShow.dataLoaded
                     itemsData = if (this@ResultFilterAndShow.dataLoaded) Data.alleOpleiders else mapOf()
                     alwaysAllowSelectAll = true
-                    selectedItemKeys = stateAsProp(ResultFilterAndShowState::selectedOpleiderKeys)
-                    selectedOtherItemKeys = stateAsProp(ResultFilterAndShowState::selectedExamenlocatieKeys)
+                    selectedItemKeys = props.selectedOpleiderKeys
+                    selectedOtherItemKeys = props.selectedExamenlocatieKeys
                     setApplyFilterFunction = props.setApplyOpleidersFilterFunction
 
                     setSelectAllFunction = props.setSelectAllOpleidersFunction
@@ -106,8 +110,8 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     dataLoaded = this@ResultFilterAndShow.dataLoaded
                     itemsData = if (this@ResultFilterAndShow.dataLoaded) Data.alleExamenlocaties else mapOf()
                     alwaysAllowSelectAll = true
-                    selectedItemKeys = stateAsProp(ResultFilterAndShowState::selectedExamenlocatieKeys)
-                    selectedOtherItemKeys = stateAsProp(ResultFilterAndShowState::selectedOpleiderKeys)
+                    selectedItemKeys = props.selectedExamenlocatieKeys
+                    selectedOtherItemKeys = props.selectedOpleiderKeys
                     setApplyFilterFunction = props.setApplyExamenlocatieFilterFunction
 
                     setSelectAllFunction = props.setSelectAllExamenlocatiesFunction
@@ -127,7 +131,7 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     dataLoaded = true
                     itemsData = mapOf(*Product.values().map { it to it }.toTypedArray()) // not used
                     alwaysAllowSelectAll = true
-                    selectedItemKeys = stateAsProp(ResultFilterAndShowState::selectedProducts)
+                    selectedItemKeys = props.selectedProducts
                     selectedOtherItemKeys = stateAsProp(setOf()) // not used
 
                     setApplyFilterFunction = setApplyCategorieFilterFunction

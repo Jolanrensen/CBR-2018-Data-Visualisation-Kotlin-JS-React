@@ -10,6 +10,7 @@ import com.ccfraser.muirwik.components.card.mCardHeader
 import data.Data
 import data.ExamenresultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenresultaatVersie.HEREXAMEN_OF_TOETS
+import data.Product
 import delegates.ReactPropAndStateDelegates.stateAsProp
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import io.data2viz.color.Colors
@@ -43,6 +44,10 @@ interface AppState : RState {
     var selectedGemeente: Gemeente?
     var examenlocatieOrOpleider: ExamenlocatieOrOpleider
     var slagingspercentageSoort: SlagingspercentageSoort
+
+    var selectedOpleiderKeys: Set<String>
+    var selectedExamenlocatieKeys: Set<String>
+    var selectedProducts: Set<Product>
 }
 
 enum class ExamenlocatieOrOpleider(val naamMeervoud: String) {
@@ -58,6 +63,15 @@ enum class SlagingspercentageSoort(val naam: String) {
 
 class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
+//    @Suppress("SimplifyBooleanWithConstants")
+//    override fun shouldComponentUpdate(nextProps: AppProps, nextState: AppState) = false
+//            || state.dataLoaded != nextState.dataLoaded
+//            || state.welcomeText != nextState.welcomeText
+//            || state.circleColor != nextState.circleColor
+////            || state.selectedGemeente != nextState.selectedGemeente
+//            || state.examenlocatieOrOpleider != nextState.examenlocatieOrOpleider
+//            || state.slagingspercentageSoort != nextState.slagingspercentageSoort
+
     override fun AppState.init(props: AppProps) {
         dataLoaded = false
         welcomeText = "Hello world!"
@@ -66,6 +80,10 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
         selectedGemeente = null
         examenlocatieOrOpleider = OPLEIDER
         slagingspercentageSoort = EERSTE_KEER
+
+        selectedOpleiderKeys = setOf()
+        selectedExamenlocatieKeys = setOf()
+        selectedProducts = setOf()
     }
 
     private var selectedGemeente by stateDelegateOf(AppState::selectedGemeente)
@@ -132,7 +150,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
     private var deselectAllExamenlocatiesFunctions = arrayListOf<DeselectAll>()
     private var deselectAllExamenlocaties: DeselectAll = { deselectAllExamenlocatiesFunctions.forEach { it() } }
-    private val setDeselectAllExamenlocatiesFunction = fun(it: DeselectAll) { deselectAllExamenlocatiesFunctions.add(it) }
+    private val setDeselectAllExamenlocatiesFunction =
+        fun(it: DeselectAll) { deselectAllExamenlocatiesFunctions.add(it) }
 
 
     private val toggleExamenlocatieOrOpleider = { _: Event? ->
@@ -316,6 +335,10 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
                                                 deselectAllOpleiders = this@App.deselectAllOpleiders
                                                 deselectAllExamenlocaties = this@App.deselectAllExamenlocaties
+
+                                                selectedOpleiderKeys = stateAsProp(AppState::selectedOpleiderKeys)
+                                                selectedExamenlocatieKeys = stateAsProp(AppState::selectedExamenlocatieKeys)
+                                                selectedProducts = stateAsProp(AppState::selectedProducts)
                                             }
                                         }
                                     }
@@ -381,8 +404,6 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                 }
                             }
 
-//                        opleiderApplyFilterFunctions = arrayListOf()
-//                        examenlocatieApplyFilterFunctions = arrayListOf()
                             mGridItem(xs = MGridSize.cells12) {
                                 hoveringCard {
                                     css {
@@ -401,7 +422,12 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                         setSelectAllOpleidersFunction = this@App.setSelectAllOpleidersFunction
                                         setSelectAllExamenlocatiesFunction = this@App.setSelectAllExamenlocatiesFunction
                                         setDeselectAllOpleidersFunction = this@App.setDeselectAllOpleidersFunction
-                                        setDeselectAllExamenlocatiesFunction = this@App.setDeselectAllExamenlocatiesFunction
+                                        setDeselectAllExamenlocatiesFunction =
+                                            this@App.setDeselectAllExamenlocatiesFunction
+
+                                        selectedOpleiderKeys = stateAsProp(AppState::selectedOpleiderKeys)
+                                        selectedExamenlocatieKeys = stateAsProp(AppState::selectedExamenlocatieKeys)
+                                        selectedProducts = stateAsProp(AppState::selectedProducts)
                                     }
                                 }
                             }

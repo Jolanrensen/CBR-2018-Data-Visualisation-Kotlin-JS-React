@@ -25,8 +25,8 @@ object ReactPropAndStateDelegates {
      *  Do not send these as a prop to a childComponent. Use StateAsProp for that!
      * */
     class StateDelegate<T>(
-        val get: () -> T,
-        val set: (T) -> Unit = {}
+        inline val get: () -> T,
+        inline val set: (T) -> Unit = {}
     ) {
         operator fun getValue(thisRef: Any?, property: KProperty<*>) = get()
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) = set(value)
@@ -38,13 +38,12 @@ object ReactPropAndStateDelegates {
         override fun hashCode(): Int = get().hashCode()
     }
 
-    fun <S : RState, T> Component<*, S>.stateDelegateOf(stateItem: KMutableProperty1<S, T>): StateDelegate<T> {
-        return StateDelegate({ stateItem.get(state) }) {
+    inline fun <S : RState, T> Component<*, S>.stateDelegateOf(stateItem: KMutableProperty1<S, T>): StateDelegate<T> =
+        StateDelegate({ stateItem.get(state) }) {
             setState {
                 stateItem.set(this, it)
             }
         }
-    }
 
     /**
      * Can be used to send both a getter and setter for a state to a child component as a prop.
@@ -72,8 +71,8 @@ object ReactPropAndStateDelegates {
      *
      */
     class StateAsProp<T>(
-        val value: T,
-        val set: (T) -> Unit = {}
+        inline val value: T,
+        inline val set: (T) -> Unit = {}
     ) {
         operator fun getValue(thisRef: Any?, property: KProperty<*>) = value
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) = set(value)
@@ -81,9 +80,13 @@ object ReactPropAndStateDelegates {
         override fun equals(other: Any?) =
             if (other !is StateAsProp<*>) false
             else (other as? StateAsProp<*>)?.value == value
+
+        override fun hashCode(): Int {
+            return value?.hashCode() ?: 0
+        }
     }
 
-    fun <S : RState, T> Component<*, S>.stateAsProp(stateItem: KMutableProperty1<S, T>): StateAsProp<T> =
+    inline fun <S : RState, T> Component<*, S>.stateAsProp(stateItem: KMutableProperty1<S, T>): StateAsProp<T> =
         StateAsProp(stateItem.get(state)) {
             setState {
                 stateItem.set(this, it)
@@ -91,7 +94,7 @@ object ReactPropAndStateDelegates {
         }
 
     /** same as stateAsProp, but without setter, just a getter */
-    fun <S : RState, T> Component<*, S>.stateAsProp(default: T) =
+    inline fun <S : RState, T> Component<*, S>.stateAsProp(default: T) =
         StateAsProp(default)
 
     /**
@@ -103,8 +106,8 @@ object ReactPropAndStateDelegates {
      *
      */
     class ReadWritePropDelegate<T>(
-        val get: () -> T,
-        val set: (T) -> Unit = {}
+        inline val get: () -> T,
+        inline val set: (T) -> Unit = {}
     ) {
         operator fun getValue(thisRef: Any?, property: KProperty<*>) = get()
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) = set(value)
@@ -112,9 +115,13 @@ object ReactPropAndStateDelegates {
         override fun equals(other: Any?) =
             if (other !is ReadWritePropDelegate<*>) false
             else (other as? ReadWritePropDelegate<*>)?.get?.invoke() == get()
+
+        override fun hashCode(): Int {
+            return get.invoke()?.hashCode() ?: 0
+        }
     }
 
-    fun <Props : RProps, State : RState, VarType : Any?> Component<Props, State>.propDelegateOf(propItem: KMutableProperty1<Props, StateAsProp<VarType>>) =
+    inline fun <Props : RProps, State : RState, VarType : Any?> Component<Props, State>.propDelegateOf(propItem: KMutableProperty1<Props, StateAsProp<VarType>>) =
         ReadWritePropDelegate({ propItem.get(props).value }
         ) { propItem.get(props).set(it) }
 
@@ -127,15 +134,19 @@ object ReactPropAndStateDelegates {
      * val item by readOnlyPropDelegateOf(YourProps::item)
      */
     class ReadOnlyPropDelegate<T>(
-        val get: () -> T
+        inline val get: () -> T
     ) {
         operator fun getValue(thisRef: Any?, property: KProperty<*>) = get()
 
         override fun equals(other: Any?) =
             if (other !is ReadWritePropDelegate<*>) false
             else (other as? ReadWritePropDelegate<*>)?.get?.invoke() == get()
+
+        override fun hashCode(): Int {
+            return get.invoke()?.hashCode() ?: 0
+        }
     }
 
-    fun <Props : RProps, State : RState, ValType : Any?> Component<Props, State>.propDelegateOf(propItem: KMutableProperty1<Props, ValType>) =
+    inline fun <Props : RProps, State : RState, ValType : Any?> Component<Props, State>.propDelegateOf(propItem: KMutableProperty1<Props, ValType>) =
         ReadOnlyPropDelegate { propItem.get(props) }
 }

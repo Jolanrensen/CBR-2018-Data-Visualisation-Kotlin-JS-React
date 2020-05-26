@@ -7,6 +7,7 @@ import ExamenlocatieOrOpleider.EXAMENLOCATIE
 import ExamenlocatieOrOpleider.OPLEIDER
 import Loading
 import Loading.*
+import ResultFilterAndShowProps
 import SelectAll
 import SlagingspercentageSoort
 import delegates.ReactPropAndStateDelegates.StateAsProp
@@ -59,6 +60,10 @@ interface NederlandVizMapProps : RProps {
 
     var deselectAllOpleiders: DeselectAll
     var deselectAllExamenlocaties: DeselectAll
+
+    var selectedOpleiderKeys: StateAsProp<Set<String>>
+    var selectedExamenlocatieKeys: StateAsProp<Set<String>>
+    var selectedProducts: StateAsProp<Set<Product>>
 }
 
 interface NederlandVizMapState : RState {
@@ -88,6 +93,10 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     val deselectAllOpleiders by propDelegateOf(NederlandVizMapProps::deselectAllOpleiders)
     val deselectAllExamenlocaties by propDelegateOf(NederlandVizMapProps::deselectAllExamenlocaties)
 
+    private var selectedOpleiderKeys by propDelegateOf(NederlandVizMapProps::selectedOpleiderKeys)
+    private var selectedExamenlocatieKeys by propDelegateOf(NederlandVizMapProps::selectedExamenlocatieKeys)
+    private var selectedProducts by propDelegateOf(NederlandVizMapProps::selectedProducts)
+
 
     override fun NederlandVizMapState.init(props: NederlandVizMapProps) {
         gemeentes = emptyMap()
@@ -98,12 +107,16 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     var loadingState by stateDelegateOf(NederlandVizMapState::loadingState)
 
     // don't update when [selectedGemeente] changed
-    override fun shouldComponentUpdate(nextProps: NederlandVizMapProps, nextState: NederlandVizMapState) =
-        props.dataLoaded != nextProps.dataLoaded
-                || props.examenlocatieOrOpleider != nextProps.examenlocatieOrOpleider
-                || props.slagingspercentageSoort != nextProps.slagingspercentageSoort
-                || state.gemeentes != nextState.gemeentes
-                || state.loadingState != nextState.loadingState
+    @Suppress("SimplifyBooleanWithConstants")
+    override fun shouldComponentUpdate(nextProps: NederlandVizMapProps, nextState: NederlandVizMapState) = false
+            || props.dataLoaded != nextProps.dataLoaded
+            || props.examenlocatieOrOpleider != nextProps.examenlocatieOrOpleider
+            || props.slagingspercentageSoort != nextProps.slagingspercentageSoort
+            || props.selectedOpleiderKeys != nextProps.selectedOpleiderKeys
+            || props.selectedExamenlocatieKeys != nextProps.selectedExamenlocatieKeys
+            || props.selectedProducts != nextProps.selectedProducts
+            || state.gemeentes != nextState.gemeentes
+            || state.loadingState != nextState.loadingState
 
     private val nederland: FeatureCollection<Data.GemeentesProperties> =
         Data.geoJson!! // geometry type is polygon/multipolygon for each
@@ -116,7 +129,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
         if (gemeentes.isNotEmpty() || loadingState == LOADED) return
 
         GlobalScope.launch {
-            delay(500)
+//            delay(500)
             println("calculating 'gemeentes'")
 
             // First get extra gemeenteData
@@ -175,8 +188,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
 
                 featureStatnaam to Gemeente(
                     feature = feature,
-                    opleiders = currentGemeenteData[0].split(","), //opleiders.map { it.code },
-                    examenlocaties = currentGemeenteData[1].split(","), //examenlocaties.map { it.naam },
+                    opleiders = currentGemeenteData[0].split(",").toSet(), //opleiders.map { it.code },
+                    examenlocaties = currentGemeenteData[1].split(",").toSet(), //examenlocaties.map { it.naam },
                     geoPathNode = geoPathNode,
                     hiddenGeoPathNode = hiddenGeoPathNode,
 
@@ -442,17 +455,14 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
         if (!dataLoaded) return showLoading()
         when (loadingState) {
             LOADING -> showLoading()
-            NOT_LOADED -> styledDiv {
-                css {
-                    display = Display.flex
-                    justifyContent = JustifyContent.center
-                }
-                mButton(caption = "LAAD KAART", color = MColor.primary, onClick = {
-                    if (loadingState == NOT_LOADED) {
+            NOT_LOADED -> {
+                if (loadingState == NOT_LOADED) {
+                    GlobalScope.launch {
                         loadingState = LOADING
                         calculateGemeentes()
                     }
-                })
+                }
+                showLoading()
             }
             LOADED -> {
                 var hiddenViz: Viz?
@@ -497,17 +507,15 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                         getGemeenteAt(it.pos, hiddenCanvas!!)?.let { clicked ->
                             deselectAllOpleiders()
                             deselectAllExamenlocaties()
+                            setExamenlocatieFilters("")
+                            setOpleiderFilters("")
                             when (examenlocatieOrOpleider) {
                                 EXAMENLOCATIE -> {
-                                    setExamenlocatieFilters(clicked.name)
-                                    setOpleiderFilters("")
-                                    selectAllExamenlocaties()
+                                    selectedExamenlocatieKeys = clicked.examenlocaties
                                     selectAllOpleiders()
                                 }
                                 OPLEIDER -> {
-                                    setOpleiderFilters(clicked.name)
-                                    setExamenlocatieFilters("")
-                                    selectAllOpleiders()
+                                    selectedOpleiderKeys = clicked.opleiders
                                     selectAllExamenlocaties()
                                 }
                             }

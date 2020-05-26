@@ -8,8 +8,8 @@ import data2viz.GeoPathNode
 
 class Gemeente(
     val feature: Feature<Data.GemeentesProperties>,
-    val opleiders: Collection<String> = setOf(),
-    val examenlocaties: Collection<String> = setOf(),
+    val opleiders: Set<String> = setOf(),
+    val examenlocaties: Set<String> = setOf(),
     val geoPathNode: GeoPathNode,
     val hiddenGeoPathNode: GeoPathNode,
 

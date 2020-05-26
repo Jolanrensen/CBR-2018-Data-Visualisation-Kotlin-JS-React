@@ -48,7 +48,7 @@ object Data {
 
     fun saveAlleExamenlocaties() {
         var allExamenlocaties = ""
-        for ((id, examenlocatie) in alleExamenlocaties) {
+        for ((_, examenlocatie) in alleExamenlocaties) {
             allExamenlocaties += examenlocatie.data.joinToString(";") + "\n"
         }
         println(allExamenlocaties)
@@ -56,7 +56,7 @@ object Data {
 
     fun saveAlleOpleiders() {
         var allOpleiders = ""
-        for ((id, opleider) in alleOpleiders) {
+        for ((_, opleider) in alleOpleiders) {
             allOpleiders += opleider.data.joinToString(";") + "\n"
         }
         println(allOpleiders)
