@@ -106,17 +106,27 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     var gemeentes by stateDelegateOf(NederlandVizMapState::gemeentes)
     var loadingState by stateDelegateOf(NederlandVizMapState::loadingState)
 
-    // don't update when [selectedGemeente] changed
+    private var previousSelectedOpleiderKeys: Set<String> = emptySet()
+    private var previousSelectedExamenlocatieKeys: Set<String> = emptySet()
+    private var previousSelectedProducts: Set<Product> = emptySet()
+
+    // don't update when [selectedGemeente] changed (because that will loop)
     @Suppress("SimplifyBooleanWithConstants")
-    override fun shouldComponentUpdate(nextProps: NederlandVizMapProps, nextState: NederlandVizMapState) = false
-            || props.dataLoaded != nextProps.dataLoaded
-            || props.examenlocatieOrOpleider != nextProps.examenlocatieOrOpleider
-            || props.slagingspercentageSoort != nextProps.slagingspercentageSoort
-            || props.selectedOpleiderKeys != nextProps.selectedOpleiderKeys
-            || props.selectedExamenlocatieKeys != nextProps.selectedExamenlocatieKeys
-            || props.selectedProducts != nextProps.selectedProducts
-            || state.gemeentes != nextState.gemeentes
-            || state.loadingState != nextState.loadingState
+    override fun shouldComponentUpdate(nextProps: NederlandVizMapProps, nextState: NederlandVizMapState): Boolean {
+        previousSelectedOpleiderKeys = selectedOpleiderKeys
+        previousSelectedExamenlocatieKeys = selectedExamenlocatieKeys
+        previousSelectedProducts = selectedProducts
+
+        return false
+                || props.dataLoaded != nextProps.dataLoaded
+                || props.examenlocatieOrOpleider != nextProps.examenlocatieOrOpleider
+                || props.slagingspercentageSoort != nextProps.slagingspercentageSoort
+                || props.selectedOpleiderKeys != nextProps.selectedOpleiderKeys
+                || props.selectedExamenlocatieKeys != nextProps.selectedExamenlocatieKeys
+                || props.selectedProducts != nextProps.selectedProducts
+                || state.gemeentes != nextState.gemeentes
+                || state.loadingState != nextState.loadingState
+    }
 
     private val nederland: FeatureCollection<Data.GemeentesProperties> =
         Data.geoJson!! // geometry type is polygon/multipolygon for each
@@ -417,7 +427,10 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                 selected = selectedGemeente == it,
                 gemeente = it,
                 examenlocatieOrOpleider = examenlocatieOrOpleider,
-                slagingspercentageSoort = slagingsPercentageSoort
+                slagingspercentageSoort = slagingsPercentageSoort,
+                selectedExamenlocatieKeys = selectedExamenlocatieKeys,
+                selectedOpleiderKeys = selectedOpleiderKeys,
+                selectedProducts = selectedProducts
             )
             it.geoPathNode.redrawPath()
             add(it.geoPathNode)
@@ -531,10 +544,21 @@ fun getGemeenteColor(
     selected: Boolean,
     gemeente: Gemeente,
     examenlocatieOrOpleider: ExamenlocatieOrOpleider,
-    slagingspercentageSoort: SlagingspercentageSoort
-): HslColor =
-//        val maxNoOpleiders = 470 // den haag
-    if (
+    slagingspercentageSoort: SlagingspercentageSoort,
+
+    selectedOpleiderKeys: Set<String>,
+    selectedExamenlocatieKeys: Set<String>,
+    selectedProducts: Set<Product>
+): HslColor {
+
+    /* TODO
+        all selected:
+
+        no opleiders: 7501
+        no examenlocaties: 327
+        no products: 103
+     */
+    return if (
         when (examenlocatieOrOpleider) {
             OPLEIDER -> gemeente.opleiders.isEmpty()
             EXAMENLOCATIE -> gemeente.examenlocaties.isEmpty()
@@ -548,7 +572,7 @@ fun getGemeenteColor(
             hue = Angle(
                 when (examenlocatieOrOpleider) {
                     OPLEIDER -> when (slagingspercentageSoort) {
-                        EERSTE_KEER -> gemeente.slagingspercentageEersteKeerOpleiders
+                        EERSTE_KEER -> gemeente.slagingspercentageEersteKeerOpleiders // todo use these only when none or all are selected
                         HERKANSING -> gemeente.slagingspercentageHerexamenOpleiders
                         GECOMBINEERD -> gemeente.slagingspercentageGecombineerdOpleiders
                     }
@@ -563,6 +587,7 @@ fun getGemeenteColor(
             lightness = if (selected) 20.pct else 50.pct
         )
     }
+}
 
 fun RBuilder.nederlandMap(handler: RElementBuilder<NederlandVizMapProps>.() -> Unit) =
     child(NederlandVizMap::class, handler)

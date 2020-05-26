@@ -19,13 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="preprocessing for faster loading">
+    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="map now properly selects gemeentes. Fixed slow reloading bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/delegates/ReactPropAndStateDelegates.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/delegates/ReactPropAndStateDelegates.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/Gemeente.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/Gemeente.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -188,7 +184,7 @@
       <workItem from="1589886502984" duration="27954000" />
       <workItem from="1590231744302" duration="83000" />
       <workItem from="1590428570811" duration="13354000" />
-      <workItem from="1590515254638" duration="13345000" />
+      <workItem from="1590515254638" duration="14730000" />
     </task>
     <task id="LOCAL-00001" summary="It's running again!">
       <created>1589639534400</created>
@@ -267,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590523083860</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="map now properly selects gemeentes. Fixed slow reloading bug">
+      <created>1590528921366</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1590528921366</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -297,7 +300,8 @@
     <MESSAGE value="deselect all when clicking on map works, popover closes on click" />
     <MESSAGE value="converted opleiders, examenlocaties and resultaten to separate files, now only the maps are left" />
     <MESSAGE value="preprocessing for faster loading" />
-    <option name="LAST_COMMIT_MESSAGE" value="preprocessing for faster loading" />
+    <MESSAGE value="map now properly selects gemeentes. Fixed slow reloading bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="map now properly selects gemeentes. Fixed slow reloading bug" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1481" y="482" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589722154163">
@@ -321,36 +325,36 @@
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl/0.34.2880.1586@0.34.2880.1586" timestamp="1589720455423" />
-    <state width="1862" height="259" key="GridCell.Tab.0.bottom" timestamp="1590528235817">
+    <state width="1862" height="259" key="GridCell.Tab.0.bottom" timestamp="1590529378245">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state width="1957" height="438" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590441953495" />
-    <state width="1862" height="259" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590528235817" />
-    <state width="1862" height="259" key="GridCell.Tab.0.center" timestamp="1590528235816">
+    <state width="1862" height="259" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378245" />
+    <state width="1862" height="259" key="GridCell.Tab.0.center" timestamp="1590529378244">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state width="1957" height="438" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590441953494" />
-    <state width="1862" height="259" key="GridCell.Tab.0.center/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590528235816" />
-    <state width="1862" height="259" key="GridCell.Tab.0.left" timestamp="1590528235816">
+    <state width="1862" height="259" key="GridCell.Tab.0.center/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
+    <state width="1862" height="259" key="GridCell.Tab.0.left" timestamp="1590529378244">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state width="1957" height="438" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590441953494" />
-    <state width="1862" height="259" key="GridCell.Tab.0.left/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590528235816" />
-    <state width="1862" height="259" key="GridCell.Tab.0.right" timestamp="1590528235816">
+    <state width="1862" height="259" key="GridCell.Tab.0.left/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
+    <state width="1862" height="259" key="GridCell.Tab.0.right" timestamp="1590529378244">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state width="1957" height="438" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590441953494" />
-    <state width="1862" height="259" key="GridCell.Tab.0.right/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590528235816" />
+    <state width="1862" height="259" key="GridCell.Tab.0.right/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
     <state x="3416" y="173" width="1195" height="907" key="SettingsEditor" timestamp="1590515533020">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="804" y="374" width="1792" height="907" key="SettingsEditor/0.34.2880.1586@0.34.2880.1586" timestamp="1589636352721" />
     <state x="3416" y="173" width="1195" height="907" key="SettingsEditor/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590515533020" />
-    <state x="3503" y="317" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1590523085451">
+    <state x="3503" y="317" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1590528922603">
       <screen x="2880" y="0" width="1920" height="1080" />
     </state>
     <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1590441803159" />
-    <state x="3503" y="317" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590523085451" />
+    <state x="3503" y="317" width="1000" height="656" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590528922603" />
     <state x="822" y="283" width="1585" height="970" key="com.intellij.database.dbimport.ImportDialog" timestamp="1589720508224">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>

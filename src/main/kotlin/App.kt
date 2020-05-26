@@ -11,6 +11,7 @@ import data.Data
 import data.ExamenresultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenresultaatVersie.HEREXAMEN_OF_TOETS
 import data.Product
+import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateAsProp
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import io.data2viz.color.Colors
@@ -20,6 +21,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.css.*
 import map.Gemeente
+import map.NederlandVizMapProps
 import map.getGemeenteColor
 import map.nederlandMap
 import org.w3c.dom.events.Event
@@ -63,15 +65,6 @@ enum class SlagingspercentageSoort(val naam: String) {
 
 class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
 
-//    @Suppress("SimplifyBooleanWithConstants")
-//    override fun shouldComponentUpdate(nextProps: AppProps, nextState: AppState) = false
-//            || state.dataLoaded != nextState.dataLoaded
-//            || state.welcomeText != nextState.welcomeText
-//            || state.circleColor != nextState.circleColor
-////            || state.selectedGemeente != nextState.selectedGemeente
-//            || state.examenlocatieOrOpleider != nextState.examenlocatieOrOpleider
-//            || state.slagingspercentageSoort != nextState.slagingspercentageSoort
-
     override fun AppState.init(props: AppProps) {
         dataLoaded = false
         welcomeText = "Hello world!"
@@ -90,6 +83,10 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
     private var dataLoaded by stateDelegateOf(AppState::dataLoaded)
     private var examenlocatieOrOpleider by stateDelegateOf(AppState::examenlocatieOrOpleider)
     private var slagingspercentageSoort by stateDelegateOf(AppState::slagingspercentageSoort)
+
+    private val selectedOpleiderKeys by stateDelegateOf(AppState::selectedOpleiderKeys)
+    private val selectedExamenlocatieKeys by stateDelegateOf(AppState::selectedExamenlocatieKeys)
+    private val selectedProducts by stateDelegateOf(AppState::selectedProducts)
 
     private fun loadData() {
         if (Data.hasStartedLoading) return
@@ -281,10 +278,13 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                 color = Color.black
                                                 backgroundColor = selectedGemeente?.let {
                                                     getGemeenteColor(
-                                                        false,
-                                                        it,
-                                                        examenlocatieOrOpleider,
-                                                        slagingspercentageSoort
+                                                        selected = false,
+                                                        gemeente = it,
+                                                        examenlocatieOrOpleider = examenlocatieOrOpleider,
+                                                        slagingspercentageSoort = slagingspercentageSoort,
+                                                        selectedProducts = selectedProducts,
+                                                        selectedOpleiderKeys = selectedOpleiderKeys,
+                                                        selectedExamenlocatieKeys = selectedExamenlocatieKeys
                                                     )
                                                         .toRgb()
                                                         .let { rgb(it.r, it.g, it.b) }
