@@ -18,6 +18,8 @@ import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.mCircularProgress
 import data.*
+import data.Examenresultaat.ONVOLDOENDE
+import data.Examenresultaat.VOLDOENDE
 import data.ExamenresultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenresultaatVersie.HEREXAMEN_OF_TOETS
 import data2viz.GeoPathNode
@@ -518,6 +520,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
 
                     on(KPointerClick) {
                         getGemeenteAt(it.pos, hiddenCanvas!!)?.let { clicked ->
+                            // TODO maybe keep filter but select only all opleiders/ex... from clicked gemeente in currently filtered items
                             deselectAllOpleiders()
                             deselectAllExamenlocaties()
                             setExamenlocatieFilters("")
@@ -540,6 +543,72 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     }
 }
 
+fun getSlagingsPercentageOpleiders(
+    opleiders: Collection<String>,
+    selectedProducts: Set<Product>,
+    slagingspercentageSoort: SlagingspercentageSoort
+): Double {
+    if (opleiders.isEmpty()) return -1.0
+
+    var voldoende = 0.0
+    var onvoldoende = 0.0
+
+    opleiders.asSequence()
+        .map { opleiderKey -> Data.opleiderToResultaten[opleiderKey]!! }
+        .flatMap { resultaatKeys ->
+            resultaatKeys.asSequence().map { resultaatKey -> Data.alleResultaten[resultaatKey]!! }
+        }
+        .filter { resultaat -> resultaat.product in selectedProducts }
+        .flatMap { resultaat -> resultaat.examenresultaatAantallen.asSequence() }
+        .filter { examenresultaatAantal ->
+            when (slagingspercentageSoort) {
+                EERSTE_KEER -> examenresultaatAantal.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
+                HERKANSING -> examenresultaatAantal.examenresultaatVersie == HEREXAMEN_OF_TOETS
+                GECOMBINEERD -> true
+            }
+        }.forEach { examenresultaatAantal ->
+            when (examenresultaatAantal.examenresultaat) {
+                VOLDOENDE -> voldoende += examenresultaatAantal.aantal
+                ONVOLDOENDE -> onvoldoende += examenresultaatAantal.aantal
+            }
+        }
+
+    return if (voldoende + onvoldoende == 0.0) 0.0 else voldoende / (voldoende + onvoldoende)
+}
+
+fun getSlagingsPercentageExamenlocaties(
+    examenlocaties: Collection<String>,
+    selectedProducts: Set<Product>,
+    slagingspercentageSoort: SlagingspercentageSoort
+): Double {
+    if (examenlocaties.isEmpty()) return -1.0
+
+    var voldoende = 0.0
+    var onvoldoende = 0.0
+
+    examenlocaties.asSequence()
+        .map { examenlocatieKey -> Data.examenlocatieToResultaten[examenlocatieKey]!! }
+        .flatMap { resultaatKeys ->
+            resultaatKeys.asSequence().map { resultaatKey -> Data.alleResultaten[resultaatKey]!! }
+        }
+        .filter { resultaat -> resultaat.product in selectedProducts }
+        .flatMap { resultaat -> resultaat.examenresultaatAantallen.asSequence() }
+        .filter { examenresultaatAantal ->
+            when (slagingspercentageSoort) {
+                EERSTE_KEER -> examenresultaatAantal.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
+                HERKANSING -> examenresultaatAantal.examenresultaatVersie == HEREXAMEN_OF_TOETS
+                GECOMBINEERD -> true
+            }
+        }.forEach { examenresultaatAantal ->
+            when (examenresultaatAantal.examenresultaat) {
+                VOLDOENDE -> voldoende += examenresultaatAantal.aantal
+                ONVOLDOENDE -> onvoldoende += examenresultaatAantal.aantal
+            }
+        }
+
+    return if (voldoende + onvoldoende == 0.0) 0.0 else voldoende / (voldoende + onvoldoende)
+}
+
 fun getGemeenteColor(
     selected: Boolean,
     gemeente: Gemeente,
@@ -550,42 +619,73 @@ fun getGemeenteColor(
     selectedExamenlocatieKeys: Set<String>,
     selectedProducts: Set<Product>
 ): HslColor {
-
-    /* TODO
+    /*
         all selected:
 
         no opleiders: 7501
         no examenlocaties: 327
         no products: 103
      */
+    val selectedProductsAllOrNone = selectedProducts.size == 103 || selectedProducts.isEmpty()
+
+    val selectedOpleiderKeysAllOrNone =
+        selectedProductsAllOrNone && (selectedOpleiderKeys.isEmpty() || selectedOpleiderKeys.size == 7501)
+    val selectedExamenlocatieKeysAllOrNone =
+        selectedProductsAllOrNone && (selectedExamenlocatieKeys.isEmpty() || selectedExamenlocatieKeys.size == 327)
+
+
     return if (
-        when (examenlocatieOrOpleider) {
-            OPLEIDER -> gemeente.opleiders.isEmpty()
-            EXAMENLOCATIE -> gemeente.examenlocaties.isEmpty()
-        }
+        examenlocatieOrOpleider == OPLEIDER && gemeente.opleiders.isEmpty()
+        || examenlocatieOrOpleider == EXAMENLOCATIE && gemeente.examenlocaties.isEmpty()
     ) {
         Colors.Web.black.toHsl()
     } else {
         val greenRedAngleDiff = Colors.Web.green.toHsl().h.rad - Colors.Web.red.toHsl().h.rad
 
-        Colors.hsl(
-            hue = Angle(
-                when (examenlocatieOrOpleider) {
-                    OPLEIDER -> when (slagingspercentageSoort) {
-                        EERSTE_KEER -> gemeente.slagingspercentageEersteKeerOpleiders // todo use these only when none or all are selected
-                        HERKANSING -> gemeente.slagingspercentageHerexamenOpleiders
-                        GECOMBINEERD -> gemeente.slagingspercentageGecombineerdOpleiders
+        val percentage =
+            when (examenlocatieOrOpleider) {
+                OPLEIDER -> {
+                    if (selectedOpleiderKeysAllOrNone) {
+                        when (slagingspercentageSoort) {
+                            EERSTE_KEER -> gemeente.slagingspercentageEersteKeerOpleiders
+                            HERKANSING -> gemeente.slagingspercentageHerexamenOpleiders
+                            GECOMBINEERD -> gemeente.slagingspercentageGecombineerdOpleiders
+                        }
+                    } else {
+                        getSlagingsPercentageOpleiders(
+                            opleiders = selectedOpleiderKeys.filter { it in gemeente.opleiders },
+                            selectedProducts =
+                            if (selectedProductsAllOrNone) Product.values().toSet()
+                            else selectedProducts,
+                            slagingspercentageSoort = slagingspercentageSoort
+                        )
                     }
-                    EXAMENLOCATIE -> when (slagingspercentageSoort) {
+                }
+                EXAMENLOCATIE -> {
+                    if (selectedExamenlocatieKeysAllOrNone) when (slagingspercentageSoort) {
                         EERSTE_KEER -> gemeente.slagingspercentageEersteKeerExamenlocaties
                         HERKANSING -> gemeente.slagingspercentageHerexamenExamenlocaties
                         GECOMBINEERD -> gemeente.slagingspercentageGecombineerdExamenlocaties
+                    } else {
+                        getSlagingsPercentageExamenlocaties(
+                            examenlocaties = selectedExamenlocatieKeys.filter { it in gemeente.examenlocaties },
+                            selectedProducts =
+                            if (selectedProductsAllOrNone) Product.values().toSet()
+                            else selectedProducts,
+                            slagingspercentageSoort = slagingspercentageSoort
+                        )
                     }
-                } * greenRedAngleDiff
-            ),
-            saturation = 100.pct,
-            lightness = if (selected) 20.pct else 50.pct
-        )
+                }
+            }
+
+        if (percentage < 0)
+            Colors.Web.black.toHsl()
+        else
+            Colors.hsl(
+                hue = Angle(greenRedAngleDiff * percentage),
+                saturation = 100.pct,
+                lightness = if (selected) 20.pct else 50.pct
+            )
     }
 }
 

@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="map now properly selects gemeentes. Fixed slow reloading bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -185,6 +184,8 @@
       <workItem from="1590231744302" duration="83000" />
       <workItem from="1590428570811" duration="13354000" />
       <workItem from="1590515254638" duration="14730000" />
+      <workItem from="1590577294267" duration="11000" />
+      <workItem from="1590686159917" duration="9182000" />
     </task>
     <task id="LOCAL-00001" summary="It's running again!">
       <created>1589639534400</created>
@@ -325,25 +326,25 @@
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl/0.34.2880.1586@0.34.2880.1586" timestamp="1589720455423" />
-    <state width="1862" height="259" key="GridCell.Tab.0.bottom" timestamp="1590529378245">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state width="2822" height="436" key="GridCell.Tab.0.bottom" timestamp="1590705179747">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="1957" height="438" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590441953495" />
+    <state width="2822" height="436" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590705179747" />
     <state width="1862" height="259" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378245" />
-    <state width="1862" height="259" key="GridCell.Tab.0.center" timestamp="1590529378244">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state width="2822" height="436" key="GridCell.Tab.0.center" timestamp="1590705179746">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="1957" height="438" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590441953494" />
+    <state width="2822" height="436" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590705179746" />
     <state width="1862" height="259" key="GridCell.Tab.0.center/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
-    <state width="1862" height="259" key="GridCell.Tab.0.left" timestamp="1590529378244">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state width="2822" height="436" key="GridCell.Tab.0.left" timestamp="1590705179746">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="1957" height="438" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590441953494" />
+    <state width="2822" height="436" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590705179746" />
     <state width="1862" height="259" key="GridCell.Tab.0.left/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
-    <state width="1862" height="259" key="GridCell.Tab.0.right" timestamp="1590529378244">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state width="2822" height="436" key="GridCell.Tab.0.right" timestamp="1590705179747">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="1957" height="438" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590441953494" />
+    <state width="2822" height="436" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590705179747" />
     <state width="1862" height="259" key="GridCell.Tab.0.right/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
     <state x="3416" y="173" width="1195" height="907" key="SettingsEditor" timestamp="1590515533020">
       <screen x="2880" y="0" width="1920" height="1080" />
