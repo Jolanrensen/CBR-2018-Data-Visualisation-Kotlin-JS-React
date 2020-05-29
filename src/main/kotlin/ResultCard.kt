@@ -34,7 +34,6 @@ import kotlin.math.max
 
 interface ResultCardProps : RProps {
     var currentResults: Sequence<Int>
-    var selectionFinished: () -> Boolean
     var selectedProducts: Set<Product>
 }
 
@@ -45,7 +44,6 @@ interface ResultCardState : RState {
 class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, ResultCardState>(prps) {
 
     val currentResults by propDelegateOf(ResultCardProps::currentResults)
-    val selectionFinished by propDelegateOf(ResultCardProps::selectionFinished)
     val selectedProducts by propDelegateOf(ResultCardProps::selectedProducts)
 
     override fun ResultCardState.init(props: ResultCardProps) {
@@ -62,8 +60,6 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
     }
 
     override fun RBuilder.render() {
-        if (!selectionFinished()) return // TODO check what to show if selection is not finished
-
         var aantalHandgeschakeldVoldoende = 0
         var aantalHandgeschakeldOnvoldoende = 0
         var aantalAutomaatVoldoende = 0
@@ -312,41 +308,40 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                             }
                             for (resultaat in Examenresultaat.values()) {
                                 mTableCell(align = MTableCellAlign.right) {
-                                    +if (selectionFinished()) {
-                                        when (categorie) {
-                                            HANDGESCHAKELD ->
-                                                when (resultaat) {
-                                                    VOLDOENDE -> aantalHandgeschakeldVoldoende
-                                                    ONVOLDOENDE -> aantalHandgeschakeldOnvoldoende
-                                                }
-                                            AUTOMAAT -> when (resultaat) {
-                                                VOLDOENDE -> aantalAutomaatVoldoende
-                                                ONVOLDOENDE -> aantalAutomaatOnvoldoende
+                                    +when (categorie) {
+                                        HANDGESCHAKELD ->
+                                            when (resultaat) {
+                                                VOLDOENDE -> aantalHandgeschakeldVoldoende
+                                                ONVOLDOENDE -> aantalHandgeschakeldOnvoldoende
                                             }
-                                            COMBI -> when (resultaat) {
-                                                VOLDOENDE -> aantalCombiVoldoende
-                                                ONVOLDOENDE -> aantalCombiOnvoldoende
-                                            }
-                                        }.toString()
-                                    } else "-"
+                                        AUTOMAAT -> when (resultaat) {
+                                            VOLDOENDE -> aantalAutomaatVoldoende
+                                            ONVOLDOENDE -> aantalAutomaatOnvoldoende
+                                        }
+                                        COMBI -> when (resultaat) {
+                                            VOLDOENDE -> aantalCombiVoldoende
+                                            ONVOLDOENDE -> aantalCombiOnvoldoende
+                                        }
+                                    }.toString()
+
                                 }
                             }
                             mTableCell(align = MTableCellAlign.right) {
-                                +if (selectionFinished())
-                                    when (categorie) {
-                                        HANDGESCHAKELD -> (
-                                                aantalHandgeschakeldVoldoende.toDouble() /
-                                                        (aantalHandgeschakeldVoldoende + aantalHandgeschakeldOnvoldoende).toDouble()
-                                                ).asPercentage()
-                                        AUTOMAAT -> (
-                                                aantalAutomaatVoldoende.toDouble() /
-                                                        (aantalAutomaatVoldoende + aantalAutomaatOnvoldoende).toDouble()
-                                                ).asPercentage()
-                                        COMBI -> (
-                                                aantalCombiVoldoende.toDouble() /
-                                                        (aantalCombiVoldoende + aantalCombiOnvoldoende).toDouble()
-                                                ).asPercentage()
-                                    } else "-"
+                                +when (categorie) {
+                                    HANDGESCHAKELD -> (
+                                            aantalHandgeschakeldVoldoende.toDouble() /
+                                                    (aantalHandgeschakeldVoldoende + aantalHandgeschakeldOnvoldoende).toDouble()
+                                            ).asPercentage()
+                                    AUTOMAAT -> (
+                                            aantalAutomaatVoldoende.toDouble() /
+                                                    (aantalAutomaatVoldoende + aantalAutomaatOnvoldoende).toDouble()
+                                            ).asPercentage()
+                                    COMBI -> (
+                                            aantalCombiVoldoende.toDouble() /
+                                                    (aantalCombiVoldoende + aantalCombiOnvoldoende).toDouble()
+                                            ).asPercentage()
+
+                                }
                             }
                         }
                     }
@@ -356,18 +351,29 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         mTableCell { +"Totaal" }
                         for (resultaat in Examenresultaat.values()) {
                             mTableCell(align = MTableCellAlign.right) {
-                                +if (selectionFinished())
-                                    when (resultaat) {
-                                        VOLDOENDE -> aantalHandgeschakeldVoldoende + aantalAutomaatVoldoende + aantalCombiVoldoende
-                                        ONVOLDOENDE -> aantalHandgeschakeldOnvoldoende + aantalAutomaatOnvoldoende + aantalCombiOnvoldoende
-                                    }.toString() else "-"
+                                +when (resultaat) {
+                                    VOLDOENDE -> aantalHandgeschakeldVoldoende + aantalAutomaatVoldoende + aantalCombiVoldoende
+                                    ONVOLDOENDE -> aantalHandgeschakeldOnvoldoende + aantalAutomaatOnvoldoende + aantalCombiOnvoldoende
+                                }.toString()
                             }
                         }
                         mTableCell(align = MTableCellAlign.right) {
-                            +if (selectionFinished()) (
-                                    (aantalHandgeschakeldVoldoende + aantalAutomaatVoldoende + aantalCombiVoldoende).toDouble() /
-                                            (aantalHandgeschakeldVoldoende + aantalAutomaatVoldoende + aantalCombiVoldoende + aantalHandgeschakeldOnvoldoende + aantalAutomaatOnvoldoende + aantalCombiOnvoldoende).toDouble()
-                                    ).asPercentage() else "-"
+                            +(
+                                    (aantalHandgeschakeldVoldoende
+                                            + aantalAutomaatVoldoende
+                                            + aantalCombiVoldoende
+                                            ).toDouble()
+
+                                            /
+
+                                            (aantalHandgeschakeldVoldoende
+                                                    + aantalAutomaatVoldoende
+                                                    + aantalCombiVoldoende
+                                                    + aantalHandgeschakeldOnvoldoende
+                                                    + aantalAutomaatOnvoldoende
+                                                    + aantalCombiOnvoldoende
+                                                    ).toDouble()
+                                    ).asPercentage()
                         }
                     }
                 }

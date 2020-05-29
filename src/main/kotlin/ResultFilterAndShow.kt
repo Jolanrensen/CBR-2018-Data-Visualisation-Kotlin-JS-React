@@ -1,8 +1,11 @@
 import com.ccfraser.muirwik.components.*
-import data.Categorie
-import data.Data
-import data.Product
-import data.producten
+import data.*
+import data.Data.NO_EXAMENLOCATIES
+import data.Data.NO_OPLEIDERS
+import data.Data.NO_PRODUCTEN
+import data.Data.isAllOrNoExamenlocaties
+import data.Data.isAllOrNoOpleiders
+import data.Data.isAllOrNoProducten
 import delegates.ReactPropAndStateDelegates
 import delegates.ReactPropAndStateDelegates.StateAsProp
 import delegates.ReactPropAndStateDelegates.propDelegateOf
@@ -22,10 +25,10 @@ interface ResultFilterAndShowProps : RProps {
     var setApplyOpleidersFilterFunction: (ApplyFilter) -> Unit
     var setApplyExamenlocatieFilterFunction: (ApplyFilter) -> Unit
 
-    var setSelectAllOpleidersFunction: (SelectAll) -> Unit
+    var setSelectAllOpleidersFunction: (SelectAll<Opleider>) -> Unit
     var setDeselectAllOpleidersFunction: (DeselectAll) -> Unit
 
-    var setSelectAllExamenlocatiesFunction: (SelectAll) -> Unit
+    var setSelectAllExamenlocatiesFunction: (SelectAll<Examenlocatie>) -> Unit
     var setDeselectAllExamenlocatiesFunction: (DeselectAll) -> Unit
 
     var selectedOpleiderKeys: StateAsProp<Set<String>>
@@ -51,15 +54,15 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
     private var selectedExamenlocatieKeys by propDelegateOf(ResultFilterAndShowProps::selectedExamenlocatieKeys)
     private var selectedProducts by propDelegateOf(ResultFilterAndShowProps::selectedProducts)
 
-    private val emptySelectAllFunction: (SelectAll) -> Unit = {}
+    private val emptySelectAllFunction: (SelectAll<Any?>) -> Unit = {}
     private val emptyDeselectAllFunction: (DeselectAll) -> Unit = {}
     private val emptyOnCategorieClicked: (Categorie) -> Unit = {}
 
-    private val selectionFinished = {
-        selectedOpleiderKeys.isNotEmpty() &&
-                selectedExamenlocatieKeys.isNotEmpty() &&
-                selectedProducts.isNotEmpty()
-    }
+//    private val selectionFinished = {
+//        selectedOpleiderKeys.isNotEmpty() &&
+//                selectedExamenlocatieKeys.isNotEmpty() &&
+//                selectedProducts.isNotEmpty()
+//    }
 
 
     private var applyCategorieFilter: ApplyFilter? = null
@@ -147,38 +150,34 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                 lg = MGridSize.cells12,
                 xl = MGridSize.cells5
             ) {
-                val currentResults =
-                    if (!selectionFinished())
-                        sequenceOf()
-                    else (Data.opleiderToResultaten
-                        .asSequence()
-                        .filter { it.key in selectedOpleiderKeys }
-                        .map { it.value }
-                        .flatten()
-                        .asIterable()
+                val selectedOpleiderKeysEmptyOrFull = selectedOpleiderKeys.size.isAllOrNoOpleiders()
+                val selectedExamenlocatieKeysEmptyOrFull = selectedExamenlocatieKeys.size.isAllOrNoExamenlocaties()
+                val selectedProductsEmptyOrFull = selectedProducts.size.isAllOrNoProducten()
 
-                            intersect
+                val currentResults = when {
+                    selectedOpleiderKeysEmptyOrFull && selectedExamenlocatieKeysEmptyOrFull -> Data.alleResultaten.keys.asSequence()
+                    selectedOpleiderKeysEmptyOrFull && !selectedExamenlocatieKeysEmptyOrFull -> getCurrentResultsForSelectedExamenlocaties()
+                    !selectedOpleiderKeysEmptyOrFull && selectedExamenlocatieKeysEmptyOrFull  -> getCurrentResultsForSelectedOpleiders()
+                    else -> (getCurrentResultsForSelectedExamenlocaties().asIterable() intersect getCurrentResultsForSelectedOpleiders().asIterable()).asSequence()
+                }
 
-                            Data.examenlocatieToResultaten
-                                .asSequence()
-                                .filter { it.key in selectedExamenlocatieKeys }
-                                .map { it.value }
-                                .flatten()
-                                .asIterable()
-                            ).asSequence()
-
-
-                // TODO replace with new barchart
                 resultCard {
                     this.currentResults = currentResults
-                    selectionFinished = this@ResultFilterAndShow.selectionFinished
-                    selectedProducts = this@ResultFilterAndShow.selectedProducts
+                    selectedProducts = if (selectedProductsEmptyOrFull) Product.values().toSet() else this@ResultFilterAndShow.selectedProducts
                 }
 
 
             }
         }
     }
+
+    private fun getCurrentResultsForSelectedOpleiders(): Sequence<Int> = selectedOpleiderKeys.asSequence()
+        .flatMap { Data.opleiderToResultaten[it]?.asSequence() ?: emptySequence() }
+
+    private fun getCurrentResultsForSelectedExamenlocaties(): Sequence<Int> = selectedExamenlocatieKeys.asSequence()
+        .flatMap { Data.examenlocatieToResultaten[it]?.asSequence() ?: emptySequence() }
+
+
 }
 
 fun RBuilder.resultFilterAndShow(handler: ResultFilterAndShowProps.() -> Unit) =

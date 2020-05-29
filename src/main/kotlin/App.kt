@@ -7,10 +7,9 @@ import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
-import data.Data
+import data.*
 import data.ExamenresultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenresultaatVersie.HEREXAMEN_OF_TOETS
-import data.Product
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateAsProp
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
@@ -20,10 +19,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.css.*
-import map.Gemeente
-import map.NederlandVizMapProps
-import map.getGemeenteColor
-import map.nederlandMap
+import map.*
 import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RComponent
@@ -133,13 +129,16 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
         }
     }
 
-    private var selectAllOpleidersFunctions = arrayListOf<SelectAll>()
-    private var selectAllOpleiders: SelectAll = { selectAllOpleidersFunctions.forEach { it() } }
-    private val setSelectAllOpleidersFunction = fun(it: SelectAll) { selectAllOpleidersFunctions.add(it) }
+    private var selectAllOpleidersFunctions = arrayListOf<SelectAll<Opleider>>()
+    private var selectAllOpleiders: SelectAll<Opleider> =
+        { condition -> selectAllOpleidersFunctions.forEach { it(condition) } }
+    private val setSelectAllOpleidersFunction = fun(it: SelectAll<Opleider>) { selectAllOpleidersFunctions.add(it) }
 
-    private var selectAllExamenlocatiesFunctions = arrayListOf<SelectAll>()
-    private var selectAllExamenlocaties: SelectAll = { selectAllExamenlocatiesFunctions.forEach { it() } }
-    private val setSelectAllExamenlocatiesFunction = fun(it: SelectAll) { selectAllExamenlocatiesFunctions.add(it) }
+    private var selectAllExamenlocatiesFunctions = arrayListOf<SelectAll<Examenlocatie>>()
+    private var selectAllExamenlocaties: SelectAll<Examenlocatie> =
+        { condition -> selectAllExamenlocatiesFunctions.forEach { it(condition) } }
+    private val setSelectAllExamenlocatiesFunction =
+        fun(it: SelectAll<Examenlocatie>) { selectAllExamenlocatiesFunctions.add(it) }
 
     private var deselectAllOpleidersFunctions = arrayListOf<DeselectAll>()
     private var deselectAllOpleiders: DeselectAll = { deselectAllOpleidersFunctions.forEach { it() } }
@@ -276,6 +275,9 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                         avatar = mAvatar(addAsChild = false) {
                                             css {
                                                 color = Color.black
+
+
+                                                // TODO
                                                 backgroundColor = selectedGemeente?.let {
                                                     getGemeenteColor(
                                                         selected = false,
@@ -284,27 +286,24 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                         slagingspercentageSoort = slagingspercentageSoort,
                                                         selectedProducts = selectedProducts,
                                                         selectedOpleiderKeys = selectedOpleiderKeys,
-                                                        selectedExamenlocatieKeys = selectedExamenlocatieKeys
+                                                        selectedExamenlocatieKeys = selectedExamenlocatieKeys,
+                                                        useCachedPercentage = true
                                                     )
                                                         .toRgb()
                                                         .let { rgb(it.r, it.g, it.b) }
                                                 } ?: rgb(189, 189, 189)
                                             }
-                                            +(selectedGemeente?.let {
-                                                "${(when (examenlocatieOrOpleider) {
-                                                    OPLEIDER -> when (slagingspercentageSoort) {
-                                                        EERSTE_KEER -> it.slagingspercentageEersteKeerOpleiders
-                                                        HERKANSING -> it.slagingspercentageHerexamenOpleiders
-                                                        GECOMBINEERD -> it.slagingspercentageGecombineerdOpleiders
-                                                    }
-                                                    EXAMENLOCATIE -> when (slagingspercentageSoort) {
-                                                        EERSTE_KEER -> it.slagingspercentageEersteKeerExamenlocaties
-                                                        HERKANSING -> it.slagingspercentageHerexamenExamenlocaties
-                                                        GECOMBINEERD -> it.slagingspercentageGecombineerdExamenlocaties
-                                                    }
-                                                } * 100.0).toInt()
-                                                }%"
-                                            } ?: "--%")
+
+                                            +selectedGemeente?.let {
+                                                it.percentageCache ?: getGemeentePercentage(
+                                                    examenlocatieOrOpleider = examenlocatieOrOpleider,
+                                                    slagingspercentageSoort = slagingspercentageSoort,
+                                                    gemeente = it,
+                                                    selectedOpleiderKeys = selectedOpleiderKeys,
+                                                    selectedProducts = selectedProducts,
+                                                    selectedExamenlocatieKeys = selectedExamenlocatieKeys
+                                                )
+                                            }.asPercentage()
                                         }
                                     ) {
                                         attrs {
@@ -327,8 +326,6 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                 slagingspercentageSoort = this@App.slagingspercentageSoort
                                                 selectedGemeente = stateAsProp(AppState::selectedGemeente)
 
-                                                setExamenlocatieFilters = this@App.setExamenlocatieFilters
-                                                setOpleiderFilters = this@App.setOpleiderFilters
 
                                                 selectAllOpleiders = this@App.selectAllOpleiders
                                                 selectAllExamenlocaties = this@App.selectAllExamenlocaties
@@ -337,7 +334,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                 deselectAllExamenlocaties = this@App.deselectAllExamenlocaties
 
                                                 selectedOpleiderKeys = stateAsProp(AppState::selectedOpleiderKeys)
-                                                selectedExamenlocatieKeys = stateAsProp(AppState::selectedExamenlocatieKeys)
+                                                selectedExamenlocatieKeys =
+                                                    stateAsProp(AppState::selectedExamenlocatieKeys)
                                                 selectedProducts = stateAsProp(AppState::selectedProducts)
                                             }
                                         }
@@ -351,7 +349,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                             }
                                             +"Houd je cursor boven een gemeente (of raak het aan) om het slagingspercentage te zien."
                                             br {}
-                                            +"Klik op een gemeente om daarop te zoeken in de opleiders/examenlocaties hieronder."
+                                            +"Klik op een gemeente om alle ${examenlocatieOrOpleider.naamMeervoud} in deze gemeente te selecteren in het filterlijstje hieronder."
                                         }
                                     }
 

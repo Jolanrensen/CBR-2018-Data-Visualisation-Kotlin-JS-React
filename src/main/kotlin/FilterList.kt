@@ -12,6 +12,7 @@ import delegates.ReactPropAndStateDelegates
 import delegates.ReactPropAndStateDelegates.StateAsProp
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
+import io.data2viz.format.Type
 import kotlinext.js.jsObject
 import kotlinx.css.Display
 import kotlinx.css.JustifyContent
@@ -34,13 +35,13 @@ interface FilterListProps<Key : Any, Type : Any?> : RProps {
     var dataLoaded: Boolean
     var itemsData: Map<Key, Type>
     var setApplyFilterFunction: (ApplyFilter) -> Unit
-    var setSelectAllFunction: (SelectAll) -> Unit
+    var setSelectAllFunction: (SelectAll<Type>) -> Unit
     var setDeselectAllFunction: (DeselectAll) -> Unit
     var onCategorieClicked: (Categorie) -> Unit
 }
 
 typealias ApplyFilter = (String) -> Unit
-typealias SelectAll = () -> Unit
+typealias SelectAll<Type> = (condition: (item: Type) -> Boolean) -> Unit
 typealias DeselectAll = () -> Unit
 
 interface FilterListState : RState {
@@ -80,9 +81,10 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
         }
     }
 
-    private val selectAll: SelectAll = {
+    private val selectAll: SelectAll<Type> = { condition ->
         println("select all called!")
         val new = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys)!!
+            .filter { condition(it) }
             .map { typeToKey(it)!! }
             .toSet()
 

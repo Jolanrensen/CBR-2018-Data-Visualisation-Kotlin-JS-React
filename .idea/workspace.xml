@@ -21,6 +21,13 @@
   <component name="ChangeListManager">
     <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="map now properly selects gemeentes. Fixed slow reloading bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/Gemeente.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/Gemeente.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,6 +111,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="kotlin" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/opleiderresultaten-met-gemeentes.csv" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -186,6 +194,8 @@
       <workItem from="1590515254638" duration="14730000" />
       <workItem from="1590577294267" duration="11000" />
       <workItem from="1590686159917" duration="9182000" />
+      <workItem from="1590760823461" duration="8474000" />
+      <workItem from="1590773381183" duration="377000" />
     </task>
     <task id="LOCAL-00001" summary="It's running again!">
       <created>1589639534400</created>
@@ -326,25 +336,25 @@
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl/0.34.2880.1586@0.34.2880.1586" timestamp="1589720455423" />
-    <state width="2822" height="436" key="GridCell.Tab.0.bottom" timestamp="1590705179747">
+    <state width="2822" height="435" key="GridCell.Tab.0.bottom" timestamp="1590769660490">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="436" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590705179747" />
+    <state width="2822" height="435" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590769660490" />
     <state width="1862" height="259" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378245" />
-    <state width="2822" height="436" key="GridCell.Tab.0.center" timestamp="1590705179746">
+    <state width="2822" height="435" key="GridCell.Tab.0.center" timestamp="1590769660490">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="436" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590705179746" />
+    <state width="2822" height="435" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590769660490" />
     <state width="1862" height="259" key="GridCell.Tab.0.center/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
-    <state width="2822" height="436" key="GridCell.Tab.0.left" timestamp="1590705179746">
+    <state width="2822" height="435" key="GridCell.Tab.0.left" timestamp="1590769660489">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="436" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590705179746" />
+    <state width="2822" height="435" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590769660489" />
     <state width="1862" height="259" key="GridCell.Tab.0.left/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
-    <state width="2822" height="436" key="GridCell.Tab.0.right" timestamp="1590705179747">
+    <state width="2822" height="435" key="GridCell.Tab.0.right" timestamp="1590769660490">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="436" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590705179747" />
+    <state width="2822" height="435" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590769660490" />
     <state width="1862" height="259" key="GridCell.Tab.0.right/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
     <state x="3416" y="173" width="1195" height="907" key="SettingsEditor" timestamp="1590515533020">
       <screen x="2880" y="0" width="1920" height="1080" />
@@ -368,6 +378,10 @@
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="1171" y="723" width="537" height="209" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.34.2880.1586@0.34.2880.1586" timestamp="1589636540325" />
+    <state x="1065" y="498" width="749" height="658" key="find.popup" timestamp="1590765354766">
+      <screen x="0" y="34" width="2880" height="1586" />
+    </state>
+    <state x="1065" y="498" width="749" height="658" key="find.popup/0.34.2880.1586@0.34.2880.1586" timestamp="1590765354766" />
     <state x="1571" y="392" width="840" height="1034" key="search.everywhere.popup" timestamp="1589889351642">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>

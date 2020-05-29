@@ -93,6 +93,7 @@ class OpleidersList(prps: OpleidersListProps) :
         itemsData[key] ?: error("opleider $key does not exist")
 
     override fun typeToKey(type: Opleider, itemsData: Map<String, Opleider>) = type.code
+
     override fun getFilteredItems(
         filter: String,
         itemsData: Map<String, Opleider>,

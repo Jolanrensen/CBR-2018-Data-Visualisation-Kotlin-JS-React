@@ -5,6 +5,8 @@ import org.w3c.xhr.XMLHttpRequest
 object Data {
 
     var hasStartedLoading = false
+    val NO_PRODUCTEN = 103
+    fun Int.isAllOrNoProducten() = this == 0 || this == NO_PRODUCTEN
 
     interface GemeentesProperties {
         val statcode: String
@@ -183,6 +185,9 @@ object Data {
             return _examenlocatieToResultaten!!
         }
 
+    val NO_EXAMENLOCATIES = 327
+    fun Int.isAllOrNoExamenlocaties() = this == 0 || this == NO_EXAMENLOCATIES
+
     private var _alleExamenlocaties: Map<String, Examenlocatie>? = null
     val alleExamenlocaties: Map<String, Examenlocatie>
         get() {
@@ -206,6 +211,8 @@ object Data {
             return _alleExamenlocaties!!
         }
 
+    val NO_OPLEIDERS = 7501
+    fun Int.isAllOrNoOpleiders() = this == 0 || this == NO_OPLEIDERS
 
     private var _alleOpleiders: Map<String, Opleider>? = null
     val alleOpleiders: Map<String, Opleider>
@@ -229,6 +236,8 @@ object Data {
 
             return _alleOpleiders!!
         }
+
+    val NO_RESULTATEN = 76583
 
     private var _alleResultaten: Map<Int, Resultaat>? = null
 

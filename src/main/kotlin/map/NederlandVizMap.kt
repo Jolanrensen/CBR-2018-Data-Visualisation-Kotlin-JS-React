@@ -18,6 +18,12 @@ import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.mCircularProgress
 import data.*
+import data.Data.NO_EXAMENLOCATIES
+import data.Data.NO_OPLEIDERS
+import data.Data.NO_PRODUCTEN
+import data.Data.isAllOrNoExamenlocaties
+import data.Data.isAllOrNoOpleiders
+import data.Data.isAllOrNoProducten
 import data.Examenresultaat.ONVOLDOENDE
 import data.Examenresultaat.VOLDOENDE
 import data.ExamenresultaatVersie.EERSTE_EXAMEN_OF_TOETS
@@ -54,11 +60,11 @@ interface NederlandVizMapProps : RProps {
     var examenlocatieOrOpleider: ExamenlocatieOrOpleider
     var slagingspercentageSoort: SlagingspercentageSoort
 
-    var setOpleiderFilters: ApplyFilter
-    var setExamenlocatieFilters: ApplyFilter
+//    var setOpleiderFilters: ApplyFilter
+//    var setExamenlocatieFilters: ApplyFilter
 
-    var selectAllOpleiders: SelectAll
-    var selectAllExamenlocaties: SelectAll
+    var selectAllOpleiders: SelectAll<Opleider>
+    var selectAllExamenlocaties: SelectAll<Examenlocatie>
 
     var deselectAllOpleiders: DeselectAll
     var deselectAllExamenlocaties: DeselectAll
@@ -86,8 +92,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
         }
 
     val dataLoaded by propDelegateOf(NederlandVizMapProps::dataLoaded)
-    val setOpleiderFilters by propDelegateOf(NederlandVizMapProps::setOpleiderFilters)
-    val setExamenlocatieFilters by propDelegateOf(NederlandVizMapProps::setExamenlocatieFilters)
+//    val setOpleiderFilters by propDelegateOf(NederlandVizMapProps::setOpleiderFilters)
+//    val setExamenlocatieFilters by propDelegateOf(NederlandVizMapProps::setExamenlocatieFilters)
 
     val selectAllOpleiders by propDelegateOf(NederlandVizMapProps::selectAllOpleiders)
     val selectAllExamenlocaties by propDelegateOf(NederlandVizMapProps::selectAllExamenlocaties)
@@ -95,9 +101,9 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     val deselectAllOpleiders by propDelegateOf(NederlandVizMapProps::deselectAllOpleiders)
     val deselectAllExamenlocaties by propDelegateOf(NederlandVizMapProps::deselectAllExamenlocaties)
 
-    private var selectedOpleiderKeys by propDelegateOf(NederlandVizMapProps::selectedOpleiderKeys)
-    private var selectedExamenlocatieKeys by propDelegateOf(NederlandVizMapProps::selectedExamenlocatieKeys)
-    private var selectedProducts by propDelegateOf(NederlandVizMapProps::selectedProducts)
+    private val selectedOpleiderKeys by propDelegateOf(NederlandVizMapProps::selectedOpleiderKeys)
+    private val selectedExamenlocatieKeys by propDelegateOf(NederlandVizMapProps::selectedExamenlocatieKeys)
+    private val selectedProducts by propDelegateOf(NederlandVizMapProps::selectedProducts)
 
 
     override fun NederlandVizMapState.init(props: NederlandVizMapProps) {
@@ -161,14 +167,6 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
             gemeentes = nederland.features.map { feature ->
                 val featureStatnaam = feature.properties.statnaam.toLowerCase()
 
-//                val opleiders = Data.alleOpleiders
-//                    .values
-//                    .filter { it.gemeente.toLowerCase() == featureStatnaam }
-//
-//                val examenlocaties = Data.alleExamenlocaties
-//                    .values
-//                    .filter { it.gemeente.toLowerCase() == featureStatnaam }
-
                 fun GeoPathNode.runOnNode() {
                     stroke = Colors.Web.black
                     strokeWidth = 1.0
@@ -209,179 +207,11 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                      * Totaal percentage = sum[i in opleiders](i.slagingspecentage * aantal resultaten in i) / totaal aantal resultaten
                      */
                     slagingspercentageEersteKeerOpleiders = currentGemeenteData[2].toDouble(),
-//                    opleiders
-//                        .filter { it.slagingspercentageEersteKeer != null }
-//                        .let { opleiders ->
-//                            val opleiderCodes = opleiders.map { it.code }
-//
-//                            val opleidersResultSize = Data.opleiderToResultaten
-//                                .asSequence()
-//                                .sumByDouble { (key, entry) ->
-//                                    if (key !in opleiderCodes) {
-//                                        0.0
-//                                    } else {
-//                                        entry.sumByDouble {
-//                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-//                                                it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
-//                                            }.toDouble()
-//                                        }
-//                                    }
-//                                }
-//
-//                            opleiders.sumByDouble {
-//                                it.slagingspercentageEersteKeer!! *
-//                                        Data.opleiderToResultaten[it.code]!!
-//                                            .sumByDouble {
-//                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-//                                                    it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
-//                                                }.toDouble()
-//                                            }
-//                            } / opleidersResultSize
-//                        },
                     slagingspercentageHerexamenOpleiders = currentGemeenteData[3].toDouble(),
-//                    opleiders
-//                        .filter { it.slagingspercentageEersteKeer != null }
-//                        .let { opleiders ->
-//                            val opleiderCodes = opleiders.map { it.code }
-//
-//                            val opleidersResultSize = Data.opleiderToResultaten
-//                                .asSequence()
-//                                .sumByDouble { (key, entry) ->
-//                                    if (key !in opleiderCodes) {
-//                                        0.0
-//                                    } else {
-//                                        entry.sumByDouble {
-//                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-//                                                it.examenresultaatVersie == HEREXAMEN_OF_TOETS
-//                                            }.toDouble()
-//                                        }
-//                                    }
-//                                }
-//
-//                            opleiders.sumByDouble {
-//                                it.slagingspercentageEersteKeer!! *
-//                                        Data.opleiderToResultaten[it.code]!!
-//                                            .sumByDouble {
-//                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-//                                                    it.examenresultaatVersie == HEREXAMEN_OF_TOETS
-//                                                }.toDouble()
-//                                            }
-//                            } / opleidersResultSize
-//                        },
                     slagingspercentageGecombineerdOpleiders = currentGemeenteData[4].toDouble(),
-//                    opleiders
-//                        .filter { it.slagingspercentageEersteKeer != null && it.slagingspercentageHerkansing != null }
-//                        .let { opleiders ->
-//                            val opleiderCodes = opleiders.map { it.code }
-//
-//                            val opleidersResultSize = Data.opleiderToResultaten
-//                                .asSequence()
-//                                .sumByDouble { (key, entry) ->
-//                                    if (key !in opleiderCodes) {
-//                                        0.0
-//                                    } else {
-//                                        entry.sumByDouble {
-//                                            Data.alleResultaten[it]!!.examenresultaatAantallen.size.toDouble()
-//                                        }
-//                                    }
-//                                }
-//
-//                            opleiders.sumByDouble {
-//                                (it.slagingspercentageEersteKeer!! + it.slagingspercentageHerkansing!!) / 2.0 *
-//                                        Data.opleiderToResultaten[it.code]!!
-//                                            .sumByDouble {
-//                                                Data.alleResultaten[it]!!.examenresultaatAantallen.size.toDouble()
-//                                            }
-//                            } / opleidersResultSize
-//                        },
-
                     slagingspercentageEersteKeerExamenlocaties = currentGemeenteData[5].toDouble(),
-//                    examenlocaties
-//                        .filter { it.slagingspercentageEersteKeer != null }
-//                        .let { examenlocaties ->
-//                            val examenlocatieNamen = examenlocaties.map { it.naam }
-//
-//                            val examenlocatiesResultSize = Data.examenlocatieToResultaten
-//                                .asSequence()
-//                                .sumByDouble { (key, entry) ->
-//                                    if (key !in examenlocatieNamen) {
-//                                        0.0
-//                                    } else {
-//                                        entry.sumByDouble {
-//                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-//                                                it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
-//                                            }.toDouble()
-//                                        }
-//                                    }
-//                                }
-//
-//                            examenlocaties.sumByDouble {
-//                                it.slagingspercentageEersteKeer!! *
-//                                        Data.examenlocatieToResultaten[it.naam]!!
-//                                            .sumByDouble {
-//                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-//                                                    it.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
-//                                                }.toDouble()
-//                                            }
-//                            } / examenlocatiesResultSize
-//                        },
                     slagingspercentageHerexamenExamenlocaties = currentGemeenteData[6].toDouble(),
-//                    examenlocaties
-//                        .filter { it.slagingspercentageEersteKeer != null }
-//                        .let { examenlocaties ->
-//                            val examenlocatieNamen = examenlocaties.map { it.naam }
-//
-//                            val examenlocatiesResultSize = Data.examenlocatieToResultaten
-//                                .asSequence()
-//                                .sumByDouble { (key, entry) ->
-//                                    if (key !in examenlocatieNamen) {
-//                                        0.0
-//                                    } else {
-//                                        entry.sumByDouble {
-//                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-//                                                it.examenresultaatVersie == HEREXAMEN_OF_TOETS
-//                                            }.toDouble()
-//                                        }
-//                                    }
-//                                }
-//
-//                            examenlocaties.sumByDouble {
-//                                it.slagingspercentageEersteKeer!! *
-//                                        Data.examenlocatieToResultaten[it.naam]!!
-//                                            .sumByDouble {
-//                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count {
-//                                                    it.examenresultaatVersie == HEREXAMEN_OF_TOETS
-//                                                }.toDouble()
-//                                            }
-//                            } / examenlocatiesResultSize
-//                        },
-
                     slagingspercentageGecombineerdExamenlocaties = currentGemeenteData[7].toDouble()
-//                    examenlocaties
-//                        .filter { it.slagingspercentageEersteKeer != null && it.slagingspercentageHerkansing != null }
-//                        .let { examenlocaties ->
-//                            val examenlocatieNamen = examenlocaties.map { it.naam }
-//
-//                            val examenlocatiesResultSize = Data.examenlocatieToResultaten
-//                                .asSequence()
-//                                .sumByDouble { (key, entry) ->
-//                                    if (key !in examenlocatieNamen) {
-//                                        0.0
-//                                    } else {
-//                                        entry.sumByDouble {
-//                                            Data.alleResultaten[it]!!.examenresultaatAantallen.count().toDouble()
-//                                        }
-//                                    }
-//                                }
-//
-//                            examenlocaties.sumByDouble {
-//                                (it.slagingspercentageEersteKeer!! + it.slagingspercentageHerkansing!!) / 2.0 *
-//                                        Data.examenlocatieToResultaten[it.naam]!!
-//                                            .sumByDouble {
-//                                                Data.alleResultaten[it]!!.examenresultaatAantallen.count().toDouble()
-//                                            }
-//                            } / examenlocatiesResultSize
-//                        }
                 ).apply { idColorToGemeente[idColor!!.rgb] = featureStatnaam }
             }.toMap()
             loadingState = LOADED
@@ -521,18 +351,16 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     on(KPointerClick) {
                         getGemeenteAt(it.pos, hiddenCanvas!!)?.let { clicked ->
                             // TODO maybe keep filter but select only all opleiders/ex... from clicked gemeente in currently filtered items
-                            deselectAllOpleiders()
-                            deselectAllExamenlocaties()
-                            setExamenlocatieFilters("")
-                            setOpleiderFilters("")
+//                            deselectAllOpleiders()
+//                            deselectAllExamenlocaties()
                             when (examenlocatieOrOpleider) {
                                 EXAMENLOCATIE -> {
-                                    selectedExamenlocatieKeys = clicked.examenlocaties
-                                    selectAllOpleiders()
+                                    selectAllExamenlocaties { it.naam in clicked.examenlocaties }
+//                                    selectAllOpleiders { true }
                                 }
                                 OPLEIDER -> {
-                                    selectedOpleiderKeys = clicked.opleiders
-                                    selectAllExamenlocaties()
+                                    selectAllOpleiders { it.code in clicked.opleiders }
+//                                    selectAllExamenlocaties { true }
                                 }
                             }
                         }
@@ -609,16 +437,14 @@ fun getSlagingsPercentageExamenlocaties(
     return if (voldoende + onvoldoende == 0.0) 0.0 else voldoende / (voldoende + onvoldoende)
 }
 
-fun getGemeenteColor(
-    selected: Boolean,
-    gemeente: Gemeente,
+fun getGemeentePercentage(
     examenlocatieOrOpleider: ExamenlocatieOrOpleider,
     slagingspercentageSoort: SlagingspercentageSoort,
-
+    gemeente: Gemeente,
     selectedOpleiderKeys: Set<String>,
-    selectedExamenlocatieKeys: Set<String>,
-    selectedProducts: Set<Product>
-): HslColor {
+    selectedProducts: Set<Product>,
+    selectedExamenlocatieKeys: Set<String>
+): Double {
     /*
         all selected:
 
@@ -626,15 +452,57 @@ fun getGemeenteColor(
         no examenlocaties: 327
         no products: 103
      */
-    val selectedProductsAllOrNone = selectedProducts.size == 103 || selectedProducts.isEmpty()
+    val selectedProductsAllOrNone = selectedProducts.size.isAllOrNoProducten()
+    val selectedOpleiderKeysAllOrNone = selectedOpleiderKeys.size.isAllOrNoOpleiders()
+    val selectedExamenlocatieKeysAllOrNone = selectedExamenlocatieKeys.size.isAllOrNoExamenlocaties()
 
-    val selectedOpleiderKeysAllOrNone =
-        selectedProductsAllOrNone && (selectedOpleiderKeys.isEmpty() || selectedOpleiderKeys.size == 7501)
-    val selectedExamenlocatieKeysAllOrNone =
-        selectedProductsAllOrNone && (selectedExamenlocatieKeys.isEmpty() || selectedExamenlocatieKeys.size == 327)
+    return when (examenlocatieOrOpleider) {
+        OPLEIDER -> {
+            if (selectedOpleiderKeysAllOrNone && selectedProductsAllOrNone) {
+                when (slagingspercentageSoort) {
+                    EERSTE_KEER -> gemeente.slagingspercentageEersteKeerOpleiders
+                    HERKANSING -> gemeente.slagingspercentageHerexamenOpleiders
+                    GECOMBINEERD -> gemeente.slagingspercentageGecombineerdOpleiders
+                }
+            } else {
+                getSlagingsPercentageOpleiders( // todo no opleiders at all, color in map
+                    opleiders = selectedOpleiderKeys.filter { it in gemeente.opleiders },
+                    selectedProducts = if (selectedProductsAllOrNone)
+                        Product.values().toSet() else selectedProducts,
+                    slagingspercentageSoort = slagingspercentageSoort
+                )
+            }
+        }
+        EXAMENLOCATIE -> {
+            if (selectedExamenlocatieKeysAllOrNone && selectedProductsAllOrNone) {
+                when (slagingspercentageSoort) {
+                    EERSTE_KEER -> gemeente.slagingspercentageEersteKeerExamenlocaties
+                    HERKANSING -> gemeente.slagingspercentageHerexamenExamenlocaties
+                    GECOMBINEERD -> gemeente.slagingspercentageGecombineerdExamenlocaties
+                }
+            } else {
+                getSlagingsPercentageExamenlocaties(
+                    examenlocaties = selectedExamenlocatieKeys.filter { it in gemeente.examenlocaties },
+                    selectedProducts = if (selectedProductsAllOrNone)
+                        Product.values().toSet() else selectedProducts,
+                    slagingspercentageSoort = slagingspercentageSoort
+                )
+            }
+        }
+    }.apply { gemeente.percentageCache = this }
+}
 
-
-    return if (
+fun getGemeenteColor(
+    selected: Boolean,
+    gemeente: Gemeente,
+    examenlocatieOrOpleider: ExamenlocatieOrOpleider,
+    slagingspercentageSoort: SlagingspercentageSoort,
+    selectedOpleiderKeys: Set<String>,
+    selectedExamenlocatieKeys: Set<String>,
+    selectedProducts: Set<Product>,
+    useCachedPercentage: Boolean = false
+): HslColor =
+    if (
         examenlocatieOrOpleider == OPLEIDER && gemeente.opleiders.isEmpty()
         || examenlocatieOrOpleider == EXAMENLOCATIE && gemeente.examenlocaties.isEmpty()
     ) {
@@ -642,52 +510,23 @@ fun getGemeenteColor(
     } else {
         val greenRedAngleDiff = Colors.Web.green.toHsl().h.rad - Colors.Web.red.toHsl().h.rad
 
-        val percentage =
-            when (examenlocatieOrOpleider) {
-                OPLEIDER -> {
-                    if (selectedOpleiderKeysAllOrNone) {
-                        when (slagingspercentageSoort) {
-                            EERSTE_KEER -> gemeente.slagingspercentageEersteKeerOpleiders
-                            HERKANSING -> gemeente.slagingspercentageHerexamenOpleiders
-                            GECOMBINEERD -> gemeente.slagingspercentageGecombineerdOpleiders
-                        }
-                    } else {
-                        getSlagingsPercentageOpleiders(
-                            opleiders = selectedOpleiderKeys.filter { it in gemeente.opleiders },
-                            selectedProducts =
-                            if (selectedProductsAllOrNone) Product.values().toSet()
-                            else selectedProducts,
-                            slagingspercentageSoort = slagingspercentageSoort
-                        )
-                    }
-                }
-                EXAMENLOCATIE -> {
-                    if (selectedExamenlocatieKeysAllOrNone) when (slagingspercentageSoort) {
-                        EERSTE_KEER -> gemeente.slagingspercentageEersteKeerExamenlocaties
-                        HERKANSING -> gemeente.slagingspercentageHerexamenExamenlocaties
-                        GECOMBINEERD -> gemeente.slagingspercentageGecombineerdExamenlocaties
-                    } else {
-                        getSlagingsPercentageExamenlocaties(
-                            examenlocaties = selectedExamenlocatieKeys.filter { it in gemeente.examenlocaties },
-                            selectedProducts =
-                            if (selectedProductsAllOrNone) Product.values().toSet()
-                            else selectedProducts,
-                            slagingspercentageSoort = slagingspercentageSoort
-                        )
-                    }
-                }
-            }
+        val cachedPercentage = if (useCachedPercentage) gemeente.percentageCache else null
+        val percentage = cachedPercentage ?: getGemeentePercentage(
+            examenlocatieOrOpleider = examenlocatieOrOpleider,
+            slagingspercentageSoort = slagingspercentageSoort,
+            gemeente = gemeente,
+            selectedOpleiderKeys = selectedOpleiderKeys,
+            selectedProducts = selectedProducts,
+            selectedExamenlocatieKeys = selectedExamenlocatieKeys
+        )
 
-        if (percentage < 0)
-            Colors.Web.black.toHsl()
-        else
-            Colors.hsl(
-                hue = Angle(greenRedAngleDiff * percentage),
-                saturation = 100.pct,
-                lightness = if (selected) 20.pct else 50.pct
-            )
+        if (percentage < 0) Colors.Web.black.toHsl()
+        else Colors.hsl(
+            hue = Angle(greenRedAngleDiff * percentage),
+            saturation = 100.pct,
+            lightness = if (selected) 20.pct else 50.pct
+        )
     }
-}
 
 fun RBuilder.nederlandMap(handler: RElementBuilder<NederlandVizMapProps>.() -> Unit) =
     child(NederlandVizMap::class, handler)

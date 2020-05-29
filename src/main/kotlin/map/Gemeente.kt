@@ -13,6 +13,8 @@ class Gemeente(
     val geoPathNode: GeoPathNode,
     val hiddenGeoPathNode: GeoPathNode,
 
+    var percentageCache: Double? = null,
+
     val slagingspercentageEersteKeerOpleiders: Double,
     val slagingspercentageHerexamenOpleiders: Double,
     val slagingspercentageGecombineerdOpleiders: Double,
