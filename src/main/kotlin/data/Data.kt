@@ -77,16 +77,108 @@ object Data {
         println(allResults)
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
+    fun saveProductenToOpleiders() {
+        val productToOpleiders = buildMap<Product, HashSet<String>> {
+            Product.values().forEach {
+                this[it] = hashSetOf()
+            }
+        }
+
+        for ((key, _) in alleOpleiders) {
+            opleiderToResultaten[key]!!
+                .map { alleResultaten[it]!! }
+                .forEach {
+                    productToOpleiders[it.product]!!.add(key)
+                }
+        }
+
+        var result = ""
+        for ((product, opleiders) in productToOpleiders) {
+            result += "${product.name};${opleiders.joinToString(";")}\n"
+        }
+        println(result)
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    fun saveProductenToExamenlocaties() {
+        val productToExamenlocaties = buildMap<Product, HashSet<String>> {
+            Product.values().forEach {
+                this[it] = hashSetOf()
+            }
+        }
+
+        for ((key, _) in alleExamenlocaties) {
+            examenlocatieToResultaten[key]!!
+                .map { alleResultaten[it]!! }
+                .forEach {
+                    productToExamenlocaties[it.product]!!.add(key)
+                }
+        }
+
+        var result = ""
+        for ((product, examenlocaties) in productToExamenlocaties) {
+            result += "${product.name};${examenlocaties.joinToString(";")}\n"
+        }
+        println(result)
+    }
+
     fun loadData() {
+        alleExamenlocaties
+        alleOpleiders
+        alleResultaten
         opleiderToExamenlocaties
         examenlocatieToOpleiders
         opleiderToResultaten
         examenlocatieToResultaten
-        alleExamenlocaties
-        alleOpleiders
-        alleResultaten
+        productToOpleiders
+        productToExamenlocaties
         geoJson
     }
+
+    private var _productToExamenlocaties: Map<Product, Set<String>>? = null
+    val productToExamenlocaties: Map<Product, Set<String>>
+        get() {
+            if (_productToExamenlocaties != null) return _productToExamenlocaties!!
+            val xmlhttp = XMLHttpRequest()
+            xmlhttp.open("GET", "productToExamenlocaties", false)
+            xmlhttp.send()
+
+            val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
+            _productToExamenlocaties = result
+                ?.split("\n")
+                ?.map { it.split(";") }
+                ?.map {
+                    Product.valueOf(it.first()) to
+                            it.takeLast(it.size - 1)
+                                .toSet()
+                }
+                ?.toMap()
+
+            return _productToExamenlocaties!!
+        }
+
+    private var _productToOpleiders: Map<Product, Set<String>>? = null
+    val productToOpleiders: Map<Product, Set<String>>
+        get() {
+            if (_productToOpleiders != null) return _productToOpleiders!!
+            val xmlhttp = XMLHttpRequest()
+            xmlhttp.open("GET", "productToOpleiders", false)
+            xmlhttp.send()
+
+            val result = if (xmlhttp.status == 200.toShort()) xmlhttp.responseText else null
+            _productToOpleiders = result
+                ?.split("\n")
+                ?.map { it.split(";") }
+                ?.map {
+                    Product.valueOf(it.first()) to
+                            it.takeLast(it.size - 1)
+                                .toSet()
+                }
+                ?.toMap()
+
+            return _productToOpleiders!!
+        }
 
     private var _opleiderToExamenlocaties: Map<String, Set<String>>? = null
     val opleiderToExamenlocaties: Map<String, Set<String>>

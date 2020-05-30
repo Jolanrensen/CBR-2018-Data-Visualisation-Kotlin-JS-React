@@ -17,20 +17,14 @@ import com.ccfraser.muirwik.components.table.mTableCell
 import com.ccfraser.muirwik.components.table.mTableRow
 import data.Categorie
 import data.Data
+import data.Data.isAllOrNoExamenlocaties
+import data.Data.isAllOrNoProducten
 import data.Opleider
-import data2viz.vizComponent
+import data.Product
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
-import io.data2viz.color.Colors.Web
-import io.data2viz.color.RgbColor
-import io.data2viz.geom.Arc
-import io.data2viz.geom.size
-import io.data2viz.scale.Scale
-import io.data2viz.scale.Scales
-import io.data2viz.shape.*
 import kotlinx.css.*
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.internal.MapEntry
 import libs.reactList.ReactListRef
 import libs.reactList.ref
 import libs.reactList.styledReactList
@@ -40,7 +34,6 @@ import react.RBuilder
 import react.ReactElement
 import react.buildElement
 import react.dom.findDOMNode
-import react.dom.h1
 import react.ref
 import styled.StyleSheet
 import styled.css
@@ -48,15 +41,17 @@ import styled.styledDiv
 import styled.styledH4
 import toInt
 
-interface OpleidersListProps : FilterableListProps<String, Opleider>
+interface OpleidersListProps : FilterableListProps<String, Opleider, Product>
 
 interface OpleidersListState : FilterableListState
 
 class OpleidersList(prps: OpleidersListProps) :
-    FilterableList<String, Opleider, OpleidersListProps, OpleidersListState>(prps) {
+    FilterableList<String, Opleider, Product, OpleidersListProps, OpleidersListState>(prps) {
 
     private var isOpleiderSelected by propDelegateOf(OpleidersListProps::selectedItemKeys)
-    private var isExamenlocatieSelected by propDelegateOf(OpleidersListProps::selectedOtherItemKeys)
+    private val isExamenlocatieSelected by propDelegateOf(OpleidersListProps::selectedOtherItemKeys)
+    private val isProductSelected by propDelegateOf(OpleidersListProps::selectedThirdItemKeys)
+
 
     private val filter by propDelegateOf(OpleidersListProps::filter)
     private val itemsData by propDelegateOf(OpleidersListProps::itemsData)
@@ -69,7 +64,8 @@ class OpleidersList(prps: OpleidersListProps) :
                 filter,
                 itemsData,
                 isOpleiderSelected,
-                isExamenlocatieSelected
+                isExamenlocatieSelected,
+                isProductSelected
             ) // for if ref is not yet set in FilterList
 
     override fun OpleidersListState.init(props: OpleidersListProps) {
@@ -98,17 +94,41 @@ class OpleidersList(prps: OpleidersListProps) :
         filter: String,
         itemsData: Map<String, Opleider>,
         selectedItemKeys: Set<String>,
-        selectedOtherItemKeys: Set<String>
+        selectedOtherItemKeys: Set<String>,
+        thirdSelectedItemKeys: Set<Product>
     ): List<Opleider> {
         val filterTerms = filter.split(" ", ", ", ",")
         val score = hashMapOf<String, Int>()
-        (if (selectedOtherItemKeys.isNotEmpty())
-            selectedOtherItemKeys.asSequence()
-                .map { Data.examenlocatieToOpleiders[it]!! }
-                .flatten()
-                .map { it to (itemsData[it] ?: error("opleider $it does not exist")) }
-                .toMap()
-        else itemsData).forEach { (oplCode, opleider) ->
+
+        val thirdSelectedItemKeysEmptyOrFull = thirdSelectedItemKeys.size.isAllOrNoProducten()
+        val selectedOtherItemKeysEmptyOrFull = selectedOtherItemKeys.size.isAllOrNoExamenlocaties()
+
+        when {
+            selectedOtherItemKeysEmptyOrFull && thirdSelectedItemKeysEmptyOrFull -> itemsData.asSequence()
+
+            selectedOtherItemKeysEmptyOrFull && !thirdSelectedItemKeysEmptyOrFull -> thirdSelectedItemKeys.asSequence()
+                .flatMap { Data.productToOpleiders[it]!!.asSequence() }
+                .map { MapEntry(it, itemsData[it] ?: error("Opleider $it does not exist")) }
+
+            !selectedOtherItemKeysEmptyOrFull && thirdSelectedItemKeysEmptyOrFull -> selectedOtherItemKeys.asSequence()
+                .flatMap { Data.examenlocatieToOpleiders[it]!!.asSequence() }
+                .map { MapEntry(it, itemsData[it] ?: error("Opleider $it does not exist")) }
+
+            !selectedOtherItemKeysEmptyOrFull && !thirdSelectedItemKeysEmptyOrFull -> (
+                    thirdSelectedItemKeys.asSequence()
+                        .flatMap { Data.productToOpleiders[it]!!.asSequence() }
+                        .asIterable()
+
+                            intersect
+
+                            selectedOtherItemKeys.asSequence()
+                                .flatMap { Data.examenlocatieToOpleiders[it]!!.asSequence() }
+                                .asIterable()
+                    ).asSequence()
+                .map { MapEntry(it, itemsData[it] ?: error("Opleider $it does not exist")) }
+
+            else -> error("this is impossible")
+        }.forEach { (oplCode, opleider) ->
             filterTerms.forEach {
                 val naam = opleider.naam.contains(it, true)
                 val code = oplCode.contains(it, true)
@@ -123,9 +143,7 @@ class OpleidersList(prps: OpleidersListProps) :
 
         val result = score.asSequence()
             .filter { it.value != 0 }
-            .sortedByDescending {
-                itemsData[it.key]?.let { sortType(it) } ?: error("opleider $it does not exist")
-            }
+            .sortedByDescending { itemsData[it.key]?.let { sortType(it) } ?: error("opleider $it does not exist") }
             .sortedByDescending { it.value }
             .sortedByDescending { it.key in selectedItemKeys }
             .map { itemsData[it.key] ?: error("opleider $it does not exist") }

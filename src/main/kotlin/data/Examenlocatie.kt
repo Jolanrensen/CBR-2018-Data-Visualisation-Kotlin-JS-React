@@ -78,4 +78,5 @@ inline class Examenlocatie(val data: Array<String>) {
             "slagingspercentage eerste keer" to slagingspercentageEersteKeer.asPercentage(),
             "slagingspercentage herkansing" to slagingspercentageHerkansing.asPercentage()
         )
+
 }

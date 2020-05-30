@@ -72,6 +72,10 @@ interface NederlandVizMapProps : RProps {
     var selectedOpleiderKeys: StateAsProp<Set<String>>
     var selectedExamenlocatieKeys: StateAsProp<Set<String>>
     var selectedProducts: StateAsProp<Set<Product>>
+
+    var filteredOpleiders: List<Opleider>
+    var filteredExamenlocaties: List<Examenlocatie>
+    var filteredProducts: List<Product>
 }
 
 interface NederlandVizMapState : RState {
@@ -105,6 +109,9 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     private val selectedExamenlocatieKeys by propDelegateOf(NederlandVizMapProps::selectedExamenlocatieKeys)
     private val selectedProducts by propDelegateOf(NederlandVizMapProps::selectedProducts)
 
+    private val filteredOpleiders by propDelegateOf(NederlandVizMapProps::filteredOpleiders)
+    private val filteredExamenlocaties by propDelegateOf(NederlandVizMapProps::filteredExamenlocaties)
+    private val filteredProducts by propDelegateOf(NederlandVizMapProps::filteredProducts)
 
     override fun NederlandVizMapState.init(props: NederlandVizMapProps) {
         gemeentes = emptyMap()
@@ -114,27 +121,20 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     var gemeentes by stateDelegateOf(NederlandVizMapState::gemeentes)
     var loadingState by stateDelegateOf(NederlandVizMapState::loadingState)
 
-    private var previousSelectedOpleiderKeys: Set<String> = emptySet()
-    private var previousSelectedExamenlocatieKeys: Set<String> = emptySet()
-    private var previousSelectedProducts: Set<Product> = emptySet()
-
     // don't update when [selectedGemeente] changed (because that will loop)
     @Suppress("SimplifyBooleanWithConstants")
-    override fun shouldComponentUpdate(nextProps: NederlandVizMapProps, nextState: NederlandVizMapState): Boolean {
-        previousSelectedOpleiderKeys = selectedOpleiderKeys
-        previousSelectedExamenlocatieKeys = selectedExamenlocatieKeys
-        previousSelectedProducts = selectedProducts
-
-        return false
-                || props.dataLoaded != nextProps.dataLoaded
-                || props.examenlocatieOrOpleider != nextProps.examenlocatieOrOpleider
-                || props.slagingspercentageSoort != nextProps.slagingspercentageSoort
-                || props.selectedOpleiderKeys != nextProps.selectedOpleiderKeys
-                || props.selectedExamenlocatieKeys != nextProps.selectedExamenlocatieKeys
-                || props.selectedProducts != nextProps.selectedProducts
-                || state.gemeentes != nextState.gemeentes
-                || state.loadingState != nextState.loadingState
-    }
+    override fun shouldComponentUpdate(nextProps: NederlandVizMapProps, nextState: NederlandVizMapState) = false
+            || props.dataLoaded != nextProps.dataLoaded
+            || props.examenlocatieOrOpleider != nextProps.examenlocatieOrOpleider
+            || props.slagingspercentageSoort != nextProps.slagingspercentageSoort
+            || props.selectedOpleiderKeys != nextProps.selectedOpleiderKeys
+            || props.selectedExamenlocatieKeys != nextProps.selectedExamenlocatieKeys
+            || props.selectedProducts != nextProps.selectedProducts
+            || props.filteredOpleiders != nextProps.filteredOpleiders
+            || props.filteredExamenlocaties != nextProps.filteredExamenlocaties
+            || props.filteredProducts != nextProps.filteredProducts
+            || state.gemeentes != nextState.gemeentes
+            || state.loadingState != nextState.loadingState
 
     private val nederland: FeatureCollection<Data.GemeentesProperties> =
         Data.geoJson!! // geometry type is polygon/multipolygon for each
@@ -168,7 +168,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                 val featureStatnaam = feature.properties.statnaam.toLowerCase()
 
                 fun GeoPathNode.runOnNode() {
-                    stroke = Colors.Web.black
+                    stroke = Colors.Web.darkgray
                     strokeWidth = 1.0
                     geoProjection = conicEqualAreaProjection {
                         scale = 15000.0
@@ -198,7 +198,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
 
                 featureStatnaam to Gemeente(
                     feature = feature,
-                    opleiders = currentGemeenteData[0].split(",").toSet(), //opleiders.map { it.code },
+                    opleiders = currentGemeenteData[0].split(",").toList().toSet(), //opleiders.map { it.code },
                     examenlocaties = currentGemeenteData[1].split(",").toSet(), //examenlocaties.map { it.naam },
                     geoPathNode = geoPathNode,
                     hiddenGeoPathNode = hiddenGeoPathNode,
@@ -262,7 +262,10 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                 slagingspercentageSoort = slagingsPercentageSoort,
                 selectedExamenlocatieKeys = selectedExamenlocatieKeys,
                 selectedOpleiderKeys = selectedOpleiderKeys,
-                selectedProducts = selectedProducts
+                selectedProducts = selectedProducts,
+                filteredOpleiders = filteredOpleiders,
+                filteredExamenlocaties = filteredExamenlocaties,
+                filteredProducts = filteredProducts
             )
             it.geoPathNode.redrawPath()
             add(it.geoPathNode)
@@ -372,21 +375,31 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
 }
 
 fun getSlagingsPercentageOpleiders(
-    opleiders: Collection<String>,
+    opleiders: Set<String>,
     selectedProducts: Set<Product>,
     slagingspercentageSoort: SlagingspercentageSoort
 ): Double {
     if (opleiders.isEmpty()) return -1.0
 
+//    println(
+//        """getSlagingsPercentageOpleiders:
+//            size opleiders: ${opleiders.size}
+//            opleiders: ${opleiders.joinToString(", ")}
+//            selectedProducts: ${selectedProducts.joinToString(", ")}
+//            slaginsPercentageSoort: $slagingspercentageSoort""".trimMargin()
+//    )
+//    console.log(opleiders)
+
     var voldoende = 0.0
     var onvoldoende = 0.0
 
-    opleiders.asSequence()
+    selectedProducts.flatMap { Data.productToOpleiders[it]!! }
+        .intersect(opleiders)
+        .asSequence()
         .map { opleiderKey -> Data.opleiderToResultaten[opleiderKey]!! }
         .flatMap { resultaatKeys ->
             resultaatKeys.asSequence().map { resultaatKey -> Data.alleResultaten[resultaatKey]!! }
         }
-        .filter { resultaat -> resultaat.product in selectedProducts }
         .flatMap { resultaat -> resultaat.examenresultaatAantallen.asSequence() }
         .filter { examenresultaatAantal ->
             when (slagingspercentageSoort) {
@@ -405,7 +418,7 @@ fun getSlagingsPercentageOpleiders(
 }
 
 fun getSlagingsPercentageExamenlocaties(
-    examenlocaties: Collection<String>,
+    examenlocaties: Set<String>,
     selectedProducts: Set<Product>,
     slagingspercentageSoort: SlagingspercentageSoort
 ): Double {
@@ -414,12 +427,13 @@ fun getSlagingsPercentageExamenlocaties(
     var voldoende = 0.0
     var onvoldoende = 0.0
 
-    examenlocaties.asSequence()
+    selectedProducts.flatMap { Data.productToExamenlocaties[it]!! }
+        .intersect(examenlocaties)
+        .asSequence()
         .map { examenlocatieKey -> Data.examenlocatieToResultaten[examenlocatieKey]!! }
         .flatMap { resultaatKeys ->
             resultaatKeys.asSequence().map { resultaatKey -> Data.alleResultaten[resultaatKey]!! }
         }
-        .filter { resultaat -> resultaat.product in selectedProducts }
         .flatMap { resultaat -> resultaat.examenresultaatAantallen.asSequence() }
         .filter { examenresultaatAantal ->
             when (slagingspercentageSoort) {
@@ -443,7 +457,10 @@ fun getGemeentePercentage(
     gemeente: Gemeente,
     selectedOpleiderKeys: Set<String>,
     selectedProducts: Set<Product>,
-    selectedExamenlocatieKeys: Set<String>
+    selectedExamenlocatieKeys: Set<String>,
+    filteredOpleiders: List<Opleider>,
+    filteredExamenlocaties: List<Examenlocatie>,
+    filteredProducts: List<Product>
 ): Double {
     /*
         all selected:
@@ -453,44 +470,97 @@ fun getGemeentePercentage(
         no products: 103
      */
     val selectedProductsAllOrNone = selectedProducts.size.isAllOrNoProducten()
+    val filteredProductsAll = filteredProducts.size == NO_PRODUCTEN
+
     val selectedOpleiderKeysAllOrNone = selectedOpleiderKeys.size.isAllOrNoOpleiders()
+    val filteredOpleidersAll = filteredOpleiders.size == NO_OPLEIDERS
+
     val selectedExamenlocatieKeysAllOrNone = selectedExamenlocatieKeys.size.isAllOrNoExamenlocaties()
+    val filteredExamenlocatiesAll = filteredExamenlocaties.size == NO_EXAMENLOCATIES
 
     return when (examenlocatieOrOpleider) {
-        OPLEIDER -> {
-            if (selectedOpleiderKeysAllOrNone && selectedProductsAllOrNone) {
-                when (slagingspercentageSoort) {
-                    EERSTE_KEER -> gemeente.slagingspercentageEersteKeerOpleiders
-                    HERKANSING -> gemeente.slagingspercentageHerexamenOpleiders
-                    GECOMBINEERD -> gemeente.slagingspercentageGecombineerdOpleiders
-                }
-            } else {
-                getSlagingsPercentageOpleiders(
-                    opleiders = if (selectedOpleiderKeysAllOrNone)
-                        gemeente.opleiders else gemeente.opleiders.filter { it in selectedOpleiderKeys },
-                    selectedProducts = if (selectedProductsAllOrNone)
-                        Product.values().toSet() else selectedProducts,
-                    slagingspercentageSoort = slagingspercentageSoort
-                )
+        OPLEIDER ->
+            when {
+                selectedOpleiderKeysAllOrNone && selectedProductsAllOrNone && filteredOpleidersAll && filteredProductsAll ->
+                    when (slagingspercentageSoort) {
+                        EERSTE_KEER -> gemeente.slagingspercentageEersteKeerOpleiders
+                        HERKANSING -> gemeente.slagingspercentageHerexamenOpleiders
+                        GECOMBINEERD -> gemeente.slagingspercentageGecombineerdOpleiders
+                    }
+
+                else ->
+                    getSlagingsPercentageOpleiders(
+                        opleiders = when {
+                            filteredOpleidersAll ->
+                                when {
+                                    selectedOpleiderKeysAllOrNone -> gemeente.opleiders
+                                    else -> selectedOpleiderKeys intersect gemeente.opleiders
+                                }
+                            else ->
+                                when {
+                                    selectedOpleiderKeysAllOrNone -> gemeente.opleiders intersect filteredOpleiders.map { it.code }
+                                    else -> selectedOpleiderKeys intersect gemeente.opleiders intersect filteredOpleiders.map { it.code }
+                                }
+                        },
+                        selectedProducts = when {
+                            filteredProductsAll ->
+                                when {
+                                    selectedProductsAllOrNone -> Product.values().toSet()
+                                    else -> selectedProducts
+                                }
+
+                            else ->
+                                when {
+                                    selectedProductsAllOrNone -> filteredProducts.toSet()
+                                    else -> selectedProducts intersect filteredProducts
+                                }
+                        },
+
+                        slagingspercentageSoort = slagingspercentageSoort
+                    )
             }
-        }
-        EXAMENLOCATIE -> {
-            if (selectedExamenlocatieKeysAllOrNone && selectedProductsAllOrNone) {
-                when (slagingspercentageSoort) {
-                    EERSTE_KEER -> gemeente.slagingspercentageEersteKeerExamenlocaties
-                    HERKANSING -> gemeente.slagingspercentageHerexamenExamenlocaties
-                    GECOMBINEERD -> gemeente.slagingspercentageGecombineerdExamenlocaties
-                }
-            } else {
-                getSlagingsPercentageExamenlocaties(
-                    examenlocaties = if (selectedExamenlocatieKeysAllOrNone)
-                        gemeente.examenlocaties else gemeente.examenlocaties.filter { it in selectedExamenlocatieKeys },
-                    selectedProducts = if (selectedProductsAllOrNone)
-                        Product.values().toSet() else selectedProducts,
-                    slagingspercentageSoort = slagingspercentageSoort
-                )
+
+        EXAMENLOCATIE ->
+            when {
+                selectedExamenlocatieKeysAllOrNone && selectedProductsAllOrNone && filteredExamenlocatiesAll && filteredProductsAll ->
+                    when (slagingspercentageSoort) {
+                        EERSTE_KEER -> gemeente.slagingspercentageEersteKeerExamenlocaties
+                        HERKANSING -> gemeente.slagingspercentageHerexamenExamenlocaties
+                        GECOMBINEERD -> gemeente.slagingspercentageGecombineerdExamenlocaties
+                    }
+
+                else ->
+                    getSlagingsPercentageExamenlocaties(
+                        examenlocaties = when {
+                            filteredExamenlocatiesAll ->
+                                when {
+                                    selectedExamenlocatieKeysAllOrNone -> gemeente.examenlocaties
+                                    else -> (gemeente.examenlocaties intersect selectedExamenlocatieKeys)
+                                }
+                            else ->
+                                when {
+                                    selectedExamenlocatieKeysAllOrNone -> gemeente.examenlocaties intersect filteredExamenlocaties.map { it.naam }
+                                    else -> gemeente.examenlocaties intersect selectedExamenlocatieKeys intersect filteredExamenlocaties.map { it.naam }
+                                }
+
+                        },
+
+                        selectedProducts = when {
+                            filteredProductsAll ->
+                                when {
+                                    selectedProductsAllOrNone -> Product.values().toSet()
+                                    else -> selectedProducts
+                                }
+                            else ->
+                                when {
+                                    selectedProductsAllOrNone -> filteredProducts.toSet()
+                                    else -> selectedProducts intersect filteredProducts
+                                }
+                        },
+
+                        slagingspercentageSoort = slagingspercentageSoort
+                    )
             }
-        }
     }.apply { gemeente.percentageCache = this }
 }
 
@@ -502,6 +572,9 @@ fun getGemeenteColor(
     selectedOpleiderKeys: Set<String>,
     selectedExamenlocatieKeys: Set<String>,
     selectedProducts: Set<Product>,
+    filteredOpleiders: List<Opleider>,
+    filteredExamenlocaties: List<Examenlocatie>,
+    filteredProducts: List<Product>,
     useCachedPercentage: Boolean = false
 ): HslColor =
     if (
@@ -519,7 +592,10 @@ fun getGemeenteColor(
             gemeente = gemeente,
             selectedOpleiderKeys = selectedOpleiderKeys,
             selectedProducts = selectedProducts,
-            selectedExamenlocatieKeys = selectedExamenlocatieKeys
+            selectedExamenlocatieKeys = selectedExamenlocatieKeys,
+            filteredOpleiders = filteredOpleiders,
+            filteredExamenlocaties = filteredExamenlocaties,
+            filteredProducts = filteredProducts
         )
 
         if (percentage < 0) Colors.Web.black.toHsl()

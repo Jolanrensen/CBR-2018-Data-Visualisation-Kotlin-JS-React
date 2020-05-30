@@ -19,9 +19,20 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="oopsie, made it faster">
+    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="zoekbalk zoekt weer meteen">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/productToExamenlocaties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/productToOpleiders" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterableList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Examenlocatie.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategorieProductList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/ExamenlocatiesList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +200,7 @@
       <workItem from="1590686159917" duration="9182000" />
       <workItem from="1590760823461" duration="8474000" />
       <workItem from="1590773381183" duration="377000" />
-      <workItem from="1590836366091" duration="3779000" />
+      <workItem from="1590836366091" duration="27432000" />
     </task>
     <task id="LOCAL-00001" summary="It's running again!">
       <created>1589639534400</created>
@@ -289,7 +300,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590839767890</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="zoekbalk zoekt weer meteen">
+      <created>1590840270031</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1590840270031</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,17 +340,18 @@
     <MESSAGE value="map now properly selects gemeentes. Fixed slow reloading bug" />
     <MESSAGE value="kaart now also colored in for just categorie, cleared up a bit" />
     <MESSAGE value="oopsie, made it faster" />
-    <option name="LAST_COMMIT_MESSAGE" value="oopsie, made it faster" />
+    <MESSAGE value="zoekbalk zoekt weer meteen" />
+    <option name="LAST_COMMIT_MESSAGE" value="zoekbalk zoekt weer meteen" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1481" y="482" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589722154163">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="1481" y="482" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.34.2880.1586@0.34.2880.1586" timestamp="1589722154163" />
-    <state x="3880" y="392" width="829" height="301" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590521906886">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state x="1500" y="610" width="825" height="440" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590843829728">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="1500" y="610" width="772" height="436" key="#com.intellij.fileTypes.FileTypeChooser/0.34.2880.1586@0.34.2880.1586" timestamp="1590441452984" />
+    <state x="1500" y="610" width="825" height="440" key="#com.intellij.fileTypes.FileTypeChooser/0.34.2880.1586@0.34.2880.1586" timestamp="1590843829728" />
     <state x="3880" y="392" width="829" height="301" key="#com.intellij.fileTypes.FileTypeChooser/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590521906886" />
     <state x="1718" y="478" width="537" height="701" key="#com.intellij.ide.util.MemberChooser" timestamp="1589905045687">
       <screen x="0" y="34" width="2880" height="1586" />
@@ -346,35 +365,35 @@
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl/0.34.2880.1586@0.34.2880.1586" timestamp="1589720455423" />
-    <state width="2822" height="435" key="GridCell.Tab.0.bottom" timestamp="1590838396658">
+    <state width="2822" height="435" key="GridCell.Tab.0.bottom" timestamp="1590864486597">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="435" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590838396658" />
+    <state width="2822" height="435" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590864486597" />
     <state width="1862" height="259" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378245" />
-    <state width="2822" height="435" key="GridCell.Tab.0.center" timestamp="1590838396657">
+    <state width="2822" height="435" key="GridCell.Tab.0.center" timestamp="1590864486596">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="435" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590838396657" />
+    <state width="2822" height="435" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590864486596" />
     <state width="1862" height="259" key="GridCell.Tab.0.center/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
-    <state width="2822" height="435" key="GridCell.Tab.0.left" timestamp="1590838396656">
+    <state width="2822" height="435" key="GridCell.Tab.0.left" timestamp="1590864486596">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="435" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590838396656" />
+    <state width="2822" height="435" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590864486596" />
     <state width="1862" height="259" key="GridCell.Tab.0.left/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
-    <state width="2822" height="435" key="GridCell.Tab.0.right" timestamp="1590838396657">
+    <state width="2822" height="435" key="GridCell.Tab.0.right" timestamp="1590864486597">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="435" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590838396657" />
+    <state width="2822" height="435" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590864486597" />
     <state width="1862" height="259" key="GridCell.Tab.0.right/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
     <state x="804" y="374" width="1195" height="907" key="SettingsEditor" timestamp="1590837290610">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="804" y="374" width="1792" height="907" key="SettingsEditor/0.34.2880.1586@0.34.2880.1586" timestamp="1590837290610" />
     <state x="3416" y="173" width="1195" height="907" key="SettingsEditor/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590515533020" />
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1590839769408">
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1590840271903">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1590839769408" />
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1590840271903" />
     <state x="3503" y="317" width="1000" height="656" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590528922603" />
     <state x="822" y="283" width="1585" height="970" key="com.intellij.database.dbimport.ImportDialog" timestamp="1589720508224">
       <screen x="0" y="34" width="2880" height="1586" />

@@ -29,14 +29,14 @@ import styled.css
 import styled.styledDiv
 import toInt
 
-interface CategorieProductListProps : FilterableListProps<Product, Product>
+interface CategorieProductListProps : FilterableListProps<Product, Product, Nothing>
 
 interface CategorieProductListState : FilterableListState {
     var expandedCategories: Set<Categorie>
 }
 
 class CategorieProductList(prps: CategorieProductListProps) :
-    FilterableList<Product, Product, CategorieProductListProps, CategorieProductListState>(prps) {
+    FilterableList<Product, Product, Nothing, CategorieProductListProps, CategorieProductListState>(prps) {
 
     private var isProductSelected by propDelegateOf(CategorieProductListProps::selectedItemKeys)
 
@@ -49,7 +49,8 @@ class CategorieProductList(prps: CategorieProductListProps) :
                 filter,
                 itemsData,
                 isProductSelected,
-                setOf()
+                emptySet(),
+                emptySet()
             ) // for if ref is not yet set in FilterList
 
     private var expandedCategories by stateDelegateOf(CategorieProductListState::expandedCategories)
@@ -69,7 +70,8 @@ class CategorieProductList(prps: CategorieProductListProps) :
         filter: String,
         itemsData: Map<Product, Product>,
         selectedItemKeys: Set<Product>,
-        selectedOtherItemKeys: Set<Product>
+        selectedOtherItemKeys: Set<Product>,
+        thirdSelectedItemKeys: Set<Nothing>
     ): List<Product> {
         val filterTerms = filter.split(" ", ", ", ",")
         val score = hashMapOf<Product, Int>()

@@ -14,6 +14,7 @@ import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import filterableLists.categorieProductList
 import filterableLists.examenlocatiesList
 import filterableLists.opleidersList
+import io.data2viz.format.Type
 import libs.RPureComponent
 import react.RBuilder
 import react.RComponent
@@ -30,6 +31,10 @@ interface ResultFilterAndShowProps : RProps {
 
     var setSelectAllExamenlocatiesFunction: (SelectAll<Examenlocatie>) -> Unit
     var setDeselectAllExamenlocatiesFunction: (DeselectAll) -> Unit
+
+    var onFilteredOpleidersItemsChanged: (List<Opleider>?) -> Unit
+    var onFilteredExamenlocatiesItemsChanged: (List<Examenlocatie>?) -> Unit
+    var onFilteredProductsItemsChanged: (List<Product>?) -> Unit
 
     var selectedOpleiderKeys: StateAsProp<Set<String>>
     var selectedExamenlocatieKeys: StateAsProp<Set<String>>
@@ -94,12 +99,14 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     alwaysAllowSelectAll = true
                     selectedItemKeys = props.selectedOpleiderKeys
                     selectedOtherItemKeys = props.selectedExamenlocatieKeys
+                    selectedThirdItemKeys = props.selectedProducts
                     setApplyFilterFunction = props.setApplyOpleidersFilterFunction
 
                     setSelectAllFunction = props.setSelectAllOpleidersFunction
                     setDeselectAllFunction = props.setDeselectAllOpleidersFunction
 
                     onCategorieClicked = this@ResultFilterAndShow.onCategorieClicked
+                    onFilteredItemsChanged = props.onFilteredOpleidersItemsChanged
                 }
             }
 
@@ -115,12 +122,14 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     alwaysAllowSelectAll = true
                     selectedItemKeys = props.selectedExamenlocatieKeys
                     selectedOtherItemKeys = props.selectedOpleiderKeys
+                    selectedThirdItemKeys = props.selectedProducts
                     setApplyFilterFunction = props.setApplyExamenlocatieFilterFunction
 
                     setSelectAllFunction = props.setSelectAllExamenlocatiesFunction
                     setDeselectAllFunction = props.setDeselectAllExamenlocatiesFunction
 
                     onCategorieClicked = this@ResultFilterAndShow.onCategorieClicked
+                    onFilteredItemsChanged = props.onFilteredExamenlocatiesItemsChanged
                 }
             }
 
@@ -136,11 +145,13 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                     alwaysAllowSelectAll = true
                     selectedItemKeys = props.selectedProducts
                     selectedOtherItemKeys = stateAsProp(setOf()) // not used
+                    selectedThirdItemKeys = stateAsProp(setOf()) // not used
 
                     setApplyFilterFunction = setApplyCategorieFilterFunction
                     setSelectAllFunction = emptySelectAllFunction // not used
                     setDeselectAllFunction = emptyDeselectAllFunction // not used
                     onCategorieClicked = emptyOnCategorieClicked // not used
+                    onFilteredItemsChanged = props.onFilteredProductsItemsChanged
                 }
             }
 

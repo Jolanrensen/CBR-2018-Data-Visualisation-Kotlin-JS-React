@@ -25,18 +25,20 @@ import react.*
 import styled.css
 import styled.styledDiv
 
-interface FilterListProps<Key : Any, Type : Any?> : RProps {
-    var filterableListCreationFunction: CreateFilterableList<Key, Type>
+interface FilterListProps<Key : Any, Type : Any?, ThirdKey : Any?> : RProps {
+    var filterableListCreationFunction: CreateFilterableList<Key, Type, ThirdKey>
     var liveReload: Boolean
     var itemsName: String
     var selectedItemKeys: StateAsProp<Set<Key>>
     var selectedOtherItemKeys: StateAsProp<Set<Key>>
+    var selectedThirdItemKeys: StateAsProp<Set<ThirdKey>>
     var alwaysAllowSelectAll: Boolean
     var dataLoaded: Boolean
     var itemsData: Map<Key, Type>
     var setApplyFilterFunction: (ApplyFilter) -> Unit
     var setSelectAllFunction: (SelectAll<Type>) -> Unit
     var setDeselectAllFunction: (DeselectAll) -> Unit
+    var onFilteredItemsChanged: (List<Type>?) -> Unit
     var onCategorieClicked: (Categorie) -> Unit
 }
 
@@ -46,21 +48,37 @@ typealias DeselectAll = () -> Unit
 
 interface FilterListState : RState {
     var filter: String
-    var filterFieldValue: String
+//    var filterFieldValue: String
 }
 
-class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
-    RPureComponent<FilterListProps<Key, Type>, FilterListState>(prps) {
+class FilterList<Key : Any, Type : Any?, ThirdKey : Any?>(prps: FilterListProps<Key, Type, ThirdKey>) :
+    RComponent<FilterListProps<Key, Type, ThirdKey>, FilterListState>(prps) {
 
-    private var selectedItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedItemKeys)
-    private val selectedOtherItemKeys by propDelegateOf(FilterListProps<Key, Type>::selectedOtherItemKeys)
-    private val dataLoaded by propDelegateOf(FilterListProps<Key, Type>::dataLoaded)
-    private val itemsData by propDelegateOf(FilterListProps<Key, Type>::itemsData)
+    private var selectedItemKeys by propDelegateOf(FilterListProps<Key, Type, ThirdKey>::selectedItemKeys)
+    private val selectedOtherItemKeys by propDelegateOf(FilterListProps<Key, Type, ThirdKey>::selectedOtherItemKeys)
+    private val selectedThirdItemKeys by propDelegateOf(FilterListProps<Key, Type, ThirdKey>::selectedThirdItemKeys)
 
-    override fun FilterListState.init(props: FilterListProps<Key, Type>) {
+    private val dataLoaded by propDelegateOf(FilterListProps<Key, Type, ThirdKey>::dataLoaded)
+    private val itemsData by propDelegateOf(FilterListProps<Key, Type, ThirdKey>::itemsData)
+
+    private val onFilteredItemsChanged by propDelegateOf(FilterListProps<Key, Type, ThirdKey>::onFilteredItemsChanged)
+
+    override fun FilterListState.init(props: FilterListProps<Key, Type, ThirdKey>) {
         filter = ""
-        filterFieldValue = ""
+//        filterFieldValue = ""
     }
+
+    @Suppress("SimplifyBooleanWithConstants")
+    override fun shouldComponentUpdate(
+        nextProps: FilterListProps<Key, Type, ThirdKey>,
+        nextState: FilterListState
+    ) = false
+            || props.selectedItemKeys != nextProps.selectedItemKeys
+            || props.selectedOtherItemKeys != nextProps.selectedOtherItemKeys
+            || props.selectedThirdItemKeys != nextProps.selectedThirdItemKeys
+            || props.dataLoaded != nextProps.dataLoaded
+            || state.filter != nextState.filter
+//            || state.filterFieldValue != nextState.filterFieldValue
 
     override fun componentDidMount() {
         props.setApplyFilterFunction(applyFilter)
@@ -83,7 +101,7 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
 
     private val selectAll: SelectAll<Type> = { condition ->
         println("select all called!")
-        val new = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys)!!
+        val new = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys, selectedThirdItemKeys)!!
             .filter { condition(it) }
             .map { typeToKey(it)!! }
             .toSet()
@@ -106,38 +124,72 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
             setState {
                 filter = value
             }
-            val filteredItems = getFilteredItems(value, itemsData, selectedItemKeys, selectedOtherItemKeys)!!
 
             // deselect all previously selected items that are no longer in filteredItems
-            selectedItemKeys.filter {
-                keyToType(it) !in filteredItems
-            }.let {
-                selectedItemKeys -= it
-            }
+            getFilteredItems(value, itemsData, selectedItemKeys, selectedOtherItemKeys, selectedThirdItemKeys)
         }
 
-    private var filterFieldValue by stateDelegateOf(FilterListState::filterFieldValue)
+    private var filterFieldValue: String = ""// by stateDelegateOf(FilterListState::filterFieldValue)
 
-    private var filterableList: FilterableList<Key, Type, *, *>? = null
+    private var filterableList: FilterableList<Key, Type, ThirdKey, *, *>? = null
+
+    private var previousFilteredItems: List<Type>? = null
 
     private fun getFilteredItems(
         filter: String,
         itemsData: Map<Key, Type>,
         selectedItemKeys: Set<Key>,
-        selectedOtherItemKeys: Set<Key>
-    ) = filterableList?.getFilteredItems(
+        selectedOtherItemKeys: Set<Key>,
+        selectedThirdItemKeys: Set<ThirdKey>
+    ): List<Type>? {
+
+        val filteredItems = filterableList?.getFilteredItems(
             filter,
             itemsData,
             selectedItemKeys,
-            selectedOtherItemKeys
+            selectedOtherItemKeys,
+            selectedThirdItemKeys
         )
+
+        // deselect all previously selected items that are no longer in filteredItems
+        if (filteredItems != null) {
+            selectedItemKeys.filter {
+                keyToType(it) !in filteredItems
+            }.let {
+                this.selectedItemKeys -= it
+            }
+        }
+
+        when {
+            filteredItems == null && previousFilteredItems != null -> {
+                previousFilteredItems = null
+                onFilteredItemsChanged(null)
+            }
+            filteredItems != null && previousFilteredItems == null -> {
+                previousFilteredItems = filteredItems
+                onFilteredItemsChanged(filteredItems)
+            }
+            filteredItems != null && previousFilteredItems != null ->
+                if (
+                    filteredItems.size != previousFilteredItems!!.size
+                    || !filteredItems.containsAll(previousFilteredItems!!)
+                    || !previousFilteredItems!!.containsAll(filteredItems)
+                ) {
+                    previousFilteredItems = filteredItems
+                    onFilteredItemsChanged(filteredItems)
+                }
+        }
+
+        return filteredItems
+    }
 
     private fun sortType(type: Type) = filterableList?.sortType(type)
     private fun typeToKey(type: Type) = filterableList?.typeToKey(type, itemsData)
     private fun keyToType(key: Key) = filterableList?.keyToType(key, itemsData)
 
     private val toggleSelectAllVisible: (Event?) -> Unit = {
-        val filteredItems = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys)!!
+        val filteredItems =
+            getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys, selectedThirdItemKeys)!!
         if (!filteredItems.all { typeToKey(it) in selectedItemKeys }) {
             selectedItemKeys += filteredItems.map { typeToKey(it)!! }
         } else {
@@ -150,8 +202,9 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
 
     private val onTextFieldChange: (Event) -> Unit = {
         it.persist()
-        filter = it.targetInputValue
-//        filterFieldValue = it.targetInputValue
+//        filter = it.targetInputValue
+        if (it.targetInputValue != filterFieldValue)
+            filterFieldValue = it.targetInputValue
     }
 
     private val onEnterKeyPress: (KeyboardEvent) -> Unit = {
@@ -179,19 +232,19 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
                 ) {
                     attrs {
                         inputRef = setInputRef
-//                        onKeyPress = onEnterKeyPress
+                        onKeyPress = onEnterKeyPress
                         inputProps = jsObject {
                             endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
                                 mIconButton(
                                     iconName = "search",
-//                                    onClick = onSearchButtonClick,
+                                    onClick = onSearchButtonClick,
                                     edge = MIconEdge.end
                                 )
                             }
                         }
                         inputLabelProps = jsObject {
-//                            shrink = filterFieldValue.isNotEmpty()
-                            shrink = filter.isNotEmpty()
+                            shrink = filterFieldValue.isNotEmpty()
+//                            shrink = filter.isNotEmpty()
                         }
                     }
                 }
@@ -210,7 +263,13 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
                             if (props.alwaysAllowSelectAll && selectedOtherItemKeys.isEmpty() && filter.isBlank())
                                 " " else " gefilterde "}${props.itemsName}"
                         )
-                        val filteredItems = getFilteredItems(filter, itemsData, selectedItemKeys, selectedOtherItemKeys)
+                        val filteredItems = getFilteredItems(
+                            filter,
+                            itemsData,
+                            selectedItemKeys,
+                            selectedOtherItemKeys,
+                            selectedThirdItemKeys
+                        )
 
                         mCheckbox(
                             checked = (filteredItems ?: listOf())
@@ -233,9 +292,10 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
                     props.filterableListCreationFunction(this) {
                         selectedItemKeys = props.selectedItemKeys
                         selectedOtherItemKeys = props.selectedOtherItemKeys
+                        selectedThirdItemKeys = props.selectedThirdItemKeys
                         onCategorieClicked = props.onCategorieClicked
 
-                        ref<FilterableList<Key, Type, *, *>> {
+                        ref<FilterableList<Key, Type, ThirdKey, *, *>> {
                             filterableList = it
                         }
 
@@ -244,7 +304,8 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
                                 filter,
                                 itemsData,
                                 selectedItemKeys,
-                                selectedOtherItemKeys
+                                selectedOtherItemKeys,
+                                selectedThirdItemKeys
                             )?.toList()
                         }
 
@@ -265,12 +326,12 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
     }
 }
 
-fun <Key : Any, Type : Any?> RBuilder.filterList(
-    type: CreateFilterableList<Key, Type>,
+fun <Key : Any, Type : Any?, ThirdKey : Any?> RBuilder.filterList(
+    type: CreateFilterableList<Key, Type, ThirdKey>,
     itemsName: String = "items",
-    handler: FilterListProps<Key, Type>.() -> Unit
+    handler: FilterListProps<Key, Type, ThirdKey>.() -> Unit
 ) =
-    child<FilterListProps<Key, Type>, FilterList<Key, Type>> {
+    child<FilterListProps<Key, Type, ThirdKey>, FilterList<Key, Type, ThirdKey>> {
         attrs {
             filterableListCreationFunction = type
             liveReload = true

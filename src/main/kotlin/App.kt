@@ -48,6 +48,10 @@ interface AppState : RState {
     var selectedOpleiderKeys: Set<String>
     var selectedExamenlocatieKeys: Set<String>
     var selectedProducts: Set<Product>
+
+    var filteredOpleiders: List<Opleider>
+    var filteredExamenlocaties: List<Examenlocatie>
+    var filteredProducts: List<Product>
 }
 
 enum class ExamenlocatieOrOpleider(val naamMeervoud: String) {
@@ -75,6 +79,10 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
         selectedOpleiderKeys = setOf()
         selectedExamenlocatieKeys = setOf()
         selectedProducts = setOf()
+
+        filteredOpleiders = Data.alleOpleiders.values.toList()
+        filteredExamenlocaties = Data.alleExamenlocaties.values.toList()
+        filteredProducts = Product.values().toList()
     }
 
     private var selectedGemeente by stateDelegateOf(AppState::selectedGemeente)
@@ -85,6 +93,10 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
     private val selectedOpleiderKeys by stateDelegateOf(AppState::selectedOpleiderKeys)
     private val selectedExamenlocatieKeys by stateDelegateOf(AppState::selectedExamenlocatieKeys)
     private val selectedProducts by stateDelegateOf(AppState::selectedProducts)
+
+    private var filteredOpleiders by stateDelegateOf(AppState::filteredOpleiders)
+    private var filteredExamenlocaties by stateDelegateOf(AppState::filteredExamenlocaties)
+    private var filteredProducts by stateDelegateOf(AppState::filteredProducts)
 
     private fun loadData() {
         if (Data.hasStartedLoading) return
@@ -165,6 +177,16 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
             HERKANSING -> GECOMBINEERD
             GECOMBINEERD -> EERSTE_KEER
         }
+    }
+
+    private val onFilteredOpleidersItemsChanged: (List<Opleider>?) -> Unit = {
+        filteredOpleiders = it ?: Data.alleOpleiders.values.toList()
+    }
+    private val onFilteredExamenlocatiesItemsChanged: (List<Examenlocatie>?) -> Unit = {
+        filteredExamenlocaties = it ?: Data.alleExamenlocaties.values.toList()
+    }
+    private val onFilteredProductsItemsChanged: (List<Product>?) -> Unit = {
+        filteredProducts = it ?: Product.values().toList()
     }
 
     override fun RBuilder.render() {
@@ -286,6 +308,9 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                         selectedProducts = selectedProducts,
                                                         selectedOpleiderKeys = selectedOpleiderKeys,
                                                         selectedExamenlocatieKeys = selectedExamenlocatieKeys,
+                                                        filteredOpleiders = filteredOpleiders,
+                                                        filteredExamenlocaties = filteredExamenlocaties,
+                                                        filteredProducts = filteredProducts,
                                                         useCachedPercentage = true
                                                     )
                                                         .toRgb()
@@ -300,7 +325,10 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                     gemeente = it,
                                                     selectedOpleiderKeys = selectedOpleiderKeys,
                                                     selectedProducts = selectedProducts,
-                                                    selectedExamenlocatieKeys = selectedExamenlocatieKeys
+                                                    selectedExamenlocatieKeys = selectedExamenlocatieKeys,
+                                                    filteredOpleiders = filteredOpleiders,
+                                                    filteredExamenlocaties = filteredExamenlocaties,
+                                                    filteredProducts = filteredProducts
                                                 )
                                             }.asPercentage()
                                         }
@@ -325,7 +353,6 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                 slagingspercentageSoort = this@App.slagingspercentageSoort
                                                 selectedGemeente = stateAsProp(AppState::selectedGemeente)
 
-
                                                 selectAllOpleiders = this@App.selectAllOpleiders
                                                 selectAllExamenlocaties = this@App.selectAllExamenlocaties
 
@@ -333,9 +360,12 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                 deselectAllExamenlocaties = this@App.deselectAllExamenlocaties
 
                                                 selectedOpleiderKeys = stateAsProp(AppState::selectedOpleiderKeys)
-                                                selectedExamenlocatieKeys =
-                                                    stateAsProp(AppState::selectedExamenlocatieKeys)
+                                                selectedExamenlocatieKeys = stateAsProp(AppState::selectedExamenlocatieKeys)
                                                 selectedProducts = stateAsProp(AppState::selectedProducts)
+
+                                                filteredOpleiders = this@App.filteredOpleiders
+                                                filteredExamenlocaties = this@App.filteredExamenlocaties
+                                                filteredProducts = this@App.filteredProducts
                                             }
                                         }
                                     }
@@ -422,6 +452,10 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                         selectedOpleiderKeys = stateAsProp(AppState::selectedOpleiderKeys)
                                         selectedExamenlocatieKeys = stateAsProp(AppState::selectedExamenlocatieKeys)
                                         selectedProducts = stateAsProp(AppState::selectedProducts)
+
+                                        onFilteredOpleidersItemsChanged = this@App.onFilteredOpleidersItemsChanged
+                                        onFilteredExamenlocatiesItemsChanged = this@App.onFilteredExamenlocatiesItemsChanged
+                                        onFilteredProductsItemsChanged = this@App.onFilteredProductsItemsChanged
                                     }
                                 }
                             }
