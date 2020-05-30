@@ -150,7 +150,8 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
 
     private val onTextFieldChange: (Event) -> Unit = {
         it.persist()
-        filterFieldValue = it.targetInputValue
+        filter = it.targetInputValue
+//        filterFieldValue = it.targetInputValue
     }
 
     private val onEnterKeyPress: (KeyboardEvent) -> Unit = {
@@ -178,18 +179,19 @@ class FilterList<Key : Any, Type : Any?>(prps: FilterListProps<Key, Type>) :
                 ) {
                     attrs {
                         inputRef = setInputRef
-                        onKeyPress = onEnterKeyPress
+//                        onKeyPress = onEnterKeyPress
                         inputProps = jsObject {
                             endAdornment = mInputAdornment(position = MInputAdornmentPosition.end) {
                                 mIconButton(
                                     iconName = "search",
-                                    onClick = onSearchButtonClick,
+//                                    onClick = onSearchButtonClick,
                                     edge = MIconEdge.end
                                 )
                             }
                         }
                         inputLabelProps = jsObject {
-                            shrink = filterFieldValue.isNotEmpty()
+//                            shrink = filterFieldValue.isNotEmpty()
+                            shrink = filter.isNotEmpty()
                         }
                     }
                 }

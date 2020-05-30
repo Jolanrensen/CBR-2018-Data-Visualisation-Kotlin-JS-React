@@ -19,8 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="kaart now also colored in for just categorie, cleared up a bit">
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" afterDir="false" />
+    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="oopsie, made it faster">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +189,7 @@
       <workItem from="1590686159917" duration="9182000" />
       <workItem from="1590760823461" duration="8474000" />
       <workItem from="1590773381183" duration="377000" />
-      <workItem from="1590836366091" duration="3105000" />
+      <workItem from="1590836366091" duration="3779000" />
     </task>
     <task id="LOCAL-00001" summary="It's running again!">
       <created>1589639534400</created>
@@ -281,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590839157476</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="oopsie, made it faster">
+      <created>1590839767890</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1590839767890</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,7 +321,8 @@
     <MESSAGE value="preprocessing for faster loading" />
     <MESSAGE value="map now properly selects gemeentes. Fixed slow reloading bug" />
     <MESSAGE value="kaart now also colored in for just categorie, cleared up a bit" />
-    <option name="LAST_COMMIT_MESSAGE" value="kaart now also colored in for just categorie, cleared up a bit" />
+    <MESSAGE value="oopsie, made it faster" />
+    <option name="LAST_COMMIT_MESSAGE" value="oopsie, made it faster" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1481" y="482" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589722154163">
@@ -362,10 +371,10 @@
     </state>
     <state x="804" y="374" width="1792" height="907" key="SettingsEditor/0.34.2880.1586@0.34.2880.1586" timestamp="1590837290610" />
     <state x="3416" y="173" width="1195" height="907" key="SettingsEditor/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590515533020" />
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1590839160185">
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1590839769408">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1590839160185" />
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1590839769408" />
     <state x="3503" y="317" width="1000" height="656" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590528922603" />
     <state x="822" y="283" width="1585" height="970" key="com.intellij.database.dbimport.ImportDialog" timestamp="1589720508224">
       <screen x="0" y="34" width="2880" height="1586" />
