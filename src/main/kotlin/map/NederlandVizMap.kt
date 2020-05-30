@@ -465,12 +465,9 @@ fun getGemeentePercentage(
                     GECOMBINEERD -> gemeente.slagingspercentageGecombineerdOpleiders
                 }
             } else {
-                getSlagingsPercentageOpleiders( // todo no opleiders at all, color in map
-                    opleiders = if (selectedOpleiderKeysAllOrNone) {
-                        Data.alleOpleiders.keys
-                    } else {
-                        selectedOpleiderKeys
-                    }.filter { it in gemeente.opleiders },
+                getSlagingsPercentageOpleiders(
+                    opleiders = if (selectedOpleiderKeysAllOrNone)
+                        gemeente.opleiders else gemeente.opleiders.filter { it in selectedOpleiderKeys },
                     selectedProducts = if (selectedProductsAllOrNone)
                         Product.values().toSet() else selectedProducts,
                     slagingspercentageSoort = slagingspercentageSoort
@@ -486,11 +483,8 @@ fun getGemeentePercentage(
                 }
             } else {
                 getSlagingsPercentageExamenlocaties(
-                    examenlocaties = if (selectedExamenlocatieKeysAllOrNone) {
-                        Data.alleExamenlocaties.keys
-                    } else {
-                        selectedExamenlocatieKeys
-                    }.filter { it in gemeente.examenlocaties },
+                    examenlocaties = if (selectedExamenlocatieKeysAllOrNone)
+                        gemeente.examenlocaties else gemeente.examenlocaties.filter { it in selectedExamenlocatieKeys },
                     selectedProducts = if (selectedProductsAllOrNone)
                         Product.values().toSet() else selectedProducts,
                     slagingspercentageSoort = slagingspercentageSoort

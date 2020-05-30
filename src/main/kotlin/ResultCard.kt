@@ -153,7 +153,6 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         fill = examenResultaatCategorieColors[HANDGESCHAKELD]
 
                         val top = heightScale(aantalHandgeschakeldVoldoende)
-                        println("top = $top")
 
                         y = top
                         x = widthScale(VOLDOENDE)
@@ -171,7 +170,6 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         fill = examenResultaatCategorieColors[AUTOMAAT]
 
                         val top = heightScale(aantalAutomaatVoldoende)
-                        println("top = $top")
 
                         y = top - voldoendeHeight1
                         x = widthScale(VOLDOENDE)
@@ -188,7 +186,6 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         fill = examenResultaatCategorieColors[COMBI]
 
                         val top = heightScale(aantalCombiVoldoende)
-                        println("top = $top")
 
                         y = top - voldoendeHeight1 - voldoendeHeight2
                         x = widthScale(VOLDOENDE)
