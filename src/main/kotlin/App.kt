@@ -26,7 +26,9 @@ import react.RComponent
 import react.RProps
 import react.RState
 import react.dom.a
+import react.dom.b
 import react.dom.br
+import react.dom.div
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
@@ -275,9 +277,6 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                         avatar = mAvatar(addAsChild = false) {
                                             css {
                                                 color = Color.black
-
-
-                                                // TODO
                                                 backgroundColor = selectedGemeente?.let {
                                                     getGemeenteColor(
                                                         selected = false,
@@ -291,7 +290,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                     )
                                                         .toRgb()
                                                         .let { rgb(it.r, it.g, it.b) }
-                                                } ?: rgb(189, 189, 189)
+                                                } ?: rgb(189, 189, 189)  // gray
                                             }
 
                                             +selectedGemeente?.let {
@@ -347,28 +346,25 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                 justifyContent = JustifyContent.center
                                                 alignItems = Align.center
                                             }
-                                            +"Houd je cursor boven een gemeente (of raak het aan) om het slagingspercentage te zien."
-                                            br {}
-                                            +"Klik op een gemeente om alle ${examenlocatieOrOpleider.naamMeervoud} in deze gemeente te selecteren in het filterlijstje hieronder."
+                                            div {
+                                                +"Houd je cursor boven een gemeente (of raak het aan) om het slagingspercentage te zien."
+                                                br {}
+                                                +"Klik op een gemeente om alle "
+                                                b { +examenlocatieOrOpleider.naamMeervoud }
+                                                +" in deze gemeente te selecteren in het filterlijstje hieronder."
+                                            }
                                         }
                                     }
 
                                     mCardActions {
                                         mButton(
-                                            caption = when (examenlocatieOrOpleider) {
-                                                EXAMENLOCATIE -> OPLEIDER.naamMeervoud
-                                                OPLEIDER -> EXAMENLOCATIE.naamMeervoud
-                                            },
+                                            caption = "Toggle Opleiders/Examenlocaties",
                                             color = MColor.primary,
                                             size = MButtonSize.small,
                                             onClick = toggleExamenlocatieOrOpleider
                                         )
                                         mButton(
-                                            caption = when (slagingspercentageSoort) {
-                                                EERSTE_KEER -> HERKANSING.naam
-                                                HERKANSING -> GECOMBINEERD.naam
-                                                GECOMBINEERD -> EERSTE_KEER.naam
-                                            },
+                                            caption = "Toggle slagingspercentagesoort",
                                             color = MColor.primary,
                                             size = MButtonSize.small,
                                             onClick = toggleSlagingspercentageSoort

@@ -22,12 +22,7 @@
     <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="map now properly selects gemeentes. Fixed slow reloading bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FilterList.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultFilterAndShow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Data.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/OpleidersList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/Gemeente.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/Gemeente.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -196,6 +191,7 @@
       <workItem from="1590686159917" duration="9182000" />
       <workItem from="1590760823461" duration="8474000" />
       <workItem from="1590773381183" duration="377000" />
+      <workItem from="1590836366091" duration="2751000" />
     </task>
     <task id="LOCAL-00001" summary="It's running again!">
       <created>1589639534400</created>
@@ -336,35 +332,35 @@
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl/0.34.2880.1586@0.34.2880.1586" timestamp="1589720455423" />
-    <state width="2822" height="435" key="GridCell.Tab.0.bottom" timestamp="1590769660490">
+    <state width="2822" height="435" key="GridCell.Tab.0.bottom" timestamp="1590838396658">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="435" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590769660490" />
+    <state width="2822" height="435" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590838396658" />
     <state width="1862" height="259" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378245" />
-    <state width="2822" height="435" key="GridCell.Tab.0.center" timestamp="1590769660490">
+    <state width="2822" height="435" key="GridCell.Tab.0.center" timestamp="1590838396657">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="435" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590769660490" />
+    <state width="2822" height="435" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590838396657" />
     <state width="1862" height="259" key="GridCell.Tab.0.center/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
-    <state width="2822" height="435" key="GridCell.Tab.0.left" timestamp="1590769660489">
+    <state width="2822" height="435" key="GridCell.Tab.0.left" timestamp="1590838396656">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="435" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590769660489" />
+    <state width="2822" height="435" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590838396656" />
     <state width="1862" height="259" key="GridCell.Tab.0.left/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
-    <state width="2822" height="435" key="GridCell.Tab.0.right" timestamp="1590769660490">
+    <state width="2822" height="435" key="GridCell.Tab.0.right" timestamp="1590838396657">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="435" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590769660490" />
+    <state width="2822" height="435" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590838396657" />
     <state width="1862" height="259" key="GridCell.Tab.0.right/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
-    <state x="3416" y="173" width="1195" height="907" key="SettingsEditor" timestamp="1590515533020">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state x="804" y="374" width="1195" height="907" key="SettingsEditor" timestamp="1590837290610">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="804" y="374" width="1792" height="907" key="SettingsEditor/0.34.2880.1586@0.34.2880.1586" timestamp="1589636352721" />
+    <state x="804" y="374" width="1792" height="907" key="SettingsEditor/0.34.2880.1586@0.34.2880.1586" timestamp="1590837290610" />
     <state x="3416" y="173" width="1195" height="907" key="SettingsEditor/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590515533020" />
-    <state x="3503" y="317" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1590528922603">
-      <screen x="2880" y="0" width="1920" height="1080" />
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1590773951080">
+      <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1590441803159" />
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1590773951080" />
     <state x="3503" y="317" width="1000" height="656" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590528922603" />
     <state x="822" y="283" width="1585" height="970" key="com.intellij.database.dbimport.ImportDialog" timestamp="1589720508224">
       <screen x="0" y="34" width="2880" height="1586" />
