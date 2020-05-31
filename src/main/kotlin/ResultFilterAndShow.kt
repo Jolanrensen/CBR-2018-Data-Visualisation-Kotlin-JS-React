@@ -39,6 +39,8 @@ interface ResultFilterAndShowProps : RProps {
     var selectedOpleiderKeys: StateAsProp<Set<String>>
     var selectedExamenlocatieKeys: StateAsProp<Set<String>>
     var selectedProducts: StateAsProp<Set<Product>>
+    var onSchakelSoortClicked: (ExamenresultaatSoort) -> Unit
+    var slagingspercentageSoort: StateAsProp<SlagingspercentageSoort>
 }
 
 interface ResultFilterAndShowState : RState
@@ -51,6 +53,7 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
             || props.dataLoaded != nextProps.dataLoaded
             || props.selectedOpleiderKeys != nextProps.selectedOpleiderKeys
             || props.selectedExamenlocatieKeys != nextProps.selectedExamenlocatieKeys
+            || props.slagingspercentageSoort != nextProps.slagingspercentageSoort
             || props.selectedProducts != nextProps.selectedProducts
 
     private val dataLoaded by propDelegateOf(ResultFilterAndShowProps::dataLoaded)
@@ -175,6 +178,8 @@ class ResultFilterAndShow(prps: ResultFilterAndShowProps) :
                 resultCard {
                     this.currentResults = currentResults
                     selectedProducts = if (selectedProductsEmptyOrFull) Product.values().toSet() else this@ResultFilterAndShow.selectedProducts
+                    onSchakelSoortClicked = props.onSchakelSoortClicked
+                    slagingspercentageSoort = props.slagingspercentageSoort
                 }
 
 

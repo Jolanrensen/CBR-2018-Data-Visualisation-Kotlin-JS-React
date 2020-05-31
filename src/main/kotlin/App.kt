@@ -60,10 +60,10 @@ enum class ExamenlocatieOrOpleider(val naamMeervoud: String) {
     OPLEIDER("opleiders")
 }
 
-enum class SlagingspercentageSoort(val naam: String) {
-    EERSTE_KEER(EERSTE_EXAMEN_OF_TOETS.title),
-    HERKANSING(HEREXAMEN_OF_TOETS.title),
-    GECOMBINEERD("-")
+enum class SlagingspercentageSoort(val naam: String, val value: ExamenresultaatVersie) {
+    EERSTE_KEER(EERSTE_EXAMEN_OF_TOETS.title, EERSTE_EXAMEN_OF_TOETS),
+    HERKANSING(HEREXAMEN_OF_TOETS.title, HEREXAMEN_OF_TOETS),
+    GECOMBINEERD("-", EERSTE_EXAMEN_OF_TOETS) // not exactly the same but good enough for bar chart
 }
 
 enum class SchakelSoort(val naam: String, val value: ExamenresultaatSoort?) {
@@ -207,6 +207,10 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
     }
     private val onFilteredProductsItemsChanged: (List<Product>?) -> Unit = {
         filteredProducts = it ?: Product.values().toList()
+    }
+
+    private val onSchakelSoortClicked = { examenresultaatSoort: ExamenresultaatSoort ->
+        schakelSoort = SchakelSoort.values().find { it.value == examenresultaatSoort }!!
     }
 
     override fun RBuilder.render() {
@@ -485,6 +489,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                         onFilteredOpleidersItemsChanged = this@App.onFilteredOpleidersItemsChanged
                                         onFilteredExamenlocatiesItemsChanged = this@App.onFilteredExamenlocatiesItemsChanged
                                         onFilteredProductsItemsChanged = this@App.onFilteredProductsItemsChanged
+                                        onSchakelSoortClicked = this@App.onSchakelSoortClicked
+                                        slagingspercentageSoort = stateAsProp(AppState::slagingspercentageSoort)
                                     }
                                 }
                             }

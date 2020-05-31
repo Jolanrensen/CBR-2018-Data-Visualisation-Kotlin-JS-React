@@ -13,17 +13,20 @@ import data.ExamenresultaatSoort.*
 import data.ExamenresultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenresultaatVersie.HEREXAMEN_OF_TOETS
 import data2viz.vizComponent
+import delegates.ReactPropAndStateDelegates
+import delegates.ReactPropAndStateDelegates.StateAsProp
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import io.data2viz.axis.Orient
 import io.data2viz.axis.axis
 import io.data2viz.color.Colors
+import io.data2viz.geom.Point
 import io.data2viz.geom.size
 import io.data2viz.scale.Scales
 import io.data2viz.scale.StrictlyContinuous
-import io.data2viz.viz.KPointerClick
-import io.data2viz.viz.Margins
+import io.data2viz.viz.*
 import kotlinx.css.*
+import kotlinx.html.InputType
 import libs.RPureComponent
 import org.khronos.webgl.get
 import org.w3c.dom.CanvasRenderingContext2D
@@ -40,10 +43,12 @@ interface ResultCardProps : RProps {
     var currentResults: Sequence<Int>
     var selectedProducts: Set<Product>
     var onSchakelSoortClicked: (ExamenresultaatSoort) -> Unit
+    var slagingspercentageSoort: StateAsProp<SlagingspercentageSoort>
 }
 
 interface ResultCardState : RState {
-    var examenresultaatVersie: ExamenresultaatVersie
+//    var examenresultaatVersie: ExamenresultaatVersie
+    var selectedSchakelSoort: ExamenresultaatSoort?
 }
 
 class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, ResultCardState>(prps) {
@@ -52,16 +57,19 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
     val selectedProducts by propDelegateOf(ResultCardProps::selectedProducts)
     val onSchakelSoortClicked by propDelegateOf(ResultCardProps::onSchakelSoortClicked)
 
+    var selectedSchakelSoort by stateDelegateOf(ResultCardState::selectedSchakelSoort)
+
     override fun ResultCardState.init(props: ResultCardProps) {
-        examenresultaatVersie = EERSTE_EXAMEN_OF_TOETS
+//        examenresultaatVersie = EERSTE_EXAMEN_OF_TOETS
+        selectedSchakelSoort = null
     }
 
-    var examenResultaatVersie by stateDelegateOf(ResultCardState::examenresultaatVersie)
+    var slagingspercentageSoort by propDelegateOf(ResultCardProps::slagingspercentageSoort)
 
     private val toggleExamenresultaatVersie: (Event?, Boolean?) -> Unit = { _, _ ->
-        examenResultaatVersie = when (examenResultaatVersie) {
-            EERSTE_EXAMEN_OF_TOETS -> HEREXAMEN_OF_TOETS
-            HEREXAMEN_OF_TOETS -> EERSTE_EXAMEN_OF_TOETS
+        slagingspercentageSoort = when (slagingspercentageSoort.value) {
+            EERSTE_EXAMEN_OF_TOETS -> SlagingspercentageSoort.HERKANSING
+            HEREXAMEN_OF_TOETS -> SlagingspercentageSoort.EERSTE_KEER
         }
     }
 
@@ -79,7 +87,7 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                 continue
 
             for (aantal in currentResult.examenresultaatAantallen) {
-                if (aantal.examenresultaatVersie != examenResultaatVersie)
+                if (aantal.examenresultaatVersie != slagingspercentageSoort.value)
                     continue
 
                 aantal.apply {
@@ -169,12 +177,12 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         val top = heightScale(aantalHandgeschakeldVoldoende)
 
                         y = top
-                        x = widthScale(VOLDOENDE)
+                        x = widthScale(VOLDOENDE) - if (selectedSchakelSoort == HANDGESCHAKELD) 5.0 else 0.0
 
                         voldoendeHeight1 = chartHeight - top
 
                         size = size(
-                            widthScale.bandwidth,
+                            widthScale.bandwidth + if (selectedSchakelSoort == HANDGESCHAKELD) 10.0 else 0.0,
                             voldoendeHeight1
                         )
                     }
@@ -186,12 +194,12 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         val top = heightScale(aantalAutomaatVoldoende)
 
                         y = top - voldoendeHeight1
-                        x = widthScale(VOLDOENDE)
+                        x = widthScale(VOLDOENDE) - if (selectedSchakelSoort == AUTOMAAT) 5.0 else 0.0
 
                         voldoendeHeight2 = chartHeight - top
 
                         size = size(
-                            widthScale.bandwidth,
+                            widthScale.bandwidth + if (selectedSchakelSoort == AUTOMAAT) 10.0 else 0.0,
                             voldoendeHeight2
                         )
                     }
@@ -202,12 +210,12 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         val top = heightScale(aantalCombiVoldoende)
 
                         y = top - voldoendeHeight1 - voldoendeHeight2
-                        x = widthScale(VOLDOENDE)
+                        x = widthScale(VOLDOENDE) - if (selectedSchakelSoort == COMBI) 5.0 else 0.0
 
                         val voldoendeHeight3 = chartHeight - top
 
                         size = size(
-                            widthScale.bandwidth,
+                            widthScale.bandwidth + if (selectedSchakelSoort == COMBI) 10.0 else 0.0,
                             voldoendeHeight3
                         )
                     }
@@ -221,12 +229,12 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         val top = heightScale(aantalHandgeschakeldOnvoldoende)
 
                         y = top
-                        x = widthScale(ONVOLDOENDE)
+                        x = widthScale(ONVOLDOENDE) - if (selectedSchakelSoort == HANDGESCHAKELD) 5.0 else 0.0
 
                         onvoldoendeHeight1 = chartHeight - top
 
                         size = size(
-                            widthScale.bandwidth,
+                            widthScale.bandwidth + if (selectedSchakelSoort == HANDGESCHAKELD) 10.0 else 0.0,
                             onvoldoendeHeight1
                         )
                     }
@@ -238,12 +246,12 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         val top = heightScale(aantalAutomaatOnvoldoende)
 
                         y = top - onvoldoendeHeight1
-                        x = widthScale(ONVOLDOENDE)
+                        x = widthScale(ONVOLDOENDE) - if (selectedSchakelSoort == AUTOMAAT) 5.0 else 0.0
 
                         onvoldoendeHeight2 = chartHeight - top
 
                         size = size(
-                            widthScale.bandwidth,
+                            widthScale.bandwidth + if (selectedSchakelSoort == AUTOMAAT) 10.0 else 0.0,
                             onvoldoendeHeight2
                         )
                     }
@@ -254,12 +262,12 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         val top = heightScale(aantalCombiOnvoldoende)
 
                         y = top - onvoldoendeHeight1 - onvoldoendeHeight2
-                        x = widthScale(ONVOLDOENDE)
+                        x = widthScale(ONVOLDOENDE) - if (selectedSchakelSoort == COMBI) 5.0 else 0.0
 
                         val onvoldoendeHeight3 = chartHeight - top
 
                         size = size(
-                            widthScale.bandwidth,
+                            widthScale.bandwidth + if (selectedSchakelSoort == COMBI) 10.0 else 0.0,
                             onvoldoendeHeight3
                         )
                     }
@@ -281,21 +289,30 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                     axis(Orient.LEFT, heightScale)
                 }
 
-                val onHovering = {
 
-                }
-
-                on(KPointerClick) {
+                fun getSchakelsoortAt(pos: Point): ExamenresultaatSoort? {
                     val context = canvas.getContext("2d") as CanvasRenderingContext2D
                     val col = context.getImageData(
-                        sx = it.pos.x * canvas.width.toDouble() / width,
-                        sy = it.pos.y * canvas.height.toDouble() / height,
+                        sx = pos.x * canvas.width.toDouble() / width,
+                        sy = pos.y * canvas.height.toDouble() / height,
                         sw = 1.0,
                         sh = 1.0
                     ).data
                     val color = Colors.rgb(col[0].toInt(), col[1].toInt(), col[2].toInt())
 
-                    categorieColorsToExamenResultaat[color]?.let {
+                    return categorieColorsToExamenResultaat[color]
+                }
+
+                val onHovering: (KPointerEvent) -> Unit = {
+                    val newSchakelSoort = getSchakelsoortAt(it.pos)
+                    if (newSchakelSoort != selectedSchakelSoort) selectedSchakelSoort = newSchakelSoort
+                }
+
+                on(KMouseMove, onHovering)
+                on(KTouchStart, onHovering)
+
+                on(KPointerClick) {
+                    getSchakelsoortAt(it.pos)?.let {
                         onSchakelSoortClicked(it)
                     }
                 }
@@ -309,8 +326,8 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         mTableCell { }
                         mTableCell {
                             mSwitchWithLabel(
-                                label = examenResultaatVersie.title,
-                                checked = examenResultaatVersie == EERSTE_EXAMEN_OF_TOETS,
+                                label = slagingspercentageSoort.value.title,
+                                checked = slagingspercentageSoort.value == EERSTE_EXAMEN_OF_TOETS,
                                 onChange = toggleExamenresultaatVersie
                             )
                         }
