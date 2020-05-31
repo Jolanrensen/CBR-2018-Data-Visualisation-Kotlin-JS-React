@@ -236,7 +236,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
         }
     }
 
-    fun Viz.drawGemeentes() {
+    fun Viz.drawGemeentes(useCache: Boolean = false) {
         val greenRedAngleDiff = Colors.Web.green.toHsl().h.rad - Colors.Web.red.toHsl().h.rad
 
         clear()
@@ -274,7 +274,8 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                 selectedProducts = selectedProducts,
                 filteredOpleiders = filteredOpleiders,
                 filteredExamenlocaties = filteredExamenlocaties,
-                filteredProducts = filteredProducts
+                filteredProducts = filteredProducts,
+                useCachedPercentage = useCache
             )
             it.geoPathNode.redrawPath()
             add(it.geoPathNode)
@@ -353,7 +354,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
 
                         if (selectedGemeente != new) {
                             selectedGemeente = new
-                            drawGemeentes()
+                            drawGemeentes(useCache = true)
                             render()
                         }
                     }
