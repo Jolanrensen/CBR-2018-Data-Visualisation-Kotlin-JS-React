@@ -206,12 +206,20 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                     /**
                      * Totaal percentage = sum[i in opleiders](i.slagingspecentage * aantal resultaten in i) / totaal aantal resultaten
                      */
-                    slagingspercentageEersteKeerOpleiders = currentGemeenteData[2].toDouble(),
-                    slagingspercentageHerexamenOpleiders = currentGemeenteData[3].toDouble(),
-                    slagingspercentageGecombineerdOpleiders = currentGemeenteData[4].toDouble(),
-                    slagingspercentageEersteKeerExamenlocaties = currentGemeenteData[5].toDouble(),
-                    slagingspercentageHerexamenExamenlocaties = currentGemeenteData[6].toDouble(),
+                    slagingspercentageEersteKeerOpleiders = currentGemeenteData[2].toDouble()
+                        .let { if (it.isNaN()) 0.0 else it },
+                    slagingspercentageHerexamenOpleiders = 2.0 * currentGemeenteData[4].toDouble()
+                        .let { if (it.isNaN()) 0.0 else it } - currentGemeenteData[2].toDouble()
+                        .let { if (it.isNaN()) 0.0 else it }, /*currentGemeenteData[3].toDouble().let { if (it.isNaN()) 0.0 else it }*/ // recalculate
+                    slagingspercentageGecombineerdOpleiders = currentGemeenteData[4].toDouble()
+                        .let { if (it.isNaN()) 0.0 else it },
+                    slagingspercentageEersteKeerExamenlocaties = currentGemeenteData[5].toDouble()
+                        .let { if (it.isNaN()) 0.0 else it },
+                    slagingspercentageHerexamenExamenlocaties = 2.0 * currentGemeenteData[7].toDouble()
+                        .let { if (it.isNaN()) 0.0 else it } - currentGemeenteData[5].toDouble()
+                        .let { if (it.isNaN()) 0.0 else it }, /*currentGemeenteData[6].toDouble().let { if (it.isNaN()) 0.0 else it }*/ // recalculate
                     slagingspercentageGecombineerdExamenlocaties = currentGemeenteData[7].toDouble()
+                        .let { if (it.isNaN()) 0.0 else it }
                 ).apply { idColorToGemeente[idColor!!.rgb] = featureStatnaam }
             }.toMap()
             loadingState = LOADED
