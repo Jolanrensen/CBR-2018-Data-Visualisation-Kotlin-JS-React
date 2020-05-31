@@ -243,7 +243,8 @@ class FilterList<Key : Any, Type : Any?, ThirdKey : Any?>(prps: FilterListProps<
                             }
                         }
                         inputLabelProps = jsObject {
-                            shrink = filterFieldValue.isNotEmpty()
+                            shrink = true
+//                            shrink = filterFieldValue.isNotEmpty()
 //                            shrink = filter.isNotEmpty()
                         }
                     }
