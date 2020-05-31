@@ -397,21 +397,17 @@ fun getSlagingsPercentageOpleiders(
     var voldoende = 0.0
     var onvoldoende = 0.0
 
-    selectedProducts.flatMap { Data.productToOpleiders[it]!! }
-        .intersect(opleiders)
+    selectedProducts.flatMap { Data.productToOpleiders[it]!! }.intersect(opleiders)
         .asSequence()
-        .map { opleiderKey -> Data.opleiderToResultaten[opleiderKey]!! }
-        .flatMap { resultaatKeys ->
-            resultaatKeys.asSequence().map { resultaatKey -> Data.alleResultaten[resultaatKey]!! }
-        }
-        .flatMap { resultaat -> resultaat.examenresultaatAantallen.asSequence() }
-        .filter { examenresultaatAantal ->
-            when (slagingspercentageSoort) {
-                EERSTE_KEER -> examenresultaatAantal.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
-                HERKANSING -> examenresultaatAantal.examenresultaatVersie == HEREXAMEN_OF_TOETS
-                GECOMBINEERD -> true
+        .flatMap { opleiderKey -> Data.opleiderToResultaten[opleiderKey]!!.asSequence() }
+        .flatMap { resultaatKey -> Data.alleResultaten[resultaatKey]!!.examenresultaatAantallen.asSequence() }
+        .let {
+            if (slagingspercentageSoort == GECOMBINEERD) it
+            else it.filter { examenresultaatAantal ->
+                examenresultaatAantal.examenresultaatVersie == slagingspercentageSoort.value
             }
-        }.forEach { examenresultaatAantal ->
+        }
+        .forEach { examenresultaatAantal ->
             if (schakelSoort == SchakelSoort.GEMIDDELD || schakelSoort.value == examenresultaatAantal.examenresultaatSoort) {
                 when (examenresultaatAantal.examenresultaat) {
                     VOLDOENDE -> voldoende += examenresultaatAantal.aantal
@@ -444,18 +440,15 @@ fun getSlagingsPercentageExamenlocaties(
     selectedProducts.flatMap { Data.productToExamenlocaties[it]!! }
         .intersect(examenlocaties)
         .asSequence()
-        .map { examenlocatieKey -> Data.examenlocatieToResultaten[examenlocatieKey]!! }
-        .flatMap { resultaatKeys ->
-            resultaatKeys.asSequence().map { resultaatKey -> Data.alleResultaten[resultaatKey]!! }
-        }
-        .flatMap { resultaat -> resultaat.examenresultaatAantallen.asSequence() }
-        .filter { examenresultaatAantal ->
-            when (slagingspercentageSoort) {
-                EERSTE_KEER -> examenresultaatAantal.examenresultaatVersie == EERSTE_EXAMEN_OF_TOETS
-                HERKANSING -> examenresultaatAantal.examenresultaatVersie == HEREXAMEN_OF_TOETS
-                GECOMBINEERD -> true
+        .flatMap { examenlocatieKey -> Data.examenlocatieToResultaten[examenlocatieKey]!!.asSequence() }
+        .flatMap { resultaatKey -> Data.alleResultaten[resultaatKey]!!.examenresultaatAantallen.asSequence() }
+        .let {
+            if (slagingspercentageSoort == GECOMBINEERD) it
+            else it.filter { examenresultaatAantal ->
+                examenresultaatAantal.examenresultaatVersie == slagingspercentageSoort.value
             }
-        }.forEach { examenresultaatAantal ->
+        }
+        .forEach { examenresultaatAantal ->
             if (schakelSoort == SchakelSoort.GEMIDDELD || schakelSoort.value == examenresultaatAantal.examenresultaatSoort) {
                 when (examenresultaatAantal.examenresultaat) {
                     VOLDOENDE -> voldoende += examenresultaatAantal.aantal
