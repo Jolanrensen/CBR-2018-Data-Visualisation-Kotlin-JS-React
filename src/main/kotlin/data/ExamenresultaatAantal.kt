@@ -4,13 +4,13 @@ inline class ExamenresultaatAantal(val data: Array<Int>) {
 
     constructor(
         examenresultaatVersie: ExamenresultaatVersie,
-        examenresultaatCategorie: ExamenresultaatCategorie,
+        examenresultaatSoort: ExamenresultaatSoort,
         examenresultaat: Examenresultaat,
         aantal: Int
     ) : this(
         arrayOf(
             ExamenresultaatVersie.values().indexOf(examenresultaatVersie),
-            ExamenresultaatCategorie.values().indexOf(examenresultaatCategorie),
+            ExamenresultaatSoort.values().indexOf(examenresultaatSoort),
             Examenresultaat.values().indexOf(examenresultaat),
             aantal
         )
@@ -19,8 +19,8 @@ inline class ExamenresultaatAantal(val data: Array<Int>) {
     inline val examenresultaatVersie: ExamenresultaatVersie
         get() = ExamenresultaatVersie.values()[data[0]]
 
-    inline val examenresultaatCategorie: ExamenresultaatCategorie
-        get() = ExamenresultaatCategorie.values()[data[1]]
+    inline val examenresultaatSoort: ExamenresultaatSoort
+        get() = ExamenresultaatSoort.values()[data[1]]
 
     inline val examenresultaat: Examenresultaat
         get() = Examenresultaat.values()[data[2]]
@@ -29,5 +29,5 @@ inline class ExamenresultaatAantal(val data: Array<Int>) {
         get() = data[3]
 
     override fun toString() =
-        "ExamenresultaatAantal(examenResultaatVersie = $examenresultaatVersie, examenResultaatCategorie = $examenresultaatCategorie, examenResultaat = $examenresultaat, aantal = $aantal)"
+        "ExamenresultaatAantal(examenResultaatVersie = $examenresultaatVersie, examenResultaatCategorie = $examenresultaatSoort, examenResultaat = $examenresultaat, aantal = $aantal)"
 }

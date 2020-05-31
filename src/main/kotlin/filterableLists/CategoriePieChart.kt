@@ -183,14 +183,12 @@ class CategoriePieChart(prps: CategoriePieChartProps) :
 
             fun getCategorieAt(pos: Point): Categorie? {
                 val context = canvas.getContext("2d") as CanvasRenderingContext2D
-                val col = context
-                    .getImageData(
-                        sx = pos.x * canvas.width.toDouble() / width,
-                        sy = pos.y * canvas.height.toDouble() / height,
-                        sw = 1.0,
-                        sh = 1.0
-                    )
-                    .data
+                val col = context.getImageData(
+                    sx = pos.x * canvas.width.toDouble() / width,
+                    sy = pos.y * canvas.height.toDouble() / height,
+                    sw = 1.0,
+                    sh = 1.0
+                ).data
                 val color = Colors.rgb(col[0].toInt(), col[1].toInt(), col[2].toInt())
 
                 categorieList.forEach {

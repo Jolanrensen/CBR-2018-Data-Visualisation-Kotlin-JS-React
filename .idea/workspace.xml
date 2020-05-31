@@ -19,8 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="slow but better filters">
+    <list default="true" id="b23c85cc-eda8-44b6-99e3-b172faee4efd" name="Default Changelist" comment="fixed map, sorta">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ResultCard.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenresultaatAantal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenresultaatAantal.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/ExamenresultaatCategorie.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ExamenresultaatSoort.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategoriePieChart.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/filterableLists/CategoriePieChart.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/map/NederlandVizMap.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -190,7 +195,7 @@
       <workItem from="1590760823461" duration="8474000" />
       <workItem from="1590773381183" duration="377000" />
       <workItem from="1590836366091" duration="27703000" />
-      <workItem from="1590919706588" duration="1796000" />
+      <workItem from="1590919706588" duration="5781000" />
     </task>
     <task id="LOCAL-00001" summary="It's running again!">
       <created>1589639534400</created>
@@ -304,7 +309,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590866052045</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="fixed map, sorta">
+      <created>1590923651126</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1590923651126</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,7 +351,8 @@
     <MESSAGE value="oopsie, made it faster" />
     <MESSAGE value="zoekbalk zoekt weer meteen" />
     <MESSAGE value="slow but better filters" />
-    <option name="LAST_COMMIT_MESSAGE" value="slow but better filters" />
+    <MESSAGE value="fixed map, sorta" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed map, sorta" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1481" y="482" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589722154163">
@@ -355,43 +368,43 @@
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="1718" y="478" width="537" height="701" key="#com.intellij.ide.util.MemberChooser/0.34.2880.1586@0.34.2880.1586" timestamp="1589905045687" />
-    <state x="893" y="242" width="1948" height="1172" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1590434214874">
+    <state x="893" y="242" width="1948" height="1172" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1590924012715">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="893" y="242" width="1948" height="1172" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.34.2880.1586@0.34.2880.1586" timestamp="1590434214874" />
+    <state x="893" y="242" width="1948" height="1172" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.34.2880.1586@0.34.2880.1586" timestamp="1590924012715" />
     <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl" timestamp="1589720455423">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="1170" y="528" width="530" height="600" key="FileChooserDialogImpl/0.34.2880.1586@0.34.2880.1586" timestamp="1589720455423" />
-    <state width="2822" height="435" key="GridCell.Tab.0.bottom" timestamp="1590866095133">
+    <state width="1382" height="435" key="GridCell.Tab.0.bottom" timestamp="1590923551886">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="435" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590866095133" />
+    <state width="1382" height="435" key="GridCell.Tab.0.bottom/0.34.2880.1586@0.34.2880.1586" timestamp="1590923551886" />
     <state width="1862" height="259" key="GridCell.Tab.0.bottom/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378245" />
-    <state width="2822" height="435" key="GridCell.Tab.0.center" timestamp="1590866095132">
+    <state width="1382" height="435" key="GridCell.Tab.0.center" timestamp="1590923551886">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="435" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590866095132" />
+    <state width="1382" height="435" key="GridCell.Tab.0.center/0.34.2880.1586@0.34.2880.1586" timestamp="1590923551886" />
     <state width="1862" height="259" key="GridCell.Tab.0.center/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
-    <state width="2822" height="435" key="GridCell.Tab.0.left" timestamp="1590866095132">
+    <state width="1382" height="435" key="GridCell.Tab.0.left" timestamp="1590923551885">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="435" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590866095132" />
+    <state width="1382" height="435" key="GridCell.Tab.0.left/0.34.2880.1586@0.34.2880.1586" timestamp="1590923551885" />
     <state width="1862" height="259" key="GridCell.Tab.0.left/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
-    <state width="2822" height="435" key="GridCell.Tab.0.right" timestamp="1590866095132">
+    <state width="1382" height="435" key="GridCell.Tab.0.right" timestamp="1590923551886">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state width="2822" height="435" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590866095132" />
+    <state width="1382" height="435" key="GridCell.Tab.0.right/0.34.2880.1586@0.34.2880.1586" timestamp="1590923551886" />
     <state width="1862" height="259" key="GridCell.Tab.0.right/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590529378244" />
     <state x="804" y="374" width="1195" height="907" key="SettingsEditor" timestamp="1590837290610">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
     <state x="804" y="374" width="1792" height="907" key="SettingsEditor/0.34.2880.1586@0.34.2880.1586" timestamp="1590837290610" />
     <state x="3416" y="173" width="1195" height="907" key="SettingsEditor/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590515533020" />
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1590866053438">
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2" timestamp="1590923653721">
       <screen x="0" y="34" width="2880" height="1586" />
     </state>
-    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1590866053438" />
+    <state x="935" y="500" width="1000" height="656" key="Vcs.Push.Dialog.v2/0.34.2880.1586@0.34.2880.1586" timestamp="1590923653721" />
     <state x="3503" y="317" width="1000" height="656" key="Vcs.Push.Dialog.v2/2880.0.1920.1080/0.34.2880.1586@2880.0.1920.1080" timestamp="1590528922603" />
     <state x="822" y="283" width="1585" height="970" key="com.intellij.database.dbimport.ImportDialog" timestamp="1589720508224">
       <screen x="0" y="34" width="2880" height="1586" />

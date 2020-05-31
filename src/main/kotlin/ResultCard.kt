@@ -9,7 +9,7 @@ import com.ccfraser.muirwik.components.table.mTableRow
 import data.*
 import data.Examenresultaat.ONVOLDOENDE
 import data.Examenresultaat.VOLDOENDE
-import data.ExamenresultaatCategorie.*
+import data.ExamenresultaatSoort.*
 import data.ExamenresultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenresultaatVersie.HEREXAMEN_OF_TOETS
 import data2viz.vizComponent
@@ -21,11 +21,15 @@ import io.data2viz.color.Colors
 import io.data2viz.geom.size
 import io.data2viz.scale.Scales
 import io.data2viz.scale.StrictlyContinuous
+import io.data2viz.viz.KPointerClick
 import io.data2viz.viz.Margins
 import kotlinx.css.*
 import libs.RPureComponent
+import org.khronos.webgl.get
+import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.events.Event
 import react.RBuilder
+import react.RConsumerProps
 import react.RProps
 import react.RState
 import styled.css
@@ -35,6 +39,7 @@ import kotlin.math.max
 interface ResultCardProps : RProps {
     var currentResults: Sequence<Int>
     var selectedProducts: Set<Product>
+    var onSchakelSoortClicked: (ExamenresultaatSoort) -> Unit
 }
 
 interface ResultCardState : RState {
@@ -45,6 +50,7 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
 
     val currentResults by propDelegateOf(ResultCardProps::currentResults)
     val selectedProducts by propDelegateOf(ResultCardProps::selectedProducts)
+    val onSchakelSoortClicked by propDelegateOf(ResultCardProps::onSchakelSoortClicked)
 
     override fun ResultCardState.init(props: ResultCardProps) {
         examenresultaatVersie = EERSTE_EXAMEN_OF_TOETS
@@ -77,7 +83,7 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                     continue
 
                 aantal.apply {
-                    when (examenresultaatCategorie) {
+                    when (examenresultaatSoort) {
                         HANDGESCHAKELD ->
                             when (examenresultaat) {
                                 VOLDOENDE -> aantalHandgeschakeldVoldoende += aantal.aantal
@@ -109,6 +115,12 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
             COMBI to Colors.Web.darkgreen
         )
 
+        val categorieColorsToExamenResultaat = mapOf(
+            Colors.Web.olivedrab to HANDGESCHAKELD,
+            Colors.Web.yellowgreen to AUTOMAAT,
+            Colors.Web.darkgreen to COMBI
+        )
+
         styledDiv {
             css {
                 width = 100.pct
@@ -122,10 +134,12 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
             val chartWidth = 600.0 - margins.hMargins
             val chartHeight = 300.0 - margins.vMargins
 
+            val width = 600.0
+            val height = 300.0
             vizComponent(
-                width = 600.0,
-                height = 300.0
-            ) {
+                width = width,
+                height = height
+            ) { canvas ->
                 // width voldoende/onvoldoende
                 // height handgeschakeld+automaat+combi
 
@@ -265,6 +279,25 @@ class ResultCard(prps: ResultCardProps) : RPureComponent<ResultCardProps, Result
                         translate(margins.left, margins.top)
                     }
                     axis(Orient.LEFT, heightScale)
+                }
+
+                val onHovering = {
+
+                }
+
+                on(KPointerClick) {
+                    val context = canvas.getContext("2d") as CanvasRenderingContext2D
+                    val col = context.getImageData(
+                        sx = it.pos.x * canvas.width.toDouble() / width,
+                        sy = it.pos.y * canvas.height.toDouble() / height,
+                        sw = 1.0,
+                        sh = 1.0
+                    ).data
+                    val color = Colors.rgb(col[0].toInt(), col[1].toInt(), col[2].toInt())
+
+                    categorieColorsToExamenResultaat[color]?.let {
+                        onSchakelSoortClicked(it)
+                    }
                 }
             }
 

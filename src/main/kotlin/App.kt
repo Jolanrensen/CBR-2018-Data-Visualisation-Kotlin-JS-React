@@ -1,5 +1,6 @@
 import ExamenlocatieOrOpleider.EXAMENLOCATIE
 import ExamenlocatieOrOpleider.OPLEIDER
+import SchakelSoort.*
 import SlagingspercentageSoort.*
 import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.MButtonSize
@@ -10,7 +11,6 @@ import com.ccfraser.muirwik.components.card.mCardHeader
 import data.*
 import data.ExamenresultaatVersie.EERSTE_EXAMEN_OF_TOETS
 import data.ExamenresultaatVersie.HEREXAMEN_OF_TOETS
-import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateAsProp
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import io.data2viz.color.Colors
@@ -44,6 +44,7 @@ interface AppState : RState {
     var selectedGemeente: Gemeente?
     var examenlocatieOrOpleider: ExamenlocatieOrOpleider
     var slagingspercentageSoort: SlagingspercentageSoort
+    var schakelSoort: SchakelSoort
 
     var selectedOpleiderKeys: Set<String>
     var selectedExamenlocatieKeys: Set<String>
@@ -62,7 +63,14 @@ enum class ExamenlocatieOrOpleider(val naamMeervoud: String) {
 enum class SlagingspercentageSoort(val naam: String) {
     EERSTE_KEER(EERSTE_EXAMEN_OF_TOETS.title),
     HERKANSING(HEREXAMEN_OF_TOETS.title),
-    GECOMBINEERD("Gecombineerd")
+    GECOMBINEERD("-")
+}
+
+enum class SchakelSoort(val naam: String, val value: ExamenresultaatSoort?) {
+    HANDGESCHAKELD(ExamenresultaatSoort.HANDGESCHAKELD.title, ExamenresultaatSoort.HANDGESCHAKELD),
+    AUTOMAAT(ExamenresultaatSoort.AUTOMAAT.title, ExamenresultaatSoort.AUTOMAAT),
+    COMBI(ExamenresultaatSoort.COMBI.title, ExamenresultaatSoort.COMBI),
+    GEMIDDELD("-", null)
 }
 
 class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
@@ -75,6 +83,8 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
         selectedGemeente = null
         examenlocatieOrOpleider = OPLEIDER
         slagingspercentageSoort = EERSTE_KEER
+        schakelSoort = GEMIDDELD
+
 
         selectedOpleiderKeys = setOf()
         selectedExamenlocatieKeys = setOf()
@@ -89,6 +99,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
     private var dataLoaded by stateDelegateOf(AppState::dataLoaded)
     private var examenlocatieOrOpleider by stateDelegateOf(AppState::examenlocatieOrOpleider)
     private var slagingspercentageSoort by stateDelegateOf(AppState::slagingspercentageSoort)
+    private var schakelSoort by stateDelegateOf(AppState::schakelSoort)
 
     private val selectedOpleiderKeys by stateDelegateOf(AppState::selectedOpleiderKeys)
     private val selectedExamenlocatieKeys by stateDelegateOf(AppState::selectedExamenlocatieKeys)
@@ -176,6 +187,15 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
             EERSTE_KEER -> HERKANSING
             HERKANSING -> GECOMBINEERD
             GECOMBINEERD -> EERSTE_KEER
+        }
+    }
+
+    private val toggleExamenresultaatSoort = { _: Event? ->
+        schakelSoort = when (schakelSoort) {
+            HANDGESCHAKELD -> AUTOMAAT
+            AUTOMAAT -> COMBI
+            COMBI -> GEMIDDELD
+            GEMIDDELD -> HANDGESCHAKELD
         }
     }
 
@@ -294,7 +314,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                         margin(1.mm)
                                     }
                                     mCardHeader(
-                                        title = "Slagingspercentage (${slagingspercentageSoort.naam}) voor ${examenlocatieOrOpleider.naamMeervoud} per gemeente",
+                                        title = "Slagingspercentage (${slagingspercentageSoort.naam}, ${schakelSoort.naam}) voor ${examenlocatieOrOpleider.naamMeervoud} per gemeente",
                                         subHeader = selectedGemeente?.name ?: "-",
                                         avatar = mAvatar(addAsChild = false) {
                                             css {
@@ -305,6 +325,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                         gemeente = it,
                                                         examenlocatieOrOpleider = examenlocatieOrOpleider,
                                                         slagingspercentageSoort = slagingspercentageSoort,
+                                                        schakelSoort = schakelSoort,
                                                         selectedProducts = selectedProducts,
                                                         selectedOpleiderKeys = selectedOpleiderKeys,
                                                         selectedExamenlocatieKeys = selectedExamenlocatieKeys,
@@ -322,6 +343,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                 it.percentageCache ?: getGemeentePercentage(
                                                     examenlocatieOrOpleider = examenlocatieOrOpleider,
                                                     slagingspercentageSoort = slagingspercentageSoort,
+                                                    schakelSoort = schakelSoort,
                                                     gemeente = it,
                                                     selectedOpleiderKeys = selectedOpleiderKeys,
                                                     selectedProducts = selectedProducts,
@@ -351,6 +373,7 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                                 dataLoaded = this@App.dataLoaded
                                                 examenlocatieOrOpleider = this@App.examenlocatieOrOpleider
                                                 slagingspercentageSoort = this@App.slagingspercentageSoort
+                                                schakelSoort = this@App.schakelSoort
                                                 selectedGemeente = stateAsProp(AppState::selectedGemeente)
 
                                                 selectAllOpleiders = this@App.selectAllOpleiders
@@ -392,6 +415,12 @@ class App(prps: AppProps) : RComponent<AppProps, AppState>(prps) {
                                             color = MColor.primary,
                                             size = MButtonSize.small,
                                             onClick = toggleExamenlocatieOrOpleider
+                                        )
+                                        mButton(
+                                            caption = "Toggle schakelsoort",
+                                            color = MColor.primary,
+                                            size = MButtonSize.small,
+                                            onClick = toggleExamenresultaatSoort
                                         )
                                         mButton(
                                             caption = "Toggle slagingspercentagesoort",

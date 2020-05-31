@@ -1,21 +1,18 @@
 package map
 
-import ApplyFilter
 import DeselectAll
 import ExamenlocatieOrOpleider
 import ExamenlocatieOrOpleider.EXAMENLOCATIE
 import ExamenlocatieOrOpleider.OPLEIDER
 import Loading
 import Loading.*
-import ResultFilterAndShowProps
+import SchakelSoort
 import SelectAll
 import SlagingspercentageSoort
 import delegates.ReactPropAndStateDelegates.StateAsProp
 import delegates.ReactPropAndStateDelegates.propDelegateOf
 import delegates.ReactPropAndStateDelegates.stateDelegateOf
 import SlagingspercentageSoort.*
-import com.ccfraser.muirwik.components.MColor
-import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.mCircularProgress
 import data.*
 import data.Data.NO_EXAMENLOCATIES
@@ -42,7 +39,6 @@ import io.data2viz.math.deg
 import io.data2viz.math.pct
 import io.data2viz.viz.*
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.css.*
 import org.khronos.webgl.get
@@ -59,6 +55,8 @@ interface NederlandVizMapProps : RProps {
     var dataLoaded: Boolean
     var examenlocatieOrOpleider: ExamenlocatieOrOpleider
     var slagingspercentageSoort: SlagingspercentageSoort
+    var schakelSoort: SchakelSoort
+
 
 //    var setOpleiderFilters: ApplyFilter
 //    var setExamenlocatieFilters: ApplyFilter
@@ -88,6 +86,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
     var selectedGemeenteState by propDelegateOf(NederlandVizMapProps::selectedGemeente)
     val examenlocatieOrOpleider by propDelegateOf(NederlandVizMapProps::examenlocatieOrOpleider)
     val slagingsPercentageSoort by propDelegateOf(NederlandVizMapProps::slagingspercentageSoort)
+    val schakelSoort by propDelegateOf(NederlandVizMapProps::schakelSoort)
 
     var selectedGemeente: Gemeente? = selectedGemeenteState
         set(value) {
@@ -127,6 +126,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
             || props.dataLoaded != nextProps.dataLoaded
             || props.examenlocatieOrOpleider != nextProps.examenlocatieOrOpleider
             || props.slagingspercentageSoort != nextProps.slagingspercentageSoort
+            || props.schakelSoort != nextProps.schakelSoort
             || props.selectedOpleiderKeys != nextProps.selectedOpleiderKeys
             || props.selectedExamenlocatieKeys != nextProps.selectedExamenlocatieKeys
             || props.selectedProducts != nextProps.selectedProducts
@@ -268,6 +268,7 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
                 gemeente = it,
                 examenlocatieOrOpleider = examenlocatieOrOpleider,
                 slagingspercentageSoort = slagingsPercentageSoort,
+                schakelSoort = schakelSoort,
                 selectedExamenlocatieKeys = selectedExamenlocatieKeys,
                 selectedOpleiderKeys = selectedOpleiderKeys,
                 selectedProducts = selectedProducts,
@@ -385,18 +386,12 @@ class NederlandVizMap(prps: NederlandVizMapProps) : RComponent<NederlandVizMapPr
 fun getSlagingsPercentageOpleiders(
     opleiders: Set<String>,
     selectedProducts: Set<Product>,
-    slagingspercentageSoort: SlagingspercentageSoort
+    slagingspercentageSoort: SlagingspercentageSoort,
+    schakelSoort: SchakelSoort
 ): Double {
     if (opleiders.isEmpty()) return -1.0
 
-//    println(
-//        """getSlagingsPercentageOpleiders:
-//            size opleiders: ${opleiders.size}
-//            opleiders: ${opleiders.joinToString(", ")}
-//            selectedProducts: ${selectedProducts.joinToString(", ")}
-//            slaginsPercentageSoort: $slagingspercentageSoort""".trimMargin()
-//    )
-//    console.log(opleiders)
+    var isEmpty = true
 
     var voldoende = 0.0
     var onvoldoende = 0.0
@@ -416,21 +411,31 @@ fun getSlagingsPercentageOpleiders(
                 GECOMBINEERD -> true
             }
         }.forEach { examenresultaatAantal ->
-            when (examenresultaatAantal.examenresultaat) {
-                VOLDOENDE -> voldoende += examenresultaatAantal.aantal
-                ONVOLDOENDE -> onvoldoende += examenresultaatAantal.aantal
+            if (schakelSoort == SchakelSoort.GEMIDDELD || schakelSoort.value == examenresultaatAantal.examenresultaatSoort) {
+                when (examenresultaatAantal.examenresultaat) {
+                    VOLDOENDE -> voldoende += examenresultaatAantal.aantal
+                    ONVOLDOENDE -> onvoldoende += examenresultaatAantal.aantal
+                }
+                if (examenresultaatAantal.aantal > 0) isEmpty = false
             }
         }
 
-    return if (voldoende + onvoldoende == 0.0) 0.0 else voldoende / (voldoende + onvoldoende)
+    return when {
+        isEmpty -> -1.0
+        voldoende + onvoldoende == 0.0 -> 0.0
+        else -> voldoende / (voldoende + onvoldoende)
+    }
 }
 
 fun getSlagingsPercentageExamenlocaties(
     examenlocaties: Set<String>,
     selectedProducts: Set<Product>,
-    slagingspercentageSoort: SlagingspercentageSoort
+    slagingspercentageSoort: SlagingspercentageSoort,
+    schakelSoort: SchakelSoort
 ): Double {
     if (examenlocaties.isEmpty()) return -1.0
+
+    var isEmpty = true
 
     var voldoende = 0.0
     var onvoldoende = 0.0
@@ -450,18 +455,26 @@ fun getSlagingsPercentageExamenlocaties(
                 GECOMBINEERD -> true
             }
         }.forEach { examenresultaatAantal ->
-            when (examenresultaatAantal.examenresultaat) {
-                VOLDOENDE -> voldoende += examenresultaatAantal.aantal
-                ONVOLDOENDE -> onvoldoende += examenresultaatAantal.aantal
+            if (schakelSoort == SchakelSoort.GEMIDDELD || schakelSoort.value == examenresultaatAantal.examenresultaatSoort) {
+                when (examenresultaatAantal.examenresultaat) {
+                    VOLDOENDE -> voldoende += examenresultaatAantal.aantal
+                    ONVOLDOENDE -> onvoldoende += examenresultaatAantal.aantal
+                }
+                if (examenresultaatAantal.aantal > 0) isEmpty = false
             }
         }
 
-    return if (voldoende + onvoldoende == 0.0) 0.0 else voldoende / (voldoende + onvoldoende)
+    return when {
+        isEmpty -> -1.0
+        voldoende + onvoldoende == 0.0 -> 0.0
+        else -> voldoende / (voldoende + onvoldoende)
+    }
 }
 
 fun getGemeentePercentage(
     examenlocatieOrOpleider: ExamenlocatieOrOpleider,
     slagingspercentageSoort: SlagingspercentageSoort,
+    schakelSoort: SchakelSoort,
     gemeente: Gemeente,
     selectedOpleiderKeys: Set<String>,
     selectedProducts: Set<Product>,
@@ -489,7 +502,7 @@ fun getGemeentePercentage(
     return when (examenlocatieOrOpleider) {
         OPLEIDER ->
             when {
-                selectedOpleiderKeysAllOrNone && selectedProductsAllOrNone && filteredOpleidersAll && filteredProductsAll ->
+                selectedOpleiderKeysAllOrNone && selectedProductsAllOrNone && filteredOpleidersAll && filteredProductsAll && schakelSoort == SchakelSoort.GEMIDDELD ->
                     when (slagingspercentageSoort) {
                         EERSTE_KEER -> gemeente.slagingspercentageEersteKeerOpleiders
                         HERKANSING -> gemeente.slagingspercentageHerexamenOpleiders
@@ -524,13 +537,14 @@ fun getGemeentePercentage(
                                 }
                         },
 
-                        slagingspercentageSoort = slagingspercentageSoort
+                        slagingspercentageSoort = slagingspercentageSoort,
+                        schakelSoort = schakelSoort
                     )
             }
 
         EXAMENLOCATIE ->
             when {
-                selectedExamenlocatieKeysAllOrNone && selectedProductsAllOrNone && filteredExamenlocatiesAll && filteredProductsAll ->
+                selectedExamenlocatieKeysAllOrNone && selectedProductsAllOrNone && filteredExamenlocatiesAll && filteredProductsAll && schakelSoort == SchakelSoort.GEMIDDELD ->
                     when (slagingspercentageSoort) {
                         EERSTE_KEER -> gemeente.slagingspercentageEersteKeerExamenlocaties
                         HERKANSING -> gemeente.slagingspercentageHerexamenExamenlocaties
@@ -566,7 +580,8 @@ fun getGemeentePercentage(
                                 }
                         },
 
-                        slagingspercentageSoort = slagingspercentageSoort
+                        slagingspercentageSoort = slagingspercentageSoort,
+                        schakelSoort = schakelSoort
                     )
             }
     }.apply { gemeente.percentageCache = this }
@@ -577,6 +592,7 @@ fun getGemeenteColor(
     gemeente: Gemeente,
     examenlocatieOrOpleider: ExamenlocatieOrOpleider,
     slagingspercentageSoort: SlagingspercentageSoort,
+    schakelSoort: SchakelSoort,
     selectedOpleiderKeys: Set<String>,
     selectedExamenlocatieKeys: Set<String>,
     selectedProducts: Set<Product>,
@@ -597,6 +613,7 @@ fun getGemeenteColor(
         val percentage = cachedPercentage ?: getGemeentePercentage(
             examenlocatieOrOpleider = examenlocatieOrOpleider,
             slagingspercentageSoort = slagingspercentageSoort,
+            schakelSoort = schakelSoort,
             gemeente = gemeente,
             selectedOpleiderKeys = selectedOpleiderKeys,
             selectedProducts = selectedProducts,
@@ -606,7 +623,7 @@ fun getGemeenteColor(
             filteredProducts = filteredProducts
         )
 
-        if (percentage < 0) Colors.Web.black.toHsl()
+        if (percentage < 0.0000001) Colors.Web.black.toHsl()
         else Colors.hsl(
             hue = Angle(greenRedAngleDiff * percentage),
             saturation = 100.pct,
